@@ -16,3 +16,11 @@ Or alternatively execute cmd:
 The reports can be found in
 
             /target/site/surefire-report.html
+
+To run the particular test execute cmd:
+
+            mvn clean test -Dtest={testClass}#{testMethod}
+
+or 
+
+            mvn clean test -Dtest={testClass}
