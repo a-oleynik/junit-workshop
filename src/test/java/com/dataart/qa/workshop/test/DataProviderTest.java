@@ -2,6 +2,7 @@ package com.dataart.qa.workshop.test;
 
 import com.dataart.qa.workshop.Factorial;
 import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvValidationException;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 public class DataProviderTest {
 
     @DataProvider
-    public static Object[][] read_numbers() throws IOException, NumberFormatException{
+    public static Object[][] read_numbers() throws IOException, NumberFormatException, CsvValidationException {
         ArrayList<Object[]> outData = new ArrayList<>();
         try {
             CSVReader reader = new CSVReader(new FileReader("src/test/resources/numbers.csv"));
@@ -30,10 +31,7 @@ public class DataProviderTest {
                 }
                 outData.add(row);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw e;
-        } catch (NumberFormatException e) {
+        } catch (IOException | NumberFormatException | CsvValidationException e) {
             e.printStackTrace();
             throw e;
         }
