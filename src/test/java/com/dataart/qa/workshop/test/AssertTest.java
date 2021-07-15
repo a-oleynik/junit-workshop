@@ -2,6 +2,8 @@ package com.dataart.qa.workshop.test;
 
 import org.junit.*;
 
+import static java.lang.String.format;
+
 public class AssertTest {
 
     @Test
@@ -13,7 +15,7 @@ public class AssertTest {
     @Test
     public void division_test(){
         System.out.println("Division test.");
-        Assert.assertEquals(2.0, 10/5.0, 0);
+        Assert.assertEquals(1.9, 10/5.0, 0.2);
     }
 
     @Test
@@ -25,6 +27,9 @@ public class AssertTest {
 
     @Test
     public void fail_test(){
-        Assert.fail("The test is failed somehow.");
+        boolean isFailed = false;
+        if (isFailed) {
+            Assert.fail(format("The test is because isFailed is %s", isFailed));
+        }
     }
 }

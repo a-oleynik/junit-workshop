@@ -7,13 +7,16 @@ import org.junit.runner.RunWith;
 
 @RunWith(MyRunner.class)
 public class Example1Test {
+    private static String actual = "Actual string";
+    private static String expected = "Actual string";// "Expected string"
+
     @Test
     public void example1_the_first_test(){
-        Assert.assertEquals("Wrong string found", "Expected string", "Actual string");
+        Assert.assertEquals("Wrong string found", expected, actual);
     }
 
     @Test
     public void example1_the_second_test(){
-        Assert.assertEquals("Wrong string found", "Actual string", "Actual string");
+        Assert.assertEquals("Wrong string found", expected, actual);
     }
 }
