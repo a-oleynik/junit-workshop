@@ -8,7 +8,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
 @RunWith(DataProviderRunner.class)
 public class DataProvider2Test {
 

@@ -3,6 +3,9 @@ package com.dataart.qa.workshop.test;
 import org.junit.*;
 
 public class FixturesTest {
+    private static String actual = "Actual string";
+    private static String expected = "Actual string";// "Expected string"
+
     @BeforeClass
     public static void globalSetUp(){
         System.out.println("Set up class.");
@@ -26,12 +29,12 @@ public class FixturesTest {
     @Test
     public void fixtures_the_first_test(){
         System.out.println("The first test.");
-        Assert.assertEquals("Wrong string found", "Expected string", "Actual string");
+        Assert.assertEquals("Wrong string found", expected, actual);
     }
 
     @Test
     public void fixtures_the_second_test(){
         System.out.println("The second test.");
-        Assert.assertEquals("Wrong string found", "Actual string", "Actual string");
+        Assert.assertEquals("Wrong string found", expected, actual);
     }
 }
