@@ -26,9 +26,9 @@ public class JUnitParamsTest {
 
     @Test
     @Parameters({
-            "2,2,3",
+            "2,2,4",//3
             "2,2,4",
-            "2,2,5"
+            "2,2,4"//5
     })
     public void test_multiplication_with_junitparams(int x, int y, int z) {
         Assert.assertThat(x * y, is(z));
