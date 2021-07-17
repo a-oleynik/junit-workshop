@@ -1,4 +1,4 @@
-package com.dataart.qa.workshop;
+package com.dataart.qa.workshop.rules;
 
 import org.junit.Rule;
 import org.junit.rules.ErrorCollector;

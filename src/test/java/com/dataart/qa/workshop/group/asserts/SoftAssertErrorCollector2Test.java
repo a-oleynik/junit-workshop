@@ -1,6 +1,6 @@
 package com.dataart.qa.workshop.group.asserts;
 
-import com.dataart.qa.workshop.AssertAll;
+import com.dataart.qa.workshop.rules.AssertAll;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
