@@ -1,4 +1,4 @@
-package com.dataart.qa.workshop.test;
+package com.dataart.qa.workshop.group.asserts;
 
 import org.junit.Rule;
 import org.junit.Test;

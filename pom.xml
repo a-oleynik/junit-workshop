@@ -107,13 +107,13 @@
         <profile>
             <id>SmokeTests</id>
             <properties>
-                <testcase.groups>com.dataart.qa.workshop.categories.SmokeTests</testcase.groups>
+                <testcase.groups>com.dataart.qa.workshop.grouping.categories.SmokeTests</testcase.groups>
             </properties>
         </profile>
         <profile>
             <id>RegressionTests</id>
             <properties>
-                <testcase.groups>com.dataart.qa.workshop.categories.RegressionTests</testcase.groups>
+                <testcase.groups>com.dataart.qa.workshop.grouping.categories.RegressionTests</testcase.groups>
             </properties>
         </profile>
     </profiles>
