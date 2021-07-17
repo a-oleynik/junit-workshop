@@ -1,9 +1,7 @@
 package com.dataart.qa.workshop.test;
 
 import org.junit.*;
-import org.junit.rules.TestRule;
-import org.junit.rules.TestWatcher;
-import org.junit.runner.Description;
+import org.junit.rules.TestName;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
@@ -11,19 +9,14 @@ import static java.lang.String.format;
 
 public class AssumeTest {
     private static final String os = System.getProperty("os.name");// Windows 10
-    public String testDescription;
 
-    @Rule
-    public TestRule watcher = new TestWatcher() {
-        protected void starting(Description description) {
-            testDescription = description.getMethodName();
-        }
-    };
+    @Rule public TestName name = new TestName();
 
     @Before
     public void checkOs() {
-        System.out.print(format("Starting AssertTest#%s", testDescription));
-        Assume.assumeThat("The test method name doesn't equal to assume_true_test", testDescription, equalTo("assume_true_test"));
+        System.out.printf("Starting AssertTest#%s", name.getMethodName());
+        Assume.assumeThat("The test method name doesn't equal to assume_true_test", name.getMethodName(),
+                equalTo("assume_true_test"));
     }
 
     @Test
