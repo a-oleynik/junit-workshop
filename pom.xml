@@ -25,6 +25,12 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>${junit.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-core</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>pl.pragmatists</groupId>
@@ -90,7 +96,7 @@
                     <properties>
                         <!--                        <property>
                                                     <name>listener</name>
-                                                    <value>com.dataart.qa.workshop.junit.listeners.ExampleListener</value>
+                                                    <value>ExampleListener</value>
                                                 </property>-->
                     </properties>
                 </configuration>
@@ -101,13 +107,13 @@
         <profile>
             <id>SmokeTests</id>
             <properties>
-                <testcase.groups>com.dataart.qa.workshop.categories.SmokeTests</testcase.groups>
+                <testcase.groups>SmokeTests</testcase.groups>
             </properties>
         </profile>
         <profile>
             <id>RegressionTests</id>
             <properties>
-                <testcase.groups>com.dataart.qa.workshop.categories.RegressionTests</testcase.groups>
+                <testcase.groups>RegressionTests</testcase.groups>
             </properties>
         </profile>
     </profiles>
