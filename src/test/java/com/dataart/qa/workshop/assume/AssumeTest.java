@@ -1,4 +1,4 @@
-package com.dataart.qa.workshop.test;
+package com.dataart.qa.workshop.assume;
 
 import org.junit.*;
 import org.junit.rules.TestName;

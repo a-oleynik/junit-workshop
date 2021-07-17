@@ -1,4 +1,4 @@
-package com.dataart.qa.workshop.test;
+package com.dataart.qa.workshop.assume;
 
 import org.junit.AfterClass;
 import org.junit.Assume;
