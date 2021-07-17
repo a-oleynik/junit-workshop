@@ -1,4 +1,4 @@
-package com.dataart.qa.workshop.test;
+package com.dataart.qa.workshop.general;
 
 import com.dataart.qa.workshop.junit.runners.MyRunner;
 import org.junit.Assert;
