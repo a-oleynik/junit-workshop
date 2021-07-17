@@ -1,4 +1,4 @@
-package com.dataart.qa.workshop.test;
+package com.dataart.qa.workshop.general;
 
 import org.junit.Test;
 

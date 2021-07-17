@@ -1,7 +1,7 @@
 package com.dataart.qa.workshop.suites;
 
-import com.dataart.qa.workshop.test.AssertTest;
-import com.dataart.qa.workshop.test.MyRunnerTest;
+import com.dataart.qa.workshop.general.AssertTest;
+import com.dataart.qa.workshop.general.MyRunnerTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
