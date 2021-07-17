@@ -9,7 +9,7 @@ public class IgnoringTest {
 
     @Ignore
     @Test
-    public void ignoring_mulitiplication_test() {
+    public void ignoring_multiplication_test() {
         System.out.println("Multiplication test.");
         Assert.assertEquals("Multiplication result is wrong", 10, 2 * 5);
     }

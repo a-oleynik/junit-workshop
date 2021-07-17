@@ -24,7 +24,7 @@ public class Parameterization2Test {
     }
 
     @Test
-    public void test_factorial() {
+    public void junit4_ddt_v2_factorial_test() {
         Assert.assertEquals("factorial function works wrong", expected, Factorial.factorial(number));
     }
 }

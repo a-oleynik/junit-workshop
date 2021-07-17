@@ -11,12 +11,12 @@ public class MyRunnerTest {
     private static String expected = "Actual string";// "Expected string"
 
     @Test
-    public void example1_the_first_test() {
+    public void my_runner_the_first_test() {
         Assert.assertEquals("Wrong string found", expected, actual);
     }
 
     @Test
-    public void example1_the_second_test() {
+    public void my_runner_the_second_test() {
         Assert.assertEquals("Wrong string found", expected, actual);
     }
 }

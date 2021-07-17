@@ -39,12 +39,12 @@ public class DataProviderTest {
 
     @Test
     @UseDataProvider("read_numbers")
-    public void test1(long number, long expected) {
+    public void junit4_with_data_provider_test(long number, long expected) {
         Assert.assertEquals("Factorial function is wrong.", expected, Factorial.factorial(number));
     }
 
     @Test
-    public void test2() {
+    public void non_parametrised_test() {
         System.out.println("test2");
     }
 }

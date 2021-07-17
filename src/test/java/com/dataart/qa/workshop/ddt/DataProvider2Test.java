@@ -13,7 +13,7 @@ public class DataProvider2Test {
 
     @Test
     @UseDataProvider(value = "read_numbers", location = MyDataProvider.class)
-    public void test1(long number, long expected) {
+    public void junit4_with_external_data_provider_test(long number, long expected) {
         Assert.assertEquals("Factorial function is wrong.", expected, Factorial.factorial(number));
     }
 }

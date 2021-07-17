@@ -8,19 +8,19 @@ import static java.lang.String.format;
 public class AssertTest {
 
     @Test
-    public void multiplication_test(){
+    public void assert_equals_multiplication_test(){
         System.out.println("Multiplication test.");
         Assert.assertEquals("Multiplication result is wrong", 10, 2*5);
     }
 
     @Test
-    public void division_test(){
+    public void assert_equals_division_test(){
         System.out.println("Division test.");
         Assert.assertEquals(1.9, 10/5.0, 0.2);
     }
 
     @Test
-    public void boolean_test(){
+    public void assert_boolean_test(){
         boolean variable = true;
         Assert.assertTrue("variable is not true", variable);
         Assert.assertFalse("!variable is not false", !variable);
