@@ -1,4 +1,4 @@
-package com.oleynik.qa.workshop.junit.assume;
+package com.oleynik.qa.workshop.junit.conditional;
 
 import org.junit.*;
 import org.junit.rules.TestName;
@@ -9,7 +9,8 @@ import static org.junit.Assert.*;
 public class AssumeTest {
     private static final String os = System.getProperty("os.name");// Windows 10
 
-    @Rule public TestName name = new TestName();
+    @Rule
+    public TestName name = new TestName();
 
     @Before
     public void checkOs() {

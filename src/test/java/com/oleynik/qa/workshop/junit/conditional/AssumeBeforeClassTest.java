@@ -1,4 +1,4 @@
-package com.oleynik.qa.workshop.junit.assume;
+package com.oleynik.qa.workshop.junit.conditional;
 
 import org.junit.AfterClass;
 import org.junit.Assume;
@@ -12,7 +12,7 @@ public class AssumeBeforeClassTest {
     private static String os = System.getProperty("os.name");// Windows 10
 
     @BeforeClass
-    public static void checkOs(){
+    public static void checkOs() {
         System.out.println("Starting AssertTest");
         Assume.assumeThat("Detected os is not Linux", os, equalTo("Linux"));
     }
@@ -30,7 +30,7 @@ public class AssumeBeforeClassTest {
     }
 
     @AfterClass
-    public static void afterExecution(){
+    public static void afterExecution() {
         System.out.println("Finishing AssertTest");
     }
 }
