@@ -8,4 +8,10 @@ public class Utils {
             e.printStackTrace();
         }
     }
+
+    public static void checkMaxTries(int maxTries){
+        if (maxTries < 1) {
+            throw new IllegalArgumentException("Impossible number of maximum tries");
+        }
+    }
 }
