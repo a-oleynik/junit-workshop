@@ -44,3 +44,11 @@ Run all test methods that match pattern 'testPattern*' from a test class:
 Run all test methods match pattern 'testPattern1*' and 'testPattern2*' from a test class:
 
             mvn clean test -Dtest=TestClass1#testPattern1*+testPattern2*
+
+Compile, test, package and install/copy of built .jar/.war file into your local Maven repository:
+
+            mvn clean install
+
+Compile, package and install/copy of built .jar/.war file into your local Maven repository but skip tests:
+
+            mvn clean install -DskipTests
