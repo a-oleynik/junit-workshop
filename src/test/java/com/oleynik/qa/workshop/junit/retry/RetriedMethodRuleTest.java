@@ -4,7 +4,7 @@ import com.oleynik.qa.workshop.junit.annotations.Retry;
 import com.oleynik.qa.workshop.junit.rules.RetryMethodRule;
 import org.junit.Assert;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 //It is preferred to implement TestRule instead of MethodRule
 public class RetriedMethodRuleTest {

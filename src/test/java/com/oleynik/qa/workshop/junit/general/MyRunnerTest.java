@@ -2,7 +2,7 @@ package com.oleynik.qa.workshop.junit.general;
 
 import com.oleynik.qa.workshop.junit.runners.MyRunner;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(MyRunner.class)
