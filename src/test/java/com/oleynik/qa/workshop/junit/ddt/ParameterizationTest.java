@@ -1,32 +1,72 @@
 package com.oleynik.qa.workshop.junit.ddt;
 
 import com.oleynik.qa.workshop.junit.Factorial;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
+import com.oleynik.qa.workshop.junit.annotations.ParameterizedDataSource;
+import com.oleynik.qa.workshop.junit.dataproviders.AnotherFactorialDataProvider;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.stream.Stream;
 
-@RunWith(Parameterized.class)
+import static org.junit.jupiter.params.provider.Arguments.arguments;
+
 public class ParameterizationTest {
-    private long number;
-    private long expected;
-
-    public ParameterizationTest(long number, long expected) {
-        this.number = number;
-        this.expected = expected;
+    @ParameterizedTest
+    @MethodSource("factorials")
+    public void inner_method_source_factorial_test(int number, int expected) {
+        Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
     }
 
-    @Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][]{{1, 1}, {2, 2}, {3, 6}, {4, 24}, {5, 120}});
+    private static Stream<Arguments> factorials() {
+        return Stream.of(
+                arguments(1, 1),
+                arguments(2, 2),
+                arguments(3, 6),
+                arguments(4, 24),
+                arguments(5, 120)
+        );
     }
 
-    @Test
-    public void junit4_ddt_factorial_test() {
-        Assert.assertEquals("factorial function works wrong", expected, Factorial.factorial(number));
+    @ParameterizedTest
+    @MethodSource("com.oleynik.qa.workshop.junit.dataproviders.FactorialDataProvider#factorials")
+    public void outer_method_source_factorial_test(int number, int expected) {
+        Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(AnotherFactorialDataProvider.class)
+    public void arguments_source_factorial_test(int number, int expected) {
+        Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
+    }
+
+    @ParameterizedTest
+    @MethodSource("com.oleynik.qa.workshop.junit.dataproviders.FactorialDataProvider#factorialsFromFile")
+    public void csv_from_outer_method_source_factorial_test(int number, int expected) {
+        Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
+    }
+
+    public static Object[][] anotherFactorials() {
+        return new Object[][]{
+                {1, 1},
+                {2, 2},
+                {3, 6},
+                {4, 24},
+                {5, 120}
+        };
+    }
+
+    @ParameterizedTest
+    @MethodSource("anotherFactorials")
+    public void another_inner_method_source_factorial_test(int number, int expected) {
+        Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
+    }
+
+    @ParameterizedTest
+    @ParameterizedDataSource(path = "src/test/resources/numbers.csv")
+    public void parameterized_arguments_source_factorial_test(int number, int expected) {
+        Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
     }
 }

@@ -1,6 +1,8 @@
 package com.oleynik.qa.workshop.junit.rules;
 
 import org.junit.*;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.TestRule;
 
 public class TestWatcherRuleTest {
@@ -20,7 +22,7 @@ public class TestWatcherRuleTest {
     }
 
     @Test
-    @Ignore
+    @Disabled
     public void test_watcher_boolean_test(){
         boolean variable = true;
         Assert.assertTrue("variable is not true", variable);

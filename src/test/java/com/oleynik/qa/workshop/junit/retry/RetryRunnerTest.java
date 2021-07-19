@@ -3,7 +3,7 @@ package com.oleynik.qa.workshop.junit.retry;
 import com.oleynik.qa.workshop.junit.annotations.RetryConfiguration;
 import com.oleynik.qa.workshop.junit.runners.RetryRunner;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 
 @RunWith(RetryRunner.class)

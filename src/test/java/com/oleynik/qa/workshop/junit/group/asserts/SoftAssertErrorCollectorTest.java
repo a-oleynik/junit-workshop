@@ -1,7 +1,7 @@
 package com.oleynik.qa.workshop.junit.group.asserts;
 
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.ErrorCollector;
 
 import static org.hamcrest.CoreMatchers.equalTo;

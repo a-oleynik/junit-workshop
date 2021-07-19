@@ -3,8 +3,8 @@ package com.oleynik.qa.workshop.junit.grouping;
 import com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests;
 import com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests;
 import org.junit.Assert;
-import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.junit.jupiter.api.Test;
 
 public class CategoriesTest {
 

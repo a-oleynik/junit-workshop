@@ -2,7 +2,7 @@ package com.oleynik.qa.workshop.junit.runners;
 
 import com.oleynik.qa.workshop.junit.annotations.RetryConfiguration;
 import org.junit.AssumptionViolatedException;
-import org.junit.Ignore;
+import org.junit.jupiter.api.Disabled;
 import org.junit.internal.runners.model.EachTestNotifier;
 import org.junit.runner.Description;
 import org.junit.runner.notification.RunNotifier;
@@ -25,7 +25,6 @@ public class RetryRunner extends BlockJUnit4ClassRunner {
         super(klass);
     }
 
-
     @Override
     public void run(final RunNotifier notifier) {
         EachTestNotifier testNotifier = new EachTestNotifier(notifier,
@@ -46,8 +45,7 @@ public class RetryRunner extends BlockJUnit4ClassRunner {
     @Override
     protected void runChild(final FrameworkMethod method, RunNotifier notifier) {
         failedAttempts = 1;
-        if (Arrays.asList(method.getAnnotations())
-                .stream()
+        if (Arrays.stream(method.getAnnotations())
                 .anyMatch(RetryConfiguration.class::isInstance)) {
             RetryConfiguration annotation = method.getAnnotation(RetryConfiguration.class);
             retryCount = annotation.maxTries();
@@ -56,7 +54,7 @@ public class RetryRunner extends BlockJUnit4ClassRunner {
             retryCount = 3;
         }
         Description description = describeChild(method);
-        if (method.getAnnotation(Ignore.class) != null) {
+        if (method.getAnnotation(Disabled.class) != null) {
             notifier.fireTestIgnored(description);
         } else {
             runTestUnit(methodBlock(method), description, notifier);

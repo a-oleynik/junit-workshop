@@ -2,7 +2,7 @@ package com.oleynik.qa.workshop.junit.rules;
 
 import org.junit.Assert;
 import org.junit.Rule;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.rules.ExternalResource;
 import org.junit.runner.OrderWith;
 import org.junit.runner.manipulation.Alphanumeric;
