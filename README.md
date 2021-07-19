@@ -33,3 +33,14 @@ To execute tests of some category execute cmd:
 
             mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
 
+Run multiple test classes:
+
+            mvn clean test -Dtest=TestClass1,TestClass2
+
+Run all test methods that match pattern 'testPattern*' from a test class:
+
+            mvn clean test -Dtest=TestClass1#testPattern*
+
+Run all test methods match pattern 'testPattern1*' and 'testPattern2*' from a test class:
+
+            mvn clean test -Dtest=TestClass1#testPattern1*+testPattern2*
