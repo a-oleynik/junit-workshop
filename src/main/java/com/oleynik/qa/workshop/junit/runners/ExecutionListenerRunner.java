@@ -1,18 +1,18 @@
 package com.oleynik.qa.workshop.junit.runners;
 
-import com.oleynik.qa.workshop.junit.listeners.ExampleListener;
+import com.oleynik.qa.workshop.junit.listeners.ExecutionListener;
 import org.junit.runner.notification.RunListener;
 import org.junit.runner.notification.RunNotifier;
 import org.junit.runners.BlockJUnit4ClassRunner;
 import org.junit.runners.model.InitializationError;
 
-public class MyRunner extends BlockJUnit4ClassRunner {
+public class ExecutionListenerRunner extends BlockJUnit4ClassRunner {
 
-    public MyRunner(Class<?> klass) throws InitializationError {
+    public ExecutionListenerRunner(Class<?> klass) throws InitializationError {
         super(klass);
     }
 
-    public static RunListener customListener = new ExampleListener();
+    public static RunListener customListener = new ExecutionListener();
 
     @Override public void run(RunNotifier notifier){
         notifier.addListener(customListener);

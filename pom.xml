@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.dataart.qa.workshop</groupId>
+    <groupId>com.oleynik.qa.workshop</groupId>
     <artifactId>junit-examples</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.1.1</version>
     <name>JUnit 4 workshop examples</name>
 
     <properties>
