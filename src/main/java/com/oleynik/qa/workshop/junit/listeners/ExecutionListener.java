@@ -5,7 +5,7 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;
 import org.junit.runner.notification.RunListener;
 
-public class ExampleListener extends RunListener{
+public class ExecutionListener extends RunListener{
     public void testRunStarted(Description description) {
         System.out.println("Number of tests to execute: " + description.testCount());
     }
