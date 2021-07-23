@@ -31,7 +31,7 @@ To rerun failed tests execute cmd:
 
 To execute tests of some category execute cmd:
 
-            mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
+            mvn clean test -Dgroups=Regression,Smoke
 
 Run multiple test classes:
 
