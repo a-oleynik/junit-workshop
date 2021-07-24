@@ -1,6 +1,5 @@
-package com.oleynik.qa.workshop.junit.rules;
+package com.oleynik.qa.workshop.junit.extensions;
 
-import com.oleynik.qa.workshop.junit.extension.DBResourceExtension;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;

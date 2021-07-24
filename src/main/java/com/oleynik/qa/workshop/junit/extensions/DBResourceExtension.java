@@ -1,4 +1,4 @@
-package com.oleynik.qa.workshop.junit.extension;
+package com.oleynik.qa.workshop.junit.extensions;
 
 import com.oleynik.qa.workshop.junit.model.MyServer;
 import org.junit.jupiter.api.extension.AfterTestExecutionCallback;
