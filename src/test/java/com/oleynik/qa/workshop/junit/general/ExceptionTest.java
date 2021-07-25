@@ -1,22 +1,15 @@
 package com.oleynik.qa.workshop.junit.general;
 
-import org.junit.Assert;
-import org.junit.Test;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 public class ExceptionTest {
-
-    @Test(expected = IndexOutOfBoundsException.class)
-    public void expected_exception_test(){
-        new ArrayList<String>().get(0);
-    }
-
     // New preferred way of exception assertion in JUnit 4.13 and JUnit 5
     @Test()
-    public void preferred_exception_test() {
+    public void exception_test() {
         IndexOutOfBoundsException thrown = assertThrows(
                 IndexOutOfBoundsException.class,
                 () -> new ArrayList<String>().get(0)
@@ -34,7 +27,7 @@ public class ExceptionTest {
         } catch (IndexOutOfBoundsException exception) {
             assertTrue(exception.getMessage().equals("Index 0 out of bounds for length 0"));
             if (!(exception instanceof IndexOutOfBoundsException)) {
-                Assert.fail(exception.getMessage());
+                fail(exception.getMessage());
             }
         }
     }
