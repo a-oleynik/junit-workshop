@@ -1,5 +1,6 @@
 package com.oleynik.qa.workshop.junit.group.asserts;
 
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class AssertAllTest {
 
     @Test
+    @Tag("Regression")
     public void assert_all_test() {
         System.out.println("Assert All in JUnit4 test.");
         boolean variable = true;
