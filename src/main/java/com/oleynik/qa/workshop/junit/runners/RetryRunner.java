@@ -25,7 +25,6 @@ public class RetryRunner extends BlockJUnit4ClassRunner {
         super(klass);
     }
 
-
     @Override
     public void run(final RunNotifier notifier) {
         EachTestNotifier testNotifier = new EachTestNotifier(notifier,
@@ -46,8 +45,7 @@ public class RetryRunner extends BlockJUnit4ClassRunner {
     @Override
     protected void runChild(final FrameworkMethod method, RunNotifier notifier) {
         failedAttempts = 1;
-        if (Arrays.asList(method.getAnnotations())
-                .stream()
+        if (Arrays.stream(method.getAnnotations())
                 .anyMatch(RetryConfiguration.class::isInstance)) {
             RetryConfiguration annotation = method.getAnnotation(RetryConfiguration.class);
             retryCount = annotation.maxTries();
