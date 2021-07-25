@@ -1,16 +1,10 @@
-package com.oleynik.qa.workshop.junit.ddt;
+package com.oleynik.qa.workshop.junit.dataproviders;
 
-import com.oleynik.qa.workshop.junit.Factorial;
 import com.oleynik.qa.workshop.junit.annotations.DataSource;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.junit.runners.model.FrameworkMethod;
 
 import java.io.FileReader;
@@ -18,10 +12,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.oleynik.qa.workshop.junit.dataproviders.JUnitDataProvider.getDataSourcePathFromTestInfo;
-
-@RunWith(DataProviderRunner.class)
-public class DataProviderTest {
+public class JUnitDataProvider {
     @DataProvider
     public static Object[][] read_numbers(FrameworkMethod frameworkMethod) {
         try {
@@ -40,15 +31,13 @@ public class DataProviderTest {
         }
     }
 
-    @Test
-    @UseDataProvider("read_numbers")
-    @DataSource(path = "src/test/resources/numbers.csv")
-    public void junit4_with_data_provider_test(long number, long expected) {
-        Assert.assertEquals("Factorial function is wrong.", expected, Factorial.factorial(number));
-    }
-
-    @Test
-    public void non_parametrised_test() {
-        System.out.println("test2");
+    public static String getDataSourcePathFromTestInfo(FrameworkMethod frameworkMethod) {
+        if (Arrays.stream(frameworkMethod.getMethod().getDeclaredAnnotations())
+                .anyMatch(DataSource.class::isInstance)) {
+            DataSource annotation = frameworkMethod.getMethod().getAnnotation(DataSource.class);
+            return annotation.path();
+        } else {
+            throw new RuntimeException("DataSource annotation is not found");
+        }
     }
 }
