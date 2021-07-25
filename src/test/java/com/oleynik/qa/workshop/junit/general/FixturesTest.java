@@ -5,8 +5,8 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class FixturesTest {
-    private static String actual = "Actual string";
-    private static String expected = "Actual string";// "Expected string"
+    private static final String ACTUAL = "Actual string";
+    private static final String EXPECTED = "Actual string";// "Expected string"
 
     @BeforeAll
     public static void globalSetUp() {
@@ -31,12 +31,12 @@ public class FixturesTest {
     @Test
     public void fixtures_the_first_test() {
         System.out.println("The first test.");
-        assertEquals(expected, actual, "Wrong string found");
+        assertEquals(EXPECTED, ACTUAL, "Wrong string found");
     }
 
     @Test
     public void fixtures_the_second_test() {
         System.out.println("The second test.");
-        assertEquals(expected, actual, "Wrong string found");
+        assertEquals(EXPECTED, ACTUAL, "Wrong string found");
     }
 }

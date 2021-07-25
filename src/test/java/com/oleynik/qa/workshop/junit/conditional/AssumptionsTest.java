@@ -22,9 +22,7 @@ public class AssumptionsTest {
     public void assuming_that_test() {
         assumingThat(
                 os.equals("Windows 10"),
-                () -> {
-                    System.out.println("Assuming that executable executed");
-                });
+                () -> System.out.println("Assuming that executable executed"));
         assertTrue(os.contains("Windows"), "os was detected in wrong way");
     }
 
