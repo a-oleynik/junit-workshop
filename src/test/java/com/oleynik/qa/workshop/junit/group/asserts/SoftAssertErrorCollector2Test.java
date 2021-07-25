@@ -11,7 +11,7 @@ import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 public class SoftAssertErrorCollector2Test {
-    public AssertAll assertAll = new AssertAll();
+    public final AssertAll assertAll = new AssertAll();
 
     @Rule
     public ErrorCollector collector = assertAll.getCollector();

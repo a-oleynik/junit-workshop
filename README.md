@@ -29,7 +29,7 @@ To rerun failed tests execute cmd:
 
             mvn clean test -Dsurefire.rerunFailingTestsCount=2
 
-To execute tests of some category execute cmd:
+To execute tests against some category execute cmd:
 
             mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
 
