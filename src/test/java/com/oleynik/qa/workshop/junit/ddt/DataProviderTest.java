@@ -1,50 +1,63 @@
 package com.oleynik.qa.workshop.junit.ddt;
 
 import com.oleynik.qa.workshop.junit.Factorial;
+import com.oleynik.qa.workshop.junit.annotations.DataSource;
+import com.oleynik.qa.workshop.junit.dataproviders.JUnitDataProvider;
 import com.opencsv.CSVReader;
-import com.opencsv.exceptions.CsvValidationException;
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.opencsv.CSVReaderBuilder;
+import com.opencsv.exceptions.CsvException;
+import com.tngtech.junit.dataprovider.DataProvider;
+import com.tngtech.junit.dataprovider.UseDataProvider;
+//import com.tngtech.junit.dataprovider.UseDataProviderExtension;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.TestInfo;
+//import org.junit.jupiter.api.TestTemplate;
+//import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-@RunWith(DataProviderRunner.class)
+import static com.oleynik.qa.workshop.junit.dataproviders.JUnitDataProvider.getDataSourcePathFromTestInfo;
+
+//@ExtendWith(UseDataProviderExtension.class)
 public class DataProviderTest {
-
+    // The data provider requires annotation @DataSource(path = "src/test/resources/numbers.csv")
+    // added to the test method
     @DataProvider
-    public static Object[][] read_numbers() throws IOException, NumberFormatException, CsvValidationException {
-        ArrayList<Object[]> outData = new ArrayList<>();
+    public static Object[][] read_numbers(TestInfo testInfo) {
         try {
-            CSVReader reader = new CSVReader(new FileReader("src/test/resources/numbers.csv"));
-            String[] data;
-            while ((data = reader.readNext()) != null) {
-                Object[] row = new Object[data.length];
-                for (int i = 0; i < data.length; i++) {
-                    row[i] = Long.parseLong(data[i].trim());
-                }
-                outData.add(row);
-            }
-        } catch (IOException | NumberFormatException | CsvValidationException e) {
+            String dataSource = getDataSourcePathFromTestInfo(testInfo);
+            CSVReader csvReader = new CSVReaderBuilder(new FileReader(dataSource))
+                    .build();
+            List<String[]> allData = csvReader.readAll();
+            return allData
+                    .stream()
+                    .map(e -> Arrays.stream(e)
+                            .map(num -> (Object) Long.parseLong(num))
+                            .toArray())
+                    .toArray(Object[][]::new);
+        } catch (IOException | NumberFormatException | CsvException e) {
             e.printStackTrace();
-            throw e;
+            throw new RuntimeException(e);
         }
-        return outData.toArray(new Object[outData.size()][]);
     }
 
-    @Test
+    //@TestTemplate
+    @ParameterizedTest
     @UseDataProvider("read_numbers")
-    public void junit4_with_data_provider_test(long number, long expected) {
-        Assert.assertEquals("Factorial function is wrong.", expected, Factorial.factorial(number));
+    @DataSource(path = "src/test/resources/numbers.csv")
+    public void junit5_with_data_provider_test(long number, long expected) {
+        Assertions.assertEquals(expected, Factorial.factorial(number), "Factorial function is wrong.");
     }
 
-    @Test
-    public void non_parametrised_test() {
-        System.out.println("test2");
+    //@TestTemplate
+    @ParameterizedTest
+    @UseDataProvider(value = "read_numbers", location = JUnitDataProvider.class)
+    @DataSource(path = "src/test/resources/numbers.csv")
+    public void junit5_with_external_data_provider_test(long number, long expected) {
+        Assertions.assertEquals(expected, Factorial.factorial(number), "Factorial function is wrong.");
     }
 }

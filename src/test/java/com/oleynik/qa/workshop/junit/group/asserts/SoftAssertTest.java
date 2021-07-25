@@ -2,7 +2,7 @@ package com.oleynik.qa.workshop.junit.group.asserts;
 
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Percentage;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SoftAssertTest {
 
