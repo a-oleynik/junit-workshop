@@ -3,10 +3,7 @@ package com.oleynik.qa.workshop.junit.extensions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
-import org.junit.runner.OrderWith;
-import org.junit.runner.manipulation.Alphanumeric;
 
-@OrderWith(Alphanumeric.class)
 public class DBResourceExtensionTest {
     @RegisterExtension
     static final DBResourceExtension MY_RESOURCE = new DBResourceExtension();
