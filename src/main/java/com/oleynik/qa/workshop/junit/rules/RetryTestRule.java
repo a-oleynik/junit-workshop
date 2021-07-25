@@ -11,7 +11,7 @@ import static com.oleynik.qa.workshop.junit.Utils.checkMaxTries;
 
 public class RetryTestRule implements TestRule {
 
-    private AtomicInteger maxTries;
+    private final AtomicInteger maxTries;
 
     public RetryTestRule() {
         this(3);

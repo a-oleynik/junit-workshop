@@ -3,8 +3,8 @@ package com.oleynik.qa.workshop.junit.general;
 import org.junit.*;
 
 public class FixturesTest {
-    private static String actual = "Actual string";
-    private static String expected = "Actual string";// "Expected string"
+    private static final String ACTUAL = "Actual string";
+    private static final String EXPECTED = "Actual string";// "Expected string"
 
     @BeforeClass
     public static void globalSetUp(){
@@ -29,12 +29,12 @@ public class FixturesTest {
     @Test
     public void fixtures_the_first_test(){
         System.out.println("The first test.");
-        Assert.assertEquals("Wrong string found", expected, actual);
+        Assert.assertEquals("Wrong string found", EXPECTED, ACTUAL);
     }
 
     @Test
     public void fixtures_the_second_test(){
         System.out.println("The second test.");
-        Assert.assertEquals("Wrong string found", expected, actual);
+        Assert.assertEquals("Wrong string found", EXPECTED, ACTUAL);
     }
 }

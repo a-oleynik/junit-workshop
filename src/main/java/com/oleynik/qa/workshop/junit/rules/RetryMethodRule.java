@@ -12,7 +12,7 @@ import static com.oleynik.qa.workshop.junit.Utils.checkMaxTries;
 //It is preferred to implement TestRule instead of MethodRule
 public class RetryMethodRule implements MethodRule {
 
-    private AtomicInteger maxTries;
+    private final AtomicInteger maxTries;
 
     public RetryMethodRule() {
         this(3);
