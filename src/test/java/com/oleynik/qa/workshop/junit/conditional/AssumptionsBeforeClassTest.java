@@ -8,26 +8,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 public class AssumptionsBeforeClassTest {
-    private static String os = System.getProperty("os.name");// Windows 10
+    private static final String OS = System.getProperty("os.name");// Windows 10
 
     @BeforeAll
     public static void checkOs() {
         System.out.println("Starting AssertTest");
-        assumeTrue(os.equals("Linux"),
+        assumeTrue(OS.equals("Linux"),
                 () -> "Detected os is not Linux");// "Windows 10"
     }
 
     @Test
     public void assume_that_test() {
-        assumeTrue(os.equals("Windows 10"),
+        assumeTrue(OS.equals("Windows 10"),
                 () -> "Detected os is not Windows 10");
-        assertTrue(os.contains("Windows"), "os was detected in wrong way");
+        assertTrue(OS.contains("Windows"), "os was detected in wrong way");
     }
 
     @Test
     public void assume_true_test() {
-        assumeTrue(os.equals("Windows"), () -> "Detected os is not Windows");
-        assertTrue(os.contains("Windows"), "os was detected in wrong way");
+        assumeTrue(OS.equals("Windows"), () -> "Detected os is not Windows");
+        assertTrue(OS.contains("Windows"), "os was detected in wrong way");
     }
 
     @AfterAll

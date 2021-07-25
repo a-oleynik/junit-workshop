@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.params.provider.Arguments.arguments;
-
 public class OneMoreFactorialDataProvider implements ArgumentsProvider, AnnotationConsumer<ParameterizedDataSource> {
     private String path;
 

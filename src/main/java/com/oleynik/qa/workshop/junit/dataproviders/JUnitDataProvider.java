@@ -9,7 +9,6 @@ import org.junit.jupiter.api.TestInfo;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 public class JUnitDataProvider {
     @DataProvider
     public static List<List<Object>> read_numbers(TestInfo testInfo) {
-        ArrayList<Object[]> outData = new ArrayList<>();
         try {
             String dataSource = getDataSourcePathFromTestInfo(testInfo);
             CSVReader csvReader = new CSVReaderBuilder(new FileReader(dataSource))
