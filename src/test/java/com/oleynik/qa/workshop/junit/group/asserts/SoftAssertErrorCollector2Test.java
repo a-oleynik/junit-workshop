@@ -18,12 +18,12 @@ public class SoftAssertErrorCollector2Test {
 
     @Test
     public void assert_all_test() {
-        System.out.println("Assert All in JUnit4 test.");
+        System.out.println("Assert All in JUnit5 test");
         boolean variable = true;
         assertAll.assertAll(
-                () -> assertThat("Multiplication result is wrong", 2*5,
+                () -> assertThat("Multiplication result is wrong", 2 * 5,
                         equalTo(10)),
-                () -> assertThat(10/5.0, closeTo(1.9, 0.2)),
+                () -> assertThat(10 / 5.0, closeTo(1.9, 0.2)),
                 () -> assertThat(variable, is(true)),
                 () -> assertThat(!variable, is(false))
         );

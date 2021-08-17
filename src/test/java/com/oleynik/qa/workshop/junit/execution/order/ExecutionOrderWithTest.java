@@ -11,13 +11,13 @@ import static java.lang.String.format;
 public class ExecutionOrderWithTest {
     @Test
     public void execution_order_with_multiplication_test() {
-        System.out.println("Multiplication test.");
+        System.out.println("Multiplication test");
         Assert.assertEquals("Multiplication result is wrong", 10, 2 * 5);
     }
 
     @Test
     public void execution_order_with_division_test() {
-        System.out.println("Division test.");
+        System.out.println("Division test");
         Assert.assertEquals(2.0, 10 / 5.0, 0);
     }
 

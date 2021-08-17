@@ -1,20 +1,19 @@
-package com.oleynik.qa.workshop.junit.retry;
+package com.oleynik.qa.workshop.junit.repeat;
 
 import com.oleynik.qa.workshop.junit.annotations.Retry;
-import com.oleynik.qa.workshop.junit.rules.RetryMethodRule;
+import com.oleynik.qa.workshop.junit.rules.RetryTestRule;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 
-//It is preferred to implement TestRule instead of MethodRule
-public class RetriedMethodRuleTest {
+public class RetriedTestRuleTest {
 
     @Rule
-    public RetryMethodRule rule = new RetryMethodRule();
+    public RetryTestRule rule = new RetryTestRule();
 
     @Test
     @Retry
-    public void retry_method_rule_multiplication_test() {
+    public void retry_test_rule_multiplication_test() {
         System.out.println("Multiplication test.");
         Assert.assertEquals("Multiplication result is wrong", 10, 2 * 5);// 2*6
     }
