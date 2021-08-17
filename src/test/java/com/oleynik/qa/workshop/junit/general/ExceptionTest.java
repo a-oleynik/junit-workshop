@@ -2,6 +2,7 @@ package com.oleynik.qa.workshop.junit.general;
 
 import org.junit.Assert;
 import org.junit.Test;
+
 import static org.junit.Assert.assertThrows;
 import static org.junit.Assert.assertTrue;
 
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 public class ExceptionTest {
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void expected_exception_test(){
+    public void expected_exception_test() {
         new ArrayList<String>().get(0);
     }
 
@@ -21,8 +22,8 @@ public class ExceptionTest {
                 IndexOutOfBoundsException.class,
                 () -> new ArrayList<String>().get(0)
         );
-        assertTrue(thrown.getMessage().contains("Index 0"));
         assertTrue(thrown.getMessage().equals("Index 0 out of bounds for length 0"));
+        assertTrue(thrown.getMessage().contains("Index 0"));
         assertTrue(thrown instanceof IndexOutOfBoundsException);
     }
 

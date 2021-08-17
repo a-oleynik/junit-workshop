@@ -1,4 +1,4 @@
-package com.oleynik.qa.workshop.junit.retry;
+package com.oleynik.qa.workshop.junit.repeat;
 
 import com.oleynik.qa.workshop.junit.annotations.RetryConfiguration;
 import com.oleynik.qa.workshop.junit.runners.RetryRunner;

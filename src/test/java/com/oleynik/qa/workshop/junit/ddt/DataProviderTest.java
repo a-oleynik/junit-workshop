@@ -44,7 +44,7 @@ public class DataProviderTest {
     @UseDataProvider("read_numbers")
     @DataSource(path = "src/test/resources/numbers.csv")
     public void junit4_with_data_provider_test(long number, long expected) {
-        Assert.assertEquals("Factorial function is wrong.", expected, Factorial.factorial(number));
+        Assert.assertEquals("Factorial function is wrong", expected, Factorial.factorial(number));
     }
 
     @Test
