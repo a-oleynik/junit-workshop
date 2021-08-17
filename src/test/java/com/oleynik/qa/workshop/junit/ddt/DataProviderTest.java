@@ -50,7 +50,7 @@ public class DataProviderTest {
     @UseDataProvider("read_numbers")
     @DataSource(path = "src/test/resources/numbers.csv")
     public void junit5_with_data_provider_test(long number, long expected) {
-        Assertions.assertEquals(expected, Factorial.factorial(number), "Factorial function is wrong.");
+        Assertions.assertEquals(expected, Factorial.factorial(number), "Factorial function is wrong");
     }
 
     //@TestTemplate
@@ -58,6 +58,6 @@ public class DataProviderTest {
     @UseDataProvider(value = "read_numbers", location = JUnitDataProvider.class)
     @DataSource(path = "src/test/resources/numbers.csv")
     public void junit5_with_external_data_provider_test(long number, long expected) {
-        Assertions.assertEquals(expected, Factorial.factorial(number), "Factorial function is wrong.");
+        Assertions.assertEquals(expected, Factorial.factorial(number), "Factorial function is wrong");
     }
 }

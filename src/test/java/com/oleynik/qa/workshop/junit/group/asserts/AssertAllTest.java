@@ -14,7 +14,7 @@ public class AssertAllTest {
     @Test
     @Tag("Regression")
     public void assert_all_test() {
-        System.out.println("Assert All in JUnit4 test.");
+        System.out.println("Assert All in JUnit5 test");
         boolean variable = true;
         assertAll(
                 () -> assertThat("Multiplication result is wrong", 2 * 5,

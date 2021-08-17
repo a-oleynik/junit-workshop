@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 public class AssumptionsTest {
-    private static final String os = System.getProperty("os.name");// Windows 10
+    private static final String OS = System.getProperty("os.name");// Windows 10
 
     @BeforeEach
     public void checkOs(TestInfo testInfo) {
@@ -21,14 +21,14 @@ public class AssumptionsTest {
     @Test
     public void assuming_that_test() {
         assumingThat(
-                os.equals("Windows 10"),
+                OS.equals("Windows 10"),
                 () -> System.out.println("Assuming that executable executed"));
-        assertTrue(os.contains("Windows"), "os was detected in wrong way");
+        assertTrue(OS.contains("Windows"), "os was detected in wrong way");
     }
 
     @Test
     public void assume_true_test() {
-        assumeTrue(os.contains("Windows"), () -> "Detected os is not Windows 10");
-        assertTrue(os.contains("Windows"), "os was detected in wrong way");
+        assumeTrue(OS.contains("Windows"), () -> "Detected os is not Windows 10");
+        assertTrue(OS.contains("Windows"), "os was detected in wrong way");
     }
 }
