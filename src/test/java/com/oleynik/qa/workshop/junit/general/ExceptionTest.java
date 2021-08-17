@@ -14,8 +14,8 @@ public class ExceptionTest {
                 IndexOutOfBoundsException.class,
                 () -> new ArrayList<String>().get(0)
         );
-        assertTrue(thrown.getMessage().contains("Index 0"));
         assertTrue(thrown.getMessage().equals("Index 0 out of bounds for length 0"));
+        assertTrue(thrown.getMessage().contains("Index 0"));
         assertTrue(thrown instanceof IndexOutOfBoundsException);
     }
 

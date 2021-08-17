@@ -9,13 +9,13 @@ public class AssertTest {
 
     @Test
     public void assert_equals_multiplication_test() {
-        System.out.println("Multiplication test.");
+        System.out.println("Multiplication test");
         Assertions.assertEquals(10, 2 * 5, "Multiplication result is wrong");
     }
 
     @Test
     public void assert_equals_division_test() {
-        System.out.println("Division test.");
+        System.out.println("Division test");
         Assertions.assertEquals(1.9, 10 / 5.0, 0.2);
     }
 
@@ -30,7 +30,7 @@ public class AssertTest {
     public void fail_test() {
         boolean isFailed = false;
         if (isFailed) {
-            Assertions.fail(format("The test is because isFailed is %s", isFailed));
+            Assertions.fail(format("The test is failed because isFailed equals to %s", isFailed));
         }
     }
 

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
-public class AssumptionsBeforeClassTest {
+public class AssumptionsBeforeAllTest {
     private static final String OS = System.getProperty("os.name");// Windows 10
 
     @BeforeAll

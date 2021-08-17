@@ -21,14 +21,14 @@ public class ExecutionOrderWithTest {
     @Test
     @Order(3)
     public void execution_order_with_multiplication_test() {
-        System.out.println("Multiplication test.");
+        System.out.println("Multiplication test");
         assertEquals(10, 2 * 5, "Multiplication result is wrong");
     }
 
     @Test
     @Order(1)
     public void execution_order_with_division_test() {
-        System.out.println("Division test.");
+        System.out.println("Division test");
         assertEquals(2.0, 10 / 5.0, 0);
     }
 

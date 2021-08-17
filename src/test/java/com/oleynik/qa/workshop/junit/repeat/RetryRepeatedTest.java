@@ -1,4 +1,4 @@
-package com.oleynik.qa.workshop.junit.retry;
+package com.oleynik.qa.workshop.junit.repeat;
 
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.RepetitionInfo;
@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class RetryRepeatedTest {
     @RepeatedTest(value = 2, name = RepeatedTest.LONG_DISPLAY_NAME)
     public void repeated_test() {
-        System.out.println("Multiplication test.");
+        System.out.println("Multiplication test");
         assertEquals(10, 2 * 5, "Multiplication result is wrong");// 2*6
     }
 

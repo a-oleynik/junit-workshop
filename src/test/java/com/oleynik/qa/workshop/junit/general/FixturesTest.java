@@ -10,33 +10,33 @@ public class FixturesTest {
 
     @BeforeAll
     public static void globalSetUp() {
-        System.out.println("Set up class.");
+        System.out.println("Set up class");
     }
 
     @AfterAll
     public static void globalTearDown() {
-        System.out.println("tear down class.");
+        System.out.println("tear down class");
     }
 
     @BeforeEach
     public void setUp() {
-        System.out.println("Set up method.");
+        System.out.println("Set up method");
     }
 
     @AfterEach
     public void tearDown() {
-        System.out.println("Test down method.");
+        System.out.println("Test down method");
     }
 
     @Test
     public void fixtures_the_first_test() {
-        System.out.println("The first test.");
+        System.out.println("The first test");
         assertEquals(EXPECTED, ACTUAL, "Wrong string found");
     }
 
     @Test
     public void fixtures_the_second_test() {
-        System.out.println("The second test.");
-        assertEquals(EXPECTED, ACTUAL, "Wrong string found");
+        System.out.println("The second test");
+        assertEquals(ACTUAL, ACTUAL, "Wrong string found");
     }
 }
