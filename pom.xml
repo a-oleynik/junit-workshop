@@ -3,16 +3,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.dataart.qa.workshop</groupId>
+    <groupId>com.oleynik.qa.workshop</groupId>
     <artifactId>junit-examples</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>JUnit 4 workshop examples</name>
+    <version>2.0-SNAPSHOT</version>
+    <name>JUnit 5 workshop examples</name>
 
     <properties>
         <java.version>1.8</java.version>
-        <junit.version>4.13.2</junit.version>
+        <junit-jupiter.version>5.7.2</junit-jupiter.version>
         <junit.params.version>1.1.1</junit.params.version>
-        <junit4.dataprovider.version>2.8</junit4.dataprovider.version>
+        <junit.jupiter.dataprovider.version>2.8</junit.jupiter.dataprovider.version>
         <opencsv.version>5.5</opencsv.version>
         <asserj.version>3.20.2</asserj.version>
         <hamcrest.version>2.2</hamcrest.version>
@@ -22,26 +22,30 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.hamcrest</groupId>
-                    <artifactId>hamcrest-core</artifactId>
-                </exclusion>
-            </exclusions>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit-jupiter.version}</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.junit.vintage</groupId>-->
+<!--            <artifactId>junit-vintage-engine</artifactId>-->
+<!--            <version>${junit-jupiter.version}</version>-->
+<!--        </dependency>-->
         <dependency>
-            <groupId>pl.pragmatists</groupId>
-            <artifactId>JUnitParams</artifactId>
-            <version>${junit.params.version}</version>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit-jupiter.version}</version>
         </dependency>
         <dependency>
             <groupId>com.tngtech.junit.dataprovider</groupId>
-            <artifactId>junit4-dataprovider</artifactId>
-            <version>${junit4.dataprovider.version}</version>
+            <artifactId>junit-jupiter-params-dataprovider</artifactId>
+            <version>${junit.jupiter.dataprovider.version}</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.tngtech.junit.dataprovider</groupId>-->
+<!--            <artifactId>junit-jupiter-dataprovider</artifactId>-->
+<!--            <version>${junit.jupiter.dataprovider.version}</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
@@ -90,7 +94,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
                 <configuration>
-<!--                    <parallel>classes</parallel>-->
+<!--                    <parallel>methods</parallel>-->
 <!--                    <threadCount>3</threadCount>-->
                     <!--<groups>${testcase.groups}</groups>-->
                     <properties>

@@ -10,7 +10,7 @@ import lombok.*;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class User {
     private String name;
-    @NonNull private String surname;
+    @NonNull private final String surname;
     private int yearOfBirth;
 
     private static UserBuilder builder() {

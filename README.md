@@ -1,9 +1,9 @@
-# JUnit 4 examples for IT Talk "JUnit 4 vs. TestNG".
+# JUnit 5 examples for IT Talk "JUnit 5 vs TestNG".
 
 
-Slides can be found [TestNG vs. JUnit 4](https://www.slideshare.net/oleynikandrey/testng-vs-junit)
+The previous slides can be found [TestNG vs. JUnit 4](https://www.slideshare.net/oleynikandrey/testng-vs-junit)
 
-The webinar is here [TestNG vs. JUnit 4 IT talk, DataArt Wrocław](https://youtu.be/3C-Nu5mkyOQ?t=3189)
+The previous webinar is here [TestNG vs. JUnit 4 IT talk, DataArt Wrocław](https://youtu.be/3C-Nu5mkyOQ?t=3189)
 
 To run the project and generate the reports execute cmd: 
 
@@ -29,9 +29,9 @@ To rerun failed tests execute cmd:
 
             mvn clean test -Dsurefire.rerunFailingTestsCount=2
 
-To execute tests of some category execute cmd:
+To execute tests against some tags execute cmd:
 
-            mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
+            mvn clean test -Dgroups=Regression,Smoke
 
 Run multiple test classes:
 
