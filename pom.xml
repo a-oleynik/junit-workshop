@@ -94,10 +94,12 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M5</version>
                 <configuration>
-<!--                    <parallel>methods</parallel>-->
-<!--                    <threadCount>3</threadCount>-->
                     <!--<groups>${testcase.groups}</groups>-->
                     <properties>
+                        <configurationParameters>
+                            junit.jupiter.execution.parallel.enabled=true
+                            junit.jupiter.execution.parallel.mode.default=concurrent
+                        </configurationParameters>
                         <!--                        <property>
                                                     <name>listener</name>
                                                     <value>ExampleListener</value>
