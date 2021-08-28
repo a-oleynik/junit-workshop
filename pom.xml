@@ -17,6 +17,8 @@
         <asserj.version>3.20.2</asserj.version>
         <hamcrest.version>2.2</hamcrest.version>
         <lombok.version>1.18.20</lombok.version>
+        <rerunner.jupiter.version>2.1.6</rerunner.jupiter.version>
+        <junit.pioneer>1.4.2</junit.pioneer>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -66,6 +68,18 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.github.artsok</groupId>
+            <artifactId>rerunner-jupiter</artifactId>
+            <version>${rerunner.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit-pioneer</groupId>
+            <artifactId>junit-pioneer</artifactId>
+            <version>${junit.pioneer}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
