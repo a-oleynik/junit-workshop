@@ -1,9 +1,11 @@
 package com.oleynik.qa.workshop.junit;
 
+import java.util.concurrent.TimeUnit;
+
 public class Utils {
     public static void waitFor(int timeoutInSeconds) {
         try {
-            Thread.sleep(timeoutInSeconds * 1000L);
+            TimeUnit.SECONDS.sleep(timeoutInSeconds);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

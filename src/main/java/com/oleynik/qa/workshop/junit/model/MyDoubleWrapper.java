@@ -25,4 +25,8 @@ public class MyDoubleWrapper {
     public double divide(double anotherNumber) {
         return number / anotherNumber;
     }
+
+    public boolean isOdd() {
+        return number % 2 != 0;
+    }
 }
