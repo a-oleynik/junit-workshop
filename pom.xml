@@ -14,9 +14,9 @@
         <junit.params.version>1.1.1</junit.params.version>
         <junit4.dataprovider.version>2.8</junit4.dataprovider.version>
         <opencsv.version>5.6</opencsv.version>
-        <asserj.version>3.22.0</asserj.version>
+        <asserj.version>3.23.1</asserj.version>
         <hamcrest.version>2.2</hamcrest.version>
-        <lombok.version>1.18.22</lombok.version>
+        <lombok.version>1.18.24</lombok.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
