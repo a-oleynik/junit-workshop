@@ -10,14 +10,14 @@
 
     <properties>
         <java.version>1.8</java.version>
-        <junit-jupiter.version>5.8.2</junit-jupiter.version>
-        <junit.jupiter.dataprovider.version>2.8</junit.jupiter.dataprovider.version>
+        <junit-jupiter.version>5.9.3</junit-jupiter.version>
+        <junit.jupiter.dataprovider.version>2.10</junit.jupiter.dataprovider.version>
         <opencsv.version>5.6</opencsv.version>
         <asserj.version>3.23.1</asserj.version>
         <hamcrest.version>2.2</hamcrest.version>
         <lombok.version>1.18.24</lombok.version>
         <rerunner.jupiter.version>2.1.6</rerunner.jupiter.version>
-        <junit.pioneer>1.5.0</junit.pioneer>
+        <junit.pioneer>2.0.1</junit.pioneer>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -83,7 +83,7 @@
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-commons</artifactId>
-            <version>1.8.2</version>
+            <version>1.9.3</version>
         </dependency>
     </dependencies>
 
@@ -110,7 +110,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M6</version>
+                <version>3.1.0</version>
                 <configuration>
                     <!--<groups>${testcase.groups}</groups>-->
                     <properties>
