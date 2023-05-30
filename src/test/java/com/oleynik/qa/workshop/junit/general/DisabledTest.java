@@ -11,7 +11,7 @@ public class DisabledTest {
 
     @Disabled
     @Test
-    public void disabled_multiplication_test() {
+    void disabled_multiplication_test() {
         System.out.println("Multiplication test");
         assertEquals(10, 2 * 5, "Multiplication result is wrong");
     }

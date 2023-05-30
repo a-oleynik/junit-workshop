@@ -14,7 +14,7 @@ public class SoftAssertionsAssertJBDDTest {
     BDDSoftAssertions bdd;
 
     @Test
-    public void soft_assertions_extension_bdd_test() {
+    void soft_assertions_extension_bdd_test() {
         System.out.println("Soft Assertions Extension test");
         bdd.then(2*5).as("Multiplication result is wrong").isEqualTo(10);
         bdd.then(10/5.0).as("Division 10/6 gives wrong result").isCloseTo(2.1, Percentage.withPercentage(5));

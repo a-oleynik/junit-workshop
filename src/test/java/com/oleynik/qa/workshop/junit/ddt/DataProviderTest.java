@@ -49,7 +49,7 @@ public class DataProviderTest {
     @ParameterizedTest
     @UseDataProvider("read_numbers")
     @DataSource(path = "src/test/resources/numbers.csv")
-    public void junit5_with_data_provider_test(long number, long expected) {
+    void junit5_with_data_provider_test(long number, long expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "Factorial function is wrong");
     }
 
@@ -57,7 +57,7 @@ public class DataProviderTest {
     @ParameterizedTest
     @UseDataProvider(value = "read_numbers", location = JUnitDataProvider.class)
     @DataSource(path = "src/test/resources/numbers.csv")
-    public void junit5_with_external_data_provider_test(long number, long expected) {
+    void junit5_with_external_data_provider_test(long number, long expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "Factorial function is wrong");
     }
 }

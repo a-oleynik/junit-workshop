@@ -18,7 +18,7 @@ public class RetryRerunnerTest {
 
     @RepeatedIfExceptionsTest(repeats = 3, exceptions = IndexOutOfBoundsException.class,
             name = "Retry failed test. Attempt {currentRepetition} of {totalRepetitions}")
-    public void retried_with_exception_test() {
+    void retried_with_exception_test() {
         //throw new NullPointerException("My NullPointerException");
         try {
             new ArrayList<String>().get(0);

@@ -21,7 +21,7 @@ public class CSVParameterizationTest {
 
     @ParameterizedTest
     @CsvFileSource(resources = "/numbers.csv")
-    public void csv_file_source_factorial_test(int number, int expected) {
+    void csv_file_source_factorial_test(int number, int expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
     }
 }
