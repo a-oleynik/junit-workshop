@@ -10,7 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 public class SoftAssertionsAssertJTest {
 
     @Test
-    public void soft_assertions_extension_test(SoftAssertions softly) {
+    void soft_assertions_extension_test(SoftAssertions softly) {
         System.out.println("Soft Assertions Extension test");
         softly.assertThat(2 * 5).as("Multiplication result is wrong").isEqualTo(10);
         softly.assertThat(10 / 5.0).isCloseTo(2.1, Percentage.withPercentage(5));

@@ -25,7 +25,7 @@ public class TimeoutTest {
     }
 
     @Test
-    public void timeout_test() {
+    void timeout_test() {
         System.out.println("Timeout test");
         System.out.println("Thread id " + Thread.currentThread().getId());
         assertTimeout(ofSeconds(6), () ->

@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ExceptionTest {
     // New preferred way of exception assertion in JUnit 4.13 and JUnit 5
     @Test()
-    public void exception_test() {
+    void exception_test() {
         IndexOutOfBoundsException thrown = assertThrows(
                 IndexOutOfBoundsException.class,
                 () -> new ArrayList<String>().get(0)
@@ -21,7 +21,7 @@ public class ExceptionTest {
 
     // A direct way of exception assertion (worse than the previous one)
     @Test
-    public void ugly_exception_test() {
+    void ugly_exception_test() {
         try {
             new ArrayList<String>().get(0);
         } catch (IndexOutOfBoundsException exception) {

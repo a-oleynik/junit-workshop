@@ -29,13 +29,13 @@ public class FixturesTest {
     }
 
     @Test
-    public void fixtures_the_first_test() {
+    void fixtures_the_first_test() {
         System.out.println("The first test");
         assertEquals(EXPECTED, ACTUAL, "Wrong string found");
     }
 
     @Test
-    public void fixtures_the_second_test() {
+    void fixtures_the_second_test() {
         System.out.println("The second test");
         assertEquals(ACTUAL, ACTUAL, "Wrong string found");
     }

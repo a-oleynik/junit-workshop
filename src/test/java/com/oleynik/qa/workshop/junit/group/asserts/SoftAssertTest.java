@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 public class SoftAssertTest {
 
     @Test
-    public void soft_assert_test() {
+    void soft_assert_test() {
         System.out.println("Soft Assertion test");
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(2 * 5).as("Multiplication result is wrong").isEqualTo(10);

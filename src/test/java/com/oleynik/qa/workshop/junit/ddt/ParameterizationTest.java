@@ -32,19 +32,19 @@ public class ParameterizationTest {
 
     @ParameterizedTest
     @MethodSource("com.oleynik.qa.workshop.junit.dataproviders.FactorialDataProvider#factorials")
-    public void outer_method_source_factorial_test(int number, int expected) {
+    void outer_method_source_factorial_test(int number, int expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
     }
 
     @ParameterizedTest
     @ArgumentsSource(AnotherFactorialDataProvider.class)
-    public void arguments_source_factorial_test(int number, int expected) {
+    void arguments_source_factorial_test(int number, int expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
     }
 
     @ParameterizedTest
     @MethodSource("com.oleynik.qa.workshop.junit.dataproviders.FactorialDataProvider#factorialsFromFile")
-    public void csv_from_outer_method_source_factorial_test(int number, int expected) {
+    void csv_from_outer_method_source_factorial_test(int number, int expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
     }
 
@@ -60,13 +60,13 @@ public class ParameterizationTest {
 
     @ParameterizedTest
     @MethodSource("anotherFactorials")
-    public void another_inner_method_source_factorial_test(int number, int expected) {
+    void another_inner_method_source_factorial_test(int number, int expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
     }
 
     @ParameterizedTest
     @ParameterizedDataSource(path = "src/test/resources/numbers.csv")
-    public void parameterized_arguments_source_factorial_test(int number, int expected) {
+    void parameterized_arguments_source_factorial_test(int number, int expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
     }
 }

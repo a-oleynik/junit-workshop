@@ -8,7 +8,7 @@ import static org.hamcrest.Matchers.*;
 public class HamcrestTest {
 
     @Test
-    public void hamcrest_test() {
+    void hamcrest_test() {
         System.out.println("The Hamcrest test");
         assertThat("Multiplication result is wrong", 2 * 5, equalTo(10));
         assertThat(2.0, is(10 / 5.0));

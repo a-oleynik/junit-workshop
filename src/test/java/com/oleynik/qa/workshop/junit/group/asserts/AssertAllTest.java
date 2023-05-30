@@ -13,7 +13,7 @@ public class AssertAllTest {
 
     @Test
     @Tag("Regression")
-    public void assert_all_test() {
+    void assert_all_test() {
         System.out.println("Assert All in JUnit5 test");
         boolean variable = true;
         assertAll(
