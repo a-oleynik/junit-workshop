@@ -11,6 +11,7 @@
     <properties>
         <java.version>1.8</java.version>
         <junit-jupiter.version>5.10.0</junit-jupiter.version>
+        <junit.platform.version>1.10.0</junit.platform.version>
         <junit.jupiter.dataprovider.version>2.10</junit.jupiter.dataprovider.version>
         <opencsv.version>5.8</opencsv.version>
         <asserj.version>3.24.2</asserj.version>
@@ -83,7 +84,7 @@
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-commons</artifactId>
-            <version>1.10.0</version>
+            <version>${junit.platform.version}</version>
         </dependency>
     </dependencies>
 
