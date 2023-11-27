@@ -13,10 +13,10 @@
         <junit.version>4.13.2</junit.version>
         <junit.params.version>1.1.1</junit.params.version>
         <junit4.dataprovider.version>2.8</junit4.dataprovider.version>
-        <opencsv.version>5.8</opencsv.version>
+        <opencsv.version>5.9</opencsv.version>
         <asserj.version>3.24.2</asserj.version>
         <hamcrest.version>2.2</hamcrest.version>
-        <lombok.version>1.18.28</lombok.version>
+        <lombok.version>1.18.30</lombok.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -82,7 +82,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>3.11.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -95,12 +95,12 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-site-plugin</artifactId>
-                <version>3.12.0</version>
+                <version>3.12.1</version>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.2.2</version>
                 <configuration>
 <!--                    <parallel>methods</parallel>-->
 <!--                    <threadCount>3</threadCount>-->
@@ -119,7 +119,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
-                <version>3.4.5</version>
+                <version>3.5.0</version>
             </plugin>
         </plugins>
     </build>
@@ -142,7 +142,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-report-plugin</artifactId>
-                <version>3.1.2</version>
+                <version>3.2.2</version>
             </plugin>
         </plugins>
     </reporting>
