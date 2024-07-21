@@ -1,4 +1,4 @@
-# JUnit 5 examples for IT Talk "JUnit 5 vs TestNG".
+# JUnit 5 examples for IT Talk "JUnit 5 vs TestNG 7"
 
 
 The previous slides can be found [TestNG vs. JUnit 4](https://www.slideshare.net/oleynikandrey/it-talk-testng-6-vs-junit-4/)
