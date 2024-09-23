@@ -10,8 +10,8 @@
 
     <properties>
         <java.version>17</java.version>
-        <junit-jupiter.version>5.10.3</junit-jupiter.version>
-        <junit.platform.version>1.10.3</junit.platform.version>
+        <junit-jupiter.version>5.11.0</junit-jupiter.version>
+        <junit.platform.version>1.11.0</junit.platform.version>
         <junit.jupiter.dataprovider.version>2.10</junit.jupiter.dataprovider.version>
         <opencsv.version>5.9</opencsv.version>
         <asserj.version>3.26.3</asserj.version>
