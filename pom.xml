@@ -15,7 +15,7 @@
         <junit.jupiter.dataprovider.version>2.10</junit.jupiter.dataprovider.version>
         <opencsv.version>5.9</opencsv.version>
         <asserj.version>3.26.3</asserj.version>
-        <hamcrest.version>2.2</hamcrest.version>
+        <hamcrest.version>3.0</hamcrest.version>
         <lombok.version>1.18.34</lombok.version>
         <rerunner.jupiter.version>2.1.6</rerunner.jupiter.version>
         <junit.pioneer>2.2.0</junit.pioneer>
