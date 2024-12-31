@@ -10,13 +10,13 @@
 
     <properties>
         <java.version>17</java.version>
-        <junit-jupiter.version>5.11.3</junit-jupiter.version>
-        <junit.platform.version>1.11.3</junit.platform.version>
+        <junit-jupiter.version>5.11.4</junit-jupiter.version>
+        <junit.platform.version>1.11.4</junit.platform.version>
         <junit.jupiter.dataprovider.version>2.10</junit.jupiter.dataprovider.version>
         <opencsv.version>5.9</opencsv.version>
-        <asserj.version>3.26.3</asserj.version>
+        <asserj.version>3.27.0</asserj.version>
         <hamcrest.version>3.0</hamcrest.version>
-        <lombok.version>1.18.34</lombok.version>
+        <lombok.version>1.18.36</lombok.version>
         <rerunner.jupiter.version>2.1.6</rerunner.jupiter.version>
         <junit.pioneer>2.3.0</junit.pioneer>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
