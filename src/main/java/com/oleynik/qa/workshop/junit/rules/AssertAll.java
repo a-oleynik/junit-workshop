@@ -7,7 +7,7 @@ import java.util.Arrays;
 
 public class AssertAll {
     @Rule
-    private ErrorCollector collector = new ErrorCollector();
+    public ErrorCollector collector = new ErrorCollector();
 
     public void assertAll(Runnable... assertions) {
         Arrays.stream(assertions).forEach(this::runAndCollectThrowable);
