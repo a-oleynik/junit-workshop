@@ -40,7 +40,6 @@ public class DataProviderTest {
                             .toArray())
                     .toArray(Object[][]::new);
         } catch (IOException | NumberFormatException | CsvException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }

@@ -28,7 +28,6 @@ public class JUnitDataProvider {
                             .collect(Collectors.toList()))
                     .collect(Collectors.toList());
         } catch (IOException | NumberFormatException | CsvException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
