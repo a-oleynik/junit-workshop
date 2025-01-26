@@ -7,7 +7,7 @@ public class Utils {
         try {
             TimeUnit.SECONDS.sleep(timeoutInSeconds);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 }
