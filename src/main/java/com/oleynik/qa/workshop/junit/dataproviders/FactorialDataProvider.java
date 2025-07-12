@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.Arguments;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -25,14 +24,12 @@ public class FactorialDataProvider {
     }
 
     private static Stream<Arguments> factorialsFromFile() {
-        List<Object[]> outData = new ArrayList<>();
         try {
             CSVReader csvReader = new CSVReaderBuilder(new FileReader("src/test/resources/numbers.csv"))
                     .build();
             List<String[]> allData = csvReader.readAll();
             return allData.stream().map(Arguments::arguments);
         } catch (IOException | NumberFormatException | CsvException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
