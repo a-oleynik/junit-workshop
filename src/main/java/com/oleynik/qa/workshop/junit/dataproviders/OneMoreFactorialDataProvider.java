@@ -33,7 +33,6 @@ public class OneMoreFactorialDataProvider implements ArgumentsProvider, Annotati
             List<String[]> allData = csvReader.readAll();
             return allData.stream().map(Arguments::arguments);
         } catch (IOException | NumberFormatException | CsvException e) {
-            e.printStackTrace();
             throw new RuntimeException(e);
         }
     }
