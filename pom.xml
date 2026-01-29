@@ -121,6 +121,13 @@
                     <compilerArgs>
                         <arg>-Xlint</arg>
                     </compilerArgs>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
 <!--                    <verbose>true</verbose>-->
                 </configuration>
             </plugin>
