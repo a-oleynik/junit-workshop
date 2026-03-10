@@ -2,14 +2,14 @@
 
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
-[![JUnit](https://img.shields.io/badge/JUnit-6.1.0--M1-green.svg)](https://junit.org/junit5/)
+[![JUnit](https://img.shields.io/badge/JUnit-5.14.1-green.svg)](https://junit.org/junit5/)
 [![JUnit Pioneer](https://img.shields.io/badge/JUnit_Pioneer-2.3.0-green.svg)](https://junit-pioneer.org/)
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
 [![Hamcrest](https://img.shields.io/badge/Hamcrest-3.0-yellowgreen.svg)](https://hamcrest.org/)
 [![Lombok](https://img.shields.io/badge/Lombok-1.18.42-red.svg)](https://projectlombok.org/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
-> Companion code for the IT Talk **"JUnit 6 vs TestNG 7"**.  
+> Companion code for the IT Talk **"JUnit 5 vs TestNG 7"**.  
 > Previous edition: [TestNG vs. JUnit 4 slides](https://www.slideshare.net/oleynikandrey/it-talk-testng-6-vs-junit-4/) · [TestNG vs. JUnit 4 webinar](https://youtu.be/3C-Nu5mkyOQ?t=3189)
 
 ---
@@ -35,7 +35,7 @@
 
 | Audience                                            | What you will get                                                             |
 |-----------------------------------------------------|-------------------------------------------------------------------------------|
-| **QA engineers** new to JUnit 6                     | A guided tour of every major feature with runnable examples                   |
+| **QA engineers** new to JUnit 5                     | A guided tour of every major feature with runnable examples                   |
 | **Java developers** migrating from JUnit 4 / TestNG | Side-by-side comparison of patterns and idioms                                |
 | **Senior / lead engineers**                         | Deep-dives into extensions, retry strategies, parallel execution, and tagging |
 | **Workshop facilitators**                           | A ready-made project you can hand to attendees                                |
@@ -67,8 +67,8 @@ mvn clean test
 
 | Library                      | Version used |
 |------------------------------|--------------|
-| JUnit Jupiter (JUnit 5)      | `6.1.0-M1`   |
-| JUnit Platform               | `6.1.0-M1`   |
+| JUnit Jupiter (JUnit 5)      | `5.14.1`   |
+| JUnit Platform               | `1.14.1`   |
 | JUnit Pioneer                | `2.3.0`      |
 | TNG DataProvider for JUnit 5 | `2.12`       |
 | AssertJ                      | `3.27.7`     |
@@ -338,7 +338,7 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 ## 📚 Additional Resources
 
-- [JUnit 6 User Guide](https://docs.junit.org/current/user-guide/)
+- [JUnit 5 User Guide](https://junit.org/junit5/docs/current/user-guide/)
 - [JUnit Pioneer Documentation](https://junit-pioneer.org/docs/)
 - [AssertJ Documentation](https://assertj.github.io/doc/)
 - [Hamcrest Tutorial](https://hamcrest.org/JavaHamcrest/tutorial)
@@ -352,7 +352,7 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 - **Java Download:** https://www.oracle.com/java/technologies/downloads/
 - **Maven Download:** https://maven.apache.org/download.cgi
-- **JUnit 6 Releases:** https://github.com/junit-team/junit5/releases
+- **JUnit 5 Releases:** https://github.com/junit-team/junit5/releases
 - **JUnit Pioneer Releases:** https://github.com/junit-pioneer/junit-pioneer/releases
 - **Lombok Download:** https://projectlombok.org/download
 - **IntelliJ Lombok Plugin:** https://plugins.jetbrains.com/plugin/6317-lombok
