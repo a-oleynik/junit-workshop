@@ -7,7 +7,7 @@
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
 [![Hamcrest](https://img.shields.io/badge/Hamcrest-3.0-yellowgreen.svg)](https://hamcrest.org/)
 [![Lombok](https://img.shields.io/badge/Lombok-1.18.42-red.svg)](https://projectlombok.org/)
-[![License](https://img.shields.io/badge/License-Apache_2.0-lightgrey.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
 > Companion code for the IT Talk **"JUnit 6 vs TestNG 7"**.  
 > Previous edition: [TestNG vs. JUnit 4 slides](https://www.slideshare.net/oleynikandrey/it-talk-testng-6-vs-junit-4/) · [TestNG vs. JUnit 4 webinar](https://youtu.be/3C-Nu5mkyOQ?t=3189)
@@ -18,9 +18,10 @@
 
 - [Who Is This For?](#-who-is-this-for)
 - [Prerequisites](#-prerequisites)
+- [Quick Start](#-quick-start)
 - [Supported Versions](#-supported-versions)
 - [Feature Map](#-feature-map)
-- [Start Here — Path for Beginners](#-start-here--path-for-beginners)
+- [Learning Path — Beginners](#-learning-path--beginners)
 - [Advanced Topics — Path for Senior Engineers](#-advanced-topics--path-for-senior-engineers)
 - [Command Examples](#-command-examples)
 - [Project Structure](#-project-structure)
@@ -49,6 +50,16 @@
 | **Maven**         | 3.9+                            |                                         |
 | **IDE**           | Any (IntelliJ IDEA recommended) | Lombok plugin required for IDE support  |
 | **Lombok plugin** | Latest                          | IntelliJ: *Settings → Plugins → Lombok* |
+
+---
+
+## 🚀 Quick Start
+
+```bash
+git clone https://github.com/a-oleynik/junit-workshop.git
+cd junit-workshop
+mvn clean test
+```
 
 ---
 
@@ -100,7 +111,7 @@
 
 ---
 
-## 🚀 "Start Here" — Path for Beginners
+## 🌱 Learning Path — Beginners
 
 Work through these topics in order; each builds on the previous one.
 
@@ -321,7 +332,7 @@ src/
 
 ## 📝 License
 
-This project is licensed under the Apache 2.0 License — see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
 ---
 
