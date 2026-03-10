@@ -16,21 +16,21 @@
 
 ## 📋 Table of Contents
 
-- [Who Is This For?](#who-is-this-for)
-- [Prerequisites](#prerequisites)
-- [Supported Versions](#supported-versions)
-- [Feature Map](#feature-map)
-- [Start Here — Path for Beginners](#start-here--path-for-beginners)
-- [Advanced Topics — Path for Senior Engineers](#advanced-topics--path-for-senior-engineers)
-- [Command Examples](#command-examples)
-- [Project Structure](#project-structure)
+- [Who Is This For?](#-who-is-this-for)
+- [Prerequisites](#-prerequisites)
+- [Supported Versions](#-supported-versions)
+- [Feature Map](#-feature-map)
+- [Start Here — Path for Beginners](#-start-here--path-for-beginners)
+- [Advanced Topics — Path for Senior Engineers](#-advanced-topics--path-for-senior-engineers)
+- [Command Examples](#-command-examples)
+- [Project Structure](#-project-structure)
 - [License](#-license)
 - [Additional Resources](#-additional-resources)
 - [Useful Links](#-useful-links)
 
 ---
 
-## Who Is This For?
+## 👥 Who Is This For?
 
 | Audience                                            | What you will get                                                             |
 |-----------------------------------------------------|-------------------------------------------------------------------------------|
@@ -41,7 +41,7 @@
 
 ---
 
-## Prerequisites
+## 📦 Prerequisites
 
 | Tool              | Minimum version                 | Notes                                   |
 |-------------------|---------------------------------|-----------------------------------------|
@@ -52,7 +52,7 @@
 
 ---
 
-## Supported Versions
+## 🛠️ Supported Versions
 
 | Library                      | Version used |
 |------------------------------|--------------|
@@ -69,7 +69,7 @@
 
 ---
 
-## Feature Map
+## 🗺️ Feature Map
 
 | Package / folder  | Feature demonstrated                                                   | Test class(es)                                              |
 |-------------------|------------------------------------------------------------------------|-------------------------------------------------------------|
@@ -100,7 +100,7 @@
 
 ---
 
-## "Start Here" — Path for Beginners
+## 🚀 "Start Here" — Path for Beginners
 
 Work through these topics in order; each builds on the previous one.
 
@@ -142,7 +142,7 @@ mvn clean test
 
 ---
 
-## "Advanced Topics" — Path for Senior Engineers
+## 🎯 "Advanced Topics" — Path for Senior Engineers
 
 These topics assume familiarity with JUnit 5+ basics.
 
@@ -214,7 +214,7 @@ mvn clean surefire-report:report
 
 ---
 
-## Command Examples
+## 💻 Command Examples
 
 ### Run all tests
 
@@ -298,7 +298,7 @@ mvn clean test -X
 
 ---
 
-## Project Structure
+## 📁 Project Structure
 
 ```
 src/
