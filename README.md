@@ -52,7 +52,7 @@
 
 ---
 
-## ⚙️ Supported Versions
+## 🛠️ Supported Versions
 
 | Library                      | Version used |
 |------------------------------|--------------|
