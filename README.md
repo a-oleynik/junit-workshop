@@ -9,10 +9,24 @@
 [![Lombok](https://img.shields.io/badge/Lombok-1.18.42-red.svg)](https://projectlombok.org/)
 [![License](https://img.shields.io/badge/License-Apache_2.0-lightgrey.svg)](LICENSE)
 
-> Companion code for the IT Talk **"JUnit 5 vs TestNG 7"**.  
-> Previous
->
-edition: [TestNG vs. JUnit 4 slides](https://www.slideshare.net/oleynikandrey/it-talk-testng-6-vs-junit-4/) · [TestNG vs. JUnit 4 webinar](https://youtu.be/3C-Nu5mkyOQ?t=3189)
+> Companion code for the IT Talk **"JUnit 6 vs TestNG 7"**.  
+> Previous edition: [TestNG vs. JUnit 4 slides](https://www.slideshare.net/oleynikandrey/it-talk-testng-6-vs-junit-4/) · [TestNG vs. JUnit 4 webinar](https://youtu.be/3C-Nu5mkyOQ?t=3189)
+
+---
+
+## 📋 Table of Contents
+
+- [Who Is This For?](#who-is-this-for)
+- [Prerequisites](#prerequisites)
+- [Supported Versions](#supported-versions)
+- [Feature Map](#feature-map)
+- [Start Here — Path for Beginners](#start-here--path-for-beginners)
+- [Advanced Topics — Path for Senior Engineers](#advanced-topics--path-for-senior-engineers)
+- [Command Examples](#command-examples)
+- [Project Structure](#project-structure)
+- [License](#-license)
+- [Additional Resources](#-additional-resources)
+- [Useful Links](#-useful-links)
 
 ---
 
@@ -302,4 +316,34 @@ src/
     ├── retry/           # Retry strategies (Pioneer, Rerunner)
     └── repeat/          # @RepeatedTest
 ```
+
+---
+
+## 📝 License
+
+This project is licensed under the Apache 2.0 License — see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 📚 Additional Resources
+
+- [JUnit 6 User Guide](https://docs.junit.org/current/user-guide/)
+- [JUnit Pioneer Documentation](https://junit-pioneer.org/docs/)
+- [AssertJ Documentation](https://assertj.github.io/doc/)
+- [Hamcrest Tutorial](https://hamcrest.org/JavaHamcrest/tutorial)
+- [Lombok Features](https://projectlombok.org/features/)
+- [Maven Surefire Plugin](https://maven.apache.org/surefire/maven-surefire-plugin/)
+- [Maven Surefire Report Plugin](https://maven.apache.org/surefire/maven-surefire-report-plugin/)
+
+---
+
+## 🔗 Useful Links
+
+- **Java Download:** https://www.oracle.com/java/technologies/downloads/
+- **Maven Download:** https://maven.apache.org/download.cgi
+- **JUnit 6 Releases:** https://github.com/junit-team/junit5/releases
+- **JUnit Pioneer Releases:** https://github.com/junit-pioneer/junit-pioneer/releases
+- **Lombok Download:** https://projectlombok.org/download
+- **IntelliJ Lombok Plugin:** https://plugins.jetbrains.com/plugin/6317-lombok
+
 
