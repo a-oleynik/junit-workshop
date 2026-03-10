@@ -338,7 +338,7 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 ## 📚 Additional Resources
 
-- [JUnit 5 User Guide](https://junit.org/junit5/docs/current/user-guide/)
+- [JUnit 5 User Guide](https://docs.junit.org/5.14.3/overview.html)
 - [JUnit Pioneer Documentation](https://junit-pioneer.org/docs/)
 - [AssertJ Documentation](https://assertj.github.io/doc/)
 - [Hamcrest Tutorial](https://hamcrest.org/JavaHamcrest/tutorial)
