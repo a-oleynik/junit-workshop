@@ -52,7 +52,7 @@
 
 ---
 
-## 🛠️ Supported Versions
+## ⚙️ Supported Versions
 
 | Library                      | Version used |
 |------------------------------|--------------|
@@ -69,7 +69,7 @@
 
 ---
 
-## 🗺️ Feature Map
+## 🗂️ Feature Map
 
 | Package / folder  | Feature demonstrated                                                   | Test class(es)                                              |
 |-------------------|------------------------------------------------------------------------|-------------------------------------------------------------|
@@ -345,5 +345,3 @@ This project is licensed under the Apache 2.0 License — see the [LICENSE](LICE
 - **JUnit Pioneer Releases:** https://github.com/junit-pioneer/junit-pioneer/releases
 - **Lombok Download:** https://projectlombok.org/download
 - **IntelliJ Lombok Plugin:** https://plugins.jetbrains.com/plugin/6317-lombok
-
-
