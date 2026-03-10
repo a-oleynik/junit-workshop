@@ -9,8 +9,12 @@
 [![Lombok](https://img.shields.io/badge/Lombok-1.18.42-red.svg)](https://projectlombok.org/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
-> Companion code for the IT Talk **"JUnit 6 vs TestNG 7"**.  
+> Companion code for the IT Talk **"JUnit 6 vs TestNG 7"**.
 > Previous edition: [TestNG vs. JUnit 4 slides](https://www.slideshare.net/oleynikandrey/it-talk-testng-6-vs-junit-4/) · [TestNG vs. JUnit 4 webinar](https://youtu.be/3C-Nu5mkyOQ?t=3189)
+>
+> **Related projects:**
+> - 🧪 [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples to compare side-by-side with this repo
+> - 🌐 [Selenium Example (JUnit 6 branch)](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium WebDriver framework built on top of JUnit 6
 
 ---
 
@@ -345,6 +349,8 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [Lombok Features](https://projectlombok.org/features/)
 - [Maven Surefire Plugin](https://maven.apache.org/surefire/maven-surefire-plugin/)
 - [Maven Surefire Report Plugin](https://maven.apache.org/surefire/maven-surefire-report-plugin/)
+- [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples
+- [Selenium Example — JUnit 6 branch](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium framework using JUnit 6
 
 ---
 
@@ -356,3 +362,5 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - **JUnit Pioneer Releases:** https://github.com/junit-pioneer/junit-pioneer/releases
 - **Lombok Download:** https://projectlombok.org/download
 - **IntelliJ Lombok Plugin:** https://plugins.jetbrains.com/plugin/6317-lombok
+- **TestNG Workshop:** https://github.com/a-oleynik/testng-workshop
+- **Selenium Example (JUnit 6 branch):** https://github.com/a-oleynik/selenium-example/tree/junit6
