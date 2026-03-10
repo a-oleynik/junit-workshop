@@ -2,7 +2,7 @@
 
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
-[![JUnit](https://img.shields.io/badge/JUnit-5.14.1-green.svg)](https://junit.org/junit5/)
+[![JUnit](https://img.shields.io/badge/JUnit-5.14.3-green.svg)](https://junit.org/junit5/)
 [![JUnit Pioneer](https://img.shields.io/badge/JUnit_Pioneer-2.3.0-green.svg)](https://junit-pioneer.org/)
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
 [![Hamcrest](https://img.shields.io/badge/Hamcrest-3.0-yellowgreen.svg)](https://hamcrest.org/)
@@ -67,8 +67,8 @@ mvn clean test
 
 | Library                      | Version used |
 |------------------------------|--------------|
-| JUnit Jupiter (JUnit 5)      | `5.14.1`   |
-| JUnit Platform               | `1.14.1`   |
+| JUnit Jupiter (JUnit 5)      | `5.14.3`     |
+| JUnit Platform               | `1.14.3`     |
 | JUnit Pioneer                | `2.3.0`      |
 | TNG DataProvider for JUnit 5 | `2.12`       |
 | AssertJ                      | `3.27.7`     |
