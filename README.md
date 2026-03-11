@@ -362,5 +362,3 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - **JUnit Pioneer Releases:** https://github.com/junit-pioneer/junit-pioneer/releases
 - **Lombok Download:** https://projectlombok.org/download
 - **IntelliJ Lombok Plugin:** https://plugins.jetbrains.com/plugin/6317-lombok
-- **TestNG Workshop:** https://github.com/a-oleynik/testng-workshop
-- **Selenium Example (JUnit 6 branch):** https://github.com/a-oleynik/selenium-example/tree/junit6
