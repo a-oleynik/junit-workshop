@@ -3,6 +3,7 @@ package com.oleynik.qa.workshop.junit.dataproviders;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
+import org.junit.jupiter.params.support.ParameterDeclarations;
 
 import java.util.stream.Stream;
 
@@ -10,7 +11,7 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class AnotherFactorialDataProvider implements ArgumentsProvider {
     @Override
-    public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
+    public Stream<? extends Arguments> provideArguments(ParameterDeclarations parameters, ExtensionContext context) {
         return Stream.of(
                 arguments(1, 1),
                 arguments(2, 2),
