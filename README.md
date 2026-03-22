@@ -6,7 +6,7 @@
 [![JUnit Pioneer](https://img.shields.io/badge/JUnit_Pioneer-2.3.0-green.svg)](https://junit-pioneer.org/)
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
 [![Hamcrest](https://img.shields.io/badge/Hamcrest-3.0-yellowgreen.svg)](https://hamcrest.org/)
-[![Lombok](https://img.shields.io/badge/Lombok-1.18.42-red.svg)](https://projectlombok.org/)
+[![Lombok](https://img.shields.io/badge/Lombok-1.18.44-red.svg)](https://projectlombok.org/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
 > Companion code for the IT Talk **"JUnit 6 vs TestNG 7"**.
@@ -77,7 +77,7 @@ mvn clean test
 | TNG DataProvider for JUnit 5 | `2.12`       |
 | AssertJ                      | `3.27.7`     |
 | Hamcrest                     | `3.0`        |
-| Lombok                       | `1.18.42`    |
+| Lombok                       | `1.18.44`    |
 | Rerunner Jupiter             | `2.1.6`      |
 | OpenCSV                      | `5.12.0`     |
 | Java source / target         | `21`         |
