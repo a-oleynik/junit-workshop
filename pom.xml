@@ -44,6 +44,11 @@
             <version>${junit-jupiter.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-suite</artifactId>
+            <version>${junit.platform.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.tngtech.junit.dataprovider</groupId>
             <artifactId>junit-jupiter-params-dataprovider</artifactId>
             <version>${junit.jupiter.dataprovider.version}</version>
@@ -141,6 +146,13 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.5</version>
                 <configuration>
+                    <includes>
+                        <include>**/Test*.java</include>
+                        <include>**/*Test.java</include>
+                        <include>**/*Tests.java</include>
+                        <include>**/*TestCase.java</include>
+                        <include>**/*Suite.java</include>
+                    </includes>
                     <!--<groups>${testcase.groups}</groups>-->
                     <properties>
                         <configurationParameters>

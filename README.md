@@ -2,7 +2,7 @@
 
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
-[![JUnit](https://img.shields.io/badge/JUnit-5.14.3-green.svg)](https://junit.org/junit5/)
+[![JUnit](https://img.shields.io/badge/JUnit-5.14.3-green.svg)](https://junit.org/)
 [![JUnit Pioneer](https://img.shields.io/badge/JUnit_Pioneer-2.3.0-green.svg)](https://junit-pioneer.org/)
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
 [![Hamcrest](https://img.shields.io/badge/Hamcrest-3.0-yellowgreen.svg)](https://hamcrest.org/)
@@ -69,49 +69,51 @@ mvn clean test
 
 ## 🧩 Supported Versions
 
-| Library                      | Version used |
-|------------------------------|--------------|
-| JUnit Jupiter (JUnit 5)      | `5.14.3`     |
-| JUnit Platform               | `1.14.3`     |
-| JUnit Pioneer                | `2.3.0`      |
-| TNG DataProvider for JUnit 5 | `2.12`       |
-| AssertJ                      | `3.27.7`     |
-| Hamcrest                     | `3.0`        |
-| Lombok                       | `1.18.44`    |
-| Rerunner Jupiter             | `2.1.6`      |
-| OpenCSV                      | `5.12.0`     |
-| Java source / target         | `21`         |
+| Maven artifact                      | Version   | Purpose                                                                                                                                            |
+|-------------------------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `junit-jupiter-engine`              | `5.14.3`  | Test engine — discovers and runs Jupiter tests; transitively provides `junit-jupiter-api` (all `@Test`, `@BeforeEach`, `@AfterAll`, … annotations) |
+| `junit-jupiter-params`              | `5.14.3`  | `@ParameterizedTest`, `@ValueSource`, `@CsvSource`, `@MethodSource`, `@CsvFileSource`                                                              |
+| `junit-platform-suite`              | `1.14.3`  | `@Suite`, `@SelectClasses`, `@BeforeSuite`, `@AfterSuite`                                                                                          |
+| `junit-pioneer`                     | `2.3.0`   | `@RetryingTest`, `@CartesianTest`, and other community extensions                                                                                  |
+| `junit-jupiter-params-dataprovider` | `2.12`    | TNG-style `@DataProvider` integration for JUnit Jupiter                                                                                            |
+| `assertj-core`                      | `3.27.7`  | Fluent assertion library; `SoftAssertions` for collecting multiple failures                                                                        |
+| `hamcrest-library`                  | `3.0`     | Matcher-based assertions — `assertThat(value, matcher)`                                                                                            |
+| `lombok`                            | `1.18.44` | `@Builder`, `@Data` — compile-time code generation; reduces boilerplate in model classes                                                           |
+| `rerunner-jupiter`                  | `2.1.6`   | `@RepeatedIfExceptionsTest` — auto-retry flaky tests on failure                                                                                    |
+| `opencsv`                           | `5.12.0`  | CSV file parsing for data-driven tests (`CSVParameterizationTest`)                                                                                 |
+| Java source / target                | `21`      | Java language level for compilation                                                                                                                |
 
 ---
 
 ## 🌍 Feature Map
 
-| Package / folder  | Feature demonstrated                                                   | Test class(es)                                              |
-|-------------------|------------------------------------------------------------------------|-------------------------------------------------------------|
-| `general`         | Basic assertions (`assertEquals`, `assertTrue`, `assertNull`, …)       | `AssertTest`                                                |
-| `general`         | Exception testing (`assertThrows`)                                     | `ExceptionTest`                                             |
-| `general`         | Test fixtures (`@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`) | `FixturesTest`                                              |
-| `general`         | Hamcrest matchers                                                      | `HamcrestTest`                                              |
-| `general`         | Timeouts (`@Timeout`)                                                  | `TimeoutTest`                                               |
-| `general`         | Disabling tests (`@Disabled`)                                          | `DisabledTest`                                              |
-| `general`         | Display names & name generators                                        | `DisplayNameTest`, `DisplayNameGenerationTest`              |
-| `group/asserts`   | Grouped / soft assertions (`assertAll`)                                | `AssertAllTest`                                             |
-| `group/asserts`   | AssertJ soft assertions                                                | `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest` |
-| `group/asserts`   | JUnit 5 soft assert pattern                                            | `SoftAssertTest`                                            |
-| `conditional`     | Assumptions (`assumeTrue`, `assumeThat`)                               | `AssumptionsTest`, `AssumptionsBeforeAllTest`               |
-| `ddt`             | Parameterized tests — `@MethodSource`                                  | `ParameterizationTest`                                      |
-| `ddt`             | Parameterized tests — `@ValueSource` / `@CsvSource`                    | `ValueSourceTest`                                           |
-| `ddt`             | CSV file data source                                                   | `CSVParameterizationTest`                                   |
-| `ddt`             | TNG DataProvider integration                                           | `DataProviderTest`                                          |
-| `ddt`             | JUnit Pioneer Cartesian product                                        | `PioneerCartesianProductTest`                               |
-| `nested`          | `@Nested` test classes                                                 | `NestedTest`                                                |
-| `grouping`        | Tagging with `@Tag` and custom tag annotations                         | `TagsTest`                                                  |
-| `execution/order` | Test execution ordering (`@TestMethodOrder`)                           | `ExecutionOrderWithTest`                                    |
-| `extensions`      | Custom `Extension` (`@RegisterExtension`)                              | `DBResourceExtensionTest`                                   |
-| `extensions`      | `TestWatcher` extension                                                | `TestWatcherExtensionTest`                                  |
-| `retry`           | Retry with JUnit Pioneer (`@RetryingTest`)                             | `RetryPioneerTest`                                          |
-| `retry`           | Retry with Rerunner Jupiter                                            | `RetryRerunnerTest`                                         |
-| `repeat`          | `@RepeatedTest`                                                        | `RetryRepeatedTest`                                         |
+| Package / folder  | Feature demonstrated                                                        | Test class(es)                                                                |
+|-------------------|-----------------------------------------------------------------------------|-------------------------------------------------------------------------------|
+| `general`         | Basic assertions (`assertEquals`, `assertTrue`, `assertNull`, …)            | `AssertTest`                                                                  |
+| `general`         | Exception testing (`assertThrows`)                                          | `ExceptionTest`                                                               |
+| `general`         | Test fixtures (`@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`)      | `FixturesTest`                                                                |
+| `general`         | Hamcrest matchers                                                           | `HamcrestTest`                                                                |
+| `general`         | Timeouts (`@Timeout`)                                                       | `TimeoutTest`                                                                 |
+| `general`         | Disabling tests (`@Disabled`)                                               | `DisabledTest`                                                                |
+| `general`         | Display names & name generators                                             | `DisplayNameTest`, `DisplayNameGenerationTest`                                |
+| `group/asserts`   | Grouped / soft assertions (`assertAll`)                                     | `AssertAllTest`                                                               |
+| `group/asserts`   | AssertJ soft assertions                                                     | `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`                   |
+| `group/asserts`   | JUnit 5+ soft assert pattern                                                | `SoftAssertTest`                                                              |
+| `conditional`     | Assumptions (`assumeTrue`, `assumeThat`)                                    | `AssumptionsTest`, `AssumptionsBeforeAllTest`                                 |
+| `ddt`             | Parameterized tests — `@MethodSource`                                       | `ParameterizationTest`                                                        |
+| `ddt`             | Parameterized tests — `@ValueSource` / `@CsvSource`                         | `ValueSourceTest`                                                             |
+| `ddt`             | CSV file data source                                                        | `CSVParameterizationTest`                                                     |
+| `ddt`             | TNG DataProvider integration                                                | `DataProviderTest`                                                            |
+| `ddt`             | JUnit Pioneer Cartesian product                                             | `PioneerCartesianProductTest`                                                 |
+| `nested`          | `@Nested` test classes                                                      | `NestedTest`                                                                  |
+| `grouping`        | Tagging with `@Tag` and custom tag annotations                              | `TagsTest`                                                                    |
+| `execution/order` | Test execution ordering (`@TestMethodOrder`)                                | `ExecutionOrderWithTest`                                                      |
+| `extensions`      | Custom `Extension` (`@RegisterExtension`)                                   | `DBResourceExtensionTest`                                                     |
+| `extensions`      | `TestWatcher` extension                                                     | `TestWatcherExtensionTest`                                                    |
+| `retry`           | Retry with JUnit Pioneer (`@RetryingTest`)                                  | `RetryPioneerTest`                                                            |
+| `retry`           | Retry with Rerunner Jupiter                                                 | `RetryRerunnerTest`                                                           |
+| `repeat`          | `@RepeatedTest`                                                             | `RetryRepeatedTest`                                                           |
+| `suite`           | Suite lifecycle (`@Suite`, `@BeforeSuite`, `@AfterSuite`, `@SelectClasses`) | `BeforeAfterDemoSuite`, `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase` |
 
 ---
 
@@ -181,7 +183,7 @@ Generate all combinations of parameter sets automatically.
 `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`  
 Collect all assertion failures before reporting — no early bail-out.
 
-### 5. Custom JUnit 5 Extensions
+### 5. Custom JUnit 5+ Extensions
 
 `DBResourceExtensionTest`, `TestWatcherExtensionTest`  
 Implement `BeforeAllCallback`, `AfterAllCallback`, and `TestWatcher` to manage external resources and observe test
@@ -196,7 +198,7 @@ Control method execution order with `@TestMethodOrder` and `@Order`.
 
 `RetryPioneerTest` — `@RetryingTest(maxAttempts, minSuccess)` via JUnit Pioneer  
 `RetryRerunnerTest` — Rerunner Jupiter integration  
-`RetryRepeatedTest` — JUnit 5 native `@RepeatedTest`
+`RetryRepeatedTest` — JUnit 5+ native `@RepeatedTest`
 
 ### 8. Parallel Execution
 
@@ -219,7 +221,45 @@ mvn clean test -P SmokeTests
 mvn clean test -P RegressionTests
 ```
 
-### 10. Surefire HTML Report Generation
+### 10. Suite Lifecycle (`@BeforeSuite` / `@AfterSuite`)
+
+`BeforeAfterDemoSuite` → `suite/` package  
+Group multiple test classes under a single `@Suite` class.  
+Use `@BeforeSuite` and `@AfterSuite` to run setup/teardown logic that wraps the **entire** suite — not just a single test class.
+
+```java
+@Suite
+@SelectClasses({
+    SuiteLifecycleFirstCase.class,
+    SuiteLifecycleSecondCase.class
+})
+public class BeforeAfterDemoSuite {
+    @BeforeSuite
+    static void beforeSuite() { ... }
+
+    @AfterSuite
+    static void afterSuite() { ... }
+}
+```
+
+> **⚠️ Naming convention:** classes selected by a suite must **not** be named `*Test` or `*Tests`.  
+> Use `*Case` or `*Scenario` instead.  
+> If they matched Surefire’s default discovery patterns they would execute **twice** —  
+> once directly by Surefire and once again through the suite.
+
+> **⚙️ Maven config:** `pom.xml` requires two things for the suite feature to work:
+>
+> 1. The `junit-platform-suite` dependency (enables `@Suite`, `@BeforeSuite`, `@AfterSuite`):
+>    ```xml
+>    <dependency>
+>        <groupId>org.junit.platform</groupId>
+>        <artifactId>junit-platform-suite</artifactId>
+>        <version>1.14.3</version>
+>    </dependency>
+>    ```
+> 2. `**/*Suite.java` added to Surefire `<includes>` so `BeforeAfterDemoSuite` is automatically discovered by `mvn clean test`.
+
+### 11. Surefire HTML Report Generation
 
 ```bash
 mvn clean site
@@ -279,6 +319,16 @@ mvn clean test -Dsurefire.rerunFailingTestsCount=2
 mvn clean test -Dgroups=Regression,Smoke
 ```
 
+### Run only a specific suite
+
+```bash
+mvn test "-Dtest=BeforeAfterDemoSuite"
+```
+
+> ⚠️ **Naming convention:** suite-member classes (e.g. `SuiteLifecycleFirstCase`) are named `*Case`, **not** `*Test` or `*Tests`.  
+> This prevents Surefire from discovering them as standalone tests and running them **twice** —  
+> once directly by Surefire and once again through the suite.
+
 ### Compile, test, package, and install to local repo
 
 ```bash
@@ -327,9 +377,10 @@ src/
     ├── nested/          # @Nested test classes
     ├── grouping/        # @Tag / custom tag annotations
     ├── execution/order/ # Test execution ordering
-    ├── extensions/      # Custom JUnit 5 extensions
+    ├── extensions/      # Custom JUnit 5+ extensions
     ├── retry/           # Retry strategies (Pioneer, Rerunner)
-    └── repeat/          # @RepeatedTest
+    ├── repeat/          # @RepeatedTest
+    └── suite/           # Suite lifecycle (@BeforeSuite, @AfterSuite)
 ```
 
 ---
