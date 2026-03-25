@@ -23,7 +23,7 @@ import org.junit.runners.Suite;
         SuiteLifecycleFirstCase.class,
         SuiteLifecycleSecondCase.class
 })
-public class MySuite {
+public class BeforeAfterSuite {
 
     @ClassRule
     public static ExternalResource suiteSetup = new ExternalResource() {
