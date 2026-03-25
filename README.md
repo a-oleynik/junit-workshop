@@ -70,7 +70,7 @@ mvn clean test
 ## 🧩 Supported Versions
 
 | Maven artifact                      | Version    | Purpose                                                                                                                                            |
-| ----------------------------------- | ---------- |----------------------------------------------------------------------------------------------------------------------------------------------------|
+|-------------------------------------|------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
 | `junit-jupiter-engine`              | `6.1.0-M1` | Test engine — discovers and runs Jupiter tests; transitively provides `junit-jupiter-api` (all `@Test`, `@BeforeEach`, `@AfterAll`, … annotations) |
 | `junit-jupiter-params`              | `6.1.0-M1` | `@ParameterizedTest`, `@ValueSource`, `@CsvSource`, `@MethodSource`, `@CsvFileSource`                                                              |
 | `junit-platform-suite`              | `6.1.0-M1` | `@Suite`, `@SelectClasses`, `@BeforeSuite`, `@AfterSuite`                                                                                          |
