@@ -1,4 +1,4 @@
-package com.oleynik.qa.workshop.junit.suites;
+package com.oleynik.qa.workshop.junit.suites.lifecycle;
 
 import org.junit.ClassRule;
 import org.junit.rules.ExternalResource;

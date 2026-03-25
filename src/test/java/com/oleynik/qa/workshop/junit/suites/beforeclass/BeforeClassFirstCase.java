@@ -1,0 +1,36 @@
+package com.oleynik.qa.workshop.junit.suites.beforeclass;
+
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+/**
+ * Suite member class — named *Case intentionally.
+ *
+ * <p>Using the *Case suffix (not *Test / *Tests) prevents Surefire from discovering
+ * this class directly during "mvn clean test", so its tests run only when
+ * {@link BeforeClassSuite} is executed. This avoids double execution.
+ */
+public class BeforeClassFirstCase {
+
+    @BeforeClass
+    public static void beforeClass() {
+        System.out.println("[BeforeClass] BeforeClassFirstCase — class setup");
+    }
+
+    @AfterClass
+    public static void afterClass() {
+        System.out.println("[AfterClass] BeforeClassFirstCase — class teardown");
+    }
+
+    @Test
+    public void first_test_in_first_case() {
+        System.out.println("Running first test in BeforeClassFirstCase");
+    }
+
+    @Test
+    public void second_test_in_first_case() {
+        System.out.println("Running second test in BeforeClassFirstCase");
+    }
+}
+
