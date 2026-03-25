@@ -90,37 +90,37 @@ mvn clean test
 
 ## 🌍 Feature Map
 
-| Package / folder  | Feature demonstrated                                                                         | Test class(es)                                                            |
-|-------------------|----------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
-| `general`         | Basic assertions (`assertEquals`, `assertThat`, `assertNull`, …)                             | `AssertTest`                                                              |
-| `general`         | Exception testing (`@Test(expected=…)`, `assertThrows`)                                      | `ExceptionTest`                                                           |
-| `general`         | Test lifecycle (`@Before`, `@After`, `@BeforeClass`, `@AfterClass`)                          | `FixturesTest`                                                            |
-| `general`         | Hamcrest matchers                                                                            | `HamcrestTest`                                                            |
-| `general`         | Timeouts (`@Test(timeout=…)`, `Timeout` rule)                                                | `TimeoutTest`                                                             |
-| `general`         | Ignoring / disabling tests (`@Ignore`)                                                       | `IgnoringTest`, `DisabledTest`                                            |
-| `general`         | Custom `RunListener` + `ExecutionListenerRunner`                                             | `ExecutionListenerRunnerTest`                                             |
-| `group/asserts`   | Soft assertions via `ErrorCollector` rule                                                    | `SoftAssertErrorCollectorTest`, `SoftAssertErrorCollector2Test`           |
-| `group/asserts`   | AssertJ soft assertions                                                                      | `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`               |
-| `group/asserts`   | JUnit 4 soft assert pattern (`AssertAll` rule)                                               | `SoftAssertTest`                                                          |
-| `conditional`     | Assumptions (`Assume.assumeTrue`, `Assume.assumeThat`)                                       | `AssumeTest`, `AssumptionsTest`                                           |
-| `conditional`     | Assumptions in `@BeforeClass`                                                                | `AssumeBeforeClassTest`, `AssumptionsBeforeAllTest`                       |
-| `ddt`             | Parameterized tests — `@RunWith(Parameterized.class)`                                        | `ParameterizationTest`, `Parameterization2Test`                           |
-| `ddt`             | Lifecycle in parameterized tests (`@Before` / `@After`)                                      | `BeforeAfterParameterizationTest`                                         |
-| `ddt`             | JUnitParams (`@JUnitParamsRunner`, `@Parameters`)                                            | `JUnitParamsTest`                                                         |
-| `ddt`             | TNG DataProvider integration                                                                 | `DataProviderTest`, `DataProvider2Test`                                   |
-| `ddt`             | Theories — `@Theory` + `@DataPoints` (Cartesian-style)                                       | `TheoryTest`                                                              |
-| `nested`          | Nested test classes (`HierarchicalContextRunner`)                                            | `NestedTest`                                                              |
-| `grouping`        | `@Category` with custom marker interfaces                                                    | `CategoriesTest`                                                          |
-| `grouping`        | Tagging via `@Category` annotations                                                          | `TagsTest`                                                                |
-| `execution/order` | Test execution ordering (`@FixMethodOrder`, `@OrderWith`)                                    | `FixMethodOrderTest`, `ExecutionOrderWithTest`                            |
-| `rules`           | External resource rule (`@Rule ExternalResource`)                                            | `ExternalResourceRuleTest`                                                |
-| `rules`           | `TestWatcher` rule (`MonitorRule`)                                                           | `TestWatcherRuleTest`                                                     |
-| `repeat`          | Retry via custom runner (`@RunWith(RetryRunner.class)`)                                      | `RetryRunnerTest`                                                         |
-| `repeat`          | Retry via test-level rule (`RetryTestRule`)                                                  | `RetriedTestRuleTest`                                                     |
-| `repeat`          | Retry via method-level rule (`RetryMethodRule`)                                              | `RetriedMethodRuleTest`                                                   |
-| `repeat`          | Repeat demos                                                                                 | `RetryRepeatedTest`                                                       |
-| `suites`          | Test suite (`@RunWith(Suite.class)`, `@Suite.SuiteClasses`)                                  | `BeforeAfterSuite`, `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase` |
-| `suites`          | Suite lifecycle — `@BeforeSuite` / `@AfterSuite` emulation via `@ClassRule ExternalResource` | `BeforeAfterSuite`                                                        |
+| Package / folder     | Feature demonstrated                                                                         | Test class(es)                                                            |
+|----------------------|----------------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
+| `general`            | Basic assertions (`assertEquals`, `assertThat`, `assertNull`, …)                             | `AssertTest`                                                              |
+| `general`            | Exception testing (`@Test(expected=…)`, `assertThrows`)                                      | `ExceptionTest`                                                           |
+| `general`            | Test lifecycle (`@Before`, `@After`, `@BeforeClass`, `@AfterClass`)                          | `FixturesTest`                                                            |
+| `general`            | Hamcrest matchers                                                                            | `HamcrestTest`                                                            |
+| `general`            | Timeouts (`@Test(timeout=…)`, `Timeout` rule)                                                | `TimeoutTest`                                                             |
+| `general`            | Ignoring / disabling tests (`@Ignore`)                                                       | `IgnoringTest`, `DisabledTest`                                            |
+| `general`            | Custom `RunListener` + `ExecutionListenerRunner`                                             | `ExecutionListenerRunnerTest`                                             |
+| `group/asserts`      | Soft assertions via `ErrorCollector` rule                                                    | `SoftAssertErrorCollectorTest`, `SoftAssertErrorCollector2Test`           |
+| `group/asserts`      | AssertJ soft assertions                                                                      | `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`               |
+| `group/asserts`      | JUnit 4 soft assert pattern (`AssertAll` rule)                                               | `SoftAssertTest`                                                          |
+| `conditional`        | Assumptions (`Assume.assumeTrue`, `Assume.assumeThat`)                                       | `AssumeTest`, `AssumptionsTest`                                           |
+| `conditional`        | Assumptions in `@BeforeClass`                                                                | `AssumeBeforeClassTest`, `AssumptionsBeforeAllTest`                       |
+| `ddt`                | Parameterized tests — `@RunWith(Parameterized.class)`                                        | `ParameterizationTest`, `Parameterization2Test`                           |
+| `ddt`                | Lifecycle in parameterized tests (`@Before` / `@After`)                                      | `BeforeAfterParameterizationTest`                                         |
+| `ddt`                | JUnitParams (`@JUnitParamsRunner`, `@Parameters`)                                            | `JUnitParamsTest`                                                         |
+| `ddt`                | TNG DataProvider integration                                                                 | `DataProviderTest`, `DataProvider2Test`                                   |
+| `ddt`                | Theories — `@Theory` + `@DataPoints` (Cartesian-style)                                       | `TheoryTest`                                                              |
+| `nested`             | Nested test classes (`HierarchicalContextRunner`)                                            | `NestedTest`                                                              |
+| `grouping`           | `@Category` with custom marker interfaces                                                    | `CategoriesTest`                                                          |
+| `grouping`           | Tagging via `@Category` annotations                                                          | `TagsTest`                                                                |
+| `execution/order`    | Test execution ordering (`@FixMethodOrder`, `@OrderWith`)                                    | `FixMethodOrderTest`, `ExecutionOrderWithTest`                            |
+| `rules`              | External resource rule (`@Rule ExternalResource`)                                            | `ExternalResourceRuleTest`                                                |
+| `rules`              | `TestWatcher` rule (`MonitorRule`)                                                           | `TestWatcherRuleTest`                                                     |
+| `repeat`             | Retry via custom runner (`@RunWith(RetryRunner.class)`)                                      | `RetryRunnerTest`                                                         |
+| `repeat`             | Retry via test-level rule (`RetryTestRule`)                                                  | `RetriedTestRuleTest`                                                     |
+| `repeat`             | Retry via method-level rule (`RetryMethodRule`)                                              | `RetriedMethodRuleTest`                                                   |
+| `repeat`             | Repeat demos                                                                                 | `RetryRepeatedTest`                                                       |
+| `suites/lifecycle`   | Suite lifecycle via `@ClassRule ExternalResource` — `@BeforeSuite` / `@AfterSuite` emulation | `BeforeAfterSuite`, `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase` |
+| `suites/beforeclass` | Suite lifecycle via `@BeforeClass` / `@AfterClass` directly on the suite class               | `BeforeClassSuite`, `BeforeClassFirstCase`, `BeforeClassSecondCase`       |
 
 ---
 
@@ -276,9 +276,14 @@ mvn clean test -P RegressionTests
 
 ### 11. Test Suite (`@BeforeSuite` / `@AfterSuite` emulation)
 
-`BeforeAfterSuite` → `suites/` package  
-Group multiple test classes under a single entry point using `@RunWith(Suite.class)` and `@Suite.SuiteClasses`.  
-JUnit 4 has **no native `@BeforeSuite` / `@AfterSuite`**. The standard emulation uses `@ClassRule` backed by `ExternalResource`:
+JUnit 4 has **no native `@BeforeSuite` / `@AfterSuite`**.  
+Two approaches work correctly — both are demonstrated in this project.
+
+#### Approach A — `@ClassRule ExternalResource` (`suites/lifecycle/`)
+
+`BeforeAfterSuite` wraps suite execution using a `@ClassRule` backed by `ExternalResource`.  
+`before()` / `after()` are guaranteed to run even if a test throws, because `ExternalResource`
+uses try-finally internally.
 
 ```java
 @RunWith(Suite.class)
@@ -303,19 +308,45 @@ public class BeforeAfterSuite {
 }
 ```
 
-**Execution lifecycle:**
+#### Approach B — `@BeforeClass` / `@AfterClass` directly (`suites/beforeclass/`)
+
+`@BeforeClass` and `@AfterClass` placed on a `@RunWith(Suite.class)` class **are** called by
+the `Suite` runner — they fire once before and after all member classes, equivalent to
+`@BeforeSuite` / `@AfterSuite` behaviour.
+
+```java
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        BeforeClassFirstCase.class,
+        BeforeClassSecondCase.class
+})
+public class BeforeClassSuite {
+
+    @BeforeClass
+    public static void beforeSuite() {
+        System.out.println("[BeforeSuite] runs once before all suite tests");
+    }
+
+    @AfterClass
+    public static void afterSuite() {
+        System.out.println("[AfterSuite] runs once after all suite tests");
+    }
+}
+```
+
+**Execution lifecycle (identical for both approaches):**
 
 ```
-[BeforeSuite]  ExternalResource.before()
-  [BeforeClass] SuiteLifecycleFirstCase
+[BeforeSuite]  before() / @BeforeClass on suite class
+  [BeforeClass] FirstCase
     first_test_in_first_case
     second_test_in_first_case
-  [AfterClass]  SuiteLifecycleFirstCase
-  [BeforeClass] SuiteLifecycleSecondCase
+  [AfterClass]  FirstCase
+  [BeforeClass] SecondCase
     first_test_in_second_case
     second_test_in_second_case
-  [AfterClass]  SuiteLifecycleSecondCase
-[AfterSuite]   ExternalResource.after()
+  [AfterClass]  SecondCase
+[AfterSuite]   after() / @AfterClass on suite class
 ```
 
 > **⚠️ Naming convention:** classes selected by a suite must **not** be named `*Test` or `*Tests`.  
@@ -323,8 +354,8 @@ public class BeforeAfterSuite {
 > If they matched Surefire's default discovery patterns they would execute **twice** —  
 > once directly by Surefire and once again through the suite.
 
-> **⚙️ Maven config:** `pom.xml` adds `**/*Suite.java` to Surefire `<includes>` so `BeforeAfterSuite` is
-> automatically discovered by `mvn clean test`:
+> **⚙️ Maven config:** `pom.xml` adds `**/*Suite.java` to Surefire `<includes>` so both suite
+> classes are automatically discovered by `mvn clean test`:
 >
 > ```xml
 > <includes>
@@ -336,15 +367,23 @@ public class BeforeAfterSuite {
 > </includes>
 > ```
 
-**JUnit 4 vs JUnit 6 suite lifecycle comparison:**
+**Comparing the two JUnit 4 suite-lifecycle approaches:**
 
-|                         | JUnit 4 (`@ClassRule ExternalResource`) | JUnit 6 (`@Suite` + `@BeforeSuite`)   |
-|-------------------------|-----------------------------------------|---------------------------------------|
-| Native annotation       | ❌ No `@BeforeSuite` / `@AfterSuite`     | ✅ `@BeforeSuite` / `@AfterSuite`      |
-| Mechanism               | `@ClassRule ExternalResource`           | Platform-level suite listener         |
-| Test class naming       | `*Case` / `*Scenario` (not `*Test`)     | `*Case` / `*Scenario` (not `*Test`)   |
-| Requires suite class    | ✅ `@Suite.SuiteClasses` required        | ✅ `@SelectClasses` required           |
-| Tests run independently | ❌ Only via suite entry class            | ❌ Only via suite entry class          |
+|                            | `@ClassRule ExternalResource`         | `@BeforeClass` / `@AfterClass`      |
+|----------------------------|---------------------------------------|-------------------------------------|
+| Syntax complexity          | Verbose (anonymous class required)    | Simple — same as regular test class |
+| Teardown guarantee         | ✅ try-finally inside ExternalResource | ⚠️ No guarantee if setup throws     |
+| Reusable across suites     | ✅ Extract rule to a shared field      | ❌ Must duplicate the methods        |
+| Resource injection support | ✅ Can expose the resource as a field  | ❌ Only static state                 |
+
+**JUnit 4 vs JUnit 6 suite lifecycle:**
+
+|                         | JUnit 4 (both approaches above)     | JUnit 6 (`@Suite` + `@BeforeSuite`) |
+|-------------------------|-------------------------------------|-------------------------------------|
+| Native annotation       | ❌ No `@BeforeSuite` / `@AfterSuite` | ✅ `@BeforeSuite` / `@AfterSuite`    |
+| Test class naming       | `*Case` / `*Scenario` (not `*Test`) | `*Case` / `*Scenario` (not `*Test`) |
+| Requires suite class    | ✅ `@Suite.SuiteClasses` required    | ✅ `@SelectClasses` required         |
+| Tests run independently | ❌ Only via suite entry class        | ❌ Only via suite entry class        |
 
 ### 12. Custom RunListener
 
@@ -435,11 +474,15 @@ mvn clean test -P RegressionTests
 ### Run only a specific suite
 
 ```bash
+# @ClassRule ExternalResource approach
 mvn test "-Dtest=BeforeAfterSuite"
+
+# @BeforeClass / @AfterClass approach
+mvn test "-Dtest=BeforeClassSuite"
 ```
 
-> `BeforeAfterSuite` is also discovered automatically by `mvn clean test` because `pom.xml` includes `**/*Suite.java`
-> in Surefire `<includes>`.  
+> Both suites are also discovered automatically by `mvn clean test` because `pom.xml` includes
+> `**/*Suite.java` in Surefire `<includes>`.  
 > ⚠️ **Naming convention:** suite-member classes (e.g. `SuiteLifecycleFirstCase`) are named `*Case`, **not** `*Test` or `*Tests`.  
 > This prevents Surefire from discovering them as standalone tests and running them **twice** —  
 > once directly by Surefire and once again through the suite.
@@ -499,8 +542,9 @@ src/
     ├── execution/order/  # Test execution ordering (@FixMethodOrder, @OrderWith)
     ├── rules/            # Rule examples (ExternalResource, TestWatcher)
     ├── repeat/           # Retry strategies (runner, test rule, method rule)
-    └── suites/           # Test suites (@RunWith(Suite.class), @ClassRule before/after emulation)
-                          #   BeforeAfterSuite, SuiteLifecycleFirstCase, SuiteLifecycleSecondCase
+    └── suites/           # Test suites (@RunWith(Suite.class))
+        ├── lifecycle/    # @ClassRule ExternalResource approach (BeforeAfterSuite + case classes)
+        └── beforeclass/  # @BeforeClass / @AfterClass approach (BeforeClassSuite + case classes)
 ```
 
 ---

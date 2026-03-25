@@ -1,4 +1,4 @@
-package com.oleynik.qa.workshop.junit.suites;
+package com.oleynik.qa.workshop.junit.suites.lifecycle;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -9,7 +9,7 @@ import org.junit.Test;
  *
  * Using the *Case suffix (not *Test / *Tests) prevents Surefire from discovering
  * this class directly during "mvn clean test", so its tests run only when
- * MySuite is executed. This avoids double execution.
+ * {@link BeforeAfterSuite} is executed. This avoids double execution.
  */
 public class SuiteLifecycleSecondCase {
 
