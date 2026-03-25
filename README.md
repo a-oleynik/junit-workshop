@@ -182,7 +182,7 @@ Generate all combinations of parameter sets automatically.
 `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`  
 Collect all assertion failures before reporting — no early bail-out.
 
-### 5. Custom JUnit 5 Extensions
+### 5. Custom JUnit 5+ Extensions
 
 `DBResourceExtensionTest`, `TestWatcherExtensionTest`  
 Implement `BeforeAllCallback`, `AfterAllCallback`, and `TestWatcher` to manage external resources and observe test
@@ -197,7 +197,7 @@ Control method execution order with `@TestMethodOrder` and `@Order`.
 
 `RetryPioneerTest` — `@RetryingTest(maxAttempts, minSuccess)` via JUnit Pioneer  
 `RetryRerunnerTest` — Rerunner Jupiter integration  
-`RetryRepeatedTest` — JUnit 5 native `@RepeatedTest`
+`RetryRepeatedTest` — JUnit 5+ native `@RepeatedTest`
 
 ### 8. Parallel Execution
 
@@ -376,7 +376,7 @@ src/
     ├── nested/          # @Nested test classes
     ├── grouping/        # @Tag / custom tag annotations
     ├── execution/order/ # Test execution ordering
-    ├── extensions/      # Custom JUnit 5 extensions
+    ├── extensions/      # Custom JUnit 5+ extensions
     ├── retry/           # Retry strategies (Pioneer, Rerunner)
     ├── repeat/          # @RepeatedTest
     └── suite/           # Suite lifecycle (@BeforeSuite, @AfterSuite)
