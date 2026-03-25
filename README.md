@@ -119,7 +119,8 @@ mvn clean test
 | `repeat`          | Retry via test-level rule (`RetryTestRule`)                         | `RetriedTestRuleTest`                                           |
 | `repeat`          | Retry via method-level rule (`RetryMethodRule`)                     | `RetriedMethodRuleTest`                                         |
 | `repeat`          | Repeat demos                                                        | `RetryRepeatedTest`                                             |
-| `suites`          | Test suite (`@RunWith(Suite.class)`, `@Suite.SuiteClasses`)         | `MySuite`                                                       |
+| `suites`          | Test suite (`@RunWith(Suite.class)`, `@Suite.SuiteClasses`)         | `MySuite`, `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase` |
+| `suites`          | Suite lifecycle — `@BeforeSuite` / `@AfterSuite` emulation via `@ClassRule ExternalResource` | `MySuite`                             |
 
 ---
 
@@ -273,13 +274,77 @@ mvn clean test -P SmokeTests
 mvn clean test -P RegressionTests
 ```
 
-### 11. Test Suite
+### 11. Test Suite (`@BeforeSuite` / `@AfterSuite` emulation)
 
 `MySuite` → `suites/` package  
-Group multiple test classes under a single entry point using `@RunWith(Suite.class)` and `@Suite.SuiteClasses`.
+Group multiple test classes under a single entry point using `@RunWith(Suite.class)` and `@Suite.SuiteClasses`.  
+JUnit 4 has **no native `@BeforeSuite` / `@AfterSuite`**. The standard emulation uses `@ClassRule` backed by `ExternalResource`:
 
-> **⚠️ Discovery:** `MySuite` does not match Surefire’s default `*Test` patterns.
-> Run it explicitly: `mvn test "-Dtest=MySuite"`
+```java
+@RunWith(Suite.class)
+@Suite.SuiteClasses({
+        SuiteLifecycleFirstCase.class,
+        SuiteLifecycleSecondCase.class
+})
+public class MySuite {
+
+    @ClassRule
+    public static ExternalResource suiteSetup = new ExternalResource() {
+        @Override
+        protected void before() {
+            System.out.println("[BeforeSuite] runs once before all suite tests");
+        }
+
+        @Override
+        protected void after() {
+            System.out.println("[AfterSuite] runs once after all suite tests");
+        }
+    };
+}
+```
+
+**Execution lifecycle:**
+
+```
+[BeforeSuite]  ExternalResource.before()
+  [BeforeClass] SuiteLifecycleFirstCase
+    first_test_in_first_case
+    second_test_in_first_case
+  [AfterClass]  SuiteLifecycleFirstCase
+  [BeforeClass] SuiteLifecycleSecondCase
+    first_test_in_second_case
+    second_test_in_second_case
+  [AfterClass]  SuiteLifecycleSecondCase
+[AfterSuite]   ExternalResource.after()
+```
+
+> **⚠️ Naming convention:** classes selected by a suite must **not** be named `*Test` or `*Tests`.  
+> Use `*Case` or `*Scenario` instead.  
+> If they matched Surefire's default discovery patterns they would execute **twice** —  
+> once directly by Surefire and once again through the suite.
+
+> **⚙️ Maven config:** `pom.xml` adds `**/*Suite.java` to Surefire `<includes>` so `MySuite` is
+> automatically discovered by `mvn clean test`:
+>
+> ```xml
+> <includes>
+>     <include>**/Test*.java</include>
+>     <include>**/*Test.java</include>
+>     <include>**/*Tests.java</include>
+>     <include>**/*TestCase.java</include>
+>     <include>**/*Suite.java</include>
+> </includes>
+> ```
+
+**JUnit 4 vs JUnit 6 suite lifecycle comparison:**
+
+|                         | JUnit 4 (`@ClassRule ExternalResource`) | JUnit 6 (`@Suite` + `@BeforeSuite`)   |
+|-------------------------|-----------------------------------------|---------------------------------------|
+| Native annotation       | ❌ No `@BeforeSuite` / `@AfterSuite`     | ✅ `@BeforeSuite` / `@AfterSuite`      |
+| Mechanism               | `@ClassRule ExternalResource`           | Platform-level suite listener         |
+| Test class naming       | `*Case` / `*Scenario` (not `*Test`)     | `*Case` / `*Scenario` (not `*Test`)   |
+| Requires suite class    | ✅ `@Suite.SuiteClasses` required        | ✅ `@SelectClasses` required           |
+| Tests run independently | ❌ Only via suite entry class            | ❌ Only via suite entry class          |
 
 ### 12. Custom RunListener
 
@@ -373,6 +438,12 @@ mvn clean test -P RegressionTests
 mvn test "-Dtest=MySuite"
 ```
 
+> `MySuite` is also discovered automatically by `mvn clean test` because `pom.xml` includes `**/*Suite.java`
+> in Surefire `<includes>`.  
+> ⚠️ **Naming convention:** suite-member classes (e.g. `SuiteLifecycleFirstCase`) are named `*Case`, **not** `*Test` or `*Tests`.  
+> This prevents Surefire from discovering them as standalone tests and running them **twice** —  
+> once directly by Surefire and once again through the suite.
+
 ### Compile, test, package, and install to local repo
 
 ```bash
@@ -428,7 +499,8 @@ src/
     ├── execution/order/  # Test execution ordering (@FixMethodOrder, @OrderWith)
     ├── rules/            # Rule examples (ExternalResource, TestWatcher)
     ├── repeat/           # Retry strategies (runner, test rule, method rule)
-    └── suites/           # Test suites (@RunWith(Suite.class))
+    └── suites/           # Test suites (@RunWith(Suite.class), @ClassRule before/after emulation)
+                          #   MySuite, SuiteLifecycleFirstCase, SuiteLifecycleSecondCase
 ```
 
 ---
