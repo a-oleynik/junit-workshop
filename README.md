@@ -73,6 +73,7 @@ mvn clean test
 |------------------------------|--------------|
 | JUnit Jupiter (JUnit 5)      | `6.1.0-M1`   |
 | JUnit Platform               | `6.1.0-M1`   |
+| JUnit Platform Suite         | `6.1.0-M1`   |
 | JUnit Pioneer                | `2.3.0`      |
 | TNG DataProvider for JUnit 5 | `2.12`       |
 | AssertJ                      | `3.27.7`     |
@@ -246,8 +247,17 @@ public class BeforeAfterDemoSuite {
 > If they matched Surefire’s default discovery patterns they would execute **twice** —  
 > once directly by Surefire and once again through the suite.
 
-> **⚙️ Maven config:** `pom.xml` adds `**/*Suite.java` to Surefire `<includes>` in addition to the default  
-> `*Test` / `*Tests` patterns, so `BeforeAfterDemoSuite` is automatically picked up by `mvn clean test`.
+> **⚙️ Maven config:** `pom.xml` requires two things for the suite feature to work:
+>
+> 1. The `junit-platform-suite` dependency (enables `@Suite`, `@BeforeSuite`, `@AfterSuite`):
+>    ```xml
+>    <dependency>
+>        <groupId>org.junit.platform</groupId>
+>        <artifactId>junit-platform-suite</artifactId>
+>        <version>6.1.0-M1</version>
+>    </dependency>
+>    ```
+> 2. `**/*Suite.java` added to Surefire `<includes>` so `BeforeAfterDemoSuite` is automatically discovered by `mvn clean test`.
 
 ### 11. Surefire HTML Report Generation
 
