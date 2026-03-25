@@ -109,6 +109,13 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.5.5</version>
                 <configuration>
+                    <includes>
+                        <include>**/Test*.java</include>
+                        <include>**/*Test.java</include>
+                        <include>**/*Tests.java</include>
+                        <include>**/*TestCase.java</include>
+                        <include>**/*Suite.java</include>
+                    </includes>
 <!--                    <parallel>methods</parallel>-->
 <!--                    <threadCount>3</threadCount>-->
                     <!--<groups>${testcase.groups}</groups>-->
