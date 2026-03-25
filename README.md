@@ -2,7 +2,7 @@
 
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
-[![JUnit](https://img.shields.io/badge/JUnit-5.14.3-green.svg)](https://junit.org/junit5/)
+[![JUnit](https://img.shields.io/badge/JUnit-5.14.3-green.svg)](https://junit.org/)
 [![JUnit Pioneer](https://img.shields.io/badge/JUnit_Pioneer-2.3.0-green.svg)](https://junit-pioneer.org/)
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
 [![Hamcrest](https://img.shields.io/badge/Hamcrest-3.0-yellowgreen.svg)](https://hamcrest.org/)
@@ -246,8 +246,17 @@ public class BeforeAfterDemoSuite {
 > If they matched Surefire’s default discovery patterns they would execute **twice** —  
 > once directly by Surefire and once again through the suite.
 
-> **⚙️ Maven config:** `pom.xml` adds `**/*Suite.java` to Surefire `<includes>` in addition to the default  
-> `*Test` / `*Tests` patterns, so `BeforeAfterDemoSuite` is automatically picked up by `mvn clean test`.
+> **⚙️ Maven config:** `pom.xml` requires two things for the suite feature to work:
+>
+> 1. The `junit-platform-suite` dependency (enables `@Suite`, `@BeforeSuite`, `@AfterSuite`):
+>    ```xml
+>    <dependency>
+>        <groupId>org.junit.platform</groupId>
+>        <artifactId>junit-platform-suite</artifactId>
+>        <version>1.14.3</version>
+>    </dependency>
+>    ```
+> 2. `**/*Suite.java` added to Surefire `<includes>` so `BeforeAfterDemoSuite` is automatically discovered by `mvn clean test`.
 
 ### 11. Surefire HTML Report Generation
 
