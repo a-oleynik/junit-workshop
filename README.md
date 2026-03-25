@@ -69,18 +69,19 @@ mvn clean test
 
 ## 🧩 Supported Versions
 
-| Library                      | Version used |
-|------------------------------|--------------|
-| JUnit Jupiter (JUnit 5)      | `5.14.3`     |
-| JUnit Platform               | `1.14.3`     |
-| JUnit Pioneer                | `2.3.0`      |
-| TNG DataProvider for JUnit 5 | `2.12`       |
-| AssertJ                      | `3.27.7`     |
-| Hamcrest                     | `3.0`        |
-| Lombok                       | `1.18.44`    |
-| Rerunner Jupiter             | `2.1.6`      |
-| OpenCSV                      | `5.12.0`     |
-| Java source / target         | `21`         |
+| Maven artifact                      | Version   | Purpose                                                                                                                                            |
+|-------------------------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `junit-jupiter-engine`              | `5.14.3`  | Test engine — discovers and runs Jupiter tests; transitively provides `junit-jupiter-api` (all `@Test`, `@BeforeEach`, `@AfterAll`, … annotations) |
+| `junit-jupiter-params`              | `5.14.3`  | `@ParameterizedTest`, `@ValueSource`, `@CsvSource`, `@MethodSource`, `@CsvFileSource`                                                              |
+| `junit-platform-suite`              | `1.14.3`  | `@Suite`, `@SelectClasses`, `@BeforeSuite`, `@AfterSuite`                                                                                          |
+| `junit-pioneer`                     | `2.3.0`   | `@RetryingTest`, `@CartesianTest`, and other community extensions                                                                                  |
+| `junit-jupiter-params-dataprovider` | `2.12`    | TNG-style `@DataProvider` integration for JUnit Jupiter                                                                                            |
+| `assertj-core`                      | `3.27.7`  | Fluent assertion library; `SoftAssertions` for collecting multiple failures                                                                        |
+| `hamcrest-library`                  | `3.0`     | Matcher-based assertions — `assertThat(value, matcher)`                                                                                            |
+| `lombok`                            | `1.18.44` | `@Builder`, `@Data` — compile-time code generation; reduces boilerplate in model classes                                                           |
+| `rerunner-jupiter`                  | `2.1.6`   | `@RepeatedIfExceptionsTest` — auto-retry flaky tests on failure                                                                                    |
+| `opencsv`                           | `5.12.0`  | CSV file parsing for data-driven tests (`CSVParameterizationTest`)                                                                                 |
+| Java source / target                | `21`      | Java language level for compilation                                                                                                                |
 
 ---
 
@@ -97,7 +98,7 @@ mvn clean test
 | `general`         | Display names & name generators                                             | `DisplayNameTest`, `DisplayNameGenerationTest`                                |
 | `group/asserts`   | Grouped / soft assertions (`assertAll`)                                     | `AssertAllTest`                                                               |
 | `group/asserts`   | AssertJ soft assertions                                                     | `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`                   |
-| `group/asserts`   | JUnit 5 soft assert pattern                                                 | `SoftAssertTest`                                                              |
+| `group/asserts`   | JUnit 5+ soft assert pattern                                                | `SoftAssertTest`                                                              |
 | `conditional`     | Assumptions (`assumeTrue`, `assumeThat`)                                    | `AssumptionsTest`, `AssumptionsBeforeAllTest`                                 |
 | `ddt`             | Parameterized tests — `@MethodSource`                                       | `ParameterizationTest`                                                        |
 | `ddt`             | Parameterized tests — `@ValueSource` / `@CsvSource`                         | `ValueSourceTest`                                                             |
