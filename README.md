@@ -226,14 +226,15 @@ mvn clean test -P RegressionTests
 
 `BeforeAfterDemoSuite` → `suite/` package  
 Group multiple test classes under a single `@Suite` class.  
-Use `@BeforeSuite` and `@AfterSuite` to run setup/teardown logic that wraps the **entire** suite — not just a single test class.
+Use `@BeforeSuite` and `@AfterSuite` to run setup/teardown logic that wraps the **entire** suite — not just a single
+test class.
 
 ```java
 
 @Suite
 @SelectClasses({
-    SuiteLifecycleFirstCase.class,
-    SuiteLifecycleSecondCase.class
+        SuiteLifecycleFirstCase.class,
+        SuiteLifecycleSecondCase.class
 })
 public class BeforeAfterDemoSuite {
     @BeforeSuite
@@ -252,15 +253,14 @@ public class BeforeAfterDemoSuite {
 > **⚙️ Maven config:** `pom.xml` requires two things for the suite feature to work:
 >
 > 1. The `junit-platform-suite` dependency (enables `@Suite`, `@BeforeSuite`, `@AfterSuite`):
-     >    ```xml
+>    ```xml
 >    <dependency>
 >        <groupId>org.junit.platform</groupId>
 >        <artifactId>junit-platform-suite</artifactId>
 >        <version>1.14.3</version>
 >    </dependency>
 >    ```
-> 2. `**/*Suite.java` added to Surefire `<includes>` so `BeforeAfterDemoSuite` is automatically discovered by
-     `mvn clean test`.
+> 2. `**/*Suite.java` added to Surefire `<includes>` so `BeforeAfterDemoSuite` is automatically discovered by `mvn clean test`.
 
 ### 11. Suite-like Lifecycle via Extension (`BeforeAllCallback` + Root Store)
 
