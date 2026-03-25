@@ -2,7 +2,7 @@
 
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
-[![JUnit](https://img.shields.io/badge/JUnit-6.1.0--M1-green.svg)](https://junit.org/junit5/)
+[![JUnit](https://img.shields.io/badge/JUnit-6.1.0--M1-green.svg)](https://junit.org/)
 [![JUnit Pioneer](https://img.shields.io/badge/JUnit_Pioneer-2.3.0-green.svg)](https://junit-pioneer.org/)
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
 [![Hamcrest](https://img.shields.io/badge/Hamcrest-3.0-yellowgreen.svg)](https://hamcrest.org/)
@@ -69,19 +69,19 @@ mvn clean test
 
 ## 🧩 Supported Versions
 
-| Library                      | Version used |
-|------------------------------|--------------|
-| JUnit Jupiter (JUnit 5)      | `6.1.0-M1`   |
-| JUnit Platform               | `6.1.0-M1`   |
-| JUnit Platform Suite         | `6.1.0-M1`   |
-| JUnit Pioneer                | `2.3.0`      |
-| TNG DataProvider for JUnit 5 | `2.12`       |
-| AssertJ                      | `3.27.7`     |
-| Hamcrest                     | `3.0`        |
-| Lombok                       | `1.18.44`    |
-| Rerunner Jupiter             | `2.1.6`      |
-| OpenCSV                      | `5.12.0`     |
-| Java source / target         | `21`         |
+| Library                       | Version used |
+|-------------------------------|--------------|
+| JUnit Jupiter (JUnit 5+)      | `6.1.0-M1`   |
+| JUnit Platform                | `6.1.0-M1`   |
+| JUnit Platform Suite          | `6.1.0-M1`   |
+| JUnit Pioneer                 | `2.3.0`      |
+| TNG DataProvider for JUnit 5+ | `2.12`       |
+| AssertJ                       | `3.27.7`     |
+| Hamcrest                      | `3.0`        |
+| Lombok                        | `1.18.44`    |
+| Rerunner Jupiter              | `2.1.6`      |
+| OpenCSV                       | `5.12.0`     |
+| Java source / target          | `21`         |
 
 ---
 
@@ -98,7 +98,7 @@ mvn clean test
 | `general`         | Display names & name generators                                             | `DisplayNameTest`, `DisplayNameGenerationTest`                                |
 | `group/asserts`   | Grouped / soft assertions (`assertAll`)                                     | `AssertAllTest`                                                               |
 | `group/asserts`   | AssertJ soft assertions                                                     | `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`                   |
-| `group/asserts`   | JUnit 5 soft assert pattern                                                 | `SoftAssertTest`                                                              |
+| `group/asserts`   | JUnit 5+ soft assert pattern                                                | `SoftAssertTest`                                                              |
 | `conditional`     | Assumptions (`assumeTrue`, `assumeThat`)                                    | `AssumptionsTest`, `AssumptionsBeforeAllTest`                                 |
 | `ddt`             | Parameterized tests — `@MethodSource`                                       | `ParameterizationTest`                                                        |
 | `ddt`             | Parameterized tests — `@ValueSource` / `@CsvSource`                         | `ValueSourceTest`                                                             |
@@ -183,7 +183,7 @@ Generate all combinations of parameter sets automatically.
 `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`  
 Collect all assertion failures before reporting — no early bail-out.
 
-### 5. Custom JUnit 5 Extensions
+### 5. Custom JUnit 5+ Extensions
 
 `DBResourceExtensionTest`, `TestWatcherExtensionTest`  
 Implement `BeforeAllCallback`, `AfterAllCallback`, and `TestWatcher` to manage external resources and observe test
@@ -198,7 +198,7 @@ Control method execution order with `@TestMethodOrder` and `@Order`.
 
 `RetryPioneerTest` — `@RetryingTest(maxAttempts, minSuccess)` via JUnit Pioneer  
 `RetryRerunnerTest` — Rerunner Jupiter integration  
-`RetryRepeatedTest` — JUnit 5 native `@RepeatedTest`
+`RetryRepeatedTest` — JUnit 5+ native `@RepeatedTest`
 
 ### 8. Parallel Execution
 
@@ -377,7 +377,7 @@ src/
     ├── nested/          # @Nested test classes
     ├── grouping/        # @Tag / custom tag annotations
     ├── execution/order/ # Test execution ordering
-    ├── extensions/      # Custom JUnit 5 extensions
+    ├── extensions/      # Custom JUnit 5+ extensions
     ├── retry/           # Retry strategies (Pioneer, Rerunner)
     ├── repeat/          # @RepeatedTest
     └── suite/           # Suite lifecycle (@BeforeSuite, @AfterSuite)
