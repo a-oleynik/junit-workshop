@@ -10,15 +10,11 @@
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
 > Companion code for the IT Talk **"JUnit 6 vs TestNG 7"**.
-> Previous
->
-edition: [TestNG vs. JUnit 4 slides](https://www.slideshare.net/oleynikandrey/it-talk-testng-6-vs-junit-4/) · [TestNG vs. JUnit 4 webinar](https://youtu.be/3C-Nu5mkyOQ?t=3189)
+> Previous edition: [TestNG vs. JUnit 4 slides](https://www.slideshare.net/oleynikandrey/it-talk-testng-6-vs-junit-4/) · [TestNG vs. JUnit 4 webinar](https://youtu.be/3C-Nu5mkyOQ?t=3189)
 >
 > **Related projects:**
-> - 🧪 [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples to compare
-    side-by-side with this repo
-> - 🌐 [Selenium Example (JUnit 6 branch)](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world
-    Selenium WebDriver framework built on top of JUnit 6
+> - 🧪 [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples to compare side-by-side with this repo
+> - 🌐 [Selenium Example (JUnit 6 branch)](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium WebDriver framework built on top of JUnit 6
 
 ---
 
@@ -257,15 +253,14 @@ public class BeforeAfterDemoSuite {
 > **⚙️ Maven config:** `pom.xml` requires two things for the suite feature to work:
 >
 > 1. The `junit-platform-suite` dependency (enables `@Suite`, `@BeforeSuite`, `@AfterSuite`):
-     >    ```xml
+>    ```xml
 >    <dependency>
 >        <groupId>org.junit.platform</groupId>
 >        <artifactId>junit-platform-suite</artifactId>
 >        <version>6.1.0-M1</version>
 >    </dependency>
 >    ```
-> 2. `**/*Suite.java` added to Surefire `<includes>` so `BeforeAfterDemoSuite` is automatically discovered by
-     `mvn clean test`.
+> 2. `**/*Suite.java` added to Surefire `<includes>` so `BeforeAfterDemoSuite` is automatically discovered by `mvn clean test`.
 
 ### 11. Suite-like Lifecycle via Extension (`BeforeAllCallback` + Root Store)
 
@@ -389,8 +384,7 @@ mvn clean test -Dgroups=Regression,Smoke
 mvn test "-Dtest=BeforeAfterDemoSuite"
 ```
 
-> ⚠️ **Naming convention:** suite-member classes (e.g. `SuiteLifecycleFirstCase`) are named `*Case`, **not** `*Test` or
-`*Tests`.  
+> ⚠️ **Naming convention:** suite-member classes (e.g. `SuiteLifecycleFirstCase`) are named `*Case`, **not** `*Test` or `*Tests`.  
 > This prevents Surefire from discovering them as standalone tests and running them **twice** —  
 > once directly by Surefire and once again through the suite.
 
@@ -468,8 +462,7 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [Maven Surefire Plugin](https://maven.apache.org/surefire/maven-surefire-plugin/)
 - [Maven Surefire Report Plugin](https://maven.apache.org/surefire/maven-surefire-report-plugin/)
 - [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples
-- [Selenium Example — JUnit 6 branch](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium
-  framework using JUnit 6
+- [Selenium Example — JUnit 6 branch](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium framework using JUnit 6
 
 ---
 
