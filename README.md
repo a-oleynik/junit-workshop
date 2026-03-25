@@ -9,6 +9,7 @@
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
 > Companion code for the IT Talk **"JUnit 4 vs TestNG 6"**.
+> 
 > Previous edition: [TestNG vs. JUnit 4 slides](https://www.slideshare.net/oleynikandrey/it-talk-testng-6-vs-junit-4/) · [TestNG vs. JUnit 4 webinar](https://youtu.be/3C-Nu5mkyOQ?t=3189)
 >
 > **Related projects:**
@@ -217,21 +218,52 @@ Two ways to control method execution order in JUnit 4.
 `RetriedMethodRuleTest` — `RetryMethodRule` via `@Rule` (method-level rule applied per method)  
 Three progressively more granular approaches to retrying flaky tests.
 
-### 9. Test Suite
+### 9. Parallel Test Execution
 
-`MySuite` → `suites/` package  
-Group multiple test classes under a single entry point using `@RunWith(Suite.class)` and `@Suite.SuiteClasses`.
+Surefire can run tests in parallel without any additional dependencies.
+`pom.xml` already contains the parallel config — just uncomment it:
 
-> **⚠️ Discovery:** `MySuite` does not match Surefire’s default `*Test` patterns.
-> Run it explicitly: `mvn test "-Dtest=MySuite"`
+```xml
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <version>3.5.5</version>
+    <configuration>
+        <parallel>methods</parallel>
+        <threadCount>3</threadCount>
+    </configuration>
+</plugin>
+```
 
-### 10. Custom RunListener
+**Available `parallel` modes:**
 
-`ExecutionListenerRunnerTest`  
-Attach a custom `RunListener` (via `ExecutionListenerRunner`) to observe test lifecycle events:
-test started, finished, failed, assumed, ignored.
+| Mode      | What runs in parallel                                  |
+|-----------|--------------------------------------------------------|
+| `methods` | Test methods within each class (safest starting point) |
+| `classes` | Whole test classes                                     |
+| `both`    | Classes and methods simultaneously                     |
+| `suites`  | Test suites                                            |
+| `all`     | Suites, classes, and methods — maximum parallelism     |
 
-### 11. Maven Profiles (Category-based filtering)
+**Enable from the command line without editing `pom.xml`:**
+
+```bash
+mvn clean test -Dparallel=methods -DthreadCount=3
+```
+
+> ⚠️ **Thread safety:** tests running in parallel must not share mutable static state.
+> Using `@FixMethodOrder` together with parallel methods can produce unpredictable results.
+
+**Alternative — `ConcurrentTestRunner`** (`junit-runners` is already in `pom.xml`):
+
+```java
+@RunWith(ConcurrentTestRunner.class)
+public class MyParallelTest { ... }
+```
+
+Runs methods within a single class concurrently, independent of Surefire config.
+
+### 10. Maven Profiles (Category-based filtering)
 
 ```bash
 # Run only Smoke tests
@@ -241,7 +273,21 @@ mvn clean test -P SmokeTests
 mvn clean test -P RegressionTests
 ```
 
-### 12. Surefire HTML Report Generation
+### 11. Test Suite
+
+`MySuite` → `suites/` package  
+Group multiple test classes under a single entry point using `@RunWith(Suite.class)` and `@Suite.SuiteClasses`.
+
+> **⚠️ Discovery:** `MySuite` does not match Surefire’s default `*Test` patterns.
+> Run it explicitly: `mvn test "-Dtest=MySuite"`
+
+### 12. Custom RunListener
+
+`ExecutionListenerRunnerTest`  
+Attach a custom `RunListener` (via `ExecutionListenerRunner`) to observe test lifecycle events:
+test started, finished, failed, assumed, ignored.
+
+### 13. Surefire HTML Report Generation
 
 ```bash
 mvn clean site
@@ -289,6 +335,12 @@ mvn clean test -Dtest=AssertTest#assert_equals*
 
 ```bash
 mvn clean test -Dtest=AssertTest#assert_equals*+assert_boolean*
+```
+
+### Run tests in parallel
+
+```bash
+mvn clean test -Dparallel=methods -DthreadCount=3
 ```
 
 ### Rerun failing tests automatically (e.g. flaky tests)
