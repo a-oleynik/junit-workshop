@@ -1,4 +1,4 @@
-package com.oleynik.qa.workshop.junit.suite.extension;
+package com.oleynik.qa.workshop.junit.suites.extension;
 
 import com.oleynik.qa.workshop.junit.extensions.SuiteLikeLifecycleExtension;
 import org.junit.jupiter.api.Test;
