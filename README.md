@@ -16,6 +16,9 @@
 > - 🧪 [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples to compare side-by-side with this repo
 > - 🌐 [Selenium Example (JUnit 6 branch)](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium WebDriver framework built on top of JUnit 6
 
+Hands-on examples for **JUnit 6**, **JUnit 5**, and **JUnit 4** in Java.  
+This repository is a practical reference for **automated testing in Java**, covering assertions, parameterized tests, extensions, test lifecycle, retry strategies, parallel execution, and migration between JUnit versions.
+
 ---
 
 ## 🌿 Branches
@@ -33,6 +36,7 @@ This repository contains examples for multiple JUnit versions, each on its own b
 ## 📋 Table of Contents
 
 - [Branches](#-branches)
+- [Why this repository?](#-why-this-repository)
 - [Who Is This For?](#-who-is-this-for)
 - [Prerequisites](#-prerequisites)
 - [Quick Start](#-quick-start)
@@ -45,6 +49,19 @@ This repository contains examples for multiple JUnit versions, each on its own b
 - [License](#-license)
 - [Additional Resources](#-additional-resources)
 - [Useful Links](#-useful-links)
+- [Found it useful?](#-found-it-useful)
+
+---
+
+## 🤔 Why this repository?
+
+This project is useful if you want to:
+
+- learn the differences between **JUnit 4, JUnit 5, and JUnit 6**
+- see **real runnable examples** instead of only theory
+- compare **JUnit and TestNG** approaches
+- study **automated testing patterns in Java**
+- use it as material for workshops, talks, and self-study
 
 ---
 
@@ -669,3 +686,11 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [**JUnit 6 Released — Clean-Up, Modernization & Minimal Disruption**](https://medium.com/@andrei.oleynik/junit-6-released-clean-up-modernization-minimal-disruption-d3ecf11b64ad)
 - [**Lombok Download**](https://projectlombok.org/download)
 - [**IntelliJ Lombok Plugin**](https://plugins.jetbrains.com/plugin/6317-lombok)
+
+---
+
+## ⭐ Found it useful?
+
+If you found useful examples or information in this repository, please give it a ⭐  
+Your support helps the project reach more Java and QA engineers.
+
