@@ -13,14 +13,26 @@
 > Previous edition: [TestNG vs. JUnit 4 slides](https://www.slideshare.net/oleynikandrey/it-talk-testng-6-vs-junit-4/) · [TestNG vs. JUnit 4 webinar](https://youtu.be/3C-Nu5mkyOQ?t=3189)
 >
 > **Related projects:**
-> - 🔄 [JUnit 6 Workshop](https://github.com/a-oleynik/junit-workshop/tree/master) — same workshop upgraded to JUnit 6
 > - 🧪 [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples to compare side-by-side with this repo
 > - 🌐 [Selenium Example (JUnit 6 branch)](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium WebDriver framework built on top of JUnit 6
 
 ---
 
+## 🌿 Branches
+
+This repository contains examples for multiple JUnit versions, each on its own branch:
+
+| Branch                                                              | JUnit version          | Description                                              |
+|---------------------------------------------------------------------|------------------------|----------------------------------------------------------|
+| [`main`](https://github.com/a-oleynik/junit-workshop/tree/main)     | **JUnit 6** (6.1.0-M1) | Current branch — latest JUnit 6 Milestone features       |
+| [`junit5`](https://github.com/a-oleynik/junit-workshop/tree/junit5) | **JUnit 5** (5.x)      | Stable JUnit 5 examples — the most widely used version   |
+| [`junit4`](https://github.com/a-oleynik/junit-workshop/tree/junit4) | **JUnit 4** (4.x)      | Legacy JUnit 4 examples — useful for migration reference |
+
+---
+
 ## 📋 Table of Contents
 
+- [Branches](#-branches)
 - [Who Is This For?](#-who-is-this-for)
 - [Prerequisites](#-prerequisites)
 - [Quick Start](#-quick-start)
@@ -644,4 +656,3 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - **JUnit 4 Releases:** https://github.com/junit-team/junit4/releases
 - **Lombok Download:** https://projectlombok.org/download
 - **IntelliJ Lombok Plugin:** https://plugins.jetbrains.com/plugin/6317-lombok
-
