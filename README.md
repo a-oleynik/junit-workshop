@@ -61,12 +61,23 @@ This repository contains examples for multiple JUnit versions, each on its own b
 
 ## 📦 Prerequisites
 
-| Tool              | Minimum version                 | Notes                                   |
-|-------------------|---------------------------------|-----------------------------------------|
-| **JDK**           | 17 LTS                          |                                         |
-| **Maven**         | 3.9+                            |                                         |
-| **IDE**           | Any (IntelliJ IDEA recommended) | Lombok plugin required for IDE support  |
-| **Lombok plugin** | Latest                          | IntelliJ: *Settings → Plugins → Lombok* |
+| Tool              | Minimum version                   | Notes                                                     |
+|-------------------|-----------------------------------|-----------------------------------------------------------|
+| **JDK**           | 17 LTS                            |                                                           |
+| **Maven**         | 3.9+ *(optional but recommended)* | Not required if using the included Maven Wrapper (`mvnw`) |
+| **IDE**           | Any (IntelliJ IDEA recommended)   | Lombok plugin required for IDE support                    |
+| **Lombok plugin** | Latest                            | IntelliJ: *Settings → Plugins → Lombok*                   |
+
+> 💡 **Maven Wrapper included** — this project ships with `mvnw` (Linux/macOS) and `mvnw.cmd` (Windows).  
+> You can use it instead of a locally installed Maven. The wrapper automatically downloads the correct Maven version on first run.
+>
+> ```bash
+> # Linux / macOS
+> ./mvnw clean test
+>
+> # Windows
+> mvnw.cmd clean test
+> ```
 
 ---
 
@@ -643,8 +654,8 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [Lombok Features](https://projectlombok.org/features/)
 - [Maven Surefire Plugin](https://maven.apache.org/surefire/maven-surefire-plugin/)
 - [Maven Surefire Report Plugin](https://maven.apache.org/surefire/maven-surefire-report-plugin/)
+- [Maven Wrapper](https://maven.apache.org/wrapper/) — run Maven without a local installation
 - [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples
-- [JUnit 6 Workshop](https://github.com/a-oleynik/junit-workshop/tree/master) — same workshop using JUnit 6
 - [Selenium Example — JUnit 6 branch](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium framework using JUnit 6
 
 ---
