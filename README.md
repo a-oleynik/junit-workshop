@@ -16,8 +16,8 @@
 > - 🧪 [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples to compare side-by-side with this repo
 > - 🌐 [Selenium Example (JUnit 6 branch)](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium WebDriver framework built on top of JUnit 6
 
-Hands-on examples for **JUnit 6**, **JUnit 5**, and **JUnit 4** in Java.  
-This repository is a practical reference for **automated testing in Java**, covering assertions, parameterized tests, extensions, test lifecycle, retry strategies, parallel execution, and migration between JUnit versions.
+Hands-on examples for **JUnit 6**, **JUnit 5**, and **JUnit 4** in Java — covering every major feature from basic assertions to advanced extensions, parameterized tests, retry strategies, parallel execution, and suite orchestration.  
+Use it as a practical reference, a workshop starter kit, or a side-by-side comparison with the companion [TestNG Workshop](https://github.com/a-oleynik/testng-workshop).
 
 ---
 
@@ -55,13 +55,19 @@ This repository contains examples for multiple JUnit versions, each on its own b
 
 ## 🤔 Why this repository?
 
-This project is useful if you want to:
+Most JUnit tutorials stop at `@Test` and `@BeforeEach`.  
+This project goes further — it covers the **full JUnit 5 / JUnit 6 feature set** with real, runnable code you can clone, execute, and adapt immediately.
 
-- learn the differences between **JUnit 4, JUnit 5, and JUnit 6**
-- see **real runnable examples** instead of only theory
-- compare **JUnit and TestNG** approaches
-- study **automated testing patterns in Java**
-- use it as material for workshops, talks, and self-study
+Use this repository if you want to:
+
+- **learn JUnit from scratch** with a structured, step-by-step learning path
+- **understand the differences between JUnit 4, JUnit 5, and JUnit 6** — what changed and why
+- **see real runnable examples** instead of reading documentation only
+- **explore advanced features** — extensions (`BeforeAllCallback`, `AfterAllCallback`, `TestWatcher`), retry strategies, parallel execution, tagging, and parameterized tests
+- **study automated testing patterns in Java** — soft assertions, data-driven tests, conditional execution, and more
+- **understand suite orchestration** — `@BeforeSuite`, `@AfterSuite`, `@Suite`, and suite-like lifecycle via custom extensions
+- **compare JUnit and TestNG** patterns and idioms side-by-side with the companion [TestNG Workshop](https://github.com/a-oleynik/testng-workshop)
+- **use it as material** for workshops, tech talks, onboarding sessions, and self-study
 
 ---
 
