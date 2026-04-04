@@ -10,7 +10,7 @@
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
 > Companion code for the IT Talk **"JUnit 6 vs TestNG 7"**.
-> 
+>
 > Previous edition: [TestNG vs. JUnit 4 slides](https://www.slideshare.net/oleynikandrey/it-talk-testng-6-vs-junit-4/) · [TestNG vs. JUnit 4 webinar](https://youtu.be/3C-Nu5mkyOQ?t=3189)
 >
 > **Related projects:**
@@ -19,8 +19,21 @@
 
 ---
 
+## 🌿 Branches
+
+This repository contains examples for multiple JUnit versions, each on its own branch:
+
+| Branch                                                              | JUnit version          | Description                                              |
+|---------------------------------------------------------------------|------------------------|----------------------------------------------------------|
+| [`main`](https://github.com/a-oleynik/junit-workshop/tree/main)     | **JUnit 6** (6.1.0-M1) | Current branch — latest JUnit 6 Milestone features       |
+| [`junit5`](https://github.com/a-oleynik/junit-workshop/tree/junit5) | **JUnit 5** (5.x)      | Stable JUnit 5 examples — the most widely used version   |
+| [`junit4`](https://github.com/a-oleynik/junit-workshop/tree/junit4) | **JUnit 4** (4.x)      | Legacy JUnit 4 examples — useful for migration reference |
+
+---
+
 ## 📋 Table of Contents
 
+- [Branches](#-branches)
 - [Who Is This For?](#-who-is-this-for)
 - [Prerequisites](#-prerequisites)
 - [Quick Start](#-quick-start)
