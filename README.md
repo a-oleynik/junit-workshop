@@ -19,8 +19,21 @@
 
 ---
 
+## 🌿 Branches
+
+This repository contains examples for multiple JUnit versions, each on its own branch:
+
+| Branch                                                              | JUnit version          | Description                                              |
+|---------------------------------------------------------------------|------------------------|----------------------------------------------------------|
+| [`main`](https://github.com/a-oleynik/junit-workshop/tree/main)     | **JUnit 6** (6.1.0-M1) | Current branch — latest JUnit 6 Milestone features       |
+| [`junit5`](https://github.com/a-oleynik/junit-workshop/tree/junit5) | **JUnit 5** (5.x)      | Stable JUnit 5 examples — the most widely used version   |
+| [`junit4`](https://github.com/a-oleynik/junit-workshop/tree/junit4) | **JUnit 4** (4.x)      | Legacy JUnit 4 examples — useful for migration reference |
+
+---
+
 ## 📋 Table of Contents
 
+- [Branches](#-branches)
 - [Who Is This For?](#-who-is-this-for)
 - [Prerequisites](#-prerequisites)
 - [Quick Start](#-quick-start)
