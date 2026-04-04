@@ -510,7 +510,9 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 - **Java Download:** https://www.oracle.com/java/technologies/downloads/
 - **Maven Download:** https://maven.apache.org/download.cgi
-- **JUnit 5 Releases:** https://github.com/junit-team/junit5/releases
+- **JUnit 5 & 6 Releases:** https://github.com/junit-team/junit5/releases
+- **JUnit 4 Releases:** https://github.com/junit-team/junit4/releases
+- **JUnit 6 Released — Clean-Up, Modernization & Minimal Disruption** https://medium.com/@andrei.oleynik/junit-6-released-clean-up-modernization-minimal-disruption-d3ecf11b64ad
 - **JUnit Pioneer Releases:** https://github.com/junit-pioneer/junit-pioneer/releases
 - **Lombok Download:** https://projectlombok.org/download
 - **IntelliJ Lombok Plugin:** https://plugins.jetbrains.com/plugin/6317-lombok
