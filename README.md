@@ -5,7 +5,7 @@
 [![JUnit](https://img.shields.io/badge/JUnit-4.13.2-green.svg)](https://junit.org/junit4/)
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
 [![Hamcrest](https://img.shields.io/badge/Hamcrest-3.0-yellowgreen.svg)](https://hamcrest.org/)
-[![Lombok](https://img.shields.io/badge/Lombok-1.18.44-red.svg)](https://projectlombok.org/)
+[![Lombok](https://img.shields.io/badge/Lombok-1.18.46-red.svg)](https://projectlombok.org/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
 > Companion code for the IT Talk **"JUnit 4 vs TestNG 6"**.
@@ -27,7 +27,7 @@ This repository contains examples for multiple JUnit versions, each on its own b
 
 | Branch                                                                          | JUnit version          | Description                                              |
 |---------------------------------------------------------------------------------|------------------------|----------------------------------------------------------|
-| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.0-M1) | Current branch — latest JUnit 6 Milestone features       |
+| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.0-RC1) | Current branch — latest JUnit 6 RC features              |
 | [`junit-5.14.3`](https://github.com/a-oleynik/junit-workshop/tree/junit-5.14.3) | **JUnit 5** (5.x)      | Stable JUnit 5 examples — the most widely used version   |
 | [`junit-4.13.2`](https://github.com/a-oleynik/junit-workshop/tree/junit-4.13.2) | **JUnit 4** (4.x)      | Legacy JUnit 4 examples — useful for migration reference |
 
@@ -125,7 +125,7 @@ mvn clean test
 | `junit-hierarchicalcontextrunner` | `4.12.2`  | Enables nested test classes like JUnit 5+ `@Nested` via `HierarchicalContextRunner`                                            |
 | `assertj-core`                    | `3.27.7`  | Fluent assertion library; `SoftAssertions` for collecting multiple failures                                                    |
 | `hamcrest-library`                | `3.0`     | Matcher-based assertions — `assertThat(value, matcher)`                                                                        |
-| `lombok`                          | `1.18.44` | `@Builder`, `@Data` — compile-time code generation; reduces boilerplate in model classes                                       |
+| `lombok`                          | `1.18.46` | `@Builder`, `@Data` — compile-time code generation; reduces boilerplate in model classes                                       |
 | `opencsv`                         | `5.12.0`  | CSV file parsing for data-driven tests                                                                                         |
 | Java source / target              | `17`      | Java language level for compilation                                                                                            |
 
