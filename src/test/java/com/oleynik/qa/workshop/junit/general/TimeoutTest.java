@@ -14,20 +14,20 @@ public class TimeoutTest {
     public void setUp() {
         Utils.waitFor(1);
         System.out.println("Set up");
-        System.out.println("Set up thread id " + Thread.currentThread().getId());
+        System.out.println("Set up thread id " + Thread.currentThread().threadId());
     }
 
     @AfterEach
     public void tearDown() {
         Utils.waitFor(1);
         System.out.println("Tear down");
-        System.out.println("Tear down thread id " + Thread.currentThread().getId());
+        System.out.println("Tear down thread id " + Thread.currentThread().threadId());
     }
 
     @Test
     void timeout_test() {
         System.out.println("Timeout test");
-        System.out.println("Thread id " + Thread.currentThread().getId());
+        System.out.println("Thread id " + Thread.currentThread().threadId());
         assertTimeout(ofSeconds(6), () ->
                 Utils.waitFor(2)
         );
@@ -36,7 +36,7 @@ public class TimeoutTest {
     @Test
     public void timeout_test2() {
         System.out.println("Timeout test");
-        System.out.println("Thread id " + Thread.currentThread().getId());
+        System.out.println("Thread id " + Thread.currentThread().threadId());
         assertTimeout(ofSeconds(2), () ->
                 Utils.waitFor(1)//2
         );
@@ -46,7 +46,7 @@ public class TimeoutTest {
     @Test
     public void timeout_test3() {
         System.out.println("Timeout test");
-        System.out.println("Thread id " + Thread.currentThread().getId());
+        System.out.println("Thread id " + Thread.currentThread().threadId());
                 Utils.waitFor(1);//2
     }
 }
