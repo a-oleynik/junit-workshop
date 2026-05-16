@@ -2,14 +2,14 @@
 
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
-[![JUnit](https://img.shields.io/badge/JUnit-5.14.3-green.svg)](https://junit.org/)
+[![JUnit](https://img.shields.io/badge/JUnit-5.14.4-green.svg)](https://junit.org/)
 [![JUnit Pioneer](https://img.shields.io/badge/JUnit_Pioneer-2.3.0-green.svg)](https://junit-pioneer.org/)
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
 [![Hamcrest](https://img.shields.io/badge/Hamcrest-3.0-yellowgreen.svg)](https://hamcrest.org/)
 [![Lombok](https://img.shields.io/badge/Lombok-1.18.46-red.svg)](https://projectlombok.org/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
-> Companion code for the IT Talk **"JUnit 5 vs TestNG 7"**.  
+> Companion code for the IT Talk **"JUnit 5 vs TestNG 7"**.
 >
 > Previous edition: [TestNG vs. JUnit 4 slides](https://www.slideshare.net/oleynikandrey/it-talk-testng-6-vs-junit-4/) · [TestNG vs. JUnit 4 webinar](https://youtu.be/3C-Nu5mkyOQ?t=3189)
 >
@@ -17,7 +17,7 @@
 > - 🧪 [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples to compare side-by-side with this repo
 > - 🌐 [Selenium Example (JUnit 6 branch)](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium WebDriver framework built on top of JUnit 6
 
-Hands-on examples for **JUnit 6**, **JUnit 5**, and **JUnit 4** in Java — covering every major feature from basic assertions to advanced extensions, parameterized tests, retry strategies, parallel execution, and suite orchestration.  
+Hands-on examples for **JUnit 5** and **JUnit 4** in Java — covering every major feature from basic assertions to advanced extensions, parameterized tests, retry strategies, parallel execution, and suite orchestration.  
 Use it as a practical reference, a workshop starter kit, or a side-by-side comparison with the companion [TestNG Workshop](https://github.com/a-oleynik/testng-workshop).
 
 ---
@@ -26,11 +26,11 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 
 This repository contains examples for multiple JUnit versions, each on its own branch:
 
-| Branch                                                                          | JUnit version          | Description                                              |
-|---------------------------------------------------------------------------------|------------------------|----------------------------------------------------------|
-| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.0-RC1) | Current branch — latest JUnit 6 RC features              |
-| [`junit-5.14.3`](https://github.com/a-oleynik/junit-workshop/tree/junit-5.14.3) | **JUnit 5** (5.x)      | Stable JUnit 5 examples — the most widely used version   |
-| [`junit-4.13.2`](https://github.com/a-oleynik/junit-workshop/tree/junit-4.13.2) | **JUnit 4** (4.x)      | Legacy JUnit 4 examples — useful for migration reference |
+| Branch                                                                          | JUnit version           | Description                                                             |
+|---------------------------------------------------------------------------------|-------------------------|-------------------------------------------------------------------------|
+| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.0-RC1) | Latest JUnit 6 RC features                                              |
+| [`junit-5.14.4`](https://github.com/a-oleynik/junit-workshop/tree/junit-5.14.4) | **JUnit 5** (5.14.4)    | Current branch — stable JUnit 5 examples (the most widely used version) |
+| [`junit-4.13.2`](https://github.com/a-oleynik/junit-workshop/tree/junit-4.13.2) | **JUnit 4** (4.13.2)    | Legacy JUnit 4 examples — useful for migration reference                |
 
 ---
 
@@ -117,19 +117,19 @@ mvn clean test
 
 ## 🧩 Supported Versions
 
-| Maven artifact                      | Version   | Purpose                                                                                                                                            |
-|-------------------------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `junit-jupiter-engine`              | `5.14.3`  | Test engine — discovers and runs Jupiter tests; transitively provides `junit-jupiter-api` (all `@Test`, `@BeforeEach`, `@AfterAll`, … annotations) |
-| `junit-jupiter-params`              | `5.14.3`  | `@ParameterizedTest`, `@ValueSource`, `@CsvSource`, `@MethodSource`, `@CsvFileSource`                                                              |
-| `junit-platform-suite`              | `1.14.3`  | `@Suite`, `@SelectClasses`, `@BeforeSuite`, `@AfterSuite`                                                                                          |
-| `junit-pioneer`                     | `2.3.0`   | `@RetryingTest`, `@CartesianTest`, and other community extensions                                                                                  |
-| `junit-jupiter-params-dataprovider` | `2.12`    | TNG-style `@DataProvider` integration for JUnit Jupiter                                                                                            |
-| `assertj-core`                      | `3.27.7`  | Fluent assertion library; `SoftAssertions` for collecting multiple failures                                                                        |
-| `hamcrest-library`                  | `3.0`     | Matcher-based assertions — `assertThat(value, matcher)`                                                                                            |
-| `lombok`                            | `1.18.46` | `@Builder`, `@Data` — compile-time code generation; reduces boilerplate in model classes                                                           |
-| `rerunner-jupiter`                  | `2.1.6`   | `@RepeatedIfExceptionsTest` — auto-retry flaky tests on failure                                                                                    |
-| `opencsv`                           | `5.12.0`  | CSV file parsing for data-driven tests (`CSVParameterizationTest`)                                                                                 |
-| Java source / target                | `21`      | Java language level for compilation                                                                                                                |
+| Maven artifact                      | Version          | Purpose                                                                                                                                            |
+|-------------------------------------|------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `junit-jupiter-engine`              | `5.14.4` *(BOM)* | Test engine — discovers and runs Jupiter tests; transitively provides `junit-jupiter-api` (all `@Test`, `@BeforeEach`, `@AfterAll`, … annotations) |
+| `junit-jupiter-params`              | `5.14.4` *(BOM)* | `@ParameterizedTest`, `@ValueSource`, `@CsvSource`, `@MethodSource`, `@CsvFileSource`                                                              |
+| `junit-platform-suite`              | `1.14.4` *(BOM)* | `@Suite`, `@SelectClasses`, `@BeforeSuite`, `@AfterSuite`                                                                                          |
+| `junit-pioneer`                     | `2.3.0`          | `@RetryingTest`, `@CartesianTest`, and other community extensions                                                                                  |
+| `junit-jupiter-params-dataprovider` | `2.12`           | TNG-style `@DataProvider` integration for JUnit Jupiter                                                                                            |
+| `assertj-core`                      | `3.27.7`         | Fluent assertion library; `SoftAssertions` for collecting multiple failures                                                                        |
+| `hamcrest-library`                  | `3.0`            | Matcher-based assertions — `assertThat(value, matcher)`                                                                                            |
+| `lombok`                            | `1.18.46`        | `@Builder`, `@Data` — compile-time code generation; reduces boilerplate in model classes                                                           |
+| `rerunner-jupiter`                  | `2.1.6`          | `@RepeatedIfExceptionsTest` — auto-retry flaky tests on failure                                                                                    |
+| `opencsv`                           | `5.12.0`         | CSV file parsing for data-driven tests (`CSVParameterizationTest`)                                                                                 |
+| Java source / target                | `21`             | Java language level for compilation                                                                                                                |
 
 ---
 
@@ -319,7 +319,7 @@ public class BeforeAfterSuite {
 >    <dependency>
 >        <groupId>org.junit.platform</groupId>
 >        <artifactId>junit-platform-suite</artifactId>
->        <version>1.14.3</version>
+>        <!-- version managed by junit-bom in dependencyManagement -->
 >    </dependency>
 >    ```
 > 2. `**/*Suite.java` added to Surefire `<includes>` so `BeforeAfterSuite` is automatically discovered by `mvn clean test`.
@@ -516,7 +516,7 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 ## 📚 Additional Resources
 
-- [JUnit 5 User Guide](https://docs.junit.org/5.14.3/overview.html)
+- [JUnit 5 User Guide](https://docs.junit.org/5.14.4/overview.html)
 - [JUnit Pioneer Documentation](https://junit-pioneer.org/docs/)
 - [AssertJ Documentation](https://assertj.github.io/doc/)
 - [Hamcrest Tutorial](https://hamcrest.org/JavaHamcrest/tutorial)
