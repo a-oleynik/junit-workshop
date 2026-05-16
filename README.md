@@ -26,11 +26,11 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 
 This repository contains examples for multiple JUnit versions, each on its own branch:
 
-| Branch                                                                          | JUnit version          | Description                                              |
-|---------------------------------------------------------------------------------|------------------------|----------------------------------------------------------|
+| Branch                                                                          | JUnit version           | Description                                              |
+|---------------------------------------------------------------------------------|-------------------------|----------------------------------------------------------|
 | [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.0-RC1) | Current branch — latest JUnit 6 RC features              |
-| [`junit-5.14.3`](https://github.com/a-oleynik/junit-workshop/tree/junit-5.14.3) | **JUnit 5** (5.x)      | Stable JUnit 5 examples — the most widely used version   |
-| [`junit-4.13.2`](https://github.com/a-oleynik/junit-workshop/tree/junit-4.13.2) | **JUnit 4** (4.x)      | Legacy JUnit 4 examples — useful for migration reference |
+| [`junit-5.14.4`](https://github.com/a-oleynik/junit-workshop/tree/junit-5.14.4) | **JUnit 5** (5.14.4)    | Stable JUnit 5 examples — the most widely used version   |
+| [`junit-4.13.2`](https://github.com/a-oleynik/junit-workshop/tree/junit-4.13.2) | **JUnit 4** (4.13.2)    | Legacy JUnit 4 examples — useful for migration reference |
 
 ---
 
@@ -117,19 +117,19 @@ mvn clean test
 
 ## 🧩 Supported Versions
 
-| Maven artifact                      | Version     | Purpose                                                                                                                                            |
-|-------------------------------------|-------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
-| `junit-jupiter-engine`              | `6.1.0-RC1` | Test engine — discovers and runs Jupiter tests; transitively provides `junit-jupiter-api` (all `@Test`, `@BeforeEach`, `@AfterAll`, … annotations) |
-| `junit-jupiter-params`              | `6.1.0-RC1` | `@ParameterizedTest`, `@ValueSource`, `@CsvSource`, `@MethodSource`, `@CsvFileSource`                                                              |
-| `junit-platform-suite`              | `6.1.0-RC1` | `@Suite`, `@SelectClasses`, `@BeforeSuite`, `@AfterSuite`                                                                                          |
-| `junit-pioneer`                     | `2.3.0`     | `@RetryingTest`, `@CartesianTest`, and other community extensions                                                                                  |
-| `junit-jupiter-params-dataprovider` | `2.12`      | TNG-style `@DataProvider` integration for JUnit Jupiter                                                                                            |
-| `assertj-core`                      | `3.27.7`    | Fluent assertion library; `SoftAssertions` for collecting multiple failures                                                                        |
-| `hamcrest-library`                  | `3.0`       | Matcher-based assertions — `assertThat(value, matcher)`                                                                                            |
-| `lombok`                            | `1.18.46`   | `@Builder`, `@Data` — compile-time code generation; reduces boilerplate in model classes                                                           |
-| `rerunner-jupiter`                  | `2.1.6`     | `@RepeatedIfExceptionsTest` — auto-retry flaky tests on failure                                                                                    |
-| `opencsv`                           | `5.12.0`    | CSV file parsing for data-driven tests (`CSVParameterizationTest`)                                                                                 |
-| Java source / target                | `21`        | Java language level for compilation                                                                                                                |
+| Maven artifact                      | Version              | Purpose                                                                                                                                            |
+|-------------------------------------|----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| `junit-jupiter-engine`              | `6.1.0-RC1` *(BOM)*  | Test engine — discovers and runs Jupiter tests; transitively provides `junit-jupiter-api` (all `@Test`, `@BeforeEach`, `@AfterAll`, … annotations) |
+| `junit-jupiter-params`              | `6.1.0-RC1` *(BOM)*  | `@ParameterizedTest`, `@ValueSource`, `@CsvSource`, `@MethodSource`, `@CsvFileSource`                                                              |
+| `junit-platform-suite`              | `6.1.0-RC1` *(BOM)*  | `@Suite`, `@SelectClasses`, `@BeforeSuite`, `@AfterSuite`                                                                                          |
+| `junit-pioneer`                     | `2.3.0`              | `@RetryingTest`, `@CartesianTest`, and other community extensions                                                                                  |
+| `junit-jupiter-params-dataprovider` | `2.12`               | TNG-style `@DataProvider` integration for JUnit Jupiter                                                                                            |
+| `assertj-core`                      | `3.27.7`             | Fluent assertion library; `SoftAssertions` for collecting multiple failures                                                                        |
+| `hamcrest-library`                  | `3.0`                | Matcher-based assertions — `assertThat(value, matcher)`                                                                                            |
+| `lombok`                            | `1.18.46`            | `@Builder`, `@Data` — compile-time code generation; reduces boilerplate in model classes                                                           |
+| `rerunner-jupiter`                  | `2.1.6`              | `@RepeatedIfExceptionsTest` — auto-retry flaky tests on failure                                                                                    |
+| `opencsv`                           | `5.12.0`             | CSV file parsing for data-driven tests (`CSVParameterizationTest`)                                                                                 |
+| Java source / target                | `21`                 | Java language level for compilation                                                                                                                |
 
 ---
 
@@ -319,7 +319,7 @@ public class BeforeAfterSuite {
 >    <dependency>
 >        <groupId>org.junit.platform</groupId>
 >        <artifactId>junit-platform-suite</artifactId>
->        <version>6.1.0-RC1</version>
+>        <!-- version managed by junit-bom in dependencyManagement -->
 >    </dependency>
 >    ```
 > 2. `**/*Suite.java` added to Surefire `<includes>` so `BeforeAfterSuite` is automatically discovered by `mvn clean test`.
