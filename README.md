@@ -28,7 +28,7 @@ This repository contains examples for multiple JUnit versions, each on its own b
 
 | Branch                                                                          | JUnit version        | Description                                              |
 |---------------------------------------------------------------------------------|----------------------|----------------------------------------------------------|
-| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.0)  | Current branch — latest JUnit 6 RC features              |
+| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.0)  | Current branch — latest JUnit 6 features                 |
 | [`junit-5.14.4`](https://github.com/a-oleynik/junit-workshop/tree/junit-5.14.4) | **JUnit 5** (5.14.4) | Stable JUnit 5 examples — the most widely used version   |
 | [`junit-4.13.2`](https://github.com/a-oleynik/junit-workshop/tree/junit-4.13.2) | **JUnit 4** (4.13.2) | Legacy JUnit 4 examples — useful for migration reference |
 
