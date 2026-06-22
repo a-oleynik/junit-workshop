@@ -77,10 +77,10 @@ Parallel execution is enabled globally in `pom.xml`. For tests that must not run
 2. **`BeforeAllCallback` + root `ExtensionContext` store** (see `SuiteLikeLifecycleExtension`): no suite class needed; `getOrComputeIfAbsent` with `AutoCloseable` provides global setup/teardown. In JUnit 5, use `getOrComputeIfAbsent` — `computeIfAbsent` is the JUnit 6 replacement (where `getOrComputeIfAbsent` is deprecated).
 
 ## CI / CD
-- Workflow: `.github/workflows/maven.yml` (GitHub Actions)
-- Triggers on push and PR to `master` and `junit-*` branches
-- Build command: `./mvnw -B clean site` — runs all tests and generates the Surefire HTML report in `target/site/`
-- Artifacts uploaded with `if: always()`, 14-day retention: `surefire-report` (`target/site/`) and `junit-xml-results` (`target/surefire-reports/`)
+- Workflow: `.github/workflows/maven.yml` (GitHub Actions), triggered **manually only** (`workflow_dispatch`)
+- Input: `groups` (optional) — tag filter passed to `-Dgroups`
+- Two jobs: `regression` (always, all tests) and `by-tag` (only when `groups` input is provided)
+- Both jobs run `./mvnw -B clean site` and upload artifacts with `if: always()`, 14-day retention: `surefire-report[-{tag}]` (`target/site/`) and `junit-xml-results[-{tag}]` (`target/surefire-reports/`)
 - Do **not** replace `site` with `test` in the workflow — the artifact upload requires the site report
 
 ## Maven quick reference
