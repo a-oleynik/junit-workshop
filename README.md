@@ -46,7 +46,7 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 If you found useful examples or information in this repository, please give it a ⭐  
 Your support helps the project reach more Java and QA engineers.
 
-[↑ Back to Table of Contents](#-table-of-contents)
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -66,7 +66,7 @@ Use this repository if you want to:
 - **compare JUnit and TestNG** patterns and idioms side-by-side with the companion [TestNG Workshop](https://github.com/a-oleynik/testng-workshop)
 - **use it as material** for workshops, tech talks, onboarding sessions, and self-study
 
-[↑ Back to Table of Contents](#-table-of-contents)
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -79,7 +79,7 @@ Use this repository if you want to:
 | **Developers** comparing JUnit 4 with TestNG            | Side-by-side comparison of patterns and idioms                      |
 | **Workshop facilitators**                               | A ready-made project you can hand to attendees                      |
 
-[↑ Back to Table of Contents](#-table-of-contents)
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -93,7 +93,7 @@ This repository contains examples for multiple JUnit versions, each on its own b
 | [`junit-5.14.4`](https://github.com/a-oleynik/junit-workshop/tree/junit-5.14.4) | **JUnit 5** (5.14.4) | Stable JUnit 5 examples — the most widely used version                    |
 | [`junit-4.13.2`](https://github.com/a-oleynik/junit-workshop/tree/junit-4.13.2) | **JUnit 4** (4.13.2) | Current branch — legacy JUnit 4 examples — useful for migration reference |
 
-[↑ Back to Table of Contents](#-table-of-contents)
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -105,7 +105,7 @@ cd junit-workshop
 mvn clean test
 ```
 
-[↑ Back to Table of Contents](#-table-of-contents)
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -129,7 +129,7 @@ mvn clean test
 > mvnw.cmd clean test
 > ```
 
-[↑ Back to Table of Contents](#-table-of-contents)
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -151,7 +151,7 @@ mvn clean test
 > **Note on Hamcrest:** `junit:junit:4.13.2` bundles `hamcrest-core:1.3`, which is excluded in `pom.xml`.
 > `hamcrest-library` is declared explicitly to get the full matcher library instead of the minimal core.
 
-[↑ Back to Table of Contents](#-table-of-contents)
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -190,7 +190,7 @@ mvn clean test
 | `suites/beforeclass` | Suite lifecycle via `@BeforeClass` / `@AfterClass` directly on the suite class               | `BeforeClassSuite`, `BeforeClassFirstCase`, `BeforeClassSecondCase`                  |
 | `suites/listener`    | Suite lifecycle via `JUnitCore` + `RunListener` (`testRunStarted` / `testRunFinished`)       | `JUnitCoreRunnerTest`, `SuiteRunListener`, `ListenerFirstCase`, `ListenerSecondCase` |
 
-[↑ Back to Table of Contents](#-table-of-contents)
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -234,7 +234,7 @@ Work through these topics in order; each builds on the previous one.
 mvn clean test
 ```
 
-[↑ Back to Table of Contents](#-table-of-contents)
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -535,7 +535,7 @@ mvn clean surefire-report:report
 
 > Reports are written to `target/site/surefire-report.html`
 
-[↑ Back to Table of Contents](#-table-of-contents)
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -655,7 +655,7 @@ mvn clean site
 mvn clean test -X
 ```
 
-[↑ Back to Table of Contents](#-table-of-contents)
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -686,7 +686,7 @@ src/
         └── listener/     # Approach C: JUnitCore + RunListener (JUnitCoreRunnerTest + case classes)
 ```
 
-[↑ Back to Table of Contents](#-table-of-contents)
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -706,7 +706,7 @@ src/
 - [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples
 - [Selenium Example — JUnit 6 branch](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium framework using JUnit 6
 
-[↑ Back to Table of Contents](#-table-of-contents)
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -720,7 +720,7 @@ src/
 - [**Lombok Download**](https://projectlombok.org/download)
 - [**IntelliJ Lombok Plugin**](https://plugins.jetbrains.com/plugin/6317-lombok)
 
-[↑ Back to Table of Contents](#-table-of-contents)
+[⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -728,4 +728,4 @@ src/
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
-[↑ Back to Table of Contents](#-table-of-contents)
+[⬆ Back to Table of Contents](#-table-of-contents)
