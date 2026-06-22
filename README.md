@@ -393,7 +393,7 @@ An **alternative to `@Suite`** that provides global setup/teardown without group
 
 1. Implement `BeforeAllCallback`
 2. Access the **root** `ExtensionContext` — shared across the entire JVM test run
-3. `getOrComputeIfAbsent` ensures the factory runs **only once**, on the first class whose `beforeAll` fires
+3. `computeIfAbsent` ensures the factory runs **only once**, on the first class whose `beforeAll` fires
 4. Return an `AutoCloseable` — JUnit calls `close()` when the root context tears down (end of run = “AfterSuite”)
 
 ```java
@@ -402,7 +402,7 @@ public class SuiteLikeLifecycleExtension implements BeforeAllCallback {
     public void beforeAll(ExtensionContext context) {
         context.getRoot()
                 .getStore(NAMESPACE)
-                .getOrComputeIfAbsent("suite-like-resource", key -> {
+                .computeIfAbsent("suite-like-resource", key -> {
                     System.out.println("Before entire run"); // runs only once
                     return new SuiteCleanupResource();
                 }, SuiteCleanupResource.class);
@@ -436,8 +436,10 @@ public class SuiteExtensionFirstTest {
 | Tests run independently | ❌ Only via suite entry class        | ✅ Normal Surefire discovery          |
 | Opt-in mechanism        | Declared in `@SelectClasses`        | `@ExtendWith` per class              |
 
-> **⚠️ Note on `getOrComputeIfAbsent`:** the 3-argument overload used here is deprecated in JUnit 6
-> but is the standard API in JUnit 5. This example targets the JUnit 5 branch.
+> **ℹ️ `computeIfAbsent` vs `getOrComputeIfAbsent`:** In JUnit 6, all `getOrComputeIfAbsent` overloads
+> are deprecated and replaced by identically-signatured `computeIfAbsent` methods — this example uses
+> `computeIfAbsent(K, Function, Class<V>)`.
+> On the JUnit 5 branch, use `getOrComputeIfAbsent(K, Function, Class<V>)` instead (same signature, different name).
 
 ### 12. Surefire HTML Report Generation
 
