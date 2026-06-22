@@ -68,6 +68,13 @@ src/
 - **`@Suite` approach:** use `@Suite` + `@SelectClasses` + `@BeforeSuite` / `@AfterSuite` on a dedicated suite class (see `BeforeAfterSuite`). Member classes must be named `*Case`.
 - **Extension approach:** implement `BeforeAllCallback`, access the root `ExtensionContext`, use `getOrComputeIfAbsent` with an `AutoCloseable` for global setup/teardown (see `SuiteLikeLifecycleExtension`). In JUnit 5, `getOrComputeIfAbsent` is the correct API — `computeIfAbsent` is the JUnit 6 replacement (where `getOrComputeIfAbsent` is deprecated).
 
+## CI / CD
+- Workflow file: `.github/workflows/maven.yml`
+- Runs on every push and PR to `master` and `junit-*` branches
+- Build command: `./mvnw -B clean site` — runs all tests and generates the Surefire HTML report
+- The `target/site/` directory is uploaded as artifact `surefire-report` and `target/surefire-reports/` as artifact `junit-xml-results`, both with 14-day retention and `if: always()` so they are saved even on test failures
+- Do **not** change the build command from `site` to `test` — the artifact upload depends on the site report being generated
+
 ## Maven commands (quick reference)
 ```bash
 mvn clean test                          # run all tests
