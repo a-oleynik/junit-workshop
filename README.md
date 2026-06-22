@@ -22,35 +22,32 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 
 ---
 
-## 🌿 Branches
-
-This repository contains examples for multiple JUnit versions, each on its own branch:
-
-| Branch                                                                          | JUnit version        | Description                                                             |
-|---------------------------------------------------------------------------------|----------------------|-------------------------------------------------------------------------|
-| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.0)  | Latest JUnit 6 features                                                 |
-| [`junit-5.14.4`](https://github.com/a-oleynik/junit-workshop/tree/junit-5.14.4) | **JUnit 5** (5.14.4) | Current branch — stable JUnit 5 examples (the most widely used version) |
-| [`junit-4.13.2`](https://github.com/a-oleynik/junit-workshop/tree/junit-4.13.2) | **JUnit 4** (4.13.2) | Legacy JUnit 4 examples — useful for migration reference                |
-
----
-
 ## 📋 Table of Contents
 
-- [Branches](#-branches)
+- [Found it useful?](#-found-it-useful)
 - [Why this repository?](#-why-this-repository)
 - [Who Is This For?](#-who-is-this-for)
-- [Prerequisites](#-prerequisites)
+- [Branches](#-branches)
 - [Quick Start](#-quick-start)
+- [Prerequisites](#-prerequisites)
 - [Supported Versions](#-supported-versions)
 - [Feature Map](#-feature-map)
 - [Learning Path — Beginners](#-learning-path--beginners)
 - [Advanced Topics — Path for Senior Engineers](#-advanced-topics--path-for-senior-engineers)
 - [Command Examples](#-command-examples)
 - [Project Structure](#-project-structure)
-- [License](#-license)
 - [Additional Resources](#-additional-resources)
 - [Useful Links](#-useful-links)
-- [Found it useful?](#-found-it-useful)
+- [License](#-license)
+
+---
+
+## ⭐ Found it useful?
+
+If you found useful examples or information in this repository, please give it a ⭐  
+Your support helps the project reach more Java and QA engineers.
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -70,6 +67,8 @@ Use this repository if you want to:
 - **compare JUnit and TestNG** patterns and idioms side-by-side with the companion [TestNG Workshop](https://github.com/a-oleynik/testng-workshop)
 - **use it as material** for workshops, tech talks, onboarding sessions, and self-study
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 👥 Who Is This For?
@@ -80,6 +79,34 @@ Use this repository if you want to:
 | **Java developers** migrating from JUnit 4 / TestNG | Side-by-side comparison of patterns and idioms                                |
 | **Senior / lead engineers**                         | Deep-dives into extensions, retry strategies, parallel execution, and tagging |
 | **Workshop facilitators**                           | A ready-made project you can hand to attendees                                |
+
+[↑ Back to Table of Contents](#-table-of-contents)
+
+---
+
+## 🌿 Branches
+
+This repository contains examples for multiple JUnit versions, each on its own branch:
+
+| Branch                                                                          | JUnit version        | Description                                                             |
+|---------------------------------------------------------------------------------|----------------------|-------------------------------------------------------------------------|
+| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.0)  | Latest JUnit 6 features                                                 |
+| [`junit-5.14.4`](https://github.com/a-oleynik/junit-workshop/tree/junit-5.14.4) | **JUnit 5** (5.14.4) | Current branch — stable JUnit 5 examples (the most widely used version) |
+| [`junit-4.13.2`](https://github.com/a-oleynik/junit-workshop/tree/junit-4.13.2) | **JUnit 4** (4.13.2) | Legacy JUnit 4 examples — useful for migration reference                |
+
+[↑ Back to Table of Contents](#-table-of-contents)
+
+---
+
+## 🚀 Quick Start
+
+```bash
+git clone https://github.com/a-oleynik/junit-workshop.git
+cd junit-workshop
+mvn clean test
+```
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -103,17 +130,10 @@ Use this repository if you want to:
 > mvnw.cmd clean test
 > ```
 
----
-
-## 🚀 Quick Start
-
-```bash
-git clone https://github.com/a-oleynik/junit-workshop.git
-cd junit-workshop
-mvn clean test
-```
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
+
 
 ## 🧩 Supported Versions
 
@@ -130,6 +150,8 @@ mvn clean test
 | `rerunner-jupiter`                  | `2.1.6`          | `@RepeatedIfExceptionsTest` — auto-retry flaky tests on failure                                                                                    |
 | `opencsv`                           | `5.12.0`         | CSV file parsing for data-driven tests (`CSVParameterizationTest`)                                                                                 |
 | Java source / target                | `21`             | Java language level for compilation                                                                                                                |
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -163,6 +185,8 @@ mvn clean test
 | `repeat`           | `@RepeatedTest`                                                                     | `RetryRepeatedTest`                                                       |
 | `suites`           | Suite lifecycle (`@Suite`, `@BeforeSuite`, `@AfterSuite`, `@SelectClasses`)         | `BeforeAfterSuite`, `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase` |
 | `suites/extension` | Suite-like global lifecycle via `BeforeAllCallback` + root `ExtensionContext` store | `SuiteExtensionFirstTest`, `SuiteExtensionSecondTest`                     |
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -205,6 +229,8 @@ Work through these topics in order; each builds on the previous one.
 ```bash
 mvn clean test
 ```
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -388,6 +414,8 @@ mvn clean site
 mvn clean surefire-report:report
 ```
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 💻 Command Examples
@@ -482,6 +510,8 @@ mvn clean site
 mvn clean test -X
 ```
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 📁 Project Structure
@@ -506,6 +536,8 @@ src/
         └── extension/   # Suite-like global lifecycle via BeforeAllCallback
 ```
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 📝 License
@@ -527,6 +559,8 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples
 - [Selenium Example — JUnit 6 branch](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium framework using JUnit 6
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 🔗 Useful Links
@@ -540,10 +574,6 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [**Lombok Download**](https://projectlombok.org/download)
 - [**IntelliJ Lombok Plugin**](https://plugins.jetbrains.com/plugin/6317-lombok)
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
-
-## ⭐ Found it useful?
-
-If you found useful examples or information in this repository, please give it a ⭐  
-Your support helps the project reach more Java and QA engineers.
-
