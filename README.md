@@ -35,6 +35,7 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 - [Learning Path — Beginners](#-learning-path--beginners)
 - [Advanced Topics — Path for Senior Engineers](#-advanced-topics--path-for-senior-engineers)
 - [Command Examples](#-command-examples)
+- [AI Assistant Support](#-ai-assistant-support)
 - [Project Structure](#-project-structure)
 - [Additional Resources](#-additional-resources)
 - [Useful Links](#-useful-links)
@@ -547,9 +548,35 @@ mvn clean test -X
 
 ---
 
+## 🤖 AI Assistant Support
+
+This project ships instruction files for AI coding assistants so they automatically follow the project's conventions when generating or editing code.
+
+| File                              | Tool                        | Purpose                                                                                                        |
+|-----------------------------------|-----------------------------|----------------------------------------------------------------------------------------------------------------|
+| `.github/copilot-instructions.md` | GitHub Copilot              | Always-on workspace instructions — injected into every Copilot suggestion and chat turn                        |
+| `.github/agents.md`               | GitHub Copilot (agent mode) | Step-by-step task recipes for the Copilot coding agent (add a test class, extension, data provider, tag, etc.) |
+| `.junie/guidelines.md`            | JetBrains Junie             | Project guidelines Junie reads before generating code                                                          |
+
+All three files encode the same critical conventions:
+- naming rules (`*Case` / `*Scenario` for suite members, never `*Test`)
+- assertion style (AssertJ first, Hamcrest only in `HamcrestTest`)
+- extension placement (`src/main/…/extensions/`, not test sources)
+- JUnit 6 API preferences (`computeIfAbsent`, not the deprecated `getOrComputeIfAbsent`)
+- parallel execution awareness (`@Execution(SAME_THREAD)` / `@ResourceLock` where needed)
+
+[⬆ Back to Table of Contents](#-table-of-contents)
+
+---
+
 ## 📁 Project Structure
 
 ```
+.github/
+├── copilot-instructions.md  # GitHub Copilot workspace instructions (always-on)
+└── agents.md                # GitHub Copilot agent-mode task recipes
+.junie/
+└── guidelines.md            # JetBrains Junie project guidelines
 src/
 ├── main/java/com/oleynik/qa/workshop/junit/
 │   ├── extensions/     # Extension implementations (SuiteLikeLifecycleExtension, DBResourceExtension, TestWatcherExtension)
