@@ -85,6 +85,13 @@ JUnit 4 has **no native `@BeforeSuite` / `@AfterSuite`** annotations. Three appr
 2. **`@BeforeClass` / `@AfterClass` on suite class** (see `BeforeClassSuite`): static methods on the `@RunWith(Suite.class)` class are called before/after the entire suite.
 3. **`JUnitCore` + `RunListener`** (see `JUnitCoreRunnerTest`): programmatic suite execution with a custom `RunListener` for global setup/teardown hooks.
 
+## CI / CD
+- Workflow file: `.github/workflows/maven.yml`
+- Runs on every push and PR to `master` and `junit-*` branches
+- Build command: `./mvnw -B clean site` — runs all tests and generates the Surefire HTML report
+- The `target/site/` directory is uploaded as artifact `surefire-report` and `target/surefire-reports/` as artifact `junit-xml-results`, both with 14-day retention and `if: always()` so they are saved even on test failures
+- Do **not** change the build command from `site` to `test` — the artifact upload depends on the site report being generated
+
 ## Maven commands (quick reference)
 ```bash
 mvn clean test                          # run all tests
