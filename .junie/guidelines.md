@@ -1,12 +1,12 @@
 # Junie Guidelines — JUnit Workshop
 
 ## Project purpose
-A hands-on Java workshop demonstrating the full JUnit feature set across JUnit 4, JUnit 5, and **JUnit 6** (default branch). Used as companion material for a tech talk comparing JUnit 6 with TestNG 7.
+A hands-on Java workshop demonstrating the full JUnit feature set across JUnit 4, JUnit 5, and JUnit 6. Used as companion material for a tech talk comparing JUnit 6 with TestNG 7. **This branch targets JUnit 5 (5.14.4)**; the `master` branch targets JUnit 6 (6.1.0).
 
 ## Stack
 - **Java 21** — language level, no preview features
 - **Maven 3.9+** with Maven Wrapper (`mvnw` / `mvnw.cmd`)
-- **JUnit 6.1.0** — Jupiter API, params, platform-suite (versions managed via `junit-bom` BOM)
+- **JUnit 5.14.4** — Jupiter API, params, platform-suite (versions managed via `junit-bom` BOM)
 - **JUnit Pioneer 2.3.0** — `@RetryingTest`, `@CartesianTest`
 - **junit-jupiter-params-dataprovider 2.12** — TNG-style `@DataProvider` for Jupiter
 - **AssertJ 3.27.7** — fluent assertions, `SoftAssertions`, `BDDSoftAssertions`
@@ -74,7 +74,7 @@ Parallel execution is enabled globally in `pom.xml`. For tests that must not run
 
 ## Suite lifecycle — two patterns
 1. **`@Suite` + `@BeforeSuite` / `@AfterSuite`** (see `BeforeAfterSuite`): explicit suite class with `@SelectClasses`. Member classes must be `*Case`.
-2. **`BeforeAllCallback` + root `ExtensionContext` store** (see `SuiteLikeLifecycleExtension`): no suite class needed; `computeIfAbsent` with `AutoCloseable` provides global setup/teardown. Use `computeIfAbsent` (not `getOrComputeIfAbsent` — deprecated in JUnit 6).
+2. **`BeforeAllCallback` + root `ExtensionContext` store** (see `SuiteLikeLifecycleExtension`): no suite class needed; `getOrComputeIfAbsent` with `AutoCloseable` provides global setup/teardown. In JUnit 5, use `getOrComputeIfAbsent` — `computeIfAbsent` is the JUnit 6 replacement (where `getOrComputeIfAbsent` is deprecated).
 
 ## Maven quick reference
 ```bash
