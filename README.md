@@ -22,42 +22,32 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 
 ---
 
-## ⭐ Found it useful?
-
-If you found useful examples or information in this repository, please give it a ⭐  
-Your support helps the project reach more Java and QA engineers.
-
----
-
-## 🌿 Branches
-
-This repository contains examples for multiple JUnit versions, each on its own branch:
-
-| Branch                                                                          | JUnit version        | Description                                              |
-|---------------------------------------------------------------------------------|----------------------|----------------------------------------------------------|
-| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.0)  | Current branch — latest JUnit 6 features                 |
-| [`junit-5.14.4`](https://github.com/a-oleynik/junit-workshop/tree/junit-5.14.4) | **JUnit 5** (5.14.4) | Stable JUnit 5 examples — the most widely used version   |
-| [`junit-4.13.2`](https://github.com/a-oleynik/junit-workshop/tree/junit-4.13.2) | **JUnit 4** (4.13.2) | Legacy JUnit 4 examples — useful for migration reference |
-
----
-
 ## 📋 Table of Contents
 
 - [Found it useful?](#-found-it-useful)
-- [Branches](#-branches)
 - [Why this repository?](#-why-this-repository)
 - [Who Is This For?](#-who-is-this-for)
-- [Prerequisites](#-prerequisites)
+- [Branches](#-branches)
 - [Quick Start](#-quick-start)
+- [Prerequisites](#-prerequisites)
 - [Supported Versions](#-supported-versions)
 - [Feature Map](#-feature-map)
 - [Learning Path — Beginners](#-learning-path--beginners)
 - [Advanced Topics — Path for Senior Engineers](#-advanced-topics--path-for-senior-engineers)
 - [Command Examples](#-command-examples)
 - [Project Structure](#-project-structure)
-- [License](#-license)
 - [Additional Resources](#-additional-resources)
 - [Useful Links](#-useful-links)
+- [License](#-license)
+
+---
+
+## ⭐ Found it useful?
+
+If you found useful examples or information in this repository, please give it a ⭐  
+Your support helps the project reach more Java and QA engineers.
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -94,6 +84,32 @@ Use this repository if you want to:
 
 ---
 
+## 🌿 Branches
+
+This repository contains examples for multiple JUnit versions, each on its own branch:
+
+| Branch                                                                          | JUnit version        | Description                                              |
+|---------------------------------------------------------------------------------|----------------------|----------------------------------------------------------|
+| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.0)  | Current branch — latest JUnit 6 features                 |
+| [`junit-5.14.4`](https://github.com/a-oleynik/junit-workshop/tree/junit-5.14.4) | **JUnit 5** (5.14.4) | Stable JUnit 5 examples — the most widely used version   |
+| [`junit-4.13.2`](https://github.com/a-oleynik/junit-workshop/tree/junit-4.13.2) | **JUnit 4** (4.13.2) | Legacy JUnit 4 examples — useful for migration reference |
+
+[↑ Back to Table of Contents](#-table-of-contents)
+
+---
+
+## 🚀 Quick Start
+
+```bash
+git clone https://github.com/a-oleynik/junit-workshop.git
+cd junit-workshop
+mvn clean test
+```
+
+[↑ Back to Table of Contents](#-table-of-contents)
+
+---
+
 ## 📦 Prerequisites
 
 | Tool              | Minimum version                   | Notes                                                          |
@@ -113,18 +129,6 @@ Use this repository if you want to:
 > # Windows
 > mvnw.cmd clean test
 > ```
-
-[↑ Back to Table of Contents](#-table-of-contents)
-
----
-
-## 🚀 Quick Start
-
-```bash
-git clone https://github.com/a-oleynik/junit-workshop.git
-cd junit-workshop
-mvn clean test
-```
 
 [↑ Back to Table of Contents](#-table-of-contents)
 
@@ -381,7 +385,6 @@ public class SuiteLikeLifecycleExtension implements BeforeAllCallback {
 Apply `@ExtendWith` to every test class that participates in the shared lifecycle:
 
 ```java
-
 @ExtendWith(SuiteLikeLifecycleExtension.class)
 public class SuiteExtensionFirstTest {
     @Test
@@ -535,14 +538,6 @@ src/
 
 ---
 
-## 📝 License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
-
-[↑ Back to Table of Contents](#-table-of-contents)
-
----
-
 ## 📚 Additional Resources
 
 - [JUnit 6 User Guide](https://docs.junit.org/current/user-guide/)
@@ -575,3 +570,10 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 
 ---
 
+## 📝 License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+[↑ Back to Table of Contents](#-table-of-contents)
+
+---
