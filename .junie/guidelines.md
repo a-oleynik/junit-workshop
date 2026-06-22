@@ -1,93 +1,109 @@
 # Junie Guidelines — JUnit Workshop
 
 ## Project purpose
-A hands-on Java workshop demonstrating the full JUnit feature set across JUnit 4, JUnit 5, and **JUnit 6** (default branch). Used as companion material for a tech talk comparing JUnit 6 with TestNG 7.
+A hands-on Java workshop demonstrating the full JUnit feature set across JUnit 4, JUnit 5, and JUnit 6. Used as companion material for a tech talk comparing JUnit 6 with TestNG 7. **This branch targets JUnit 4 (4.13.2)**; the `master` branch targets JUnit 6 (6.1.0).
 
 ## Stack
-- **Java 21** — language level, no preview features
+- **Java 17** — language level, no preview features
 - **Maven 3.9+** with Maven Wrapper (`mvnw` / `mvnw.cmd`)
-- **JUnit 6.1.0** — Jupiter API, params, platform-suite (versions managed via `junit-bom` BOM)
-- **JUnit Pioneer 2.3.0** — `@RetryingTest`, `@CartesianTest`
-- **junit-jupiter-params-dataprovider 2.12** — TNG-style `@DataProvider` for Jupiter
+- **JUnit 4.13.2** — `junit:junit` artifact; all dependency versions are explicit (no BOM)
+- **JUnitParams 1.1.1** — `@JUnitParamsRunner` + `@Parameters` for parameterized tests
+- **junit4-dataprovider 2.12** — TNG-style `@DataProvider` for JUnit 4
+- **junit-runners 1.3** — `ExecutionListenerRunner` custom runner
+- **junit-hierarchicalcontextrunner 4.12.2** — `HierarchicalContextRunner` for nested tests
 - **AssertJ 3.27.7** — fluent assertions, `SoftAssertions`, `BDDSoftAssertions`
 - **Hamcrest 3.0** — matcher-based assertions
 - **Lombok 1.18.46** — `@Data`, `@Builder` for model classes
-- **rerunner-jupiter 2.1.6** — `@RepeatedIfExceptionsTest` retry
 - **opencsv 5.12.0** — CSV file parsing for data-driven tests
 
 ## Directory structure
 ```
 src/main/java/com/oleynik/qa/workshop/junit/
   annotations/        custom annotation types and helpers
-  dataproviders/      ArgumentsProvider / DataProvider implementations
-  extensions/         JUnit extension classes (not in test sources)
+  dataproviders/      TNG-style DataProvider implementations
+  listeners/          RunListener implementations (ExecutionListener)
+  rules/              @Rule / @ClassRule implementations (not in test sources)
+  runners/            custom @RunWith runners (not in test sources)
   model/              domain model (User, MyDoubleWrapper, MyServer)
   Factorial.java      example production code
   PrimeNumber.java
   Utils.java
 
 src/test/java/com/oleynik/qa/workshop/junit/
-  general/            assertions, fixtures, exceptions, display names, timeouts
-  group/asserts/      assertAll, AssertJ soft assertions
-  conditional/        assumptions
+  general/            assertions, fixtures, exceptions, timeouts, ignoring
+  group/asserts/      ErrorCollector rule, AssertJ soft assertions
+  conditional/        Assume.assumeTrue, Assume.assumeThat
   ddt/                parameterized & data-driven tests
-  nested/             @Nested test classes
-  grouping/           @Tag usage; tags/ sub-package has Tags.java + @Smoke / @Regression
-  execution/order/    @TestMethodOrder, @Order
-  extensions/         tests exercising custom extensions
-  retry/              @RetryingTest, @RepeatedIfExceptionsTest
-  repeat/             @RepeatedTest
-  suites/             @Suite lifecycle; extension/ for BeforeAllCallback approach
+  nested/             nested tests via HierarchicalContextRunner
+  grouping/           @Category usage; categories/ has marker interfaces
+  execution/order/    @FixMethodOrder
+  rules/              tests exercising custom @Rule implementations
+  repeat/             retry runners and rules
+  suites/
+    beforeclass/      @BeforeClass / @AfterClass on suite class
+    lifecycle/        @ClassRule + ExternalResource for before/after suite
+    listener/         JUnitCore + RunListener approach
 
 src/test/resources/
-  numbers.csv         input data for CSVParameterizationTest
+  numbers.csv         input data for parameterized tests
 ```
 
 ## Naming rules — follow exactly
-| Type                | Suffix               | Example                      |
-|---------------------|----------------------|------------------------------|
-| Regular test class  | `Test`               | `AssertTest`, `FixturesTest` |
-| Suite member class  | `Case` or `Scenario` | `SuiteLifecycleFirstCase`    |
-| Tag meta-annotation | none (short noun)    | `@Smoke`, `@Regression`      |
+| Type               | Suffix                  | Example                         |
+|--------------------|-------------------------|---------------------------------|
+| Regular test class | `Test`                  | `AssertTest`, `FixturesTest`    |
+| Suite member class | `Case` or `Scenario`    | `SuiteLifecycleFirstCase`       |
+| Category marker    | interface name (plural) | `SmokeTests`, `RegressionTests` |
 
-> ⚠️ **Never** name suite member classes with `*Test` or `*Tests`. Maven Surefire auto-discovers `*Test` classes and would run them twice (standalone + via suite).
+> ⚠️ **Never** name suite member classes `*Test` or `*Tests`. Maven Surefire auto-discovers them and would run them twice (standalone + via suite).
 
 ## Code style
 - Test method names use `snake_case`: `assert_equals_multiplication_test`
 - Use `@Data` / `@Builder` (Lombok) in model classes to minimise boilerplate
 - Prefer **AssertJ** for assertions in new test classes
 - Use `SoftAssertions` or `BDDSoftAssertions` when all failures in a block should be collected before reporting
-- Use `assertThrows` for exception testing (JUnit Jupiter style)
-- Use `@Timeout` annotation for time-limited tests
-- Do **not** use JUnit 4 annotations (`@org.junit.Test`, `@RunWith`, `@Rule`) in JUnit 5/6 classes
+- Use `assertThrows` for exception testing (preferred in JUnit 4.13+); `@Test(expected = ...)` is also valid and demonstrated
+- Use `@Test(timeout = ms)` for time-limited tests — there is no `@Timeout` annotation in JUnit 4
+- Do **not** use JUnit 5/6 annotations — `@BeforeEach`, `@AfterEach`, `@Disabled`, `@Tag`, `@ExtendWith` are not on the classpath
 
-## Parallel execution
-Parallel execution is enabled globally in `pom.xml`. For tests that must not run concurrently, annotate with:
-```java
-@Execution(ExecutionMode.SAME_THREAD)   // serialize the whole class
-@ResourceLock("resource-name")          // mutual exclusion on a named resource
-```
+## JUnit 4 annotation cheat sheet
+| Purpose                     | JUnit 4                   | JUnit 5/6 equivalent                 |
+|-----------------------------|---------------------------|--------------------------------------|
+| Mark a test                 | `@Test` (`org.junit`)     | `@Test` (`org.junit.jupiter.api`)    |
+| Before each test            | `@Before`                 | `@BeforeEach`                        |
+| After each test             | `@After`                  | `@AfterEach`                         |
+| Before all tests in class   | `@BeforeClass` (static)   | `@BeforeAll` (static)                |
+| After all tests in class    | `@AfterClass` (static)    | `@AfterAll` (static)                 |
+| Skip a test                 | `@Ignore`                 | `@Disabled`                          |
+| Categorise / tag            | `@Category(Marker.class)` | `@Tag("name")`                       |
+| Method-level lifecycle hook | `@Rule`                   | `@ExtendWith` / `@RegisterExtension` |
+| Class-level lifecycle hook  | `@ClassRule` (static)     | `@ExtendWith` / `@RegisterExtension` |
+| Execution order             | `@FixMethodOrder`         | `@TestMethodOrder`                   |
+| Custom runner               | `@RunWith`                | `@ExtendWith`                        |
 
-## Extension placement
-- Extension **implementations** go in `src/main/…/extensions/` (production source tree)
-- Tests that *use* extensions go in `src/test/…/extensions/`
+## Rule / runner placement
+- Rule **implementations** go in `src/main/…/rules/`
+- Runner **implementations** go in `src/main/…/runners/`
+- Listener **implementations** go in `src/main/…/listeners/`
+- Tests that *use* rules go in `src/test/…/rules/`
 
-## Suite lifecycle — two patterns
-1. **`@Suite` + `@BeforeSuite` / `@AfterSuite`** (see `BeforeAfterSuite`): explicit suite class with `@SelectClasses`. Member classes must be `*Case`.
-2. **`BeforeAllCallback` + root `ExtensionContext` store** (see `SuiteLikeLifecycleExtension`): no suite class needed; `computeIfAbsent` with `AutoCloseable` provides global setup/teardown. Use `computeIfAbsent` (not `getOrComputeIfAbsent` — deprecated in JUnit 6).
+## Suite lifecycle — three patterns
+JUnit 4 has no native `@BeforeSuite` / `@AfterSuite`. Three approaches are demonstrated:
+1. **`@ClassRule` + `ExternalResource`** (`BeforeAfterSuite`): static `@ClassRule` field on the suite class; `before()` / `after()` wrap the entire suite.
+2. **`@BeforeClass` / `@AfterClass`** (`BeforeClassSuite`): static methods on the `@RunWith(Suite.class)` class run before/after the whole suite.
+3. **`JUnitCore` + `RunListener`** (`JUnitCoreRunnerTest`): programmatic execution with listener callbacks for global hooks.
 
 ## Maven quick reference
 ```bash
 mvn clean test                          # all tests
 mvn clean test -Dtest=ClassName         # single class
-mvn clean test -Dgroups=Smoke           # by tag
-mvn clean test -P SmokeTests            # by Maven profile
+mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests  # by category
 mvn clean surefire-report:report        # HTML report
 mvn clean site                          # full Maven site
 ```
 
 ## What NOT to do
-- Do not add the JUnit Vintage engine unless working on the JUnit 4 branch
-- Do not specify explicit versions for JUnit artifacts covered by `junit-bom` in `<dependencyManagement>`
+- Do not use Jupiter annotations (`@BeforeEach`, `@AfterEach`, `@Disabled`, `@Tag`, `@ExtendWith`) — not on the classpath
+- Do not add a `junit-bom` — all dependency versions are managed explicitly in `pom.xml`
 - Do not rename `*Case` suite members to `*Test`
-
+- Do not use `@RunWith(Suite.class)` member classes named `*Test` — Surefire will run them twice
