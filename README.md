@@ -126,8 +126,11 @@ mvn clean test
 > # Linux / macOS
 > ./mvnw clean test
 >
-> # Windows
+> # Windows (Command Prompt / PowerShell)
 > mvnw.cmd clean test
+>
+> # Windows with Git Bash
+> ./mvnw clean test
 > ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -171,7 +174,7 @@ mvn clean test
 | `conditional`      | Assumptions (`assumeTrue`, `assumeThat`)                                            | `AssumptionsTest`, `AssumptionsBeforeAllTest`                             |
 | `ddt`              | Parameterized tests — `@MethodSource`                                               | `ParameterizationTest`                                                    |
 | `ddt`              | Parameterized tests — `@ValueSource` / `@CsvSource`                                 | `ValueSourceTest`                                                         |
-| `ddt`              | CSV file data source                                                                | `CSVParameterizationTest`                                                 |
+| `ddt`              | CSV file data source (`src/test/resources/numbers.csv`)                             | `CSVParameterizationTest`                                                 |
 | `ddt`              | TNG DataProvider integration                                                        | `DataProviderTest`                                                        |
 | `ddt`              | JUnit Pioneer Cartesian product                                                     | `PioneerCartesianProductTest`                                             |
 | `nested`           | `@Nested` test classes                                                              | `NestedTest`                                                              |
@@ -202,8 +205,9 @@ Work through these topics in order; each builds on the previous one.
 3. **Exception testing** → `ExceptionTest`  
    Use `assertThrows` to assert that code throws the right exception.
 
-4. **Disabling & display names** → `DisabledTest`, `DisplayNameTest`  
-   Skip tests cleanly and make reports human-readable.
+4. **Disabling & display names** → `DisabledTest`, `DisplayNameTest`, `DisplayNameGenerationTest`  
+   Skip tests cleanly and make reports human-readable.  
+   `DisplayNameGenerationTest` demonstrates class-level name generators with `@DisplayNameGeneration`.
 
 5. **Hamcrest matchers** → `HamcrestTest`  
    Write expressive assertions with `assertThat`.
@@ -278,22 +282,53 @@ Control method execution order with `@TestMethodOrder` and `@Order`.
 
 Configured globally in `pom.xml` via Surefire:
 
-```
+```properties
 junit.jupiter.execution.parallel.enabled=true
 junit.jupiter.execution.parallel.mode.default=concurrent
 ```
 
 Tests run concurrently by default. Use `@ResourceLock` or `@Execution(SAME_THREAD)` to serialise where needed.
 
+```java
+// Serialise a single test class back to the main thread:
+@Execution(ExecutionMode.SAME_THREAD)
+class MyOrderSensitiveTest { ... }
+
+// Declare a shared resource lock (prevents concurrent access):
+@ResourceLock("shared-db-connection")
+@Test
+void test_that_uses_shared_resource() { ... }
+```
+
+> 💡 See `ExecutionOrderWithTest` in the `execution/order/` package for ordering examples used alongside parallel execution.
+
 ### 9. Maven Profiles (Tag-based filtering)
+
+Tags used in this project are `Smoke` and `Regression` (defined in `Tags.java`; also available as meta-annotations `@Smoke` and `@Regression`).
+
+**Direct tag filtering (works out of the box):**
 
 ```bash
 # Run only Smoke tests
-mvn clean test -P SmokeTests
+mvn clean test -Dgroups=Smoke
 
 # Run only Regression tests
+mvn clean test -Dgroups=Regression
+
+# Run both tags
+mvn clean test -Dgroups=Smoke,Regression
+```
+
+**Via Maven profiles (SmokeTests / RegressionTests):**
+
+```bash
+mvn clean test -P SmokeTests
 mvn clean test -P RegressionTests
 ```
+
+> ⚠️ **Note:** The `SmokeTests` and `RegressionTests` profiles in `pom.xml` currently have the `<groups>` line commented out.
+> To enable profile-based tag filtering, uncomment `<groups>${testcase.groups}</groups>` in the Surefire plugin configuration
+> and update the profile property values from `SmokeTests`/`RegressionTests` to `Smoke`/`Regression` to match the actual `@Tag` values.
 
 ### 10. Suite Lifecycle (`@BeforeSuite` / `@AfterSuite`)
 
@@ -519,19 +554,23 @@ src/
 ├── main/java/com/oleynik/qa/workshop/junit/
 │   ├── extensions/     # Extension implementations (SuiteLikeLifecycleExtension, DBResourceExtension, TestWatcherExtension)
 │   └── model/          # Domain model (User, MyDoubleWrapper, MyServer)
-└── test/java/com/oleynik/qa/workshop/junit/
-    ├── general/         # Core assertions, fixtures, exceptions, display names
-    ├── group/asserts/   # Grouped / soft assertions
-    ├── conditional/     # Assumptions
-    ├── ddt/             # Parameterized & data-driven tests
-    ├── nested/          # @Nested test classes
-    ├── grouping/        # @Tag / custom tag annotations
-    ├── execution/order/ # Test execution ordering
-    ├── extensions/      # Custom JUnit 5+ extensions
-    ├── retry/           # Retry strategies (Pioneer, Rerunner)
-    ├── repeat/          # @RepeatedTest
-    └── suites/          # Suite lifecycle (@BeforeSuite, @AfterSuite)
-        └── extension/   # Suite-like global lifecycle via BeforeAllCallback
+└── test/
+    ├── java/com/oleynik/qa/workshop/junit/
+    │   ├── general/         # Core assertions, fixtures, exceptions, display names
+    │   ├── group/asserts/   # Grouped / soft assertions
+    │   ├── conditional/     # Assumptions
+    │   ├── ddt/             # Parameterized & data-driven tests
+    │   ├── nested/          # @Nested test classes
+    │   ├── grouping/        # @Tag / custom tag annotations
+    │   │   └── tags/        # @Smoke, @Regression meta-annotations and Tags constants
+    │   ├── execution/order/ # Test execution ordering
+    │   ├── extensions/      # Custom JUnit extensions
+    │   ├── retry/           # Retry strategies (Pioneer, Rerunner)
+    │   ├── repeat/          # @RepeatedTest
+    │   └── suites/          # Suite lifecycle (@BeforeSuite, @AfterSuite)
+    │       └── extension/   # Suite-like global lifecycle via BeforeAllCallback
+    └── resources/
+        └── numbers.csv      # Input data for CSVParameterizationTest (number → expected factorial)
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
