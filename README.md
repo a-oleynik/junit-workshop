@@ -683,39 +683,53 @@ mvn clean test -X
 
 ## 🚦 CI / CD
 
-This project uses **GitHub Actions** to build and verify every push and pull request.
+This project uses **GitHub Actions** with a manually triggered workflow.
 
 ### Workflow — `maven.yml`
 
-| Setting                | Value                                                       |
-|------------------------|-------------------------------------------------------------|
-| Trigger (push)         | `master`, `junit-*`                                         |
-| Trigger (pull request) | `master`, `junit-*`                                         |
-| Runner                 | `ubuntu-latest`                                             |
-| JDK                    | 21 (Temurin)                                                |
-| Build command          | `./mvnw -B clean site`                                      |
-| Artifacts              | Surefire HTML report + JUnit XML results (retained 14 days) |
+Triggered manually from **Actions → Run workflow** on GitHub.
 
-`mvn clean site` runs all tests **and** generates the full HTML Surefire report in `target/site/`.
-Two artifacts are uploaded after every run — including failed runs (`if: always()`):
+| Input    | Required | Description                                                                               |
+|----------|----------|-------------------------------------------------------------------------------------------|
+| `groups` | No       | Tag filter for the by-tag job (e.g. `Smoke`, `Regression`). Leave empty to skip that job. |
 
-| Artifact            | Source path                | Contents                                                               |
-|---------------------|----------------------------|------------------------------------------------------------------------|
-| `surefire-report`   | `target/site/`             | Full HTML report — open `surefire-report.html` in a browser            |
-| `junit-xml-results` | `target/surefire-reports/` | Raw JUnit XML files — compatible with CI dashboards and report parsers |
+### Jobs
+
+| Job          | Name                   | Runs when                             | Command                                  |
+|--------------|------------------------|---------------------------------------|------------------------------------------|
+| `regression` | Regression — all tests | Always                                | `./mvnw -B clean site`                   |
+| `by-tag`     | By tag — `{groups}`    | Only when `groups` input is filled in | `./mvnw -B clean site -Dgroups={groups}` |
+
+Each job uploads two artifacts after completion — including on failure (`if: always()`):
+
+| Artifact                                        | Source path                | Contents                                                               |
+|-------------------------------------------------|----------------------------|------------------------------------------------------------------------|
+| `surefire-report` / `surefire-report-{tag}`     | `target/site/`             | Full HTML report — open `surefire-report.html` in a browser            |
+| `junit-xml-results` / `junit-xml-results-{tag}` | `target/surefire-reports/` | Raw JUnit XML files — compatible with CI dashboards and report parsers |
+
+### How to trigger
+
+1. Go to the **Actions** tab on GitHub
+2. Select **Java CI with Maven** in the left panel
+3. Click **Run workflow**
+4. Optionally fill in the **`groups`** field (e.g. `Smoke`) to also run the by-tag job
+5. Click **Run workflow**
 
 ### Downloading the reports
 
-1. Go to the **Actions** tab on GitHub
-2. Click any workflow run
-3. Scroll to **Artifacts** → download **`surefire-report`** (HTML) or **`junit-xml-results`** (XML)
-4. Open `surefire-report.html` in a browser
+1. Click the completed workflow run
+2. Scroll to **Artifacts** → download **`surefire-report`** (HTML) or **`junit-xml-results`** (XML)
+3. Open `surefire-report.html` in a browser
 
 ### Generating the report locally
 
 ```bash
+# All tests
 mvn clean site
-# report is written to target/site/surefire-report.html
+
+# By tag
+mvn clean site -Dgroups=Smoke
+mvn clean site -Dgroups=Regression
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
