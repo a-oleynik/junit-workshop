@@ -562,7 +562,7 @@ All three files encode the same critical conventions:
 - naming rules (`*Case` / `*Scenario` for suite members, never `*Test`)
 - assertion style (AssertJ first, Hamcrest only in `HamcrestTest`)
 - extension placement (`src/main/…/extensions/`, not test sources)
-- JUnit 6 API preferences (`computeIfAbsent`, not the deprecated `getOrComputeIfAbsent`)
+- JUnit 5 API preferences (`getOrComputeIfAbsent`, not `computeIfAbsent` — that is the JUnit 6 replacement)
 - parallel execution awareness (`@Execution(SAME_THREAD)` / `@ResourceLock` where needed)
 
 [⬆ Back to Table of Contents](#-table-of-contents)
