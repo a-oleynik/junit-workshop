@@ -125,8 +125,11 @@ mvn clean test
 > # Linux / macOS
 > ./mvnw clean test
 >
-> # Windows
+> # Windows (Command Prompt / PowerShell)
 > mvnw.cmd clean test
+>
+> # Windows with Git Bash
+> ./mvnw clean test
 > ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -174,7 +177,7 @@ mvn clean test
 | `ddt`                | Parameterized tests — `@RunWith(Parameterized.class)`                                        | `ParameterizationTest`, `Parameterization2Test`                                      |
 | `ddt`                | Lifecycle in parameterized tests (`@Before` / `@After`)                                      | `BeforeAfterParameterizationTest`                                                    |
 | `ddt`                | JUnitParams (`@JUnitParamsRunner`, `@Parameters`)                                            | `JUnitParamsTest`                                                                    |
-| `ddt`                | TNG DataProvider integration                                                                 | `DataProviderTest`, `DataProvider2Test`                                              |
+| `ddt`                | TNG DataProvider integration (`src/test/resources/numbers.csv`)                              | `DataProviderTest`, `DataProvider2Test`                                              |
 | `ddt`                | Theories — `@Theory` + `@DataPoints` (Cartesian-style)                                       | `TheoryTest`                                                                         |
 | `nested`             | Nested test classes (`HierarchicalContextRunner`)                                            | `NestedTest`                                                                         |
 | `grouping`           | `@Category` with custom marker interfaces                                                    | `CategoriesTest`                                                                     |
@@ -338,13 +341,29 @@ Runs methods within a single class concurrently, independent of Surefire config.
 
 ### 10. Maven Profiles (Category-based filtering)
 
+Categories used in this project: `SmokeTests` and `RegressionTests` (marker interfaces in `grouping/categories/`).
+
+**Direct category filtering (works out of the box):**
+
 ```bash
 # Run only Smoke tests
-mvn clean test -P SmokeTests
+mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests
 
 # Run only Regression tests
+mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
+```
+
+**Via Maven profiles:**
+
+```bash
+mvn clean test -P SmokeTests
 mvn clean test -P RegressionTests
 ```
+
+> ⚠️ **Note:** The `SmokeTests` and `RegressionTests` profiles in `pom.xml` currently have the `<groups>` line commented out.
+> To enable profile-based category filtering, uncomment `<groups>${testcase.groups}</groups>` in the Surefire plugin configuration
+> and update the profile property values to the fully-qualified category class names
+> (e.g. `com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests`).
 
 ### 11. Test Suite (`@BeforeSuite` / `@AfterSuite` emulation)
 
@@ -670,20 +689,23 @@ src/
 │   ├── model/           # Domain model (User, MyDoubleWrapper, MyServer)
 │   ├── rules/           # Custom rules (DBResourceRule, MonitorRule, RetryTestRule, RetryMethodRule, AssertAll)
 │   └── runners/         # Custom runners (RetryRunner, ExecutionListenerRunner)
-└── test/java/com/oleynik/qa/workshop/junit/
-    ├── general/          # Core assertions, lifecycle, exceptions, timeouts, @Ignore
-    ├── group/asserts/    # Soft assertions (ErrorCollector, AssertJ)
-    ├── conditional/      # Assumptions (Assume)
-    ├── ddt/              # Parameterized, JUnitParams, DataProvider, Theories
-    ├── nested/           # Nested tests (HierarchicalContextRunner)
-    ├── grouping/         # @Category and custom category interfaces
-    ├── execution/order/  # Test execution ordering (@FixMethodOrder, @OrderWith)
-    ├── rules/            # Rule examples (ExternalResource, TestWatcher)
-    ├── repeat/           # Retry strategies (runner, test rule, method rule)
-    └── suites/           # Test suites (@RunWith(Suite.class))
-        ├── lifecycle/    # Approach A: @ClassRule ExternalResource (BeforeAfterSuite + case classes)
-        ├── beforeclass/  # Approach B: @BeforeClass / @AfterClass (BeforeClassSuite + case classes)
-        └── listener/     # Approach C: JUnitCore + RunListener (JUnitCoreRunnerTest + case classes)
+└── test/
+    ├── java/com/oleynik/qa/workshop/junit/
+    │   ├── general/          # Core assertions, lifecycle, exceptions, timeouts, @Ignore
+    │   ├── group/asserts/    # Soft assertions (ErrorCollector, AssertJ)
+    │   ├── conditional/      # Assumptions (Assume)
+    │   ├── ddt/              # Parameterized, JUnitParams, DataProvider, Theories
+    │   ├── nested/           # Nested tests (HierarchicalContextRunner)
+    │   ├── grouping/         # @Category and custom category interfaces
+    │   ├── execution/order/  # Test execution ordering (@FixMethodOrder, @OrderWith)
+    │   ├── rules/            # Rule examples (ExternalResource, TestWatcher)
+    │   ├── repeat/           # Retry strategies (runner, test rule, method rule)
+    │   └── suites/           # Test suites (@RunWith(Suite.class))
+    │       ├── lifecycle/    # Approach A: @ClassRule ExternalResource (BeforeAfterSuite + case classes)
+    │       ├── beforeclass/  # Approach B: @BeforeClass / @AfterClass (BeforeClassSuite + case classes)
+    │       └── listener/     # Approach C: JUnitCore + RunListener (JUnitCoreRunnerTest + case classes)
+    └── resources/
+        └── numbers.csv       # Input data for DataProviderTest / DataProvider2Test (number → expected factorial)
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
