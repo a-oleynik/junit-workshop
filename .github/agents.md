@@ -10,6 +10,7 @@
 - **Java:** 21 LTS (`JAVA_HOME` must point to JDK 21)
 - **Build:** Maven 3.9+ or the bundled wrapper
 - **IDE:** IntelliJ IDEA with Lombok plugin enabled
+- **CI:** GitHub Actions — `.github/workflows/maven.yml` runs `./mvnw -B clean site` on push/PR; uploads `target/site/` as `surefire-report` and `target/surefire-reports/` as `junit-xml-results`. Do **not** change `site` to `test`.
 
 ## How to build and test
 ```bash
