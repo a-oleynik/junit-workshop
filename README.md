@@ -692,9 +692,9 @@ This project ships instruction files for AI coding assistants so they automatica
 All three files encode the same critical conventions:
 - naming rules (`*Case` / `*Scenario` for suite members, never `*Test`)
 - assertion style (AssertJ first, Hamcrest only in `HamcrestTest`)
-- extension placement (`src/main/…/extensions/`, not test sources)
-- JUnit 6 API preferences (`computeIfAbsent`, not the deprecated `getOrComputeIfAbsent`)
-- parallel execution awareness (`@Execution(SAME_THREAD)` / `@ResourceLock` where needed)
+- rule/runner placement (`src/main/…/rules/` and `src/main/…/runners/`, not test sources)
+- JUnit 4 annotations only (`@Before`, `@After`, `@Ignore`, `@Category`, `@FixMethodOrder`) — no Jupiter annotations on the classpath
+- suite lifecycle via `@ClassRule ExternalResource`, `@BeforeClass`/`@AfterClass`, or `JUnitCore` + `RunListener`
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
