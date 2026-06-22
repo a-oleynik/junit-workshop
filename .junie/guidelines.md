@@ -93,6 +93,13 @@ JUnit 4 has no native `@BeforeSuite` / `@AfterSuite`. Three approaches are demon
 2. **`@BeforeClass` / `@AfterClass`** (`BeforeClassSuite`): static methods on the `@RunWith(Suite.class)` class run before/after the whole suite.
 3. **`JUnitCore` + `RunListener`** (`JUnitCoreRunnerTest`): programmatic execution with listener callbacks for global hooks.
 
+## CI / CD
+- Workflow: `.github/workflows/maven.yml` (GitHub Actions)
+- Triggers on push and PR to `master` and `junit-*` branches
+- Build command: `./mvnw -B clean site` — runs all tests and generates the Surefire HTML report in `target/site/`
+- Artifacts uploaded with `if: always()`, 14-day retention: `surefire-report` (`target/site/`) and `junit-xml-results` (`target/surefire-reports/`)
+- Do **not** replace `site` with `test` in the workflow — the artifact upload requires the site report
+
 ## Maven quick reference
 ```bash
 mvn clean test                          # all tests
