@@ -9,10 +9,11 @@ public class SuiteLikeLifecycleExtension implements BeforeAllCallback {
             ExtensionContext.Namespace.create(SuiteLikeLifecycleExtension.class);
 
     @Override
+    @SuppressWarnings("resource") // SuiteCleanupResource lifecycle is managed by JUnit's store — close() is called by the root context at end-of-run
     public void beforeAll(ExtensionContext context) {
         context.getRoot()
                 .getStore(NAMESPACE)
-                .getOrComputeIfAbsent("suite-like-resource", key -> {
+                .computeIfAbsent("suite-like-resource", key -> {
                     System.out.println("Before entire run via extension");
                     return new SuiteCleanupResource();
                 }, SuiteCleanupResource.class);
