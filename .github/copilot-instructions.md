@@ -70,9 +70,12 @@ src/
 
 ## CI / CD
 - Workflow file: `.github/workflows/maven.yml`
-- Runs on every push and PR to `master` and `junit-*` branches
-- Build command: `./mvnw -B clean site` — runs all tests and generates the Surefire HTML report
-- The `target/site/` directory is uploaded as artifact `surefire-report` and `target/surefire-reports/` as artifact `junit-xml-results`, both with 14-day retention and `if: always()` so they are saved even on test failures
+- Triggered **manually only** via `workflow_dispatch` (Actions → Run workflow on GitHub)
+- Input: `groups` (optional) — tag filter for the by-tag job (e.g. `Smoke`, `Regression`)
+- Two jobs:
+  - `regression` — always runs all tests: `./mvnw -B clean site`
+  - `by-tag` — runs only when `groups` is provided: `./mvnw -B clean site -Dgroups={groups}`
+- Each job uploads `target/site/` as `surefire-report[-{tag}]` and `target/surefire-reports/` as `junit-xml-results[-{tag}]`, both with 14-day retention and `if: always()`
 - Do **not** change the build command from `site` to `test` — the artifact upload depends on the site report being generated
 
 ## Maven commands (quick reference)
