@@ -76,6 +76,13 @@ Parallel execution is enabled globally in `pom.xml`. For tests that must not run
 1. **`@Suite` + `@BeforeSuite` / `@AfterSuite`** (see `BeforeAfterSuite`): explicit suite class with `@SelectClasses`. Member classes must be `*Case`.
 2. **`BeforeAllCallback` + root `ExtensionContext` store** (see `SuiteLikeLifecycleExtension`): no suite class needed; `computeIfAbsent` with `AutoCloseable` provides global setup/teardown. Use `computeIfAbsent` (not `getOrComputeIfAbsent` — deprecated in JUnit 6).
 
+## CI / CD
+- Workflow: `.github/workflows/maven.yml` (GitHub Actions)
+- Triggers on push and PR to `master` and `junit-*` branches
+- Build command: `./mvnw -B clean site` — runs all tests and generates the Surefire HTML report in `target/site/`
+- Artifacts uploaded with `if: always()`, 14-day retention: `surefire-report` (`target/site/`) and `junit-xml-results` (`target/surefire-reports/`)
+- Do **not** replace `site` with `test` in the workflow — the artifact upload requires the site report
+
 ## Maven quick reference
 ```bash
 mvn clean test                          # all tests

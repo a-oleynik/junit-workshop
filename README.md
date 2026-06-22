@@ -3,6 +3,7 @@
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
 [![JUnit](https://img.shields.io/badge/JUnit-6.1.0-green.svg)](https://junit.org/)
+[![Java CI with Maven](https://github.com/a-oleynik/junit-workshop/actions/workflows/maven.yml/badge.svg)](https://github.com/a-oleynik/junit-workshop/actions/workflows/maven.yml)
 [![JUnit Pioneer](https://img.shields.io/badge/JUnit_Pioneer-2.3.0-green.svg)](https://junit-pioneer.org/)
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
 [![Hamcrest](https://img.shields.io/badge/Hamcrest-3.0-yellowgreen.svg)](https://hamcrest.org/)
@@ -35,6 +36,7 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 - [Learning Path — Beginners](#-learning-path--beginners)
 - [Advanced Topics — Path for Senior Engineers](#-advanced-topics--path-for-senior-engineers)
 - [Command Examples](#-command-examples)
+- [CI / CD](#-ci--cd)
 - [AI Assistant Support](#-ai-assistant-support)
 - [Project Structure](#-project-structure)
 - [Additional Resources](#-additional-resources)
@@ -544,6 +546,47 @@ mvn clean site
 
 ```bash
 mvn clean test -X
+```
+
+[⬆ Back to Table of Contents](#-table-of-contents)
+
+---
+
+## 🚦 CI / CD
+
+This project uses **GitHub Actions** to build and verify every push and pull request.
+
+### Workflow — `maven.yml`
+
+| Setting                | Value                                                       |
+|------------------------|-------------------------------------------------------------|
+| Trigger (push)         | `master`, `junit-*`                                         |
+| Trigger (pull request) | `master`, `junit-*`                                         |
+| Runner                 | `ubuntu-latest`                                             |
+| JDK                    | 21 (Temurin)                                                |
+| Build command          | `./mvnw -B clean site`                                      |
+| Artifacts              | Surefire HTML report + JUnit XML results (retained 14 days) |
+
+`mvn clean site` runs all tests **and** generates the full HTML Surefire report in `target/site/`.
+Two artifacts are uploaded after every run — including failed runs (`if: always()`):
+
+| Artifact            | Source path                | Contents                                                               |
+|---------------------|----------------------------|------------------------------------------------------------------------|
+| `surefire-report`   | `target/site/`             | Full HTML report — open `surefire-report.html` in a browser            |
+| `junit-xml-results` | `target/surefire-reports/` | Raw JUnit XML files — compatible with CI dashboards and report parsers |
+
+### Downloading the reports
+
+1. Go to the **Actions** tab on GitHub
+2. Click any workflow run
+3. Scroll to **Artifacts** → download **`surefire-report`** (HTML) or **`junit-xml-results`** (XML)
+4. Open `surefire-report.html` in a browser
+
+### Generating the report locally
+
+```bash
+mvn clean site
+# report is written to target/site/surefire-report.html
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
