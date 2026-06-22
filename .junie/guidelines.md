@@ -94,10 +94,10 @@ JUnit 4 has no native `@BeforeSuite` / `@AfterSuite`. Three approaches are demon
 3. **`JUnitCore` + `RunListener`** (`JUnitCoreRunnerTest`): programmatic execution with listener callbacks for global hooks.
 
 ## CI / CD
-- Workflow: `.github/workflows/maven.yml` (GitHub Actions)
-- Triggers on push and PR to `master` and `junit-*` branches
-- Build command: `./mvnw -B clean site` — runs all tests and generates the Surefire HTML report in `target/site/`
-- Artifacts uploaded with `if: always()`, 14-day retention: `surefire-report` (`target/site/`) and `junit-xml-results` (`target/surefire-reports/`)
+- Workflow: `.github/workflows/maven.yml` (GitHub Actions), triggered **manually only** (`workflow_dispatch`)
+- Input: `groups` (optional) — tag filter passed to `-Dgroups`
+- Two jobs: `regression` (always, all tests) and `by-tag` (only when `groups` input is provided)
+- Both jobs run `./mvnw -B clean site` and upload artifacts with `if: always()`, 14-day retention: `surefire-report[-{tag}]` (`target/site/`) and `junit-xml-results[-{tag}]` (`target/surefire-reports/`)
 - Do **not** replace `site` with `test` in the workflow — the artifact upload requires the site report
 
 ## Maven quick reference
