@@ -20,7 +20,9 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build and generate report
-      run: ./mvnw -B clean site
+      run: |
+        chmod +x mvnw
+        ./mvnw -B clean site
     - name: Upload Surefire report
       if: always()
       uses: actions/upload-artifact@v4
