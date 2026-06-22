@@ -21,35 +21,32 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 
 ---
 
-## 🌿 Branches
-
-This repository contains examples for multiple JUnit versions, each on its own branch:
-
-| Branch                                                                          | JUnit version        | Description                                                               |
-|---------------------------------------------------------------------------------|----------------------|---------------------------------------------------------------------------|
-| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.0)  | Latest JUnit 6 features                                                   |
-| [`junit-5.14.4`](https://github.com/a-oleynik/junit-workshop/tree/junit-5.14.4) | **JUnit 5** (5.14.4) | Stable JUnit 5 examples — the most widely used version                    |
-| [`junit-4.13.2`](https://github.com/a-oleynik/junit-workshop/tree/junit-4.13.2) | **JUnit 4** (4.13.2) | Current branch — legacy JUnit 4 examples — useful for migration reference |
-
----
-
 ## 📋 Table of Contents
 
-- [Branches](#-branches)
+- [Found it useful?](#-found-it-useful)
 - [Why this repository?](#-why-this-repository)
 - [Who Is This For?](#-who-is-this-for)
-- [Prerequisites](#-prerequisites)
+- [Branches](#-branches)
 - [Quick Start](#-quick-start)
+- [Prerequisites](#-prerequisites)
 - [Supported Versions](#-supported-versions)
 - [Feature Map](#-feature-map)
 - [Learning Path — Beginners](#-learning-path--beginners)
 - [Advanced Topics — Path for Senior Engineers](#-advanced-topics--path-for-senior-engineers)
 - [Command Examples](#-command-examples)
 - [Project Structure](#-project-structure)
-- [License](#-license)
 - [Additional Resources](#-additional-resources)
 - [Useful Links](#-useful-links)
-- [Found it useful?](#-found-it-useful)
+- [License](#-license)
+
+---
+
+## ⭐ Found it useful?
+
+If you found useful examples or information in this repository, please give it a ⭐  
+Your support helps the project reach more Java and QA engineers.
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -69,6 +66,8 @@ Use this repository if you want to:
 - **compare JUnit and TestNG** patterns and idioms side-by-side with the companion [TestNG Workshop](https://github.com/a-oleynik/testng-workshop)
 - **use it as material** for workshops, tech talks, onboarding sessions, and self-study
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 👥 Who Is This For?
@@ -79,6 +78,34 @@ Use this repository if you want to:
 | **Java developers** migrating from JUnit 4 to JUnit 5/6 | Clear view of what changes and what stays the same                  |
 | **Developers** comparing JUnit 4 with TestNG            | Side-by-side comparison of patterns and idioms                      |
 | **Workshop facilitators**                               | A ready-made project you can hand to attendees                      |
+
+[↑ Back to Table of Contents](#-table-of-contents)
+
+---
+
+## 🌿 Branches
+
+This repository contains examples for multiple JUnit versions, each on its own branch:
+
+| Branch                                                                          | JUnit version        | Description                                                               |
+|---------------------------------------------------------------------------------|----------------------|---------------------------------------------------------------------------|
+| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.0)  | Latest JUnit 6 features                                                   |
+| [`junit-5.14.4`](https://github.com/a-oleynik/junit-workshop/tree/junit-5.14.4) | **JUnit 5** (5.14.4) | Stable JUnit 5 examples — the most widely used version                    |
+| [`junit-4.13.2`](https://github.com/a-oleynik/junit-workshop/tree/junit-4.13.2) | **JUnit 4** (4.13.2) | Current branch — legacy JUnit 4 examples — useful for migration reference |
+
+[↑ Back to Table of Contents](#-table-of-contents)
+
+---
+
+## 🚀 Quick Start
+
+```bash
+git clone https://github.com/a-oleynik/junit-workshop.git
+cd junit-workshop
+mvn clean test
+```
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -102,15 +129,7 @@ Use this repository if you want to:
 > mvnw.cmd clean test
 > ```
 
----
-
-## 🚀 Quick Start
-
-```bash
-git clone https://github.com/a-oleynik/junit-workshop.git
-cd junit-workshop
-mvn clean test
-```
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -131,6 +150,8 @@ mvn clean test
 
 > **Note on Hamcrest:** `junit:junit:4.13.2` bundles `hamcrest-core:1.3`, which is excluded in `pom.xml`.
 > `hamcrest-library` is declared explicitly to get the full matcher library instead of the minimal core.
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -168,6 +189,8 @@ mvn clean test
 | `suites/lifecycle`   | Suite lifecycle via `@ClassRule ExternalResource` — `@BeforeSuite` / `@AfterSuite` emulation | `BeforeAfterSuite`, `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase`            |
 | `suites/beforeclass` | Suite lifecycle via `@BeforeClass` / `@AfterClass` directly on the suite class               | `BeforeClassSuite`, `BeforeClassFirstCase`, `BeforeClassSecondCase`                  |
 | `suites/listener`    | Suite lifecycle via `JUnitCore` + `RunListener` (`testRunStarted` / `testRunFinished`)       | `JUnitCoreRunnerTest`, `SuiteRunListener`, `ListenerFirstCase`, `ListenerSecondCase` |
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -211,9 +234,11 @@ Work through these topics in order; each builds on the previous one.
 mvn clean test
 ```
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
-## 🎯 "Advanced Topics" — Path for Senior Engineers
+## 🎯 Advanced Topics — Path for Senior Engineers
 
 These topics assume familiarity with JUnit 4 basics.
 
@@ -403,16 +428,16 @@ public class BeforeClassSuite {
 
 > **⚙️ Maven config:** `pom.xml` adds `**/*Suite.java` to Surefire `<includes>` so both suite
 > classes are automatically discovered by `mvn clean test`:
->
-> ```xml
-> <includes>
->     <include>**/Test*.java</include>
->     <include>**/*Test.java</include>
->     <include>**/*Tests.java</include>
->     <include>**/*TestCase.java</include>
->     <include>**/*Suite.java</include>
-> </includes>
-> ```
+
+```xml
+<includes>
+    <include>**/Test*.java</include>
+    <include>**/*Test.java</include>
+    <include>**/*Tests.java</include>
+    <include>**/*TestCase.java</include>
+    <include>**/*Suite.java</include>
+</includes>
+```
 
 **Comparing the three JUnit 4 suite-lifecycle approaches:**
 
@@ -509,6 +534,8 @@ mvn clean surefire-report:report
 ```
 
 > Reports are written to `target/site/surefire-report.html`
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -628,6 +655,8 @@ mvn clean site
 mvn clean test -X
 ```
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 📁 Project Structure
@@ -657,11 +686,7 @@ src/
         └── listener/     # Approach C: JUnitCore + RunListener (JUnitCoreRunnerTest + case classes)
 ```
 
----
-
-## 📝 License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -681,6 +706,8 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples
 - [Selenium Example — JUnit 6 branch](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium framework using JUnit 6
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 🔗 Useful Links
@@ -693,10 +720,12 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [**Lombok Download**](https://projectlombok.org/download)
 - [**IntelliJ Lombok Plugin**](https://plugins.jetbrains.com/plugin/6317-lombok)
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
-## ⭐ Found it useful?
+## 📝 License
 
-If you found useful examples or information in this repository, please give it a ⭐  
-Your support helps the project reach more Java and QA engineers.
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
+[↑ Back to Table of Contents](#-table-of-contents)
