@@ -22,6 +22,13 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 
 ---
 
+## ⭐ Found it useful?
+
+If you found useful examples or information in this repository, please give it a ⭐  
+Your support helps the project reach more Java and QA engineers.
+
+---
+
 ## 🌿 Branches
 
 This repository contains examples for multiple JUnit versions, each on its own branch:
@@ -36,6 +43,7 @@ This repository contains examples for multiple JUnit versions, each on its own b
 
 ## 📋 Table of Contents
 
+- [Found it useful?](#-found-it-useful)
 - [Branches](#-branches)
 - [Why this repository?](#-why-this-repository)
 - [Who Is This For?](#-who-is-this-for)
@@ -50,7 +58,6 @@ This repository contains examples for multiple JUnit versions, each on its own b
 - [License](#-license)
 - [Additional Resources](#-additional-resources)
 - [Useful Links](#-useful-links)
-- [Found it useful?](#-found-it-useful)
 
 ---
 
@@ -70,6 +77,8 @@ Use this repository if you want to:
 - **compare JUnit and TestNG** patterns and idioms side-by-side with the companion [TestNG Workshop](https://github.com/a-oleynik/testng-workshop)
 - **use it as material** for workshops, tech talks, onboarding sessions, and self-study
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 👥 Who Is This For?
@@ -80,6 +89,8 @@ Use this repository if you want to:
 | **Java developers** migrating from JUnit 4 / TestNG | Side-by-side comparison of patterns and idioms                                |
 | **Senior / lead engineers**                         | Deep-dives into extensions, retry strategies, parallel execution, and tagging |
 | **Workshop facilitators**                           | A ready-made project you can hand to attendees                                |
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -103,6 +114,8 @@ Use this repository if you want to:
 > mvnw.cmd clean test
 > ```
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 🚀 Quick Start
@@ -112,6 +125,8 @@ git clone https://github.com/a-oleynik/junit-workshop.git
 cd junit-workshop
 mvn clean test
 ```
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -130,6 +145,8 @@ mvn clean test
 | `rerunner-jupiter`                  | `2.1.6`         | `@RepeatedIfExceptionsTest` — auto-retry flaky tests on failure                                                                                    |
 | `opencsv`                           | `5.12.0`        | CSV file parsing for data-driven tests (`CSVParameterizationTest`)                                                                                 |
 | Java source / target                | `21`            | Java language level for compilation                                                                                                                |
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -163,6 +180,8 @@ mvn clean test
 | `repeat`           | `@RepeatedTest`                                                                     | `RetryRepeatedTest`                                                       |
 | `suites`           | Suite lifecycle (`@Suite`, `@BeforeSuite`, `@AfterSuite`, `@SelectClasses`)         | `BeforeAfterSuite`, `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase` |
 | `suites/extension` | Suite-like global lifecycle via `BeforeAllCallback` + root `ExtensionContext` store | `SuiteExtensionFirstTest`, `SuiteExtensionSecondTest`                     |
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -205,6 +224,8 @@ Work through these topics in order; each builds on the previous one.
 ```bash
 mvn clean test
 ```
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -388,6 +409,8 @@ mvn clean site
 mvn clean surefire-report:report
 ```
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 💻 Command Examples
@@ -482,6 +505,8 @@ mvn clean site
 mvn clean test -X
 ```
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 📁 Project Structure
@@ -506,11 +531,15 @@ src/
         └── extension/   # Suite-like global lifecycle via BeforeAllCallback
 ```
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 📝 License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
+
+[↑ Back to Table of Contents](#-table-of-contents)
 
 ---
 
@@ -527,6 +556,8 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples
 - [Selenium Example — JUnit 6 branch](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium framework using JUnit 6
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
 
 ## 🔗 Useful Links
@@ -540,10 +571,7 @@ This project is licensed under the MIT License — see the [LICENSE](LICENSE) fi
 - [**Lombok Download**](https://projectlombok.org/download)
 - [**IntelliJ Lombok Plugin**](https://plugins.jetbrains.com/plugin/6317-lombok)
 
+[↑ Back to Table of Contents](#-table-of-contents)
+
 ---
-
-## ⭐ Found it useful?
-
-If you found useful examples or information in this repository, please give it a ⭐  
-Your support helps the project reach more Java and QA engineers.
 
