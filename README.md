@@ -689,8 +689,8 @@ This project uses **GitHub Actions** with a manually triggered workflow.
 
 Triggered manually from **Actions → Run workflow** on GitHub.
 
-| Input    | Required | Description                                                                               |
-|----------|----------|-------------------------------------------------------------------------------------------|
+| Input    | Required | Description                                                                                                                                                              |
+|----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `groups` | No       | Category filter for the by-category job (fully-qualified class name, e.g. `com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests`). Leave empty to skip that job. |
 
 ### Jobs
@@ -740,14 +740,13 @@ mvn clean site -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.Regres
 
 This project ships instruction files for AI coding assistants so they automatically follow the project's conventions when generating or editing code.
 
-| File                              | Tool                        | Purpose                                                                                                        |
-|-----------------------------------|-----------------------------|----------------------------------------------------------------------------------------------------------------|
-| `AGENTS.md`                       | Any AI Agent                | Unified task recipes and conventions for AI assistants (root copy for visibility)                              |
-| `.github/copilot-instructions.md` | GitHub Copilot              | Always-on workspace instructions — injected into every Copilot suggestion and chat turn                        |
-| `.github/agents.md`               | GitHub Copilot (agent mode) | Step-by-step task recipes for the Copilot coding agent (add a test class, extension, data provider, tag, etc.) |
-| `.junie/guidelines.md`            | JetBrains Junie             | Project guidelines Junie reads before generating code                                                          |
+| File                              | Tool            | Purpose                                                                                                        |
+|-----------------------------------|-----------------|----------------------------------------------------------------------------------------------------------------|
+| `AGENTS.md`                       | Any AI Agent    | Task recipes and conventions for AI coding agents — add a test class, extension, data provider, tag, etc.      |
+| `.github/copilot-instructions.md` | GitHub Copilot  | Always-on workspace instructions — injected into every Copilot suggestion and chat turn                        |
+| `.junie/guidelines.md`            | JetBrains Junie | Project guidelines Junie reads before generating code                                                          |
 
-All three files encode the same critical conventions:
+All files encode the same critical conventions:
 - naming rules (`*Case` / `*Scenario` for suite members, never `*Test`)
 - assertion style (AssertJ first, Hamcrest only in `HamcrestTest`)
 - rule/runner placement (`src/main/…/rules/` and `src/main/…/runners/`, not test sources)
@@ -761,10 +760,13 @@ All three files encode the same critical conventions:
 ## 📁 Project Structure
 
 ```
-AGENTS.md                    # AI Agent task recipes and conventions (root copy)
+AGENTS.md                    # AI Agent task recipes and conventions
+README.md                    # This file
+LICENSE
+pom.xml                      # Maven build — dependencies, Surefire config, profiles
+mvnw / mvnw.cmd              # Maven Wrapper scripts (no local Maven installation required)
 .github/
-├── copilot-instructions.md  # GitHub Copilot workspace instructions (always-on)
-└── agents.md                # GitHub Copilot agent-mode task recipes
+└── copilot-instructions.md  # GitHub Copilot workspace instructions (always-on)
 .junie/
 └── guidelines.md            # JetBrains Junie project guidelines
 src/
@@ -775,6 +777,7 @@ src/
 │   ├── model/           # Domain model (User, MyDoubleWrapper, MyServer)
 │   ├── rules/           # Custom rules (DBResourceRule, MonitorRule, RetryTestRule, RetryMethodRule, AssertAll)
 │   └── runners/         # Custom runners (RetryRunner, ExecutionListenerRunner)
+│   └── Utils.java
 └── test/
     ├── java/com/oleynik/qa/workshop/junit/
     │   ├── general/          # Core assertions, lifecycle, exceptions, timeouts, @Ignore
@@ -792,6 +795,10 @@ src/
     │       └── listener/     # Approach C: JUnitCore + RunListener (JUnitCoreRunnerTest + case classes)
     └── resources/
         └── numbers.csv       # Input data for DataProviderTest / DataProvider2Test (number → expected factorial)
+target/                      # Generated by Maven — not committed to git
+├── surefire-reports/        # Raw JUnit XML results (TEST-*.xml) + console output (*.txt)
+└── site/
+    └── surefire-report.html # HTML test report — open in a browser after `mvn site`
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
