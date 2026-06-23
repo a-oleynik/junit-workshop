@@ -88,7 +88,7 @@ JUnit 4 has **no native `@BeforeSuite` / `@AfterSuite`** annotations. Three appr
 ## CI / CD
 - Workflow file: `.github/workflows/maven.yml`
 - Triggered **manually only** via `workflow_dispatch` (Actions → Run workflow on GitHub)
-- Input: `groups` (optional) — tag filter for the by-tag job (e.g. `Smoke`, `Regression`)
+- Input: `groups` (optional) — category filter for the by-category job; must be a fully-qualified class name (e.g. `com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests`)
 - Two jobs:
   - `regression` — always runs all tests: `./mvnw -B clean site`
   - `by-tag` — runs only when `groups` is provided: `./mvnw -B clean site -Dgroups={groups}`

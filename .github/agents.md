@@ -10,7 +10,7 @@
 - **Java:** 17 LTS (`JAVA_HOME` must point to JDK 17)
 - **Build:** Maven 3.9+ or the bundled wrapper
 - **IDE:** IntelliJ IDEA with Lombok plugin enabled
-- **CI:** GitHub Actions — `.github/workflows/maven.yml`, triggered manually (`workflow_dispatch`). Two jobs: `regression` (all tests, `./mvnw -B clean site`) and `by-tag` (runs only when `groups` input is provided, `./mvnw -B clean site -Dgroups={groups}`). Both upload `surefire-report` and `junit-xml-results` artifacts. Do **not** change `site` to `test`.
+- **CI:** GitHub Actions — `.github/workflows/maven.yml`, triggered manually (`workflow_dispatch`). Two jobs: `regression` (all tests, `./mvnw -B clean site`) and `by-tag` (runs only when `groups` input is provided — must be a fully-qualified category class name, e.g. `com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests`). Both upload `surefire-report` and `junit-xml-results` artifacts. Do **not** change `site` to `test`.
 
 ## How to build and test
 ```bash

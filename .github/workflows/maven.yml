@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       groups:
-        description: 'Tag filter for the by-tag job (e.g. Smoke, Regression). Leave empty to skip that job.'
+        description: 'Category filter for the by-tag job (fully-qualified class name, e.g. com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests). Leave empty to skip that job.'
         required: false
         default: ''
 
@@ -15,10 +15,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK 21
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: '17'
           distribution: 'temurin'
           cache: maven
       - name: Run all tests and generate report
@@ -41,18 +41,18 @@ jobs:
           retention-days: 14
 
   by-tag:
-    name: By tag — ${{ inputs.groups }}
+    name: By category — ${{ inputs.groups }}
     runs-on: ubuntu-latest
     if: ${{ inputs.groups != '' }}
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK 21
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - name: Run tests for tag '${{ inputs.groups }}'
+      - name: Run tests for category '${{ inputs.groups }}'
         run: |
           chmod +x mvnw
           ./mvnw -B clean site -Dgroups=${{ inputs.groups }}

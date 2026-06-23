@@ -691,14 +691,14 @@ Triggered manually from **Actions → Run workflow** on GitHub.
 
 | Input    | Required | Description                                                                               |
 |----------|----------|-------------------------------------------------------------------------------------------|
-| `groups` | No       | Tag filter for the by-tag job (e.g. `Smoke`, `Regression`). Leave empty to skip that job. |
+| `groups` | No       | Category filter for the by-category job (fully-qualified class name, e.g. `com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests`). Leave empty to skip that job. |
 
 ### Jobs
 
-| Job          | Name                   | Runs when                             | Command                                  |
-|--------------|------------------------|---------------------------------------|------------------------------------------|
-| `regression` | Regression — all tests | Always                                | `./mvnw -B clean site`                   |
-| `by-tag`     | By tag — `{groups}`    | Only when `groups` input is filled in | `./mvnw -B clean site -Dgroups={groups}` |
+| Job          | Name                          | Runs when                             | Command                                  |
+|--------------|-------------------------------|---------------------------------------|------------------------------------------|
+| `regression` | Regression — all tests        | Always                                | `./mvnw -B clean site`                   |
+| `by-tag`     | By category — `{groups}`      | Only when `groups` input is filled in | `./mvnw -B clean site -Dgroups={groups}` |
 
 Each job uploads two artifacts after completion — including on failure (`if: always()`):
 
@@ -712,7 +712,7 @@ Each job uploads two artifacts after completion — including on failure (`if: a
 1. Go to the **Actions** tab on GitHub
 2. Select **Java CI with Maven** in the left panel
 3. Click **Run workflow**
-4. Optionally fill in the **`groups`** field (e.g. `Smoke`) to also run the by-tag job
+4. Optionally fill in the **`groups`** field with a fully-qualified category class name (e.g. `com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests`) to also run the by-category job
 5. Click **Run workflow**
 
 ### Downloading the reports
@@ -727,9 +727,9 @@ Each job uploads two artifacts after completion — including on failure (`if: a
 # All tests
 mvn clean site
 
-# By tag
-mvn clean site -Dgroups=Smoke
-mvn clean site -Dgroups=Regression
+# By category (JUnit 4 requires the fully-qualified category class name)
+mvn clean site -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests
+mvn clean site -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
