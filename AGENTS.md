@@ -1,4 +1,4 @@
-# GitHub Copilot Agent Instructions — JUnit Workshop
+# GitHub Copilot Agent Instructions — JUnit 5 Workshop
 
 ## Agent behaviour
 - Always read `copilot-instructions.md` (same `.github/` folder) for full project conventions before taking any action.
@@ -73,12 +73,12 @@ mvn clean site
 3. Apply `@Tag(Tags.YOUR_TAG)` or the meta-annotation directly to test methods or classes.
 
 ## Key constraints the agent must respect
-| Rule                                                                           | Why                                                                     |
-|--------------------------------------------------------------------------------|-------------------------------------------------------------------------|
-| Suite members named `*Case`, never `*Test`                                     | Surefire discovers `*Test` independently → double execution             |
-| Extensions in `src/main/…/extensions/`                                         | Keeps extension code reusable and out of test classpath only            |
-| Use `computeIfAbsent` (not `getOrComputeIfAbsent`) in `ExtensionContext` store | `getOrComputeIfAbsent` is deprecated in JUnit 6                         |
-| No explicit versions on JUnit artifacts covered by `junit-bom`                 | BOM in `<dependencyManagement>` manages them                            |
-| No JUnit Vintage engine                                                        | Only add it on the dedicated `junit-4.*` branch                         |
-| No JUnit 4 annotations in JUnit 5/6 classes                                    | `@org.junit.Test`, `@RunWith`, `@Rule` are JUnit 4 only                 |
-| Parallel execution is on by default                                            | Annotate with `@Execution(SAME_THREAD)` or `@ResourceLock` where needed |
+| Rule                                                                           | Why                                                                                             |
+|--------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
+| Suite members named `*Case`, never `*Test`                                     | Surefire discovers `*Test` independently → double execution                                     |
+| Extensions in `src/main/…/extensions/`                                         | Keeps extension code reusable and out of test classpath only                                    |
+| Use `getOrComputeIfAbsent` (not `computeIfAbsent`) in `ExtensionContext` store | `computeIfAbsent` is the JUnit 6 replacement; `getOrComputeIfAbsent` is the correct JUnit 5 API |
+| No explicit versions on JUnit artifacts covered by `junit-bom`                 | BOM in `<dependencyManagement>` manages them                                                    |
+| No JUnit Vintage engine                                                        | Only add it on the dedicated `junit-4.*` branch                                                 |
+| No JUnit 4 annotations in JUnit 5 classes                                      | `@org.junit.Test`, `@RunWith`, `@Rule` are JUnit 4 only                                         |
+| Parallel execution is on by default                                            | Annotate with `@Execution(SAME_THREAD)` or `@ResourceLock` where needed                         |
