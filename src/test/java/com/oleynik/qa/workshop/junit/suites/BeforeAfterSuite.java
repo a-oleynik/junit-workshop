@@ -6,9 +6,10 @@ import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
 
 /**
- * JUnit 6 test suite demonstrating native {@code @BeforeSuite} / {@code @AfterSuite} support.
+ * JUnit 5 test suite demonstrating native {@code @BeforeSuite} / {@code @AfterSuite} support
+ * (available since JUnit Platform 1.11 / JUnit Jupiter 5.11).
  *
- * <p>Unlike JUnit 4, JUnit 6 provides first-class {@code @BeforeSuite} / {@code @AfterSuite}
+ * <p>Unlike JUnit 4, JUnit 5.11+ provides first-class {@code @BeforeSuite} / {@code @AfterSuite}
  * annotations via the {@code junit-platform-suite} dependency — no {@code @ClassRule} workaround
  * needed.
  *

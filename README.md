@@ -340,6 +340,8 @@ Group multiple test classes under a single `@Suite` class.
 Use `@BeforeSuite` and `@AfterSuite` to run setup/teardown logic that wraps the **entire** suite — not just a single
 test class.
 
+> **ℹ️ Availability:** `@BeforeSuite` and `@AfterSuite` were introduced in **JUnit Platform 1.11.0** (bundled with JUnit Jupiter 5.11). They are fully supported on this JUnit 5.14.4 branch.
+
 ```java
 @Suite
 @SelectClasses({
