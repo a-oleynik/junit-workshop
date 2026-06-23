@@ -611,6 +611,7 @@ This project ships instruction files for AI coding assistants so they automatica
 
 | File                              | Tool                        | Purpose                                                                                                        |
 |-----------------------------------|-----------------------------|----------------------------------------------------------------------------------------------------------------|
+| `AGENTS.md`                       | Any AI Agent                | Unified task recipes and conventions for AI assistants (root copy for visibility)                              |
 | `.github/copilot-instructions.md` | GitHub Copilot              | Always-on workspace instructions — injected into every Copilot suggestion and chat turn                        |
 | `.github/agents.md`               | GitHub Copilot (agent mode) | Step-by-step task recipes for the Copilot coding agent (add a test class, extension, data provider, tag, etc.) |
 | `.junie/guidelines.md`            | JetBrains Junie             | Project guidelines Junie reads before generating code                                                          |
@@ -629,6 +630,7 @@ All three files encode the same critical conventions:
 ## 📁 Project Structure
 
 ```
+AGENTS.md                    # AI Agent task recipes and conventions (root copy)
 .github/
 ├── copilot-instructions.md  # GitHub Copilot workspace instructions (always-on)
 └── agents.md                # GitHub Copilot agent-mode task recipes
