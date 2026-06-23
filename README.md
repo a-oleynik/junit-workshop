@@ -776,7 +776,7 @@ src/
 │   ├── listeners/       # ExecutionListener (RunListener implementation)
 │   ├── model/           # Domain model (User, MyDoubleWrapper, MyServer)
 │   ├── rules/           # Custom rules (DBResourceRule, MonitorRule, RetryTestRule, RetryMethodRule, AssertAll)
-│   └── runners/         # Custom runners (RetryRunner, ExecutionListenerRunner)
+│   ├── runners/         # Custom runners (RetryRunner, ExecutionListenerRunner)
 │   └── Utils.java
 └── test/
     ├── java/com/oleynik/qa/workshop/junit/
@@ -785,7 +785,8 @@ src/
     │   ├── conditional/      # Assumptions (Assume)
     │   ├── ddt/              # Parameterized, JUnitParams, DataProvider, Theories
     │   ├── nested/           # Nested tests (HierarchicalContextRunner)
-    │   ├── grouping/         # @Category and custom category interfaces
+    │   ├── grouping/         # @Category usage
+    │   │   └── categories/  # SmokeTests, RegressionTests marker interfaces
     │   ├── execution/order/  # Test execution ordering (@FixMethodOrder, @OrderWith)
     │   ├── rules/            # Rule examples (ExternalResource, TestWatcher)
     │   ├── repeat/           # Retry strategies (runner, test rule, method rule)
