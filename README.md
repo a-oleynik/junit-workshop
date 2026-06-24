@@ -1,9 +1,9 @@
 # JUnit 4 Workshop Examples
 
+[![Java CI with Maven](https://github.com/a-oleynik/junit-workshop/actions/workflows/maven.yml/badge.svg)](https://github.com/a-oleynik/junit-workshop/actions/workflows/maven.yml)
 [![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
 [![JUnit](https://img.shields.io/badge/JUnit-4.13.2-green.svg)](https://junit.org/junit4/)
-[![Java CI with Maven](https://github.com/a-oleynik/junit-workshop/actions/workflows/maven.yml/badge.svg)](https://github.com/a-oleynik/junit-workshop/actions/workflows/maven.yml)
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
 [![Hamcrest](https://img.shields.io/badge/Hamcrest-3.0-yellowgreen.svg)](https://hamcrest.org/)
 [![Lombok](https://img.shields.io/badge/Lombok-1.18.46-red.svg)](https://projectlombok.org/)
