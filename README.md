@@ -154,7 +154,7 @@ mvn clean test
 | `lombok`                            | `1.18.46`       | `@Builder`, `@Data` — compile-time code generation; reduces boilerplate in model classes                                                           |
 | `rerunner-jupiter`                  | `2.1.6`         | `@RepeatedIfExceptionsTest` — auto-retry flaky tests on failure                                                                                    |
 | `opencsv`                           | `5.12.0`        | CSV file parsing for data-driven tests (`CSVParameterizationTest`)                                                                                 |
-| Java source / target                | `21`            | Java language level for compilation                                                                                                                |
+| Java `--release`                    | `21`            | Java language level for compilation — enforces JDK 21 API surface (`<release>` is stricter than `<source>`+`<target>`)                             |
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
