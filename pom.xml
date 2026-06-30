@@ -17,7 +17,7 @@
         <hamcrest.version>3.0</hamcrest.version>
         <lombok.version>1.18.46</lombok.version>
         <rerunner.jupiter.version>2.1.6</rerunner.jupiter.version>
-        <junit.pioneer>2.3.0</junit.pioneer>
+        <junit-pioneer.version>2.3.0</junit-pioneer.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -122,7 +122,7 @@
         <dependency>
             <groupId>org.junit-pioneer</groupId>
             <artifactId>junit-pioneer</artifactId>
-            <version>${junit.pioneer}</version>
+            <version>${junit-pioneer.version}</version>
             <scope>test</scope>
         </dependency>
         <!--
