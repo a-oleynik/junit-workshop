@@ -34,21 +34,46 @@
     </dependencyManagement>
 
     <dependencies>
+        <!--
+            junit-jupiter-api: compile scope — needed in src/main/ by custom extensions
+            (BeforeAllCallback, AfterAllCallback, TestWatcher, ExtensionContext, TestInfo, …)
+        -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <!-- version managed by junit-bom -->
+        </dependency>
+        <!--
+            junit-jupiter-engine: test scope — the test runtime engine; not referenced in src/main/
+        -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
             <!-- version managed by junit-bom -->
+            <scope>test</scope>
         </dependency>
+        <!--
+            junit-jupiter-params: compile scope — ArgumentsProvider, Arguments, ArgumentsSource,
+            AnnotationConsumer, ParameterDeclarations are used in src/main/dataproviders/ and annotations/
+        -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-params</artifactId>
             <!-- version managed by junit-bom -->
         </dependency>
+        <!--
+            junit-platform-suite: test scope — @Suite, @BeforeSuite, @AfterSuite are only used in src/test/
+        -->
         <dependency>
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-suite</artifactId>
             <!-- version managed by junit-bom -->
+            <scope>test</scope>
         </dependency>
+        <!--
+            junit-jupiter-params-dataprovider: compile scope — @DataProvider is used in
+            src/main/dataproviders/JUnitDataProvider.java
+        -->
         <dependency>
             <groupId>com.tngtech.junit.dataprovider</groupId>
             <artifactId>junit-jupiter-params-dataprovider</artifactId>
@@ -68,11 +93,13 @@
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-library</artifactId>
             <version>${hamcrest.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -92,16 +119,10 @@
             <version>${junit.pioneer}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-commons</artifactId>
-            <!-- version managed by junit-bom -->
-        </dependency>
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-engine</artifactId>
-            <!-- version managed by junit-bom -->
-        </dependency>
+        <!--
+            junit-platform-commons and junit-platform-engine are transitive dependencies
+            of junit-jupiter-engine — no need to declare them explicitly.
+        -->
     </dependencies>
 
     <build>
