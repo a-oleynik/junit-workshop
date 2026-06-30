@@ -153,16 +153,38 @@
     </build>
     <profiles>
         <profile>
-            <id>SmokeTests</id>
-            <properties>
-                <testcase.groups>SmokeTests</testcase.groups>
-            </properties>
+            <id>Smoke</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <groups>com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests</groups>
+                            <excludes>
+                                <exclude>**/*Suite.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
-            <id>RegressionTests</id>
-            <properties>
-                <testcase.groups>RegressionTests</testcase.groups>
-            </properties>
+            <id>Regression</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <groups>com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests</groups>
+                            <excludes>
+                                <exclude>**/*Suite.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
     </profiles>
     <reporting>
