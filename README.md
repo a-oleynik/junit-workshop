@@ -322,16 +322,17 @@ mvn clean test -Dgroups=Regression
 mvn clean test -Dgroups=Smoke,Regression
 ```
 
-**Via Maven profiles (SmokeTests / RegressionTests):**
+**Via Maven profiles (`Smoke` / `Regression`):**
 
 ```bash
-mvn clean test -P SmokeTests
-mvn clean test -P RegressionTests
+mvn clean test -P Smoke
+mvn clean test -P Regression
 ```
 
-> ⚠️ **Note:** The `SmokeTests` and `RegressionTests` profiles in `pom.xml` currently have the `<groups>` line commented out.
-> To enable profile-based tag filtering, uncomment `<groups>${testcase.groups}</groups>` in the Surefire plugin configuration
-> and update the profile property values from `SmokeTests`/`RegressionTests` to `Smoke`/`Regression` to match the actual `@Tag` values.
+> Each profile activates the matching `<groups>` filter in the Surefire configuration and automatically
+> excludes `@Suite` classes, which have no tagged members and would otherwise fail with `NoTestsDiscoveredException`.
+> Profile IDs intentionally match the `@Tag` values — `Smoke` and `Regression` — so the naming is consistent
+> throughout the project.
 
 ### 10. Suite Lifecycle (`@BeforeSuite` / `@AfterSuite`)
 
@@ -504,6 +505,13 @@ mvn clean test -Dsurefire.rerunFailingTestsCount=2
 
 ```bash
 mvn clean test -Dgroups=Regression,Smoke
+```
+
+### Run tests via Maven profile
+
+```bash
+mvn clean test -P Smoke
+mvn clean test -P Regression
 ```
 
 ### Run only a specific suite

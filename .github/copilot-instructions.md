@@ -83,7 +83,7 @@ src/
 mvn clean test                          # run all tests
 mvn clean test -Dtest=AssertTest        # run one class
 mvn clean test -Dgroups=Smoke           # run by tag
-mvn clean test -P SmokeTests            # run via Maven profile
+mvn clean test -P Smoke                 # run via Maven profile (Smoke or Regression)
 mvn clean surefire-report:report        # generate HTML report
 mvn clean site                          # full Maven site
 ```
