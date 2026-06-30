@@ -21,6 +21,10 @@
     </properties>
 
     <dependencies>
+        <!--
+            junit: compile scope — rules, runners, listeners in src/main/ use org.junit.* API
+            (TestRule, ExternalResource, TestWatcher, RunListener, BlockJUnit4ClassRunner, …)
+        -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -32,11 +36,17 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <!-- JUnitParams: test scope — @RunWith(JUnitParamsRunner) and @Parameters only used in src/test/ -->
         <dependency>
             <groupId>pl.pragmatists</groupId>
             <artifactId>JUnitParams</artifactId>
             <version>${junit.params.version}</version>
+            <scope>test</scope>
         </dependency>
+        <!--
+            junit4-dataprovider: compile scope — @DataProvider is used in
+            src/main/dataproviders/ (FactorialDataProvider, etc.)
+        -->
         <dependency>
             <groupId>com.tngtech.junit.dataprovider</groupId>
             <artifactId>junit4-dataprovider</artifactId>
@@ -47,15 +57,19 @@
             <artifactId>opencsv</artifactId>
             <version>${opencsv.version}</version>
         </dependency>
+        <!-- assertj-core: test scope — only used in src/test/ -->
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
             <version>${assertj.version}</version>
+            <scope>test</scope>
         </dependency>
+        <!-- hamcrest-library: test scope — only used in src/test/ -->
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-library</artifactId>
             <version>${hamcrest.version}</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
