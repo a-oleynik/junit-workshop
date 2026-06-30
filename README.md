@@ -93,7 +93,7 @@ This repository contains examples for multiple JUnit versions, each on its own b
 
 | Branch                                                                          | JUnit version        | Description                                                             |
 |---------------------------------------------------------------------------------|----------------------|-------------------------------------------------------------------------|
-| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.0)  | Latest JUnit 6 features                                                 |
+| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.1)  | Latest JUnit 6 features                                                 |
 | [`junit-5.14.4`](https://github.com/a-oleynik/junit-workshop/tree/junit-5.14.4) | **JUnit 5** (5.14.4) | Current branch — stable JUnit 5 examples (the most widely used version) |
 | [`junit-4.13.2`](https://github.com/a-oleynik/junit-workshop/tree/junit-4.13.2) | **JUnit 4** (4.13.2) | Legacy JUnit 4 examples — useful for migration reference                |
 
@@ -154,7 +154,7 @@ mvn clean test
 | `lombok`                            | `1.18.46`        | `@Builder`, `@Data` — compile-time code generation; reduces boilerplate in model classes                                                           |
 | `rerunner-jupiter`                  | `2.1.6`          | `@RepeatedIfExceptionsTest` — auto-retry flaky tests on failure                                                                                    |
 | `opencsv`                           | `5.12.0`         | CSV file parsing for data-driven tests (`CSVParameterizationTest`)                                                                                 |
-| Java source / target                | `21`             | Java language level for compilation                                                                                                                |
+| Java `--release`                    | `21`             | Java language level for compilation — enforces JDK 21 API surface (`<release>` is stricter than `<source>`+`<target>`)                             |
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
