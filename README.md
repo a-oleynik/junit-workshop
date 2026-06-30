@@ -92,7 +92,7 @@ This repository contains examples for multiple JUnit versions, each on its own b
 
 | Branch                                                                          | JUnit version        | Description                                                               |
 |---------------------------------------------------------------------------------|----------------------|---------------------------------------------------------------------------|
-| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.0)  | Latest JUnit 6 features                                                   |
+| [`master`](https://github.com/a-oleynik/junit-workshop/tree/master)             | **JUnit 6** (6.1.1)  | Latest JUnit 6 features                                                   |
 | [`junit-5.14.4`](https://github.com/a-oleynik/junit-workshop/tree/junit-5.14.4) | **JUnit 5** (5.14.4) | Stable JUnit 5 examples — the most widely used version                    |
 | [`junit-4.13.2`](https://github.com/a-oleynik/junit-workshop/tree/junit-4.13.2) | **JUnit 4** (4.13.2) | Current branch — legacy JUnit 4 examples — useful for migration reference |
 
@@ -152,7 +152,7 @@ mvn clean test
 | `hamcrest-library`                | `3.0`     | Matcher-based assertions — `assertThat(value, matcher)`                                                                        |
 | `lombok`                          | `1.18.46` | `@Builder`, `@Data` — compile-time code generation; reduces boilerplate in model classes                                       |
 | `opencsv`                         | `5.12.0`  | CSV file parsing for data-driven tests                                                                                         |
-| Java source / target              | `17`      | Java language level for compilation                                                                                            |
+| Java `--release`                  | `17`      | Java language level for compilation — enforces JDK 17 API surface (`<release>` is stricter than `<source>`+`<target>`)         |
 
 > **Note on Hamcrest:** `junit:junit:4.13.2` bundles `hamcrest-core:1.3`, which is excluded in `pom.xml`.
 > `hamcrest-library` is declared explicitly to get the full matcher library instead of the minimal core.
