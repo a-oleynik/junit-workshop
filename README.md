@@ -359,14 +359,14 @@ mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.Regres
 **Via Maven profiles:**
 
 ```bash
-mvn clean test -P SmokeTests
-mvn clean test -P RegressionTests
+mvn clean test -P Smoke
+mvn clean test -P Regression
 ```
 
-> ⚠️ **Note:** The `SmokeTests` and `RegressionTests` profiles in `pom.xml` currently have the `<groups>` line commented out.
-> To enable profile-based category filtering, uncomment `<groups>${testcase.groups}</groups>` in the Surefire plugin configuration
-> and update the profile property values to the fully-qualified category class names
-> (e.g. `com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests`).
+> Each profile activates the matching `<groups>` filter in the Surefire configuration using the
+> fully-qualified category class name (`SmokeTests` / `RegressionTests`), and automatically excludes
+> `*Suite.java` classes, which have no `@Category` annotation and would otherwise interfere with
+> filtered runs. Profile IDs match the master-branch convention — `Smoke` and `Regression`.
 
 ### 11. Test Suite (`@BeforeSuite` / `@AfterSuite` emulation)
 
@@ -625,8 +625,8 @@ mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.Regres
 ### Run tests via Maven profile
 
 ```bash
-mvn clean test -P SmokeTests
-mvn clean test -P RegressionTests
+mvn clean test -P Smoke
+mvn clean test -P Regression
 ```
 
 ### Run only a specific suite
