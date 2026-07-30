@@ -3,6 +3,7 @@
 [![Java CI with Maven](https://github.com/a-oleynik/junit-workshop/actions/workflows/maven.yml/badge.svg)](https://github.com/a-oleynik/junit-workshop/actions/workflows/maven.yml)
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
+[![Gradle](https://img.shields.io/badge/Gradle-9.6.0-02303A.svg)](https://gradle.org/)
 [![JUnit](https://img.shields.io/badge/JUnit-6.1.2-green.svg)](https://junit.org/)
 [![JUnit Pioneer](https://img.shields.io/badge/JUnit_Pioneer-2.3.0-green.svg)](https://junit-pioneer.org/)
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
@@ -106,8 +107,23 @@ This repository contains examples for multiple JUnit versions, each on its own b
 ```bash
 git clone https://github.com/a-oleynik/junit-workshop.git
 cd junit-workshop
-mvn clean test
+
+# Maven
+./mvnw clean test
+
+# Gradle
+./gradlew clean test
 ```
+
+### Import into an IDE
+
+The same checkout can be imported as either build system:
+
+- **Maven project:** open or import `pom.xml`
+- **Gradle project:** open or import `settings.gradle` / `build.gradle`
+
+In IntelliJ IDEA, open the repository folder and choose the build model you want when the IDE detects both Maven and
+Gradle. Do not link both models at the same time: select one build system for the current IDE project.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -115,25 +131,25 @@ mvn clean test
 
 ## 📦 Prerequisites
 
-| Tool              | Minimum version                   | Notes                                                          |
-|-------------------|-----------------------------------|----------------------------------------------------------------|
-| **JDK**           | 21 LTS                            |                                                                |
-| **Maven**         | 3.9+ *(optional but recommended)* | Not required if using the included Maven Wrapper (`mvnw`)      |
-| **IDE**           | Any (IntelliJ IDEA recommended)   | Lombok plugin required for IDE support                         |
-| **Lombok plugin** | Latest                            | IntelliJ: *Settings → Plugins → Lombok*                        |
+| Tool              | Minimum version    | Notes                                           |
+|-------------------|--------------------|-------------------------------------------------|
+| **JDK**           | 21 LTS             | Required by both build configurations           |
+| **Maven**         | 3.9+ *(optional)*  | The included Maven Wrapper can be used instead  |
+| **Gradle**        | 9.6.0 *(optional)* | The included Gradle Wrapper can be used instead |
+| **IDE**           | Any                | IntelliJ IDEA is recommended                    |
+| **Lombok plugin** | Latest             | IntelliJ: *Settings → Plugins → Lombok*         |
 
-> 💡 **Maven Wrapper included** — this project ships with `mvnw` (Linux/macOS) and `mvnw.cmd` (Windows).  
-> You can use it instead of a locally installed Maven. The wrapper automatically downloads the correct Maven version on first run.
+> 💡 **Maven and Gradle Wrappers included** — no local Maven or Gradle installation is required. Each wrapper
+> automatically downloads its pinned build-tool version on first run.
 >
 > ```bash
-> # Linux / macOS
+> # Linux / macOS (or Windows with Git Bash)
 > ./mvnw clean test
+> ./gradlew clean test
 >
 > # Windows (Command Prompt / PowerShell)
 > mvnw.cmd clean test
->
-> # Windows with Git Bash
-> ./mvnw clean test
+> gradlew.bat clean test
 > ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -142,7 +158,7 @@ mvn clean test
 
 ## 🧩 Supported Versions
 
-| Maven artifact                      | Version         | Purpose                                                                                                                                            |
+| Maven/Gradle artifact               | Version         | Purpose                                                                                                                                            |
 |-------------------------------------|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
 | `junit-jupiter-engine`              | `6.1.2` *(BOM)* | Test engine — discovers and runs Jupiter tests; transitively provides `junit-jupiter-api` (all `@Test`, `@BeforeEach`, `@AfterAll`, … annotations) |
 | `junit-jupiter-params`              | `6.1.2` *(BOM)* | `@ParameterizedTest`, `@ValueSource`, `@CsvSource`, `@MethodSource`, `@CsvFileSource`                                                              |
@@ -154,6 +170,7 @@ mvn clean test
 | `lombok`                            | `1.18.46`       | `@Builder`, `@Data` — compile-time code generation; reduces boilerplate in model classes                                                           |
 | `rerunner-jupiter`                  | `2.1.6`         | `@RepeatedIfExceptionsTest` — auto-retry flaky tests on failure                                                                                    |
 | `opencsv`                           | `5.12.0`        | CSV file parsing for data-driven tests (`CSVParameterizationTest`)                                                                                 |
+| `org.gradle.test-retry`             | `1.6.5`         | Gradle plugin behind the `-PretryCount=N` command                                                                                                  |
 | Java `--release`                    | `21`            | Java language level for compilation — enforces JDK 21 API surface (`<release>` is stricter than `<source>`+`<target>`)                             |
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -233,7 +250,11 @@ Work through these topics in order; each builds on the previous one.
 **Run the whole beginner suite:**
 
 ```bash
-mvn clean test
+# Maven
+./mvnw clean test
+
+# Gradle
+./gradlew clean test
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -283,7 +304,7 @@ Control method execution order with `@TestMethodOrder` and `@Order`.
 
 ### 8. Parallel Execution
 
-Configured globally in `pom.xml` via Surefire:
+Configured globally in both `pom.xml` (Surefire) and `build.gradle`:
 
 ```properties
 junit.jupiter.execution.parallel.enabled=true
@@ -305,7 +326,7 @@ void test_that_uses_shared_resource() { ... }
 
 > 💡 See `ExecutionOrderWithTest` in the `execution/order/` package for ordering examples used alongside parallel execution.
 
-### 9. Maven Profiles (Tag-based filtering)
+### 9. Tag-based filtering
 
 Tags used in this project are `Smoke` and `Regression` (defined in `Tags.java`; also available as meta-annotations `@Smoke` and `@Regression`).
 
@@ -313,26 +334,30 @@ Tags used in this project are `Smoke` and `Regression` (defined in `Tags.java`; 
 
 ```bash
 # Run only Smoke tests
-mvn clean test -Dgroups=Smoke
+./mvnw clean test -Dgroups=Smoke
+./gradlew clean test -Pgroups=Smoke
 
 # Run only Regression tests
-mvn clean test -Dgroups=Regression
+./mvnw clean test -Dgroups=Regression
+./gradlew clean test -Pgroups=Regression
 
 # Run both tags
-mvn clean test -Dgroups=Smoke,Regression
+./mvnw clean test -Dgroups=Smoke,Regression
+./gradlew clean test -Pgroups=Smoke,Regression
 ```
 
-**Via Maven profiles (`Smoke` / `Regression`):**
+**Via Maven profiles or dedicated Gradle tasks:**
 
 ```bash
-mvn clean test -P Smoke
-mvn clean test -P Regression
+./mvnw clean test -P Smoke
+./gradlew clean smokeTest
+
+./mvnw clean test -P Regression
+./gradlew clean regressionTest
 ```
 
-> Each profile activates the matching `<groups>` filter in the Surefire configuration and automatically
+> Each Maven profile or Gradle task activates the matching tag filter and automatically
 > excludes `@Suite` classes, which have no tagged members and would otherwise fail with `NoTestsDiscoveredException`.
-> Profile IDs intentionally match the `@Tag` values — `Smoke` and `Regression` — so the naming is consistent
-> throughout the project.
 
 ### 10. Suite Lifecycle (`@BeforeSuite` / `@AfterSuite`)
 
@@ -376,7 +401,9 @@ public class BeforeAfterSuite {
 > If they matched Surefire’s default discovery patterns they would execute **twice** —  
 > once directly by Surefire and once again through the suite.
 
-> **⚙️ Maven config:** `pom.xml` requires two things for the suite feature to work:
+> **⚙️ Build config:** `pom.xml` and `build.gradle` both declare the JUnit Platform Suite dependency and include
+> `*Suite` classes in test discovery. In Maven that is expressed through Surefire `<includes>`; in Gradle it is
+> configured on every `Test` task.
 >
 > 1. The `junit-platform-suite` dependency (enables `@Suite`, `@BeforeSuite`, `@AfterSuite`):
 >    ```xml
@@ -386,7 +413,8 @@ public class BeforeAfterSuite {
 >        <!-- version managed by junit-bom in dependencyManagement -->
 >    </dependency>
 >    ```
-> 2. `**/*Suite.java` added to Surefire `<includes>` so `BeforeAfterSuite` is automatically discovered by `mvn clean test`.
+> 2. `**/*Suite.java` added to Surefire `<includes>` so `BeforeAfterSuite` is automatically discovered by
+>    `./mvnw clean test`; the equivalent Gradle include is `**/*Suite.class`.
 
 ### 11. Suite-like Lifecycle via Extension (`BeforeAllCallback` + Root Store)
 
@@ -436,8 +464,8 @@ public class SuiteExtensionFirstTest {
 |                         | `@Suite` + `@BeforeSuite`           | Extension approach                   |
 |-------------------------|-------------------------------------|--------------------------------------|
 | Test class naming       | `*Case` / `*Scenario` (not `*Test`) | `*Test` — normal, runs independently |
-| Requires suite class    | ✅ `@SelectClasses` required         | ❌ No suite class needed              |
-| Tests run independently | ❌ Only via suite entry class        | ✅ Normal Surefire discovery          |
+| Requires suite class    | ✅ `@SelectClasses` required        | ❌ No suite class needed             |
+| Tests run independently | ❌ Only via suite entry class       | ✅ Normal Surefire discovery         |
 | Opt-in mechanism        | Declared in `@SelectClasses`        | `@ExtendWith` per class              |
 
 > **ℹ️ `computeIfAbsent` vs `getOrComputeIfAbsent`:** In JUnit 6, all `getOrComputeIfAbsent` overloads
@@ -445,13 +473,18 @@ public class SuiteExtensionFirstTest {
 > `computeIfAbsent(K, Function, Class<V>)`.
 > On the JUnit 5 branch, use `getOrComputeIfAbsent(K, Function, Class<V>)` instead (same signature, different name).
 
-### 12. Surefire HTML Report Generation
+### 12. HTML Report Generation
 
 ```bash
-mvn clean site
-# or
-mvn clean surefire-report:report
+# Maven
+./mvnw clean site
+
+# Gradle
+./gradlew clean site
 ```
+
+Maven writes the report to `target/site/surefire-report.html`; Gradle writes it to
+`build/reports/tests/test/index.html`.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -462,62 +495,74 @@ mvn clean surefire-report:report
 ### Run all tests
 
 ```bash
-mvn clean test
+./mvnw clean test
+./gradlew clean test
 ```
 
 ### Run a single test class
 
 ```bash
-mvn clean test -Dtest=AssertTest
+./mvnw clean test -Dtest=AssertTest
+./gradlew clean test --tests "*AssertTest"
 ```
 
 ### Run a single test method
 
 ```bash
-mvn clean test -Dtest=AssertTest#assert_equals_multiplication_test
+./mvnw clean test -Dtest=AssertTest#assert_equals_multiplication_test
+./gradlew clean test --tests "*AssertTest.assert_equals_multiplication_test"
 ```
 
 ### Run multiple test classes
 
 ```bash
-mvn clean test -Dtest=AssertTest,HamcrestTest
+./mvnw clean test -Dtest=AssertTest,HamcrestTest
+./gradlew clean test --tests "*AssertTest" --tests "*HamcrestTest"
 ```
 
 ### Run test methods matching a pattern
 
 ```bash
-mvn clean test -Dtest=AssertTest#assert_equals*
+./mvnw clean test -Dtest=AssertTest#assert_equals*
+./gradlew clean test --tests "*AssertTest.assert_equals*"
 ```
 
 ### Run test methods matching multiple patterns
 
 ```bash
-mvn clean test -Dtest=AssertTest#assert_equals*+assert_boolean*
+./mvnw clean test -Dtest=AssertTest#assert_equals*+assert_boolean*
+./gradlew clean test --tests "*AssertTest.assert_equals*" --tests "*AssertTest.assert_boolean*"
 ```
 
 ### Rerun failing tests automatically (e.g. flaky tests)
 
 ```bash
-mvn clean test -Dsurefire.rerunFailingTestsCount=2
+./mvnw clean test -Dsurefire.rerunFailingTestsCount=2
+./gradlew clean test -PretryCount=2
 ```
 
 ### Run tests by tag
 
 ```bash
-mvn clean test -Dgroups=Regression,Smoke
+./mvnw clean test -Dgroups=Regression,Smoke
+./gradlew clean test -Pgroups=Regression,Smoke
 ```
 
-### Run tests via Maven profile
+### Run tests via Maven profile or dedicated Gradle task
 
 ```bash
-mvn clean test -P Smoke
-mvn clean test -P Regression
+./mvnw clean test -P Smoke
+./gradlew clean smokeTest
+
+./mvnw clean test -P Regression
+./gradlew clean regressionTest
 ```
 
 ### Run only a specific suite
 
 ```bash
-mvn test "-Dtest=BeforeAfterSuite"
+./mvnw test "-Dtest=BeforeAfterSuite"
+./gradlew test --tests "*BeforeAfterSuite"
 ```
 
 > ⚠️ **Naming convention:** suite-member classes (e.g. `SuiteLifecycleFirstCase`) are named `*Case`, **not** `*Test` or `*Tests`.  
@@ -527,33 +572,39 @@ mvn test "-Dtest=BeforeAfterSuite"
 ### Compile, test, package, and install to local repo
 
 ```bash
-mvn clean install
+./mvnw clean install
+./gradlew clean build publishToMavenLocal
 ```
 
 ### Skip tests (compile + package + install to local repo without running tests)
 
 ```bash
-mvn clean install -DskipTests
+./mvnw clean install -DskipTests
+./gradlew clean assemble publishToMavenLocal
 ```
 
-### Generate Surefire HTML report (quick)
+### Generate an HTML test report
 
 ```bash
-mvn clean surefire-report:report
+./mvnw clean surefire-report:report
+./gradlew clean test
 ```
 
-### Generate full Maven site with Surefire report
+### Generate the build-tool report site
 
 ```bash
-mvn clean site
+./mvnw clean site
+./gradlew clean site
 ```
 
-> Reports are written to `target/site/surefire-report.html`
+> Maven report: `target/site/surefire-report.html`<br>
+> Gradle report: `build/reports/tests/test/index.html`
 
 ### Enable full debug logging for troubleshooting
 
 ```bash
-mvn clean test -X
+./mvnw clean test -X
+./gradlew clean test --debug
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -574,10 +625,13 @@ Triggered manually from **Actions → Run workflow** on GitHub.
 
 ### Jobs
 
-| Job          | Name                   | Runs when                             | Command                                  |
-|--------------|------------------------|---------------------------------------|------------------------------------------|
-| `regression` | Regression — all tests | Always                                | `./mvnw -B clean site`                   |
-| `by-tag`     | By tag — `{groups}`    | Only when `groups` input is filled in | `./mvnw -B clean site -Dgroups={groups}` |
+| Job          | Name                   | Runs when                             | Maven command                            | Equivalent Gradle command                                  |
+|--------------|------------------------|---------------------------------------|------------------------------------------|------------------------------------------------------------|
+| `regression` | Regression — all tests | Always                                | `./mvnw -B clean site`                   | `./gradlew --no-daemon clean site`                         |
+| `by-tag`     | By tag — `{groups}`    | Only when `groups` input is filled in | `./mvnw -B clean site -Dgroups={groups}` | `./gradlew --no-daemon clean test -Pgroups={groups}`       |
+
+The current GitHub Actions workflow executes the Maven commands; the Gradle column shows the equivalent commands for
+local use or for adding a Gradle-based workflow later.
 
 Each job uploads two artifacts after completion — including on failure (`if: always()`):
 
@@ -604,11 +658,15 @@ Each job uploads two artifacts after completion — including on failure (`if: a
 
 ```bash
 # All tests
-mvn clean site
+./mvnw clean site
+./gradlew clean site
 
 # By tag
-mvn clean site -Dgroups=Smoke
-mvn clean site -Dgroups=Regression
+./mvnw clean site -Dgroups=Smoke
+./gradlew clean test -Pgroups=Smoke
+
+./mvnw clean site -Dgroups=Regression
+./gradlew clean test -Pgroups=Regression
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -644,6 +702,10 @@ README.md                    # This file
 LICENSE
 pom.xml                      # Maven build — dependencies, Surefire config, profiles
 mvnw / mvnw.cmd              # Maven Wrapper scripts (no local Maven installation required)
+build.gradle                 # Gradle build — equivalent dependencies and test configuration
+settings.gradle              # Gradle project name
+gradlew / gradlew.bat        # Gradle Wrapper scripts (no local Gradle installation required)
+gradle/wrapper/              # Pinned Gradle distribution and wrapper bootstrap JAR
 .github/
 └── copilot-instructions.md  # GitHub Copilot workspace instructions (always-on)
 .junie/
@@ -676,6 +738,10 @@ target/                      # Generated by Maven — not committed to git
 ├── surefire-reports/        # Raw JUnit XML results (TEST-*.xml) + console output (*.txt)
 └── site/
     └── surefire-report.html # HTML test report — open in a browser after `mvn site`
+build/                       # Generated by Gradle — not committed to git
+├── test-results/test/       # Raw JUnit XML results
+└── reports/tests/test/
+    └── index.html           # Gradle HTML test report
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -692,6 +758,9 @@ target/                      # Generated by Maven — not committed to git
 - [Maven Surefire Plugin](https://maven.apache.org/surefire/maven-surefire-plugin/)
 - [Maven Surefire Report Plugin](https://maven.apache.org/surefire/maven-surefire-report-plugin/)
 - [Maven Wrapper](https://maven.apache.org/wrapper/) — run Maven without a local installation
+- [Gradle Java Plugin](https://docs.gradle.org/current/userguide/java_plugin.html)
+- [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) — run Gradle without a local installation
+- [Gradle Test Retry Plugin](https://github.com/gradle/test-retry-gradle-plugin)
 - [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples
 - [Selenium Example — JUnit 6 branch](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium framework using JUnit 6
 
@@ -703,6 +772,7 @@ target/                      # Generated by Maven — not committed to git
 
 - [**Java Download**](https://www.oracle.com/java/technologies/downloads/)
 - [**Maven Download**](https://maven.apache.org/download.cgi)
+- [**Gradle Releases**](https://gradle.org/releases/)
 - [**JUnit 5 & 6 Releases**](https://github.com/junit-team/junit5/releases)
 - [**JUnit 4 Releases**](https://github.com/junit-team/junit4/releases)
 - [**JUnit 6 Released — Clean-Up, Modernization & Minimal Disruption**](https://medium.com/@andrei.oleynik/junit-6-released-clean-up-modernization-minimal-disruption-d3ecf11b64ad)
