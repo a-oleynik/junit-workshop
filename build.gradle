@@ -1,0 +1,116 @@
+plugins {
+    id 'java'
+    id 'org.gradle.test-retry' version '1.6.5'
+}
+
+group = 'com.oleynik.qa.workshop'
+version = '2.0-SNAPSHOT'
+description = 'JUnit 6 workshop examples'
+
+def versions = [
+        junit          : '6.1.2',
+        dataProvider    : '2.12',
+        openCsv         : '5.12.0',
+        assertJ         : '3.27.7',
+        hamcrest        : '3.0',
+        lombok          : '1.18.46',
+        rerunnerJupiter : '2.1.6',
+        junitPioneer    : '2.3.0'
+]
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation platform("org.junit:junit-bom:${versions.junit}")
+    implementation 'org.junit.jupiter:junit-jupiter-api'
+    implementation 'org.junit.jupiter:junit-jupiter-params'
+    implementation "com.tngtech.junit.dataprovider:junit-jupiter-params-dataprovider:${versions.dataProvider}"
+    implementation "com.opencsv:opencsv:${versions.openCsv}"
+
+    compileOnly "org.projectlombok:lombok:${versions.lombok}"
+    annotationProcessor "org.projectlombok:lombok:${versions.lombok}"
+
+    testImplementation platform("org.junit:junit-bom:${versions.junit}")
+    testImplementation 'org.junit.platform:junit-platform-suite'
+    testImplementation "org.assertj:assertj-core:${versions.assertJ}"
+    testImplementation "org.hamcrest:hamcrest-library:${versions.hamcrest}"
+    testImplementation "io.github.artsok:rerunner-jupiter:${versions.rerunnerJupiter}"
+    testImplementation "org.junit-pioneer:junit-pioneer:${versions.junitPioneer}"
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 21
+    options.compilerArgs += '-Xlint'
+    options.encoding = 'UTF-8'
+}
+
+def configureWorkshopTests = { Test testTask ->
+    testTask.useJUnitPlatform()
+    testTask.include '**/Test*.class',
+            '**/*Test.class',
+            '**/*Tests.class',
+            '**/*TestCase.class',
+            '**/*Suite.class'
+    testTask.systemProperty 'junit.jupiter.execution.parallel.enabled', 'true'
+    testTask.systemProperty 'junit.jupiter.execution.parallel.mode.default', 'concurrent'
+    testTask.reports {
+        junitXml.required = true
+        html.required = true
+    }
+    testTask.retry {
+        maxRetries = (project.findProperty('retryCount') ?: '0') as int
+        failOnPassedAfterRetry = false
+    }
+    testTask.doFirst {
+        def commandLinePatterns = testTask.filter.commandLineIncludePatterns
+        if (!commandLinePatterns.isEmpty() && commandLinePatterns.every { !it.contains('Suite') }) {
+            testTask.exclude '**/*Suite.class'
+        }
+    }
+}
+
+tasks.withType(Test).configureEach {
+    configureWorkshopTests(delegate)
+}
+
+tasks.named('test', Test) {
+    def requestedGroups = providers.gradleProperty('groups')
+    if (requestedGroups.isPresent()) {
+        useJUnitPlatform {
+            includeTags requestedGroups.get().split(',').collect { it.trim() }.findAll { !it.isEmpty() }
+        }
+        exclude '**/*Suite.class'
+    }
+}
+
+def registerTaggedTest = { String taskName, String tag ->
+    tasks.register(taskName, Test) {
+        group = LifecycleBasePlugin.VERIFICATION_GROUP
+        description = "Runs tests tagged with ${tag}."
+        testClassesDirs = sourceSets.test.output.classesDirs
+        classpath = sourceSets.test.runtimeClasspath
+        useJUnitPlatform {
+            includeTags tag
+        }
+        exclude '**/*Suite.class'
+        shouldRunAfter tasks.named('test')
+    }
+}
+
+registerTaggedTest('smokeTest', 'Smoke')
+registerTaggedTest('regressionTest', 'Regression')
+
+tasks.register('site') {
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+    description = 'Runs all tests and generates the Gradle HTML and XML test reports.'
+    dependsOn tasks.named('test')
+}
