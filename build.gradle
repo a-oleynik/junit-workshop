@@ -1,3 +1,5 @@
+import org.junit.jupiter.api.Test
+
 plugins {
     id 'java'
     id 'org.gradle.test-retry' version '1.6.5'
@@ -53,22 +55,30 @@ tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-def configureWorkshopTests = { Test testTask ->
-    testTask.useJUnitPlatform()
+def configureWorkshopTest = { Test testTask ->
     testTask.include '**/Test*.class',
             '**/*Test.class',
             '**/*Tests.class',
             '**/*TestCase.class',
             '**/*Suite.class'
+    testTask.systemProperties System.getProperties()
+    testTask.systemProperty 'file.encoding', 'UTF-8'
     testTask.systemProperty 'junit.jupiter.execution.parallel.enabled', 'true'
     testTask.systemProperty 'junit.jupiter.execution.parallel.mode.default', 'concurrent'
+    testTask.systemProperty 'junit.jupiter.execution.parallel.config.strategy', 'dynamic'
+    testTask.systemProperty 'junit.jupiter.execution.parallel.config.executor-service', 'worker_thread_pool'
+    testTask.testLogging {
+        exceptionFormat = 'full'
+        showStandardStreams = true
+    }
     testTask.reports {
         junitXml.required = true
         html.required = true
     }
     testTask.retry {
         maxRetries = (project.findProperty('retryCount') ?: '0') as int
-        failOnPassedAfterRetry = false
+        maxFailures = 100
+        failOnPassedAfterRetry = true
     }
     testTask.doFirst {
         def commandLinePatterns = testTask.filter.commandLineIncludePatterns
@@ -78,16 +88,24 @@ def configureWorkshopTests = { Test testTask ->
     }
 }
 
-tasks.withType(Test).configureEach {
-    configureWorkshopTests(delegate)
-}
+test {
+    configureWorkshopTest(delegate)
 
-tasks.named('test', Test) {
-    def requestedGroups = providers.gradleProperty('groups')
-    if (requestedGroups.isPresent()) {
-        useJUnitPlatform {
-            includeTags requestedGroups.get().split(',').collect { it.trim() }.findAll { !it.isEmpty() }
+    String includedTagsProperty = System.getProperty('includeTags')
+    String excludedTagsProperty = System.getProperty('excludeTags')
+    List<String> includedTags = includedTagsProperty?.split(',')?.collect { it.trim() }?.findAll { !it.isEmpty() }
+    List<String> excludedTags = excludedTagsProperty?.split(',')?.collect { it.trim() }?.findAll { !it.isEmpty() }
+
+    useJUnitPlatform {
+        if (includedTags) {
+            includeTags(*includedTags)
         }
+        if (excludedTags) {
+            excludeTags(*excludedTags)
+        }
+    }
+
+    if (includedTags || excludedTags) {
         exclude '**/*Suite.class'
     }
 }
@@ -98,6 +116,7 @@ def registerTaggedTest = { String taskName, String tag ->
         description = "Runs tests tagged with ${tag}."
         testClassesDirs = sourceSets.test.output.classesDirs
         classpath = sourceSets.test.runtimeClasspath
+        configureWorkshopTest(delegate)
         useJUnitPlatform {
             includeTags tag
         }
@@ -108,9 +127,3 @@ def registerTaggedTest = { String taskName, String tag ->
 
 registerTaggedTest('smokeTest', 'Smoke')
 registerTaggedTest('regressionTest', 'Regression')
-
-tasks.register('site') {
-    group = LifecycleBasePlugin.VERIFICATION_GROUP
-    description = 'Runs all tests and generates the Gradle HTML and XML test reports.'
-    dependsOn tasks.named('test')
-}

@@ -307,6 +307,8 @@ Configured globally in both `pom.xml` (Surefire) and `build.gradle`:
 ```properties
 junit.jupiter.execution.parallel.enabled=true
 junit.jupiter.execution.parallel.mode.default=concurrent
+junit.jupiter.execution.parallel.config.strategy=dynamic
+junit.jupiter.execution.parallel.config.executor-service=worker_thread_pool
 ```
 
 Tests run concurrently by default. Use `@ResourceLock` or `@Execution(SAME_THREAD)` to serialise where needed.
@@ -333,16 +335,18 @@ Tags used in this project are `Smoke` and `Regression` (defined in `Tags.java`; 
 ```bash
 # Run only Smoke tests
 ./mvnw clean test -Dgroups=Smoke
-./gradlew clean test -Pgroups=Smoke
+./gradlew clean test -DincludeTags=Smoke
 
 # Run only Regression tests
 ./mvnw clean test -Dgroups=Regression
-./gradlew clean test -Pgroups=Regression
+./gradlew clean test -DincludeTags=Regression
 
 # Run both tags
 ./mvnw clean test -Dgroups=Smoke,Regression
-./gradlew clean test -Pgroups=Smoke,Regression
+./gradlew clean test -DincludeTags=Smoke,Regression
 ```
+
+Gradle also supports `-DexcludeTags=TagName`; both properties may be supplied together.
 
 **Via Maven profiles or dedicated Gradle tasks:**
 
@@ -478,11 +482,11 @@ public class SuiteExtensionFirstTest {
 ./mvnw clean site
 
 # Gradle
-./gradlew clean site
+./gradlew clean test
 ```
 
 Maven writes the report to `target/site/surefire-report.html`; Gradle writes it to
-`build/reports/tests/test/index.html`.
+`build/reports/tests/test/index.html` automatically as part of the standard `test` task.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -543,7 +547,7 @@ Maven writes the report to `target/site/surefire-report.html`; Gradle writes it 
 
 ```bash
 ./mvnw clean test -Dgroups=Regression,Smoke
-./gradlew clean test -Pgroups=Regression,Smoke
+./gradlew clean test -DincludeTags=Regression,Smoke
 ```
 
 ### Run tests via Maven profile or dedicated Gradle task
@@ -567,18 +571,18 @@ Maven writes the report to `target/site/surefire-report.html`; Gradle writes it 
 > This prevents Surefire from discovering them as standalone tests and running them **twice** —  
 > once directly by Surefire and once again through the suite.
 
-### Compile, test, package, and install to local repo
+### Compile, test, and package
 
 ```bash
-./mvnw clean install
-./gradlew clean build publishToMavenLocal
+./mvnw clean package
+./gradlew clean build
 ```
 
-### Skip tests (compile + package + install to local repo without running tests)
+### Compile and package without running tests
 
 ```bash
-./mvnw clean install -DskipTests
-./gradlew clean assemble publishToMavenLocal
+./mvnw clean package -DskipTests
+./gradlew clean assemble
 ```
 
 ### Generate an HTML test report
@@ -590,11 +594,11 @@ Maven writes the report to `target/site/surefire-report.html`; Gradle writes it 
 
 > Report is written to `target/reports/surefire.html` — this is the **standalone** mojo execution, which uses its own default output directory.
 
-### Generate the build-tool report site
+### Generate the full Maven site or standard Gradle test report
 
 ```bash
 ./mvnw clean site
-./gradlew clean site
+./gradlew clean test
 ```
 
 > Maven report: `target/site/surefire-report.html`<br>
@@ -627,8 +631,8 @@ Triggered manually from **Actions → Run workflow** on GitHub.
 
 | Job          | Name                   | Runs when                             | Maven command                            | Equivalent Gradle command                                  |
 |--------------|------------------------|---------------------------------------|------------------------------------------|------------------------------------------------------------|
-| `regression` | Regression — all tests | Always                                | `./mvnw -B clean site`                   | `./gradlew --no-daemon clean site`                         |
-| `by-tag`     | By tag — `{groups}`    | Only when `groups` input is filled in | `./mvnw -B clean site -Dgroups={groups}` | `./gradlew --no-daemon clean test -Pgroups={groups}`       |
+| `regression` | Regression — all tests | Always                                | `./mvnw -B clean site`                   | `./gradlew --no-daemon clean test`                         |
+| `by-tag`     | By tag — `{groups}`    | Only when `groups` input is filled in | `./mvnw -B clean site -Dgroups={groups}` | `./gradlew --no-daemon clean test -DincludeTags={groups}`  |
 
 The current GitHub Actions workflow executes the Maven commands; the Gradle column shows the equivalent commands for
 local use or for adding a Gradle-based workflow later.
@@ -659,14 +663,14 @@ Each job uploads two artifacts after completion — including on failure (`if: a
 ```bash
 # All tests
 ./mvnw clean site
-./gradlew clean site
+./gradlew clean test
 
 # By tag
 ./mvnw clean site -Dgroups=Smoke
-./gradlew clean test -Pgroups=Smoke
+./gradlew clean test -DincludeTags=Smoke
 
 ./mvnw clean site -Dgroups=Regression
-./gradlew clean test -Pgroups=Regression
+./gradlew clean test -DincludeTags=Regression
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
