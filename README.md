@@ -542,13 +542,15 @@ mvn clean install -DskipTests
 mvn clean surefire-report:report
 ```
 
+> Report is written to `target/reports/surefire.html` — this is the **standalone** mojo execution, which uses its own default output directory.
+
 ### Generate full Maven site with Surefire report
 
 ```bash
 mvn clean site
 ```
 
-> Reports are written to `target/site/surefire-report.html`
+> Report is written to `target/site/surefire-report.html` — running the Surefire Report Plugin as part of `mvn site` places it alongside the rest of the generated site pages, under a different path than the standalone `surefire-report:report` goal above.
 
 ### Enable full debug logging for troubleshooting
 
