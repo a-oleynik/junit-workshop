@@ -8,7 +8,7 @@
 [![JUnit Pioneer](https://img.shields.io/badge/JUnit_Pioneer-2.3.0-green.svg)](https://junit-pioneer.org/)
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
 [![Hamcrest](https://img.shields.io/badge/Hamcrest-3.0-yellowgreen.svg)](https://hamcrest.org/)
-[![Lombok](https://img.shields.io/badge/Lombok-1.18.48-red.svg)](https://projectlombok.org/)
+[![Lombok](https://img.shields.io/badge/Lombok-1.18.46-red.svg)](https://projectlombok.org/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
 > Companion code for the IT Talk **"JUnit 6 vs TestNG 7"**.
@@ -596,6 +596,8 @@ Maven writes the report to `target/site/surefire-report.html`; Gradle writes it 
 ./gradlew clean test
 ```
 
+> Report is written to `target/reports/surefire.html` — this is the **standalone** mojo execution, which uses its own default output directory.
+
 ### Generate the full Maven site or standard Gradle test report
 
 ```bash
@@ -603,7 +605,7 @@ Maven writes the report to `target/site/surefire-report.html`; Gradle writes it 
 ./gradlew clean test
 ```
 
-> Maven report: `target/site/surefire-report.html`<br>
+> Maven report: `target/site/surefire-report.html`  — running the Surefire Report Plugin as part of `mvn site` places it alongside the rest of the generated site pages, under a different path than the standalone `surefire-report:report` goal above.<br>
 > Gradle report: `build/reports/tests/test/index.html`
 
 ### Enable full debug logging for troubleshooting
