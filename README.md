@@ -463,14 +463,14 @@ public class BeforeClassSuite {
 
 **Comparing the three JUnit 4 suite-lifecycle approaches:**
 
-|                             | Approach A — `@ClassRule ExternalResource` | Approach B — `@BeforeClass`/`@AfterClass` | Approach C — `JUnitCore` + `RunListener`  |
-|-----------------------------|--------------------------------------------|-------------------------------------------|-------------------------------------------|
-| Requires a suite class      | ✅ `@RunWith(Suite.class)` needed           | ✅ `@RunWith(Suite.class)` needed          | ❌ No suite class needed                   |
-| Member class naming         | `*Case` (not `*Test`)                      | `*Case` (not `*Test`)                     | `*Case` (not `*Test`)                     |
-| Syntax complexity           | Verbose (anonymous class)                  | Simple — same as regular test class       | Moderate — wrapper `*Test` needed         |
-| Teardown guarantee          | ✅ try-finally inside `ExternalResource`    | ⚠️ No guarantee if setup throws           | ⚠️ No guarantee if setup throws           |
-| Reusable across suites      | ✅ Extract rule to a shared field           | ❌ Must duplicate the methods              | ✅ Attach same listener to any `JUnitCore` |
-| Result inspection available | ❌                                          | ❌                                         | ✅ `Result` object in `testRunFinished`    |
+|                             | Approach A — `@ClassRule ExternalResource` | Approach B — `@BeforeClass`/`@AfterClass` | Approach C — `JUnitCore` + `RunListener`   |
+|-----------------------------|--------------------------------------------|-------------------------------------------|--------------------------------------------|
+| Requires a suite class      | ✅ `@RunWith(Suite.class)` needed          | ✅ `@RunWith(Suite.class)` needed         | ❌ No suite class needed                   |
+| Member class naming         | `*Case` (not `*Test`)                      | `*Case` (not `*Test`)                     | `*Case` (not `*Test`)                      |
+| Syntax complexity           | Verbose (anonymous class)                  | Simple — same as regular test class       | Moderate — wrapper `*Test` needed          |
+| Teardown guarantee          | ✅ try-finally inside `ExternalResource`   | ⚠️ No guarantee if setup throws           | ⚠️ No guarantee if setup throws            |
+| Reusable across suites      | ✅ Extract rule to a shared field          | ❌ Must duplicate the methods             | ✅ Attach same listener to any `JUnitCore` |
+| Result inspection available | ❌                                         | ❌                                        | ✅ `Result` object in `testRunFinished`    |
 
 #### Approach C — `JUnitCore` + `RunListener` (`suites/listener/`)
 
@@ -555,7 +555,8 @@ mvn clean site
 mvn clean surefire-report:report
 ```
 
-> Reports are written to `target/site/surefire-report.html`
+> `mvn clean site` writes the report to `target/site/surefire-report.html`.
+> `mvn clean surefire-report:report` (standalone mojo) writes it to `target/reports/surefire.html` instead — the two execution modes use different default output directories, even though both run the same `maven-surefire-report-plugin`.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -663,13 +664,15 @@ mvn clean install -DskipTests
 mvn clean surefire-report:report
 ```
 
+> Report is written to `target/reports/surefire.html` — this is the **standalone** mojo execution, which uses its own default output directory.
+
 ### Generate full Maven site with Surefire report
 
 ```bash
 mvn clean site
 ```
 
-> Reports are written to `target/site/surefire-report.html`
+> Report is written to `target/site/surefire-report.html` — running the Surefire Report Plugin as part of `mvn site` places it alongside the rest of the generated site pages, under a different path than the standalone `surefire-report:report` goal above.
 
 ### Enable full debug logging for troubleshooting
 
