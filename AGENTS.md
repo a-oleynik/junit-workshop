@@ -25,6 +25,11 @@ mvn clean test -Dtest=<ClassName>#<methodName>
 
 # Run by category
 mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests
+mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
+
+# Run via Maven profile (Smoke or Regression — resolves to the fully-qualified category class internally)
+mvn clean test -P Smoke
+mvn clean test -P Regression
 
 # Generate Surefire HTML report
 mvn clean surefire-report:report
