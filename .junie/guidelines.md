@@ -105,6 +105,7 @@ JUnit 4 has no native `@BeforeSuite` / `@AfterSuite`. Three approaches are demon
 mvn clean test                          # all tests
 mvn clean test -Dtest=ClassName         # single class
 mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests  # by category
+mvn clean test -P Smoke                 # by Maven profile (Smoke or Regression)
 mvn clean surefire-report:report        # HTML report
 mvn clean site                          # full Maven site
 ```
