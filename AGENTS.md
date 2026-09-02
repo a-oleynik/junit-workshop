@@ -28,8 +28,8 @@ mvn clean test -Dgroups=Smoke
 mvn clean test -Dgroups=Regression
 
 # Run via Maven profile
-mvn clean test -P SmokeTests
-mvn clean test -P RegressionTests
+mvn clean test -P Smoke
+mvn clean test -P Regression
 
 # Generate Surefire HTML report
 mvn clean surefire-report:report

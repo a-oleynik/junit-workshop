@@ -436,8 +436,8 @@ public class SuiteExtensionFirstTest {
 |                         | `@Suite` + `@BeforeSuite`           | Extension approach                   |
 |-------------------------|-------------------------------------|--------------------------------------|
 | Test class naming       | `*Case` / `*Scenario` (not `*Test`) | `*Test` — normal, runs independently |
-| Requires suite class    | ✅ `@SelectClasses` required         | ❌ No suite class needed              |
-| Tests run independently | ❌ Only via suite entry class        | ✅ Normal Surefire discovery          |
+| Requires suite class    | ✅ `@SelectClasses` required        | ❌ No suite class needed             |
+| Tests run independently | ❌ Only via suite entry class       | ✅ Normal Surefire discovery         |
 | Opt-in mechanism        | Declared in `@SelectClasses`        | `@ExtendWith` per class              |
 
 > **ℹ️ `computeIfAbsent` vs `getOrComputeIfAbsent`:** In JUnit 6, all `getOrComputeIfAbsent` overloads
