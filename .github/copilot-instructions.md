@@ -15,7 +15,7 @@ This is a **Java test-automation workshop** that demonstrates every major JUnit 
 | Matcher assertions    | Hamcrest 3.0                                                                   |
 | Retry on failure      | rerunner-jupiter 2.1.6 (`@RepeatedIfExceptionsTest`)                           |
 | CSV parsing           | opencsv 5.12.0                                                                 |
-| Boilerplate reduction | Lombok 1.18.46 (`@Builder`, `@Data`)                                           |
+| Boilerplate reduction | Lombok 1.18.48 (`@Builder`, `@Data`)                                           |
 
 ## Source layout
 ```
