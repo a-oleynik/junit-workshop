@@ -8,7 +8,7 @@
 [![JUnit Pioneer](https://img.shields.io/badge/JUnit_Pioneer-2.3.0-green.svg)](https://junit-pioneer.org/)
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
 [![Hamcrest](https://img.shields.io/badge/Hamcrest-3.0-yellowgreen.svg)](https://hamcrest.org/)
-[![Lombok](https://img.shields.io/badge/Lombok-1.18.46-red.svg)](https://projectlombok.org/)
+[![Lombok](https://img.shields.io/badge/Lombok-1.18.48-red.svg)](https://projectlombok.org/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
 > Companion code for the IT Talk **"JUnit 6 vs TestNG 7"**.
@@ -167,7 +167,7 @@ Gradle. Do not link both models at the same time: select one build system for th
 | `junit-jupiter-params-dataprovider` | `2.12`          | TNG-style `@DataProvider` integration for JUnit Jupiter                                                                                            |
 | `assertj-core`                      | `3.27.7`        | Fluent assertion library; `SoftAssertions` for collecting multiple failures                                                                        |
 | `hamcrest-library`                  | `3.0`           | Matcher-based assertions — `assertThat(value, matcher)`                                                                                            |
-| `lombok`                            | `1.18.46`       | `@Builder`, `@Data` — compile-time code generation; reduces boilerplate in model classes                                                           |
+| `lombok`                            | `1.18.48`       | `@Builder`, `@Data` — compile-time code generation; reduces boilerplate in model classes                                                           |
 | `rerunner-jupiter`                  | `2.1.6`         | `@RepeatedIfExceptionsTest` — auto-retry flaky tests on failure                                                                                    |
 | `opencsv`                           | `5.12.0`        | CSV file parsing for data-driven tests (`CSVParameterizationTest`)                                                                                 |
 | `org.gradle.test-retry`             | `1.6.5`         | Gradle plugin behind the `-PretryCount=N` command                                                                                                  |
