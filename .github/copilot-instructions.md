@@ -16,7 +16,7 @@ This is a **Java test-automation workshop** that demonstrates every major JUnit 
 | Custom runners        | junit-runners 1.3 (`ExecutionListenerRunner`)                                  |
 | Nested test support   | junit-hierarchicalcontextrunner 4.12.2 (`HierarchicalContextRunner`)           |
 | CSV parsing           | opencsv 5.12.0                                                                 |
-| Boilerplate reduction | Lombok 1.18.46 (`@Builder`, `@Data`)                                           |
+| Boilerplate reduction | Lombok 1.18.48 (`@Builder`, `@Data`)                                           |
 
 ## Source layout
 ```
