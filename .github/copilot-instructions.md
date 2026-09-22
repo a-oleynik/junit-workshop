@@ -1,21 +1,21 @@
 # GitHub Copilot Instructions — JUnit Workshop
 
 ## Project overview
-This is a **Java test-automation workshop** that demonstrates every major JUnit feature across JUnit 4, JUnit 5, and JUnit 6. It is a companion project to a tech talk comparing JUnit 6 with TestNG 7. The default branch targets **JUnit 6 (6.1.0)**.
+This is a **Java test-automation workshop** that demonstrates every major JUnit feature across JUnit 4, JUnit 5, and JUnit 6. It is a companion project to a tech talk comparing JUnit 6 with TestNG 7. The default branch targets **JUnit 6 (6.1.3)**.
 
 ## Tech stack
-| Concern               | Library / Tool                                                                 |
-|-----------------------|--------------------------------------------------------------------------------|
-| Language              | Java 21 (LTS)                                                                  |
-| Build                 | Maven 3.9+ (Maven Wrapper included)                                            |
-| Test framework        | JUnit 6.1.0 (junit-jupiter-engine, junit-jupiter-params, junit-platform-suite) |
-| Community extensions  | JUnit Pioneer 2.3.0 (`@RetryingTest`, `@CartesianTest`)                        |
-| Data-provider bridge  | junit-jupiter-params-dataprovider 2.12                                         |
-| Fluent assertions     | AssertJ 3.27.7 (`SoftAssertions`, BDD style)                                   |
-| Matcher assertions    | Hamcrest 3.0                                                                   |
-| Retry on failure      | rerunner-jupiter 2.1.6 (`@RepeatedIfExceptionsTest`)                           |
-| CSV parsing           | opencsv 5.12.0                                                                 |
-| Boilerplate reduction | Lombok 1.18.48 (`@Builder`, `@Data`)                                           |
+| Concern               | Library / Tool                                                                    |
+|-----------------------|-----------------------------------------------------------------------------------|
+| Language              | Java 21 (LTS)                                                                     |
+| Build                 | Maven 3.9+ / Gradle 9.6.0+ (Maven and Gradle Wrappers included)                   |
+| Test framework        | JUnit 6.1.3 (junit-jupiter-engine, junit-jupiter-params, junit-platform-suite)    |
+| Community extensions  | JUnit Pioneer 2.3.0 (`@RetryingTest`, `@CartesianTest`)                           |
+| Data-provider bridge  | junit-jupiter-params-dataprovider 2.12                                            |
+| Fluent assertions     | AssertJ 3.27.7 (`SoftAssertions`, BDD style)                                      |
+| Matcher assertions    | Hamcrest 3.0                                                                      |
+| Retry on failure      | rerunner-jupiter 2.1.6 (`@RepeatedIfExceptionsTest`), org.gradle.test-retry 1.6.5 |
+| CSV parsing           | opencsv 5.12.0                                                                    |
+| Boilerplate reduction | Lombok 1.18.48 (`@Builder`, `@Data`)                                              |
 
 ## Source layout
 ```
