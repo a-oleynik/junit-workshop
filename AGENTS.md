@@ -1,4 +1,4 @@
-# GitHub Copilot Agent Instructions — JUnit 5 Workshop
+# AI Agent Instructions — JUnit Workshop
 
 ## Agent behaviour
 - Always read `copilot-instructions.md` (same `.github/` folder) for full project conventions before taking any action.
@@ -6,13 +6,15 @@
 - Never silently skip a feature or leave a `TODO` — implement it fully or ask.
 
 ## Environment
-- **OS:** any (Maven Wrapper included — use `./mvnw` on Unix, `mvnw.cmd` on Windows)
+- **OS:** any (Maven and Gradle Wrappers included — use `./mvnw` / `./gradlew` on Unix, `mvnw.cmd` / `gradlew.bat` on Windows)
 - **Java:** 21 LTS (`JAVA_HOME` must point to JDK 21)
-- **Build:** Maven 3.9+ or the bundled wrapper
+- **Build:** Maven 3.9+ or Gradle 9.6.0+ (bundled wrappers included)
 - **IDE:** IntelliJ IDEA with Lombok plugin enabled
 - **CI:** GitHub Actions — `.github/workflows/maven.yml`, triggered manually (`workflow_dispatch`). Two jobs: `regression` (all tests, `./mvnw -B clean site`) and `by-tag` (runs only when `groups` input is provided, `./mvnw -B clean site -Dgroups={groups}`). Both upload `surefire-report` and `junit-xml-results` artifacts. Do **not** change `site` to `test`.
 
 ## How to build and test
+
+### Maven
 ```bash
 # Run all tests
 mvn clean test
@@ -38,6 +40,29 @@ mvn clean surefire-report:report
 mvn clean site
 ```
 
+### Gradle
+```bash
+# Run all tests
+gradle clean test
+
+# Run a single test class
+gradle clean test --tests "*<ClassName>"
+
+# Run a single test method
+gradle clean test --tests "*<ClassName>.<methodName>"
+
+# Run by tag
+gradle clean test -DincludeTags=Smoke
+gradle clean test -DincludeTags=Regression
+
+# Run via dedicated Gradle task
+gradle clean smokeTest
+gradle clean regressionTest
+
+# Generate HTML test report (written to build/reports/tests/test/index.html)
+gradle clean test
+```
+
 ## Common agent tasks
 
 ### Add a new test class
@@ -46,10 +71,10 @@ mvn clean site
 3. Use `@Test` from `org.junit.jupiter.api` — never `org.junit.Test`.
 4. Name test methods in `snake_case`.
 5. Use **AssertJ** for assertions unless the class is specifically demonstrating Hamcrest.
-6. Run `mvn clean test -Dtest=<NewClass>` to verify.
+6. Run `mvn clean test -Dtest=<NewClass>` or `gradle clean test --tests "*<NewClass>"` to verify.
 
 ### Add a suite-member class
-1. Name it `*Case` or `*Scenario` — **never** `*Test` (Surefire would run it twice).
+1. Name it `*Case` or `*Scenario` — **never** `*Test` (Surefire / Gradle would run it twice).
 2. Place it under `src/test/…/suites/`.
 3. Reference it in `@SelectClasses` on the relevant `*Suite` class.
 

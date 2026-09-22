@@ -1,5 +1,3 @@
-import org.junit.jupiter.api.Test
-
 plugins {
     id 'java'
     id 'org.gradle.test-retry' version '1.6.5'
@@ -10,12 +8,12 @@ version = '2.0-SNAPSHOT'
 description = 'JUnit 6 workshop examples'
 
 def versions = [
-        junit          : '6.1.2',
+        junit          : '6.1.3',
         dataProvider    : '2.12',
         openCsv         : '5.12.0',
         assertJ         : '3.27.7',
         hamcrest        : '3.0',
-        lombok          : '1.18.46',
+        lombok          : '1.18.48',
         rerunnerJupiter : '2.1.6',
         junitPioneer    : '2.3.0'
 ]

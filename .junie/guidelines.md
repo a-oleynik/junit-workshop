@@ -1,18 +1,19 @@
 # Junie Guidelines — JUnit Workshop
 
 ## Project purpose
-A hands-on Java workshop demonstrating the full JUnit feature set across JUnit 4, JUnit 5, and JUnit 6. Used as companion material for a tech talk comparing JUnit 6 with TestNG 7. **This branch targets JUnit 5 (5.14.4)**; the `master` branch targets JUnit 6 (6.1.0).
+A hands-on Java workshop demonstrating the full JUnit feature set across JUnit 4, JUnit 5, and JUnit 6. Used as companion material for a tech talk comparing JUnit 6 with TestNG 7. **This branch targets JUnit 5 (5.14.4)**; the `master` branch targets JUnit 6 (6.1.3).
 
 ## Stack
 - **Java 21** — language level, no preview features
-- **Maven 3.9+** with Maven Wrapper (`mvnw` / `mvnw.cmd`)
+- **Maven 3.9+ / Gradle 9.6.0+** with Maven & Gradle Wrappers (`mvnw` / `mvnw.cmd`, `gradlew` / `gradlew.bat`)
 - **JUnit 5.14.4** — Jupiter API, params, platform-suite (versions managed via `junit-bom` BOM)
 - **JUnit Pioneer 2.3.0** — `@RetryingTest`, `@CartesianTest`
 - **junit-jupiter-params-dataprovider 2.12** — TNG-style `@DataProvider` for Jupiter
 - **AssertJ 3.27.7** — fluent assertions, `SoftAssertions`, `BDDSoftAssertions`
 - **Hamcrest 3.0** — matcher-based assertions
-- **Lombok 1.18.46** — `@Data`, `@Builder` for model classes
+- **Lombok 1.18.48** — `@Data`, `@Builder` for model classes
 - **rerunner-jupiter 2.1.6** — `@RepeatedIfExceptionsTest` retry
+- **org.gradle.test-retry 1.6.5** — `-PretryCount=N` test retry support in Gradle
 - **opencsv 5.12.0** — CSV file parsing for data-driven tests
 
 ## Directory structure
@@ -50,7 +51,7 @@ src/test/resources/
 | Suite member class  | `Case` or `Scenario` | `SuiteLifecycleFirstCase`    |
 | Tag meta-annotation | none (short noun)    | `@Smoke`, `@Regression`      |
 
-> ⚠️ **Never** name suite member classes with `*Test` or `*Tests`. Maven Surefire auto-discovers `*Test` classes and would run them twice (standalone + via suite).
+> ⚠️ **Never** name suite member classes with `*Test` or `*Tests`. Maven Surefire and Gradle auto-discover `*Test` classes and would run them twice (standalone + via suite).
 
 ## Code style
 - Test method names use `snake_case`: `assert_equals_multiplication_test`
@@ -62,7 +63,7 @@ src/test/resources/
 - Do **not** use JUnit 4 annotations (`@org.junit.Test`, `@RunWith`, `@Rule`) in JUnit 5/6 classes
 
 ## Parallel execution
-Parallel execution is enabled globally in `pom.xml`. For tests that must not run concurrently, annotate with:
+Parallel execution is enabled globally in `pom.xml` and `build.gradle`. For tests that must not run concurrently, annotate with:
 ```java
 @Execution(ExecutionMode.SAME_THREAD)   // serialize the whole class
 @ResourceLock("resource-name")          // mutual exclusion on a named resource
@@ -80,21 +81,31 @@ Parallel execution is enabled globally in `pom.xml`. For tests that must not run
 - Workflow: `.github/workflows/maven.yml` (GitHub Actions), triggered **manually only** (`workflow_dispatch`)
 - Input: `groups` (optional) — tag filter passed to `-Dgroups`
 - Two jobs: `regression` (always, all tests) and `by-tag` (only when `groups` input is provided)
-- Both jobs run `./mvnw -B clean site` and upload artifacts with `if: always()`, 14-day retention: `surefire-report[-{tag}]` (`target/site/`) and `junit-xml-results[-{tag}]` (`target/surefire-reports/`)
+- Both jobs run `./mvnw -B clean site` (equivalent Gradle: `./gradlew --no-daemon clean test`) and upload artifacts with `if: always()`, 14-day retention: `surefire-report[-{tag}]` (`target/site/`) and `junit-xml-results[-{tag}]` (`target/surefire-reports/`)
 - Do **not** replace `site` with `test` in the workflow — the artifact upload requires the site report
 
-## Maven quick reference
+## Build and test quick reference
+
+### Maven
 ```bash
 mvn clean test                          # all tests
 mvn clean test -Dtest=ClassName         # single class
 mvn clean test -Dgroups=Smoke           # by tag
-mvn clean test -P SmokeTests            # by Maven profile
-mvn clean surefire-report:report        # HTML report
+mvn clean test -P Smoke                 # by Maven profile (Smoke or Regression)
+mvn clean surefire-report:report        # HTML report (target/reports/surefire.html)
 mvn clean site                          # full Maven site
+```
+
+### Gradle
+```bash
+gradle clean test                       # all tests (generates HTML report in build/reports/tests/test/index.html)
+gradle clean test --tests "*ClassName"  # single class
+gradle clean test -DincludeTags=Smoke   # by tag
+gradle clean smokeTest                  # dedicated Gradle task (smokeTest / regressionTest)
 ```
 
 ## What NOT to do
 - Do not add the JUnit Vintage engine unless working on the JUnit 4 branch
-- Do not specify explicit versions for JUnit artifacts covered by `junit-bom` in `<dependencyManagement>`
+- Do not specify explicit versions for JUnit artifacts covered by `junit-bom` in `<dependencyManagement>` (Maven) or `platform()` (Gradle)
 - Do not rename `*Case` suite members to `*Test`
 

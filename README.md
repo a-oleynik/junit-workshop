@@ -402,8 +402,8 @@ public class BeforeAfterSuite {
 
 > **⚠️ Naming convention:** classes selected by a suite must **not** be named `*Test` or `*Tests`.  
 > Use `*Case` or `*Scenario` instead.  
-> If they matched Surefire’s default discovery patterns they would execute **twice** —  
-> once directly by Surefire and once again through the suite.
+> If they matched Surefire’s or Gradle’s default discovery patterns they would execute **twice** —  
+> once directly by Surefire / Gradle and once again through the suite.
 
 > **⚙️ Build config:** `pom.xml` and `build.gradle` both declare the JUnit Platform Suite dependency and include
 > `*Suite` classes in test discovery. In Maven that is expressed through Surefire `<includes>`; in Gradle it is
@@ -465,12 +465,12 @@ public class SuiteExtensionFirstTest {
 
 **Comparing the two suite-lifecycle approaches:**
 
-|                         | `@Suite` + `@BeforeSuite`           | Extension approach                   |
-|-------------------------|-------------------------------------|--------------------------------------|
-| Test class naming       | `*Case` / `*Scenario` (not `*Test`) | `*Test` — normal, runs independently |
-| Requires suite class    | ✅ `@SelectClasses` required        | ❌ No suite class needed             |
-| Tests run independently | ❌ Only via suite entry class       | ✅ Normal Surefire discovery         |
-| Opt-in mechanism        | Declared in `@SelectClasses`        | `@ExtendWith` per class              |
+|                         | `@Suite` + `@BeforeSuite`           | Extension approach                    |
+|-------------------------|-------------------------------------|---------------------------------------|
+| Test class naming       | `*Case` / `*Scenario` (not `*Test`) | `*Test` — normal, runs independently  |
+| Requires suite class    | ✅ `@SelectClasses` required        | ❌ No suite class needed              |
+| Tests run independently | ❌ Only via suite entry class       | ✅ Normal Surefire / Gradle discovery |
+| Opt-in mechanism        | Declared in `@SelectClasses`        | `@ExtendWith` per class               |
 
 > **⚠️ Note on `getOrComputeIfAbsent`:** the 3-argument overload used here is deprecated in JUnit 6
 > but is the standard API in JUnit 5. This example targets the JUnit 5 branch.
@@ -568,8 +568,8 @@ Maven writes the report to `target/site/surefire-report.html`; Gradle writes it 
 ```
 
 > ⚠️ **Naming convention:** suite-member classes (e.g. `SuiteLifecycleFirstCase`) are named `*Case`, **not** `*Test` or `*Tests`.  
-> This prevents Surefire from discovering them as standalone tests and running them **twice** —  
-> once directly by Surefire and once again through the suite.
+> This prevents Surefire and Gradle from discovering them as standalone tests and running them **twice** —  
+> once directly by Surefire / Gradle and once again through the suite.
 
 ### Compile, test, and package
 
