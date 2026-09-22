@@ -596,7 +596,8 @@ Maven writes the report to `target/site/surefire-report.html`; Gradle writes it 
 ./gradlew clean test
 ```
 
-> Report is written to `target/reports/surefire.html` — this is the **standalone** mojo execution, which uses its own default output directory.
+> Maven report: `target/reports/surefire.html` — this is the **standalone** goal ([mojo](https://maven.apache.org/plugin-developers/index.html)) execution, which uses its own default output directory.<br>
+> Gradle report: `build/reports/tests/test/index.html`
 
 ### Generate the full Maven site or standard Gradle test report
 
