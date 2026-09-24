@@ -105,6 +105,7 @@ gradle clean smokeTest                  # dedicated Gradle task (smokeTest / reg
 ```
 
 ## What NOT to do
+- Do not mix Maven and Gradle commands in a single workflow; consistently follow the selected build tool
 - Do not add the JUnit Vintage engine unless working on the JUnit 4 branch
 - Do not specify explicit versions for JUnit artifacts covered by `junit-bom` in `<dependencyManagement>` (Maven) or `platform()` (Gradle)
 - Do not rename `*Case` suite members to `*Test`

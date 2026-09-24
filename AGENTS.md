@@ -4,6 +4,7 @@
 - Always read `copilot-instructions.md` (same `.github/` folder) for full project conventions before taking any action.
 - This is a **workshop / demo project** — every test class exists to *demonstrate* a JUnit feature. When adding new tests, make them educational: prefer clear, minimal, self-contained examples over production-style abstractions.
 - Never silently skip a feature or leave a `TODO` — implement it fully or ask.
+- When executing tasks, running tests, or writing instructions, consistently target the user's chosen build tool (Maven or Gradle) rather than mixing both commands.
 
 ## Environment
 - **OS:** any (Maven and Gradle Wrappers included — use `./mvnw` / `./gradlew` on Unix, `mvnw.cmd` / `gradlew.bat` on Windows)
@@ -107,3 +108,4 @@ gradle clean test
 | No JUnit Vintage engine                                                        | Only add it on the dedicated `junit-4.*` branch                                                 |
 | No JUnit 4 annotations in JUnit 5 classes                                      | `@org.junit.Test`, `@RunWith`, `@Rule` are JUnit 4 only                                         |
 | Parallel execution is on by default                                            | Annotate with `@Execution(SAME_THREAD)` or `@ResourceLock` where needed                         |
+| Choose either Maven or Gradle consistently                                     | Avoids mixed tool execution, duplicate build outputs, and conflicting project setups            |
