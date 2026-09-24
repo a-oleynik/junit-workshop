@@ -126,6 +126,7 @@ gradle clean test                       # HTML report (build/reports/tests/test/
 ```
 
 ## What NOT to do
+- Do not mix Maven and Gradle commands in a single workflow; consistently follow the selected build tool
 - Do not use Jupiter annotations (`@BeforeEach`, `@AfterEach`, `@Disabled`, `@Tag`, `@ExtendWith`) — not on the classpath
 - Do not add a `junit-bom` — all dependency versions are managed explicitly in `pom.xml` and `build.gradle`
 - Do not rename `*Case` suite members to `*Test`

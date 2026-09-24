@@ -4,6 +4,7 @@
 - Always read `copilot-instructions.md` (same `.github/` folder) for full project conventions before taking any action.
 - This is a **workshop / demo project** — every test class exists to *demonstrate* a JUnit 4 feature. When adding new tests, make them educational: prefer clear, minimal, self-contained examples over production-style abstractions.
 - Never silently skip a feature or leave a `TODO` — implement it fully or ask.
+- When executing tasks, running tests, or writing instructions, consistently target the user's chosen build tool (Maven or Gradle) rather than mixing both commands.
 
 ## Environment
 - **OS:** any (Maven and Gradle Wrappers included — use `./mvnw` / `./gradlew` on Unix, `mvnw.cmd` / `gradlew.bat` on Windows)
@@ -99,13 +100,14 @@ gradle clean test
 2. Apply `@Category(MyCategory.class)` to test methods or the whole class.
 
 ## Key constraints the agent must respect
-| Rule                                                                      | Why                                                                   |
-|---------------------------------------------------------------------------|-----------------------------------------------------------------------|
-| Suite members named `*Case`, never `*Test`                                | Surefire and Gradle discover `*Test` independently → double execution |
-| Rules in `src/main/…/rules/`, runners in `src/main/…/runners/`            | Keeps shared infrastructure out of test sources                       |
-| Use `@org.junit.Test`, `@Before`, `@After`, `@BeforeClass`, `@AfterClass` | JUnit 4 API — Jupiter annotations are not on the classpath            |
-| Use `@Ignore` to skip, not `@Disabled`                                    | `@Disabled` is JUnit 5/6 only                                         |
-| Use `@Category` for grouping, not `@Tag`                                  | `@Tag` is JUnit 5/6 only                                              |
-| Use `@Test(timeout = ms)` for time limits                                 | No `@Timeout` annotation in JUnit 4                                   |
-| Use `@FixMethodOrder` for ordering                                        | No `@TestMethodOrder` in JUnit 4                                      |
-| No `junit-bom` — all versions explicit in `pom.xml` / `build.gradle`      | BOM-based version management is a JUnit 5/6 pattern                   |
+| Rule                                                                      | Why                                                                                  |
+|---------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| Suite members named `*Case`, never `*Test`                                | Surefire and Gradle discover `*Test` independently → double execution                |
+| Rules in `src/main/…/rules/`, runners in `src/main/…/runners/`            | Keeps shared infrastructure out of test sources                                      |
+| Use `@org.junit.Test`, `@Before`, `@After`, `@BeforeClass`, `@AfterClass` | JUnit 4 API — Jupiter annotations are not on the classpath                           |
+| Use `@Ignore` to skip, not `@Disabled`                                    | `@Disabled` is JUnit 5/6 only                                                        |
+| Use `@Category` for grouping, not `@Tag`                                  | `@Tag` is JUnit 5/6 only                                                             |
+| Use `@Test(timeout = ms)` for time limits                                 | No `@Timeout` annotation in JUnit 4                                                  |
+| Use `@FixMethodOrder` for ordering                                        | No `@TestMethodOrder` in JUnit 4                                                     |
+| No `junit-bom` — all versions explicit in `pom.xml` / `build.gradle`      | BOM-based version management is a JUnit 5/6 pattern                                  |
+| Choose either Maven or Gradle consistently                                | Avoids mixed tool execution, duplicate build outputs, and conflicting project setups |

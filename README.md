@@ -101,6 +101,11 @@ This repository contains examples for multiple JUnit versions, each on its own b
 
 ## 🚀 Quick Start
 
+> ℹ️ **Choose Your Build Tool:**  
+> This project supports both **Maven** and **Gradle** independently. Choose the tool you prefer (or use the included wrappers) and consistently use its corresponding commands:
+> - **Maven:** use `./mvnw` (Linux/macOS) or `mvnw.cmd` (Windows)
+> - **Gradle:** use `./gradlew` (Linux/macOS) or `gradlew.bat` (Windows)
+
 ```bash
 git clone https://github.com/a-oleynik/junit-workshop.git
 cd junit-workshop
@@ -587,6 +592,8 @@ Maven writes the report to `target/site/surefire-report.html`; Gradle writes it 
 ---
 
 ## 💻 Command Examples
+
+> 💡 Commands below are provided in pairs for **Maven** and **Gradle**. Select the commands corresponding to your chosen build system.
 
 ### Run all tests
 

@@ -116,6 +116,7 @@ gradle clean test                       # generate HTML report (build/reports/te
 ```
 
 ## Important constraints
+- When generating commands, test runs, or build actions, consistently follow the user's chosen build tool (Maven or Gradle) rather than mixing both.
 - Do **not** rename `*Case` classes to `*Test` — it will cause double-execution via Surefire and Gradle.
 - Do **not** use JUnit 5/6 annotations (`@ExtendWith`, `@BeforeEach`, `@AfterEach`, `@Disabled`, `@Tag`) — they are not on the classpath in this branch.
 - Dependency versions are declared explicitly in `pom.xml` and `build.gradle` — there is no `junit-bom` in this branch.
