@@ -89,6 +89,7 @@ mvn clean site                          # full Maven site
 ```
 
 ## Important constraints
+- When generating commands, test runs, or build actions, consistently follow the user's chosen build tool (Maven or Gradle) rather than mixing both.
 - Do **not** rename `*Case` classes to `*Test` — it will cause double-execution.
 - Do **not** add `<groupId>org.junit.vintage</groupId>` (JUnit 4 vintage engine) unless specifically creating a JUnit 4 example branch.
 - The `junit-bom` BOM is declared in `<dependencyManagement>` — do not specify explicit versions for JUnit artifacts that are covered by the BOM.
