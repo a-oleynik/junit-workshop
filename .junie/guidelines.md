@@ -1,23 +1,29 @@
 # Junie Guidelines — JUnit Workshop
 
 ## Project purpose
-A hands-on Java workshop demonstrating the full JUnit feature set across JUnit 4, JUnit 5, and JUnit 6. Used as companion material for a tech talk comparing JUnit 6 with TestNG 7. **This branch targets JUnit 4 (4.13.2)**; the `master` branch targets JUnit 6 (6.1.0).
+A hands-on Java workshop demonstrating the full JUnit feature set across JUnit 4, JUnit 5, and JUnit 6. Used as companion material for a tech talk comparing JUnit 6 with TestNG 7. **This branch targets JUnit 4 (4.13.2)**; the `master` branch targets JUnit 6 (6.1.3).
 
 ## Stack
 - **Java 17** — language level, no preview features
-- **Maven 3.9+** with Maven Wrapper (`mvnw` / `mvnw.cmd`)
+- **Maven 3.9+** and **Gradle 9.6.0+** with bundled wrappers (`mvnw` / `mvnw.cmd`, `gradlew` / `gradlew.bat`)
 - **JUnit 4.13.2** — `junit:junit` artifact; all dependency versions are explicit (no BOM)
 - **JUnitParams 1.1.1** — `@JUnitParamsRunner` + `@Parameters` for parameterized tests
 - **junit4-dataprovider 2.12** — TNG-style `@DataProvider` for JUnit 4
 - **junit-runners 1.3** — `ExecutionListenerRunner` custom runner
 - **junit-hierarchicalcontextrunner 4.12.2** — `HierarchicalContextRunner` for nested tests
+- **org.gradle.test-retry 1.6.5** — Gradle plugin for test retries
 - **AssertJ 3.27.7** — fluent assertions, `SoftAssertions`, `BDDSoftAssertions`
 - **Hamcrest 3.0** — matcher-based assertions
-- **Lombok 1.18.46** — `@Data`, `@Builder` for model classes
+- **Lombok 1.18.48** — `@Data`, `@Builder` for model classes
 - **opencsv 5.12.0** — CSV file parsing for data-driven tests
 
 ## Directory structure
 ```
+build.gradle             Gradle build configuration
+settings.gradle          Gradle project name
+gradlew / gradlew.bat    Gradle Wrapper scripts
+pom.xml                  Maven build configuration
+mvnw / mvnw.cmd          Maven Wrapper scripts
 src/main/java/com/oleynik/qa/workshop/junit/
   annotations/        custom annotation types and helpers
   dataproviders/      TNG-style DataProvider implementations
@@ -55,7 +61,7 @@ src/test/resources/
 | Suite member class | `Case` or `Scenario`    | `SuiteLifecycleFirstCase`       |
 | Category marker    | interface name (plural) | `SmokeTests`, `RegressionTests` |
 
-> ⚠️ **Never** name suite member classes `*Test` or `*Tests`. Maven Surefire auto-discovers them and would run them twice (standalone + via suite).
+> ⚠️ **Never** name suite member classes `*Test` or `*Tests`. Maven Surefire and Gradle auto-discover them and would run them twice (standalone + via suite).
 
 ## Code style
 - Test method names use `snake_case`: `assert_equals_multiplication_test`
@@ -110,8 +116,17 @@ mvn clean surefire-report:report        # HTML report
 mvn clean site                          # full Maven site
 ```
 
+## Gradle quick reference
+```bash
+gradle clean test                       # all tests
+gradle clean test --tests "*ClassName"  # single class
+gradle clean test -DincludeCategories=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests # by category
+gradle clean smokeTest                  # by dedicated Gradle task (smokeTest or regressionTest)
+gradle clean test                       # HTML report (build/reports/tests/test/index.html)
+```
+
 ## What NOT to do
 - Do not use Jupiter annotations (`@BeforeEach`, `@AfterEach`, `@Disabled`, `@Tag`, `@ExtendWith`) — not on the classpath
-- Do not add a `junit-bom` — all dependency versions are managed explicitly in `pom.xml`
+- Do not add a `junit-bom` — all dependency versions are managed explicitly in `pom.xml` and `build.gradle`
 - Do not rename `*Case` suite members to `*Test`
-- Do not use `@RunWith(Suite.class)` member classes named `*Test` — Surefire will run them twice
+- Do not use `@RunWith(Suite.class)` member classes named `*Test` — Surefire and Gradle will run them twice

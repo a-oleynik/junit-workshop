@@ -3,6 +3,7 @@
 [![Java CI with Maven](https://github.com/a-oleynik/junit-workshop/actions/workflows/maven.yml/badge.svg)](https://github.com/a-oleynik/junit-workshop/actions/workflows/maven.yml)
 [![Java](https://img.shields.io/badge/Java-17-orange.svg)](https://www.oracle.com/java/)
 [![Maven](https://img.shields.io/badge/Maven-3.9+-blue.svg)](https://maven.apache.org/)
+[![Gradle](https://img.shields.io/badge/Gradle-9.6.0-02303A.svg)](https://gradle.org/)
 [![JUnit](https://img.shields.io/badge/JUnit-4.13.2-green.svg)](https://junit.org/junit4/)
 [![AssertJ](https://img.shields.io/badge/AssertJ-3.27.7-yellowgreen.svg)](https://assertj.github.io/doc/)
 [![Hamcrest](https://img.shields.io/badge/Hamcrest-3.0-yellowgreen.svg)](https://hamcrest.org/)
@@ -103,8 +104,23 @@ This repository contains examples for multiple JUnit versions, each on its own b
 ```bash
 git clone https://github.com/a-oleynik/junit-workshop.git
 cd junit-workshop
-mvn clean test
+
+# Maven
+./mvnw clean test
+
+# Gradle
+./gradlew clean test
 ```
+
+### Import into an IDE
+
+The same checkout can be imported as either build system:
+
+- **Maven project:** open or import `pom.xml`
+- **Gradle project:** open or import `settings.gradle` / `build.gradle`
+
+In IntelliJ IDEA, open the repository folder and choose the build model you want when the IDE detects both Maven and
+Gradle. Do not link both models at the same time: select one build system for the current IDE project.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -112,25 +128,25 @@ mvn clean test
 
 ## 📦 Prerequisites
 
-| Tool              | Minimum version                   | Notes                                                     |
-|-------------------|-----------------------------------|-----------------------------------------------------------|
-| **JDK**           | 17 LTS                            |                                                           |
-| **Maven**         | 3.9+ *(optional but recommended)* | Not required if using the included Maven Wrapper (`mvnw`) |
-| **IDE**           | Any (IntelliJ IDEA recommended)   | Lombok plugin required for IDE support                    |
-| **Lombok plugin** | Latest                            | IntelliJ: *Settings → Plugins → Lombok*                   |
+| Tool              | Minimum version    | Notes                                           |
+|-------------------|--------------------|-------------------------------------------------|
+| **JDK**           | 17 LTS             | Required by both build configurations           |
+| **Maven**         | 3.9+ *(optional)*  | The included Maven Wrapper can be used instead  |
+| **Gradle**        | 9.6.0 *(optional)* | The included Gradle Wrapper can be used instead |
+| **IDE**           | Any                | IntelliJ IDEA is recommended                    |
+| **Lombok plugin** | Latest             | IntelliJ: *Settings → Plugins → Lombok*         |
 
-> 💡 **Maven Wrapper included** — this project ships with `mvnw` (Linux/macOS) and `mvnw.cmd` (Windows).  
-> You can use it instead of a locally installed Maven. The wrapper automatically downloads the correct Maven version on first run.
+> 💡 **Maven and Gradle Wrappers included** — no local Maven or Gradle installation is required. Each wrapper
+> automatically downloads its pinned build-tool version on first run.
 >
 > ```bash
-> # Linux / macOS
+> # Linux / macOS (or Windows with Git Bash)
 > ./mvnw clean test
+> ./gradlew clean test
 >
 > # Windows (Command Prompt / PowerShell)
 > mvnw.cmd clean test
->
-> # Windows with Git Bash
-> ./mvnw clean test
+> gradlew.bat clean test
 > ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -139,7 +155,7 @@ mvn clean test
 
 ## 🧩 Supported Versions
 
-| Maven artifact                    | Version   | Purpose                                                                                                                        |
+| Maven/Gradle artifact             | Version   | Purpose                                                                                                                        |
 |-----------------------------------|-----------|--------------------------------------------------------------------------------------------------------------------------------|
 | `junit:junit`                     | `4.13.2`  | JUnit 4 core — `@Test`, `@Before`, `@After`, `@BeforeClass`, `@AfterClass`, `@Ignore`, `@Rule`, `@ClassRule`, `@RunWith`       |
 | `JUnitParams`                     | `1.1.1`   | `@RunWith(JUnitParamsRunner.class)` + `@Parameters` — cleaner parameterized test syntax than the built-in Parameterized runner |
@@ -150,6 +166,7 @@ mvn clean test
 | `hamcrest-library`                | `3.0`     | Matcher-based assertions — `assertThat(value, matcher)`                                                                        |
 | `lombok`                          | `1.18.48` | `@Builder`, `@Data` — compile-time code generation; reduces boilerplate in model classes                                       |
 | `opencsv`                         | `5.12.0`  | CSV file parsing for data-driven tests                                                                                         |
+| `org.gradle.test-retry`           | `1.6.5`   | Gradle plugin behind the `-PretryCount=N` command                                                                              |
 | Java `--release`                  | `17`      | Java language level for compilation — enforces JDK 17 API surface (`<release>` is stricter than `<source>`+`<target>`)         |
 
 > **Note on Hamcrest:** `junit:junit:4.13.2` bundles `hamcrest-core:1.3`, which is excluded in `pom.xml`.
@@ -340,7 +357,7 @@ public class MyParallelTest { ... }
 
 Runs methods within a single class concurrently, independent of Surefire config.
 
-### 10. Maven Profiles (Category-based filtering)
+### 10. Maven Profiles & Gradle Tasks (Category-based filtering)
 
 Categories used in this project: `SmokeTests` and `RegressionTests` (marker interfaces in `grouping/categories/`).
 
@@ -348,22 +365,27 @@ Categories used in this project: `SmokeTests` and `RegressionTests` (marker inte
 
 ```bash
 # Run only Smoke tests
-mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests
+./mvnw clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests
+./gradlew clean test -DincludeCategories=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests
 
 # Run only Regression tests
-mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
+./mvnw clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
+./gradlew clean test -DincludeCategories=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
 ```
 
-**Via Maven profiles:**
+**Via Maven profiles or dedicated Gradle tasks:**
 
 ```bash
-mvn clean test -P Smoke
-mvn clean test -P Regression
+./mvnw clean test -P Smoke
+./gradlew clean smokeTest
+
+./mvnw clean test -P Regression
+./gradlew clean regressionTest
 ```
 
-> Each profile activates the matching `<groups>` filter in the Surefire configuration using the
-> fully-qualified category class name (`SmokeTests` / `RegressionTests`), and automatically excludes
-> `*Suite.java` classes, which have no `@Category` annotation and would otherwise interfere with
+> Each profile activates the matching `<groups>` filter in the Surefire configuration or Gradle `useJUnit` category filter
+> using the fully-qualified category class name (`SmokeTests` / `RegressionTests`), and automatically excludes
+> `*Suite.java` / `*Suite.class` classes, which have no `@Category` annotation and would otherwise interfere with
 > filtered runs. Profile IDs match the master-branch convention — `Smoke` and `Regression`.
 
 ### 11. Test Suite (`@BeforeSuite` / `@AfterSuite` emulation)
@@ -443,11 +465,11 @@ public class BeforeClassSuite {
 
 > **⚠️ Naming convention:** classes selected by a suite must **not** be named `*Test` or `*Tests`.  
 > Use `*Case` or `*Scenario` instead.  
-> If they matched Surefire's default discovery patterns they would execute **twice** —  
-> once directly by Surefire and once again through the suite.
+> If they matched Surefire’s or Gradle’s default discovery patterns they would execute **twice** —  
+> once directly by Surefire / Gradle and once again through the suite.
 
-> **⚙️ Maven config:** `pom.xml` adds `**/*Suite.java` to Surefire `<includes>` so both suite
-> classes are automatically discovered by `mvn clean test`:
+> **⚙️ Build config:** `pom.xml` and `build.gradle` both include `*Suite` classes in test discovery.
+> In Maven that is expressed through Surefire `<includes>`:
 
 ```xml
 <includes>
@@ -458,6 +480,8 @@ public class BeforeClassSuite {
     <include>**/*Suite.java</include>
 </includes>
 ```
+
+In Gradle, `**/*Suite.class` is included in test discovery and automatically excluded for single-class runs.
 
 **Comparing the three JUnit 4 suite-lifecycle approaches:**
 
@@ -545,16 +569,18 @@ public class SuiteRunListener extends RunListener {
 Attach a custom `RunListener` (via `ExecutionListenerRunner`) to observe test lifecycle events:
 test started, finished, failed, assumed, ignored.
 
-### 13. Surefire HTML Report Generation
+### 13. HTML Report Generation
 
 ```bash
-mvn clean site
-# or
-mvn clean surefire-report:report
+# Maven
+./mvnw clean site
+
+# Gradle
+./gradlew clean test
 ```
 
-> `mvn clean site` writes the report to `target/site/surefire-report.html`.
-> `mvn clean surefire-report:report` (standalone mojo) writes it to `target/reports/surefire.html` instead — the two execution modes use different default output directories, even though both run the same `maven-surefire-report-plugin`.
+Maven writes the report to `target/site/surefire-report.html`; Gradle writes it to
+`build/reports/tests/test/index.html` automatically as part of the standard `test` task.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -565,117 +591,138 @@ mvn clean surefire-report:report
 ### Run all tests
 
 ```bash
-mvn clean test
+./mvnw clean test
+./gradlew clean test
 ```
 
 ### Run a single test class
 
 ```bash
-mvn clean test -Dtest=AssertTest
+./mvnw clean test -Dtest=AssertTest
+./gradlew clean test --tests "*AssertTest"
 ```
 
 ### Run a single test method
 
 ```bash
-mvn clean test -Dtest=AssertTest#assert_equals_multiplication_test
+./mvnw clean test -Dtest=AssertTest#assert_equals_multiplication_test
+./gradlew clean test --tests "*AssertTest.assert_equals_multiplication_test"
 ```
 
 ### Run multiple test classes
 
 ```bash
-mvn clean test -Dtest=AssertTest,HamcrestTest
+./mvnw clean test -Dtest=AssertTest,HamcrestTest
+./gradlew clean test --tests "*AssertTest" --tests "*HamcrestTest"
 ```
 
 ### Run test methods matching a pattern
 
 ```bash
-mvn clean test -Dtest=AssertTest#assert_equals*
+./mvnw clean test -Dtest=AssertTest#assert_equals*
+./gradlew clean test --tests "*AssertTest.assert_equals*"
 ```
 
 ### Run test methods matching multiple patterns
 
 ```bash
-mvn clean test -Dtest=AssertTest#assert_equals*+assert_boolean*
+./mvnw clean test -Dtest=AssertTest#assert_equals*+assert_boolean*
+./gradlew clean test --tests "*AssertTest.assert_equals*" --tests "*AssertTest.assert_boolean*"
 ```
 
 ### Run tests in parallel
 
 ```bash
-mvn clean test -Dparallel=methods -DthreadCount=3
+./mvnw clean test -Dparallel=methods -DthreadCount=3
 ```
 
 ### Rerun failing tests automatically (e.g. flaky tests)
 
 ```bash
-mvn clean test -Dsurefire.rerunFailingTestsCount=2
+./mvnw clean test -Dsurefire.rerunFailingTestsCount=2
+./gradlew clean test -PretryCount=2
 ```
 
 ### Run tests by category
 
 ```bash
 # Full category class name is required in JUnit 4
-mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests
-mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
+./mvnw clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests
+./gradlew clean test -DincludeCategories=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests
+
+./mvnw clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
+./gradlew clean test -DincludeCategories=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
 ```
 
-> ⚠️ In JUnit 4, `-Dgroups` requires the **fully-qualified class name** of the category interface,
+> ⚠️ In JUnit 4, `-Dgroups` and `-DincludeCategories` require the **fully-qualified class name** of the category interface,
 > unlike JUnit 5+ where short tag strings are used (e.g. `-Dgroups=Smoke`).
 
-### Run tests via Maven profile
+### Run tests via Maven profile or dedicated Gradle task
 
 ```bash
-mvn clean test -P Smoke
-mvn clean test -P Regression
+./mvnw clean test -P Smoke
+./gradlew clean smokeTest
+
+./mvnw clean test -P Regression
+./gradlew clean regressionTest
 ```
 
 ### Run only a specific suite
 
 ```bash
 # @ClassRule ExternalResource approach
-mvn test "-Dtest=BeforeAfterSuite"
+./mvnw test "-Dtest=BeforeAfterSuite"
+./gradlew test --tests "*BeforeAfterSuite"
 
 # @BeforeClass / @AfterClass approach
-mvn test "-Dtest=BeforeClassSuite"
+./mvnw test "-Dtest=BeforeClassSuite"
+./gradlew test --tests "*BeforeClassSuite"
 ```
 
-> Both suites are also discovered automatically by `mvn clean test` because `pom.xml` includes
-> `**/*Suite.java` in Surefire `<includes>`.  
+> Both suites are also discovered automatically by `./mvnw clean test` and `./gradlew clean test` because `pom.xml` and `build.gradle` include `*Suite` classes in discovery.  
 > ⚠️ **Naming convention:** suite-member classes (e.g. `SuiteLifecycleFirstCase`) are named `*Case`, **not** `*Test` or `*Tests`.  
-> This prevents Surefire from discovering them as standalone tests and running them **twice** —  
-> once directly by Surefire and once again through the suite.
+> This prevents Surefire and Gradle from discovering them as standalone tests and running them **twice** —  
+> once directly by Surefire / Gradle and once again through the suite.
 
-### Compile, test, package, and install to local repo
-
-```bash
-mvn clean install
-```
-
-### Skip tests (compile + package + install to local repo without running tests)
+### Compile, test, and package
 
 ```bash
-mvn clean install -DskipTests
+./mvnw clean package
+./gradlew clean build
 ```
 
-### Generate Surefire HTML report (quick)
+### Compile and package without running tests
 
 ```bash
-mvn clean surefire-report:report
+./mvnw clean package -DskipTests
+./gradlew clean assemble
 ```
 
-> Report is written to `target/reports/surefire.html` — this is the **standalone** mojo execution, which uses its own default output directory.
-
-### Generate full Maven site with Surefire report
+### Generate an HTML test report
 
 ```bash
-mvn clean site
+./mvnw clean surefire-report:report
+./gradlew clean test
 ```
 
-> Report is written to `target/site/surefire-report.html` — running the Surefire Report Plugin as part of `mvn site` places it alongside the rest of the generated site pages, under a different path than the standalone `surefire-report:report` goal above.
+> Maven report: `target/reports/surefire.html` — this is the **standalone** goal ([mojo](https://maven.apache.org/plugin-developers/index.html)) execution, which uses its own default output directory.<br>
+> Gradle report: `build/reports/tests/test/index.html`
+
+### Generate the full Maven site or standard Gradle test report
+
+```bash
+./mvnw clean site
+./gradlew clean test
+```
+
+> Maven report: `target/site/surefire-report.html` — running the Surefire Report Plugin as part of `mvn site` places it alongside the rest of the generated site pages, under a different path than the standalone `surefire-report:report` goal above.<br>
+> Gradle report: `build/reports/tests/test/index.html`
 
 ### Enable full debug logging for troubleshooting
 
 ```bash
-mvn clean test -X
+./mvnw clean test -X
+./gradlew clean test --debug
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -696,10 +743,13 @@ Triggered manually from **Actions → Run workflow** on GitHub.
 
 ### Jobs
 
-| Job          | Name                          | Runs when                             | Command                                  |
-|--------------|-------------------------------|---------------------------------------|------------------------------------------|
-| `regression` | Regression — all tests        | Always                                | `./mvnw -B clean site`                   |
-| `by-tag`     | By category — `{groups}`      | Only when `groups` input is filled in | `./mvnw -B clean site -Dgroups={groups}` |
+| Job          | Name                          | Runs when                             | Maven command                            | Equivalent Gradle command                                                         |
+|--------------|-------------------------------|---------------------------------------|------------------------------------------|-----------------------------------------------------------------------------------|
+| `regression` | Regression — all tests        | Always                                | `./mvnw -B clean site`                   | `./gradlew --no-daemon clean test`                                                |
+| `by-tag`     | By category — `{groups}`      | Only when `groups` input is filled in | `./mvnw -B clean site -Dgroups={groups}` | `./gradlew --no-daemon clean test -DincludeCategories={groups}`                   |
+
+The current GitHub Actions workflow executes the Maven commands; the Gradle column shows the equivalent commands for
+local use or for adding a Gradle-based workflow later.
 
 Each job uploads two artifacts after completion — including on failure (`if: always()`):
 
@@ -726,11 +776,15 @@ Each job uploads two artifacts after completion — including on failure (`if: a
 
 ```bash
 # All tests
-mvn clean site
+./mvnw clean site
+./gradlew clean test
 
 # By category (JUnit 4 requires the fully-qualified category class name)
-mvn clean site -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests
-mvn clean site -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
+./mvnw clean site -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests
+./gradlew clean test -DincludeCategories=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests
+
+./mvnw clean site -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
+./gradlew clean test -DincludeCategories=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -766,6 +820,10 @@ README.md                    # This file
 LICENSE
 pom.xml                      # Maven build — dependencies, Surefire config, profiles
 mvnw / mvnw.cmd              # Maven Wrapper scripts (no local Maven installation required)
+build.gradle                 # Gradle build — equivalent dependencies and test configuration
+settings.gradle              # Gradle project name
+gradlew / gradlew.bat        # Gradle Wrapper scripts (no local Gradle installation required)
+gradle/wrapper/              # Pinned Gradle distribution and wrapper bootstrap JAR
 .github/
 └── copilot-instructions.md  # GitHub Copilot workspace instructions (always-on)
 .junie/
@@ -801,6 +859,10 @@ target/                      # Generated by Maven — not committed to git
 ├── surefire-reports/        # Raw JUnit XML results (TEST-*.xml) + console output (*.txt)
 └── site/
     └── surefire-report.html # HTML test report — open in a browser after `mvn site`
+build/                       # Generated by Gradle — not committed to git
+├── test-results/test/       # Raw JUnit XML results
+└── reports/tests/test/
+    └── index.html           # Gradle HTML test report
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)
@@ -820,6 +882,9 @@ target/                      # Generated by Maven — not committed to git
 - [Maven Surefire Plugin](https://maven.apache.org/surefire/maven-surefire-plugin/)
 - [Maven Surefire Report Plugin](https://maven.apache.org/surefire/maven-surefire-report-plugin/)
 - [Maven Wrapper](https://maven.apache.org/wrapper/) — run Maven without a local installation
+- [Gradle Java Plugin](https://docs.gradle.org/current/userguide/java_plugin.html)
+- [Gradle Wrapper](https://docs.gradle.org/current/userguide/gradle_wrapper.html) — run Gradle without a local installation
+- [Gradle Test Retry Plugin](https://github.com/gradle/test-retry-gradle-plugin)
 - [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples
 - [Selenium Example — JUnit 6 branch](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium framework using JUnit 6
 
@@ -831,6 +896,7 @@ target/                      # Generated by Maven — not committed to git
 
 - [**Java Download**](https://www.oracle.com/java/technologies/downloads/)
 - [**Maven Download**](https://maven.apache.org/download.cgi)
+- [**Gradle Releases**](https://gradle.org/releases/)
 - [**JUnit 5 & 6 Releases**](https://github.com/junit-team/junit5/releases)
 - [**JUnit 4 Releases**](https://github.com/junit-team/junit4/releases)
 - [**JUnit 6 Released — Clean-Up, Modernization & Minimal Disruption**](https://medium.com/@andrei.oleynik/junit-6-released-clean-up-modernization-minimal-disruption-d3ecf11b64ad)

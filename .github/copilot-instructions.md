@@ -1,22 +1,23 @@
 # GitHub Copilot Instructions — JUnit Workshop
 
 ## Project overview
-This is a **Java test-automation workshop** that demonstrates every major JUnit feature across JUnit 4, JUnit 5, and JUnit 6. It is a companion project to a tech talk comparing JUnit 6 with TestNG 7. **This branch targets JUnit 4 (4.13.2)**; the `master` branch targets JUnit 6 (6.1.0).
+This is a **Java test-automation workshop** that demonstrates every major JUnit feature across JUnit 4, JUnit 5, and JUnit 6. It is a companion project to a tech talk comparing JUnit 6 with TestNG 7. **This branch targets JUnit 4 (4.13.2)**; the `master` branch targets JUnit 6 (6.1.3).
 
 ## Tech stack
-| Concern               | Library / Tool                                                                 |
-|-----------------------|--------------------------------------------------------------------------------|
-| Language              | Java 17 (LTS)                                                                  |
-| Build                 | Maven 3.9+ (Maven Wrapper included)                                            |
-| Test framework        | JUnit 4.13.2 (`junit:junit`)                                                   |
-| Parameterized tests   | JUnitParams 1.1.1 (`@JUnitParamsRunner`)                                       |
-| Data-provider bridge  | junit4-dataprovider 2.12 (TNG-style `@DataProvider`)                           |
-| Fluent assertions     | AssertJ 3.27.7 (`SoftAssertions`, BDD style)                                   |
-| Matcher assertions    | Hamcrest 3.0                                                                   |
-| Custom runners        | junit-runners 1.3 (`ExecutionListenerRunner`)                                  |
-| Nested test support   | junit-hierarchicalcontextrunner 4.12.2 (`HierarchicalContextRunner`)           |
-| CSV parsing           | opencsv 5.12.0                                                                 |
-| Boilerplate reduction | Lombok 1.18.48 (`@Builder`, `@Data`)                                           |
+| Concern               | Library / Tool                                                       |
+|-----------------------|----------------------------------------------------------------------|
+| Language              | Java 17 (LTS)                                                        |
+| Build                 | Maven 3.9+ / Gradle 9.6.0+ (Maven and Gradle Wrappers included)      |
+| Test framework        | JUnit 4.13.2 (`junit:junit`)                                         |
+| Parameterized tests   | JUnitParams 1.1.1 (`@JUnitParamsRunner`)                             |
+| Data-provider bridge  | junit4-dataprovider 2.12 (TNG-style `@DataProvider`)                 |
+| Fluent assertions     | AssertJ 3.27.7 (`SoftAssertions`, BDD style)                         |
+| Matcher assertions    | Hamcrest 3.0                                                         |
+| Custom runners        | junit-runners 1.3 (`ExecutionListenerRunner`)                        |
+| Nested test support   | junit-hierarchicalcontextrunner 4.12.2 (`HierarchicalContextRunner`) |
+| Retry on failure      | org.gradle.test-retry 1.6.5 (Gradle) / junit-runners 1.3 (JUnit 4)   |
+| CSV parsing           | opencsv 5.12.0                                                       |
+| Boilerplate reduction | Lombok 1.18.48 (`@Builder`, `@Data`)                                 |
 
 ## Source layout
 ```
@@ -50,7 +51,7 @@ src/
 
 ## Naming conventions
 - **Test classes** end with `Test` (e.g. `AssertTest`, `FixturesTest`).
-- **Suite-member classes** end with `Case` or `Scenario` — **never** `Test` or `Tests`. This prevents Maven Surefire from discovering them independently and running them twice.
+- **Suite-member classes** end with `Case` or `Scenario` — **never** `Test` or `Tests`. This prevents Maven Surefire and Gradle from discovering them independently and running them twice.
   - ✅ `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase`
   - ❌ `SuiteLifecycleFirstTest`
 - **Category marker interfaces** live in the `categories/` package (`SmokeTests`, `RegressionTests`).
@@ -105,7 +106,16 @@ mvn clean surefire-report:report        # generate HTML report
 mvn clean site                          # full Maven site
 ```
 
+## Gradle commands (quick reference)
+```bash
+gradle clean test                       # run all tests
+gradle clean test --tests "*AssertTest" # run one class
+gradle clean test -DincludeCategories=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests # run by category
+gradle clean smokeTest                  # run via dedicated Gradle task
+gradle clean test                       # generate HTML report (build/reports/tests/test/index.html)
+```
+
 ## Important constraints
-- Do **not** rename `*Case` classes to `*Test` — it will cause double-execution via Surefire.
+- Do **not** rename `*Case` classes to `*Test` — it will cause double-execution via Surefire and Gradle.
 - Do **not** use JUnit 5/6 annotations (`@ExtendWith`, `@BeforeEach`, `@AfterEach`, `@Disabled`, `@Tag`) — they are not on the classpath in this branch.
-- Dependency versions are declared explicitly in `pom.xml` — there is no `junit-bom` in this branch.
+- Dependency versions are declared explicitly in `pom.xml` and `build.gradle` — there is no `junit-bom` in this branch.
