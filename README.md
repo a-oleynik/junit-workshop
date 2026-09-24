@@ -49,8 +49,6 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 If you found useful examples or information in this repository, please give it a ⭐  
 Your support helps the project reach more Java and QA engineers.
 
-[⬆ Back to Table of Contents](#-table-of-contents)
-
 ---
 
 ## 🤔 Why this repository?
