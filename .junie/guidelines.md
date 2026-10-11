@@ -17,31 +17,45 @@ A hands-on Java workshop demonstrating the full JUnit feature set across JUnit 4
 - **opencsv 5.12.0** — CSV file parsing for data-driven tests
 
 ## Directory structure
-```
-src/main/java/com/oleynik/qa/workshop/junit/
-  annotations/        custom annotation types and helpers
-  dataproviders/      ArgumentsProvider / DataProvider implementations
-  extensions/         JUnit extension classes (not in test sources)
-  model/              domain model (User, MyDoubleWrapper, MyServer)
-  Factorial.java      example production code
-  PrimeNumber.java
-  Utils.java
 
-src/test/java/com/oleynik/qa/workshop/junit/
-  general/            assertions, fixtures, exceptions, display names, timeouts
-  group/asserts/      assertAll, AssertJ soft assertions
-  conditional/        assumptions
-  ddt/                parameterized & data-driven tests
-  nested/             @Nested test classes
-  grouping/           @Tag usage; tags/ sub-package has Tags.java + @Smoke / @Regression
-  execution/order/    @TestMethodOrder, @Order
-  extensions/         tests exercising custom extensions
-  retry/              @RetryingTest, @RepeatedIfExceptionsTest
-  repeat/             @RepeatedTest
-  suites/             @Suite lifecycle; extension/ for BeforeAllCallback approach
+`topics` contains examples of individual JUnit features; `scenarios` contains complete examples that combine several features and can be referenced by multiple articles. The Calculator scenario is in `scenarios/calculator` in both main and test sources.
 
-src/test/resources/
-  numbers.csv         input data for CSVParameterizationTest
+```text
+src/
+├── main/java/com/oleynik/qa/workshop/junit/
+│   ├── scenarios/
+│   │   └── calculator/
+│   │       └── Calculator.java  # Article example: addition and integer division
+│   └── topics/
+│       ├── annotations/         # Custom annotation types and helpers
+│       ├── dataproviders/       # ArgumentsProvider / DataProvider implementations
+│       ├── extensions/          # DBResourceExtension, TestWatcherExtension, SuiteLikeLifecycleExtension
+│       ├── model/               # Shared domain model (User, MyDoubleWrapper, MyServer)
+│       ├── Factorial.java       # Example production class for parameterized tests
+│       ├── PrimeNumber.java
+│       └── Utils.java           # Helper used by timeout examples
+└── test/
+    ├── java/com/oleynik/qa/workshop/junit/
+    │   ├── scenarios/
+    │   │   └── calculator/
+    │   │       ├── CalculatorTest.java
+    │   │       └── CalculatorParameterizedTest.java
+    │   └── topics/
+    │       ├── general/         # Basic assertions, fixtures, exceptions, display names, timeouts
+    │       ├── asserts/         # assertAll and AssertJ soft assertions
+    │       ├── conditional/     # Assumptions (assumeTrue, assumingThat)
+    │       ├── ddt/             # Parameterized and data-driven tests
+    │       ├── nested/          # @Nested test classes
+    │       ├── grouping/        # @Tag usage and custom tag annotations
+    │       │   └── tags/        # Tags constants, @Smoke and @Regression
+    │       ├── order/           # @TestMethodOrder and @Order
+    │       ├── extensions/      # Tests exercising custom extensions
+    │       ├── retry/           # @RetryingTest (Pioneer), @RepeatedIfExceptionsTest (Rerunner)
+    │       ├── repeat/          # @RepeatedTest
+    │       └── suites/          # @Suite, @BeforeSuite, @AfterSuite
+    │           └── extension/  # Suite-like lifecycle via BeforeAllCallback and root store
+    └── resources/
+        └── numbers.csv         # CSVParameterizationTest input (number → expected factorial)
 ```
 
 ## Naming rules — follow exactly
@@ -70,8 +84,8 @@ Parallel execution is enabled globally in `pom.xml` and `build.gradle`. For test
 ```
 
 ## Extension placement
-- Extension **implementations** go in `src/main/…/extensions/` (production source tree)
-- Tests that *use* extensions go in `src/test/…/extensions/`
+- Extension **implementations** go in `src/main/…/topics/extensions/` (production source tree)
+- Tests that *use* extensions go in `src/test/…/topics/extensions/`
 
 ## Suite lifecycle — two patterns
 1. **`@Suite` + `@BeforeSuite` / `@AfterSuite`** (see `BeforeAfterSuite`): explicit suite class with `@SelectClasses`. Member classes must be `*Case`.

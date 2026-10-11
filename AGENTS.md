@@ -64,6 +64,12 @@ gradle clean regressionTest
 gradle clean test
 ```
 
+## Source organization
+
+`topics` contains examples of individual JUnit features; `scenarios` contains complete examples that combine several features and can be referenced by multiple articles. The Calculator scenario is in `scenarios/calculator` in both main and test sources.
+
+Place new feature examples under `src/test/java/…/topics/`; place complete article scenarios under `src/main/java/…/scenarios/` and `src/test/java/…/scenarios/`. Follow the current package map in README.
+
 ## Common agent tasks
 
 ### Add a new test class
@@ -76,36 +82,36 @@ gradle clean test
 
 ### Add a suite-member class
 1. Name it `*Case` or `*Scenario` — **never** `*Test` (Surefire / Gradle would run it twice).
-2. Place it under `src/test/…/suites/`.
+2. Place it under `src/test/…/topics/suites/`.
 3. Reference it in `@SelectClasses` on the relevant `*Suite` class.
 
 ### Add a custom JUnit extension
-1. Create the implementation in `src/main/java/…/extensions/` (main sources, not test sources).
-2. Create a test class in `src/test/java/…/extensions/` that exercises it with `@ExtendWith` or `@RegisterExtension`.
+1. Create the implementation in `src/main/java/…/topics/extensions/` (main sources, not test sources).
+2. Create a test class in `src/test/java/…/topics/extensions/` that exercises it with `@ExtendWith` or `@RegisterExtension`.
 
 ### Add a data provider
-1. Create the provider class in `src/main/java/…/dataproviders/`.
+1. Create the provider class in `src/main/java/…/topics/dataproviders/`.
 2. Implement `ArgumentsProvider` (for `@ArgumentsSource`) or use the TNG-style `@DataProvider` bridge.
-3. Reference it from the test class in `src/test/…/ddt/`.
+3. Reference it from the test class in `src/test/…/topics/ddt/`.
 
 ### Add a parameterized test
-- Prefer `@MethodSource` pointing to a `static Stream<Arguments>` method in the same class, or to a `dataproviders/` class for reuse.
+- Prefer `@MethodSource` pointing to a `static Stream<Arguments>` method in the same class, or to a `topics/dataproviders/` class for reuse.
 - Use `@CsvSource` / `@CsvFileSource` for simple tabular data.
 - Use `@CartesianTest` (JUnit Pioneer) for full cross-product scenarios.
 
 ### Add a tag / meta-annotation
-1. Add the string constant to `Tags.java` in `src/test/…/grouping/tags/`.
-2. Create the meta-annotation type (e.g. `@Smoke`) in the same `tags/` package.
+1. Add the string constant to `Tags.java` in `src/test/…/topics/grouping/tags/`.
+2. Create the meta-annotation type (e.g. `@Smoke`) in the same `topics/grouping/tags/` package.
 3. Apply `@Tag(Tags.YOUR_TAG)` or the meta-annotation directly to test methods or classes.
 
 ## Key constraints the agent must respect
-| Rule                                                                           | Why                                                                                             |
-|--------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------|
-| Suite members named `*Case`, never `*Test`                                     | Surefire discovers `*Test` independently → double execution                                     |
-| Extensions in `src/main/…/extensions/`                                         | Keeps extension code reusable and out of test classpath only                                    |
-| Use `getOrComputeIfAbsent` (not `computeIfAbsent`) in `ExtensionContext` store | `computeIfAbsent` is the JUnit 6 replacement; `getOrComputeIfAbsent` is the correct JUnit 5 API |
-| No explicit versions on JUnit artifacts covered by `junit-bom`                 | BOM in `<dependencyManagement>` manages them                                                    |
-| No JUnit Vintage engine                                                        | Only add it on the dedicated `junit-4.*` branch                                                 |
-| No JUnit 4 annotations in JUnit 5 classes                                      | `@org.junit.Test`, `@RunWith`, `@Rule` are JUnit 4 only                                         |
-| Parallel execution is on by default                                            | Annotate with `@Execution(SAME_THREAD)` or `@ResourceLock` where needed                         |
-| Choose either Maven or Gradle consistently                                     | Avoids mixed tool execution, duplicate build outputs, and conflicting project setups            |
+| Rule                                                                           | Why                                                                                                  |
+|--------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
+| Suite members named `*Case`, never `*Test`                                     | Surefire and Gradle discover `*Test` independently → double execution                                |
+| Extensions in `src/main/…/topics/extensions/`                                  | Keeps extension code reusable and out of test classpath only                                         |
+| Use `computeIfAbsent` (not `getOrComputeIfAbsent`) in `ExtensionContext` store | `getOrComputeIfAbsent` is deprecated in JUnit 6                                                      |
+| No explicit versions on JUnit artifacts covered by `junit-bom`                 | BOM in `<dependencyManagement>` (Maven) / `platform()` (Gradle) manages them                         |
+| No JUnit Vintage engine                                                        | Only add it on the dedicated `junit-4.*` branch                                                      |
+| No JUnit 4 annotations in JUnit 5/6 classes                                    | `@org.junit.Test`, `@RunWith`, `@Rule` are JUnit 4 only                                              |
+| Parallel execution is on by default                                            | Configured in `pom.xml` & `build.gradle`; annotate with `@Execution(SAME_THREAD)` or `@ResourceLock` |
+| Choose either Maven or Gradle consistently                                     | Avoids mixed tool execution, duplicate build outputs, and conflicting project setups                 |

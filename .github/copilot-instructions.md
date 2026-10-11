@@ -18,30 +18,45 @@ This is a **Java test-automation workshop** that demonstrates every major JUnit 
 | Boilerplate reduction | Lombok 1.18.48 (`@Builder`, `@Data`)                                              |
 
 ## Source layout
-```
+
+`topics` contains examples of individual JUnit features; `scenarios` contains complete examples that combine several features and can be referenced by multiple articles. The Calculator scenario is in `scenarios/calculator` in both main and test sources.
+
+```text
 src/
 ├── main/java/com/oleynik/qa/workshop/junit/
-│   ├── annotations/       # Custom annotation types and helpers
-│   ├── dataproviders/     # ArgumentsProvider / DataProvider implementations
-│   ├── extensions/        # JUnit extension implementations (DBResourceExtension, TestWatcherExtension, SuiteLikeLifecycleExtension)
-│   ├── model/             # Domain model classes (User, MyDoubleWrapper, MyServer)
-│   ├── Factorial.java     # Example production class
-│   ├── PrimeNumber.java
-│   └── Utils.java
-└── test/java/com/oleynik/qa/workshop/junit/
-    ├── general/           # Basic assertions, fixtures, exceptions, display names, timeouts
-    ├── group/asserts/     # assertAll, AssertJ soft assertions
-    ├── conditional/       # Assumptions (assumeTrue, assumeThat)
-    ├── ddt/               # Parameterized & data-driven tests
-    ├── nested/            # @Nested test classes
-    ├── grouping/          # @Tag, @Smoke, @Regression meta-annotations
-    │   └── tags/          # Tags constants + meta-annotation types
-    ├── execution/order/   # @TestMethodOrder, @Order
-    ├── extensions/        # Tests that use custom extensions
-    ├── retry/             # @RetryingTest (Pioneer), @RepeatedIfExceptionsTest (Rerunner)
-    ├── repeat/            # @RepeatedTest
-    └── suites/            # @Suite, @BeforeSuite, @AfterSuite lifecycle
-        └── extension/     # Suite-like lifecycle via BeforeAllCallback + root store
+│   ├── scenarios/
+│   │   └── calculator/
+│   │       └── Calculator.java  # Article example: addition and integer division
+│   └── topics/
+│       ├── annotations/         # Custom annotation types and helpers
+│       ├── dataproviders/       # ArgumentsProvider / DataProvider implementations
+│       ├── extensions/          # DBResourceExtension, TestWatcherExtension, SuiteLikeLifecycleExtension
+│       ├── model/               # Shared domain model (User, MyDoubleWrapper, MyServer)
+│       ├── Factorial.java       # Example production class for parameterized tests
+│       ├── PrimeNumber.java
+│       └── Utils.java           # Helper used by timeout examples
+└── test/
+    ├── java/com/oleynik/qa/workshop/junit/
+    │   ├── scenarios/
+    │   │   └── calculator/
+    │   │       ├── CalculatorTest.java
+    │   │       └── CalculatorParameterizedTest.java
+    │   └── topics/
+    │       ├── general/         # Basic assertions, fixtures, exceptions, display names, timeouts
+    │       ├── asserts/         # assertAll and AssertJ soft assertions
+    │       ├── conditional/     # Assumptions (assumeTrue, assumingThat)
+    │       ├── ddt/             # Parameterized and data-driven tests
+    │       ├── nested/          # @Nested test classes
+    │       ├── grouping/        # @Tag usage and custom tag annotations
+    │       │   └── tags/        # Tags constants, @Smoke and @Regression
+    │       ├── order/           # @TestMethodOrder and @Order
+    │       ├── extensions/      # Tests exercising custom extensions
+    │       ├── retry/           # @RetryingTest (Pioneer), @RepeatedIfExceptionsTest (Rerunner)
+    │       ├── repeat/          # @RepeatedTest
+    │       └── suites/          # @Suite, @BeforeSuite, @AfterSuite
+    │           └── extension/  # Suite-like lifecycle via BeforeAllCallback and root store
+    └── resources/
+        └── numbers.csv         # CSVParameterizationTest input (number → expected factorial)
 ```
 
 ## Naming conventions
@@ -49,9 +64,9 @@ src/
 - **Suite-member classes** end with `Case` or `Scenario` — **never** `Test` or `Tests`. This prevents Maven Surefire from discovering them independently and running them twice (once standalone, once via the suite).
   - ✅ `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase`
   - ❌ `SuiteLifecycleFirstTest`
-- **Tag constants** live in `Tags.java`; meta-annotation types (`@Smoke`, `@Regression`) live alongside it in the `tags/` package.
-- **Extension classes** live in `src/main/…/extensions/` — not in the test source tree.
-- **DataProvider classes** live in `src/main/…/dataproviders/`.
+- **Tag constants** live in `Tags.java`; meta-annotation types (`@Smoke`, `@Regression`) live alongside it in the `topics/grouping/tags/` package.
+- **Extension classes** live in `src/main/…/topics/extensions/` — not in the test source tree.
+- **DataProvider classes** live in `src/main/…/topics/dataproviders/`.
 
 ## Coding conventions
 - Java 21 language level; no preview features.
