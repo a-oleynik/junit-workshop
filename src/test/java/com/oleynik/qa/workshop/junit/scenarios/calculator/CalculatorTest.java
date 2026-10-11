@@ -1,32 +1,32 @@
 package com.oleynik.qa.workshop.junit.scenarios.calculator;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
-class CalculatorTest {
+public class CalculatorTest {
 
     private Calculator calculator;
 
-    @BeforeEach
-    void setUp() {
+    @Before
+    public void set_up() {
         calculator = new Calculator();
     }
 
     @Test
-    void shouldAddTwoPositiveNumbers() {
+    public void should_add_two_positive_numbers() {
         assertEquals(5, calculator.add(2, 3));
     }
 
     @Test
-    void shouldAddZero() {
+    public void should_add_zero() {
         assertEquals(5, calculator.add(0, 5));
     }
 
     @Test
-    void shouldThrowExceptionWhenDividingByZero() {
+    public void should_throw_exception_when_dividing_by_zero() {
         assertThrows(
                 ArithmeticException.class,
                 () -> calculator.divide(10, 0)

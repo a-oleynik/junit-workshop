@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       groups:
-        description: 'Category filter for the by-tag job (fully-qualified class name, e.g. com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests). Leave empty to skip that job.'
+        description: 'Category filter for the by-tag job (fully-qualified class name, e.g. com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests). Leave empty to skip that job.'
         required: false
         default: ''
 

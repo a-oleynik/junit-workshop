@@ -121,5 +121,5 @@ def registerCategoryTest = { String taskName, String categoryClass ->
     }
 }
 
-registerCategoryTest('smokeTest', 'com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests')
-registerCategoryTest('regressionTest', 'com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests')
+registerCategoryTest('smokeTest', 'com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests')
+registerCategoryTest('regressionTest', 'com.oleynik.qa.workshop.junit.topics.grouping.categories.RegressionTests')

@@ -47,7 +47,7 @@
         </dependency>
         <!--
             junit4-dataprovider: compile scope — @DataProvider is used in
-            src/main/dataproviders/ (FactorialDataProvider, etc.)
+            src/main/java/com/oleynik/qa/workshop/junit/topics/dataproviders/ (FactorialDataProvider, etc.)
         -->
         <dependency>
             <groupId>com.tngtech.junit.dataprovider</groupId>
@@ -168,7 +168,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <groups>com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests</groups>
+                            <groups>com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests</groups>
                             <excludes>
                                 <exclude>**/*Suite.java</exclude>
                             </excludes>
@@ -185,7 +185,7 @@
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <groups>com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests</groups>
+                            <groups>com.oleynik.qa.workshop.junit.topics.grouping.categories.RegressionTests</groups>
                             <excludes>
                                 <exclude>**/*Suite.java</exclude>
                             </excludes>
