@@ -223,8 +223,6 @@ Gradle. Do not link both models at the same time: select one build system for th
 
 ## 🌱 Learning Path — Beginners
 
-For the article's complete example, start with the [Calculator walkthrough](#calculator-walkthrough).
-
 Work through these topics in order; each builds on the previous one.
 
 1. **Basic assertions** → `AssertTest`  
