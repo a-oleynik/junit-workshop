@@ -189,6 +189,8 @@ Gradle. Do not link both models at the same time: select one build system for th
 
 `topics` contains examples of individual JUnit features; `scenarios` contains complete examples that combine several features and can be referenced by multiple articles. The Calculator scenario is in `scenarios/calculator` in both main and test sources.
 
+The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit/Main.java`; it uses the shared `Calculator` and leads into `CalculatorTest`.
+
 | Package / folder            | Feature demonstrated                                                                         | Test class(es)                                                                       |
 |-----------------------------|----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
 | `topics/general`            | Basic assertions (`assertEquals`, `assertThat`, `assertNull`, …)                             | `AssertTest`                                                                         |
@@ -845,7 +847,9 @@ src/
 ├── main/java/com/oleynik/qa/workshop/junit/
 │   ├── scenarios/
 │   │   └── calculator/
-│   │       └── Calculator.java  # Addition and integer division
+│   │       ├── Calculator.java  # Addition and integer division
+│   │       └── beforejunit/
+│   │           └── Main.java    # Manual comparison before introducing JUnit
 │   └── topics/
 │       ├── annotations/         # DataSource, Retry, RetryConfiguration
 │       ├── dataproviders/       # JUnitDataProvider
