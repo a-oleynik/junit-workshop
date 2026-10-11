@@ -68,6 +68,8 @@ gradle clean test
 
 `topics` contains examples of individual JUnit features; `scenarios` contains complete examples that combine several features and can be referenced by multiple articles. The Calculator scenario is in `scenarios/calculator` in both main and test sources.
 
+The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit/Main.java`; it uses the shared `Calculator` and leads into `CalculatorTest`.
+
 Place new feature examples under `src/test/java/…/topics/`; place complete article scenarios under `src/main/java/…/scenarios/` and `src/test/java/…/scenarios/`. Follow the current package map in README.
 
 ## Common agent tasks
