@@ -20,33 +20,47 @@ This is a **Java test-automation workshop** that demonstrates every major JUnit 
 | Boilerplate reduction | Lombok 1.18.48 (`@Builder`, `@Data`)                                 |
 
 ## Source layout
-```
+
+`topics` contains examples of individual JUnit features; `scenarios` contains complete examples that combine several features and can be referenced by multiple articles. The Calculator scenario is in `scenarios/calculator` in both main and test sources.
+
+```text
 src/
 ├── main/java/com/oleynik/qa/workshop/junit/
-│   ├── annotations/       # Custom annotation types and helpers
-│   ├── dataproviders/     # TNG-style DataProvider implementations
-│   ├── listeners/         # RunListener implementations (ExecutionListener)
-│   ├── rules/             # @Rule / @ClassRule implementations (DBResourceRule, RetryTestRule, etc.)
-│   ├── runners/           # Custom @RunWith runners (ExecutionListenerRunner, RetryRunner)
-│   ├── model/             # Domain model classes (User, MyDoubleWrapper, MyServer)
-│   ├── Factorial.java     # Example production class
-│   ├── PrimeNumber.java
-│   └── Utils.java
-└── test/java/com/oleynik/qa/workshop/junit/
-    ├── general/           # Basic assertions, fixtures, exceptions, display names, timeouts
-    ├── group/asserts/     # assertAll (ErrorCollector rule), AssertJ soft assertions
-    ├── conditional/       # Assumptions (Assume.assumeTrue, Assume.assumeThat)
-    ├── ddt/               # Parameterized & data-driven tests
-    ├── nested/            # Nested tests via HierarchicalContextRunner
-    ├── grouping/          # @Category usage
-    │   └── categories/    # Category marker interfaces (SmokeTests, RegressionTests)
-    ├── execution/order/   # @FixMethodOrder
-    ├── rules/             # Tests that use custom @Rule implementations
-    ├── repeat/            # Retry runners and rules
-    └── suites/            # Suite lifecycle
-        ├── beforeclass/   # Suite with @BeforeClass / @AfterClass pattern
-        ├── lifecycle/     # Suite lifecycle via @ClassRule + ExternalResource
-        └── listener/      # Suite with RunListener via JUnitCore
+│   ├── scenarios/
+│   │   └── calculator/
+│   │       └── Calculator.java  # Addition and integer division
+│   └── topics/
+│       ├── annotations/         # DataSource, Retry, RetryConfiguration
+│       ├── dataproviders/       # JUnitDataProvider
+│       ├── listeners/           # ExecutionListener (RunListener)
+│       ├── model/               # User, MyDoubleWrapper, MyServer
+│       ├── rules/               # DBResourceRule, MonitorRule, retry rules, AssertAll
+│       ├── runners/             # RetryRunner, ExecutionListenerRunner
+│       ├── Factorial.java       # Production code for parameterized tests
+│       └── Utils.java           # Helper used by timeout examples
+└── test/
+    ├── java/com/oleynik/qa/workshop/junit/
+    │   ├── scenarios/
+    │   │   └── calculator/
+    │   │       ├── CalculatorTest.java
+    │   │       └── CalculatorParameterizedTest.java
+    │   └── topics/
+    │       ├── general/         # Assertions, fixtures, exceptions, timeouts, @Ignore
+    │       ├── asserts/         # ErrorCollector, AssertAll, AssertJ soft assertions
+    │       ├── conditional/     # Assumptions via Assume
+    │       ├── ddt/             # Parameterized, JUnitParams, DataProvider, Theories
+    │       ├── nested/          # HierarchicalContextRunner
+    │       ├── grouping/        # @Category usage
+    │       │   └── categories/  # SmokeTests, RegressionTests marker interfaces
+    │       ├── order/           # @FixMethodOrder, @OrderWith
+    │       ├── rules/           # ExternalResource and TestWatcher examples
+    │       ├── repeat/          # Retry runners, retry rules and repeat demos
+    │       └── suites/
+    │           ├── lifecycle/   # @ClassRule + ExternalResource
+    │           ├── beforeclass/ # @BeforeClass / @AfterClass on the suite
+    │           └── listener/    # JUnitCore + RunListener
+    └── resources/
+        └── numbers.csv         # Input data for DataProvider tests
 ```
 
 ## Naming conventions
@@ -54,10 +68,10 @@ src/
 - **Suite-member classes** end with `Case` or `Scenario` — **never** `Test` or `Tests`. This prevents Maven Surefire and Gradle from discovering them independently and running them twice.
   - ✅ `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase`
   - ❌ `SuiteLifecycleFirstTest`
-- **Category marker interfaces** live in the `categories/` package (`SmokeTests`, `RegressionTests`).
-- **Rule classes** live in `src/main/…/rules/` — not in the test source tree.
-- **Runner classes** live in `src/main/…/runners/`.
-- **Listener classes** live in `src/main/…/listeners/`.
+- **Category marker interfaces** live in the `topics/grouping/categories/` package (`SmokeTests`, `RegressionTests`).
+- **Rule classes** live in `src/main/…/topics/rules/` — not in the test source tree.
+- **Runner classes** live in `src/main/…/topics/runners/`.
+- **Listener classes** live in `src/main/…/topics/listeners/`.
 
 ## Coding conventions
 - Java 17 language level; no preview features.
@@ -77,7 +91,7 @@ src/
 - **`@Rule`** — method-level lifecycle; apply to a `public` non-static field annotated `@Rule`.
 - **`@ClassRule`** — class-level lifecycle (like `@BeforeClass`/`@AfterClass`); apply to a `public static` field.
 - **Custom runners** — use `@RunWith(MyRunner.class)` to swap the test runner. Cannot combine multiple runners without a wrapper.
-- Rule implementations extend `ExternalResource`, `TestWatcher`, `TestRule`, etc. Place them in `src/main/…/rules/`.
+- Rule implementations extend `ExternalResource`, `TestWatcher`, `TestRule`, etc. Place them in `src/main/…/topics/rules/`.
 
 ## Suite lifecycle patterns
 JUnit 4 has **no native `@BeforeSuite` / `@AfterSuite`** annotations. Three approaches are demonstrated:
@@ -89,7 +103,7 @@ JUnit 4 has **no native `@BeforeSuite` / `@AfterSuite`** annotations. Three appr
 ## CI / CD
 - Workflow file: `.github/workflows/maven.yml`
 - Triggered **manually only** via `workflow_dispatch` (Actions → Run workflow on GitHub)
-- Input: `groups` (optional) — category filter for the by-category job; must be a fully-qualified class name (e.g. `com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests`)
+- Input: `groups` (optional) — category filter for the by-category job; must be a fully-qualified class name (e.g. `com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests`)
 - Two jobs:
   - `regression` — always runs all tests: `./mvnw -B clean site`
   - `by-tag` — runs only when `groups` is provided: `./mvnw -B clean site -Dgroups={groups}`
@@ -100,7 +114,7 @@ JUnit 4 has **no native `@BeforeSuite` / `@AfterSuite`** annotations. Three appr
 ```bash
 mvn clean test                          # run all tests
 mvn clean test -Dtest=AssertTest        # run one class
-mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests  # run by category
+mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests  # run by category
 mvn clean test -P Smoke                 # run via Maven profile (Smoke or Regression)
 mvn clean surefire-report:report        # generate HTML report
 mvn clean site                          # full Maven site
@@ -110,7 +124,7 @@ mvn clean site                          # full Maven site
 ```bash
 gradle clean test                       # run all tests
 gradle clean test --tests "*AssertTest" # run one class
-gradle clean test -DincludeCategories=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests # run by category
+gradle clean test -DincludeCategories=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests # run by category
 gradle clean smokeTest                  # run via dedicated Gradle task
 gradle clean test                       # generate HTML report (build/reports/tests/test/index.html)
 ```

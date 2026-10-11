@@ -18,40 +18,52 @@ A hands-on Java workshop demonstrating the full JUnit feature set across JUnit 4
 - **opencsv 5.12.0** — CSV file parsing for data-driven tests
 
 ## Directory structure
-```
-build.gradle             Gradle build configuration
-settings.gradle          Gradle project name
-gradlew / gradlew.bat    Gradle Wrapper scripts
-pom.xml                  Maven build configuration
-mvnw / mvnw.cmd          Maven Wrapper scripts
-src/main/java/com/oleynik/qa/workshop/junit/
-  annotations/        custom annotation types and helpers
-  dataproviders/      TNG-style DataProvider implementations
-  listeners/          RunListener implementations (ExecutionListener)
-  rules/              @Rule / @ClassRule implementations (not in test sources)
-  runners/            custom @RunWith runners (not in test sources)
-  model/              domain model (User, MyDoubleWrapper, MyServer)
-  Factorial.java      example production code
-  PrimeNumber.java
-  Utils.java
 
-src/test/java/com/oleynik/qa/workshop/junit/
-  general/            assertions, fixtures, exceptions, timeouts, ignoring
-  group/asserts/      ErrorCollector rule, AssertJ soft assertions
-  conditional/        Assume.assumeTrue, Assume.assumeThat
-  ddt/                parameterized & data-driven tests
-  nested/             nested tests via HierarchicalContextRunner
-  grouping/           @Category usage; categories/ has marker interfaces
-  execution/order/    @FixMethodOrder
-  rules/              tests exercising custom @Rule implementations
-  repeat/             retry runners and rules
-  suites/
-    beforeclass/      @BeforeClass / @AfterClass on suite class
-    lifecycle/        @ClassRule + ExternalResource for before/after suite
-    listener/         JUnitCore + RunListener approach
+`topics` contains examples of individual JUnit features; `scenarios` contains complete examples that combine several features and can be referenced by multiple articles. The Calculator scenario is in `scenarios/calculator` in both main and test sources.
 
-src/test/resources/
-  numbers.csv         input data for parameterized tests
+```text
+build.gradle             # Gradle build configuration
+settings.gradle          # Gradle project name
+gradlew / gradlew.bat    # Gradle Wrapper scripts
+pom.xml                  # Maven build configuration
+mvnw / mvnw.cmd          # Maven Wrapper scripts
+src/
+├── main/java/com/oleynik/qa/workshop/junit/
+│   ├── scenarios/
+│   │   └── calculator/
+│   │       └── Calculator.java  # Addition and integer division
+│   └── topics/
+│       ├── annotations/         # DataSource, Retry, RetryConfiguration
+│       ├── dataproviders/       # JUnitDataProvider
+│       ├── listeners/           # ExecutionListener (RunListener)
+│       ├── model/               # User, MyDoubleWrapper, MyServer
+│       ├── rules/               # DBResourceRule, MonitorRule, retry rules, AssertAll
+│       ├── runners/             # RetryRunner, ExecutionListenerRunner
+│       ├── Factorial.java       # Production code for parameterized tests
+│       └── Utils.java           # Helper used by timeout examples
+└── test/
+    ├── java/com/oleynik/qa/workshop/junit/
+    │   ├── scenarios/
+    │   │   └── calculator/
+    │   │       ├── CalculatorTest.java
+    │   │       └── CalculatorParameterizedTest.java
+    │   └── topics/
+    │       ├── general/         # Assertions, fixtures, exceptions, timeouts, @Ignore
+    │       ├── asserts/         # ErrorCollector, AssertAll, AssertJ soft assertions
+    │       ├── conditional/     # Assumptions via Assume
+    │       ├── ddt/             # Parameterized, JUnitParams, DataProvider, Theories
+    │       ├── nested/          # HierarchicalContextRunner
+    │       ├── grouping/        # @Category usage
+    │       │   └── categories/  # SmokeTests, RegressionTests marker interfaces
+    │       ├── order/           # @FixMethodOrder, @OrderWith
+    │       ├── rules/           # ExternalResource and TestWatcher examples
+    │       ├── repeat/          # Retry runners, retry rules and repeat demos
+    │       └── suites/
+    │           ├── lifecycle/   # @ClassRule + ExternalResource
+    │           ├── beforeclass/ # @BeforeClass / @AfterClass on the suite
+    │           └── listener/    # JUnitCore + RunListener
+    └── resources/
+        └── numbers.csv         # Input data for DataProvider tests
 ```
 
 ## Naming rules — follow exactly
@@ -88,10 +100,10 @@ src/test/resources/
 | Custom runner               | `@RunWith`                | `@ExtendWith`                        |
 
 ## Rule / runner placement
-- Rule **implementations** go in `src/main/…/rules/`
-- Runner **implementations** go in `src/main/…/runners/`
-- Listener **implementations** go in `src/main/…/listeners/`
-- Tests that *use* rules go in `src/test/…/rules/`
+- Rule **implementations** go in `src/main/…/topics/rules/`
+- Runner **implementations** go in `src/main/…/topics/runners/`
+- Listener **implementations** go in `src/main/…/topics/listeners/`
+- Tests that *use* rules go in `src/test/…/topics/rules/`
 
 ## Suite lifecycle — three patterns
 JUnit 4 has no native `@BeforeSuite` / `@AfterSuite`. Three approaches are demonstrated:
@@ -101,7 +113,7 @@ JUnit 4 has no native `@BeforeSuite` / `@AfterSuite`. Three approaches are demon
 
 ## CI / CD
 - Workflow: `.github/workflows/maven.yml` (GitHub Actions), triggered **manually only** (`workflow_dispatch`)
-- Input: `groups` (optional) — fully-qualified category class name passed to `-Dgroups` (e.g. `com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests`)
+- Input: `groups` (optional) — fully-qualified category class name passed to `-Dgroups` (e.g. `com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests`)
 - Two jobs: `regression` (always, all tests) and `by-tag` (only when `groups` input is provided)
 - Both jobs run `./mvnw -B clean site` and upload artifacts with `if: always()`, 14-day retention: `surefire-report[-{tag}]` (`target/site/`) and `junit-xml-results[-{tag}]` (`target/surefire-reports/`)
 - Do **not** replace `site` with `test` in the workflow — the artifact upload requires the site report
@@ -110,7 +122,7 @@ JUnit 4 has no native `@BeforeSuite` / `@AfterSuite`. Three approaches are demon
 ```bash
 mvn clean test                          # all tests
 mvn clean test -Dtest=ClassName         # single class
-mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests  # by category
+mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests  # by category
 mvn clean test -P Smoke                 # by Maven profile (Smoke or Regression)
 mvn clean surefire-report:report        # HTML report
 mvn clean site                          # full Maven site
@@ -120,7 +132,7 @@ mvn clean site                          # full Maven site
 ```bash
 gradle clean test                       # all tests
 gradle clean test --tests "*ClassName"  # single class
-gradle clean test -DincludeCategories=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests # by category
+gradle clean test -DincludeCategories=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests # by category
 gradle clean smokeTest                  # by dedicated Gradle task (smokeTest or regressionTest)
 gradle clean test                       # HTML report (build/reports/tests/test/index.html)
 ```

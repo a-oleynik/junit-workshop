@@ -11,7 +11,7 @@
 - **Java:** 17 LTS (`JAVA_HOME` must point to JDK 17)
 - **Build:** Maven 3.9+ or Gradle 9.6.0+ (bundled wrappers included)
 - **IDE:** IntelliJ IDEA with Lombok plugin enabled
-- **CI:** GitHub Actions — `.github/workflows/maven.yml`, triggered manually (`workflow_dispatch`). Two jobs: `regression` (all tests, `./mvnw -B clean site`) and `by-tag` (runs only when `groups` input is provided — must be a fully-qualified category class name, e.g. `com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests`). Both upload `surefire-report` and `junit-xml-results` artifacts. Do **not** change `site` to `test`.
+- **CI:** GitHub Actions — `.github/workflows/maven.yml`, triggered manually (`workflow_dispatch`). Two jobs: `regression` (all tests, `./mvnw -B clean site`) and `by-tag` (runs only when `groups` input is provided — must be a fully-qualified category class name, e.g. `com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests`). Both upload `surefire-report` and `junit-xml-results` artifacts. Do **not** change `site` to `test`.
 
 ## How to build and test
 
@@ -27,8 +27,8 @@ mvn clean test -Dtest=<ClassName>
 mvn clean test -Dtest=<ClassName>#<methodName>
 
 # Run by category
-mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests
-mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
+mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests
+mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.topics.grouping.categories.RegressionTests
 
 # Run via Maven profile (Smoke or Regression — resolves to the fully-qualified category class internally)
 mvn clean test -P Smoke
@@ -53,8 +53,8 @@ gradle clean test --tests "*<ClassName>"
 gradle clean test --tests "*<ClassName>.<methodName>"
 
 # Run by category
-gradle clean test -DincludeCategories=com.oleynik.qa.workshop.junit.grouping.categories.SmokeTests
-gradle clean test -DincludeCategories=com.oleynik.qa.workshop.junit.grouping.categories.RegressionTests
+gradle clean test -DincludeCategories=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests
+gradle clean test -DincludeCategories=com.oleynik.qa.workshop.junit.topics.grouping.categories.RegressionTests
 
 # Run via dedicated Gradle task
 gradle clean smokeTest
@@ -63,6 +63,12 @@ gradle clean regressionTest
 # Generate HTML test report (written to build/reports/tests/test/index.html)
 gradle clean test
 ```
+
+## Source organization
+
+`topics` contains examples of individual JUnit features; `scenarios` contains complete examples that combine several features and can be referenced by multiple articles. The Calculator scenario is in `scenarios/calculator` in both main and test sources.
+
+Place feature examples under `src/test/java/…/topics/` and shared helpers under `src/main/java/…/topics/`. Place complete scenarios under `scenarios/` in the corresponding main and test source trees. Follow the package map in README.
 
 ## Common agent tasks
 
@@ -77,37 +83,37 @@ gradle clean test
 
 ### Add a suite-member class
 1. Name it `*Case` or `*Scenario` — **never** `*Test` (Surefire / Gradle would run it twice).
-2. Place it under the appropriate `src/test/…/suites/` sub-package.
+2. Place it under the appropriate `src/test/…/topics/suites/` sub-package.
 3. Reference it in `@Suite.SuiteClasses` on the relevant suite class.
 
 ### Add a custom rule
-1. Create the implementation in `src/main/java/…/rules/` (main sources, not test sources).
+1. Create the implementation in `src/main/java/…/topics/rules/` (main sources, not test sources).
 2. Extend `ExternalResource`, `TestWatcher`, or implement `TestRule` / `MethodRule` as appropriate.
-3. Create a test class in `src/test/java/…/rules/` that exercises it with a `@Rule` or `@ClassRule` field.
+3. Create a test class in `src/test/java/…/topics/rules/` that exercises it with a `@Rule` or `@ClassRule` field.
 
 ### Add a custom runner
-1. Create the runner in `src/main/java/…/runners/`.
+1. Create the runner in `src/main/java/…/topics/runners/`.
 2. Apply it in the test class with `@RunWith(MyRunner.class)`.
 3. Note: only one `@RunWith` can be active per class — use delegation or composition if multiple behaviours are needed.
 
 ### Add a data provider
-1. Create the provider class in `src/main/java/…/dataproviders/` using the TNG-style `@DataProvider` annotation from `junit4-dataprovider`.
-2. Reference it from the test class in `src/test/…/ddt/` with `@UseDataProvider`.
+1. Create the provider class in `src/main/java/…/topics/dataproviders/` using the TNG-style `@DataProvider` annotation from `junit4-dataprovider`.
+2. Reference it from the test class in `src/test/…/topics/ddt/` with `@UseDataProvider`.
 3. For `JUnitParams`-style tests, use `@RunWith(JUnitParamsRunner.class)` and `@Parameters`.
 
 ### Add a category / grouping
-1. Create a new marker interface in `src/test/…/grouping/categories/`.
+1. Create a new marker interface in `src/test/…/topics/grouping/categories/`.
 2. Apply `@Category(MyCategory.class)` to test methods or the whole class.
 
 ## Key constraints the agent must respect
-| Rule                                                                      | Why                                                                                  |
-|---------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| Suite members named `*Case`, never `*Test`                                | Surefire and Gradle discover `*Test` independently → double execution                |
-| Rules in `src/main/…/rules/`, runners in `src/main/…/runners/`            | Keeps shared infrastructure out of test sources                                      |
-| Use `@org.junit.Test`, `@Before`, `@After`, `@BeforeClass`, `@AfterClass` | JUnit 4 API — Jupiter annotations are not on the classpath                           |
-| Use `@Ignore` to skip, not `@Disabled`                                    | `@Disabled` is JUnit 5/6 only                                                        |
-| Use `@Category` for grouping, not `@Tag`                                  | `@Tag` is JUnit 5/6 only                                                             |
-| Use `@Test(timeout = ms)` for time limits                                 | No `@Timeout` annotation in JUnit 4                                                  |
-| Use `@FixMethodOrder` for ordering                                        | No `@TestMethodOrder` in JUnit 4                                                     |
-| No `junit-bom` — all versions explicit in `pom.xml` / `build.gradle`      | BOM-based version management is a JUnit 5/6 pattern                                  |
-| Choose either Maven or Gradle consistently                                | Avoids mixed tool execution, duplicate build outputs, and conflicting project setups |
+| Rule                                                                         | Why                                                                                  |
+|------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| Suite members named `*Case`, never `*Test`                                   | Surefire and Gradle discover `*Test` independently → double execution                |
+| Rules in `src/main/…/topics/rules/`, runners in `src/main/…/topics/runners/` | Keeps shared infrastructure out of test sources                                      |
+| Use `@org.junit.Test`, `@Before`, `@After`, `@BeforeClass`, `@AfterClass`    | JUnit 4 API — Jupiter annotations are not on the classpath                           |
+| Use `@Ignore` to skip, not `@Disabled`                                       | `@Disabled` is JUnit 5/6 only                                                        |
+| Use `@Category` for grouping, not `@Tag`                                     | `@Tag` is JUnit 5/6 only                                                             |
+| Use `@Test(timeout = ms)` for time limits                                    | No `@Timeout` annotation in JUnit 4                                                  |
+| Use `@FixMethodOrder` for ordering                                           | No `@TestMethodOrder` in JUnit 4                                                     |
+| No `junit-bom` — all versions explicit in `pom.xml` / `build.gradle`         | BOM-based version management is a JUnit 5/6 pattern                                  |
+| Choose either Maven or Gradle consistently                                   | Avoids mixed tool execution, duplicate build outputs, and conflicting project setups |
