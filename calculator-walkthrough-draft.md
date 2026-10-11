@@ -1,17 +1,17 @@
 <a id="calculator-walkthrough"></a>
 
-# Calculator — article walkthrough
+# Calculator — article walkthrough (JUnit 4)
 
 Отдельный черновик для обсуждения. Не включён в README; решение о его дальнейшем размещении остаётся открытым. Ссылки ниже указаны относительно корня репозитория.
 
-Start here to follow the Calculator example from the article. The files share the
+This branch adapts the Calculator example from the article to JUnit 4.13.2. The files share the
 `com.oleynik.qa.workshop.junit.scenarios.calculator` package.
 
-| Step                               | Code                                                                                                                                  | What to look for                                                               |
-|------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------|
-| 1. The code under test             | [Calculator.java](src/main/java/com/oleynik/qa/workshop/junit/scenarios/calculator/Calculator.java)                                   | `add()` and integer `divide()`                                                 |
-| 2. Tests, assertions and lifecycle | [CalculatorTest.java](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java)                           | `@Test`, `assertEquals`, `@BeforeEach` and `assertThrows` for division by zero |
-| 3. One scenario, multiple inputs   | [CalculatorParameterizedTest.java](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java) | `@ParameterizedTest` and the five `@CsvSource` rows from the article           |
+| Step                               | Code                                                                                                                                  | What to look for                                                                                           |
+|------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
+| 1. The code under test             | [Calculator.java](src/main/java/com/oleynik/qa/workshop/junit/scenarios/calculator/Calculator.java)                                   | `add()` and integer `divide()`                                                                             |
+| 2. Tests, assertions and lifecycle | [CalculatorTest.java](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java)                           | `org.junit.Test`, `@Before`, `assertEquals` and `assertThrows` for division by zero                        |
+| 3. One scenario, multiple inputs   | [CalculatorParameterizedTest.java](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java) | `@RunWith(Parameterized.class)`, `@Parameterized.Parameters` and constructor injection for five input rows |
 
 Run these two test classes from the repository root with Maven:
 
