@@ -80,7 +80,11 @@ task generates the HTML report automatically. The XML results are in
 `build/test-results/test/`.
 
 Read the test names, counts, and outcomes, then continue to the xUnit recap and
-parameterized tests. See also the [README report commands and output paths](README.md#generate-the-full-maven-site-or-standard-gradle-test-report).
+parameterized tests.
+
+To generate a report for the full workshop instead of only `CalculatorTest`,
+run `./mvnw clean site` or `./gradlew clean test`.
+See the [README report commands and output paths](README.md#generate-the-full-maven-site-or-standard-gradle-test-report).
 
 <a id="calculator-walkthrough"></a>
 
