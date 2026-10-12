@@ -434,17 +434,17 @@ Categories used in this project: `SmokeTests` and `RegressionTests` (marker inte
 **Via Maven profiles or dedicated Gradle tasks:**
 
 ```bash
-./mvnw clean test -P Smoke
+./mvnw clean test -P smoke
 ./gradlew clean smokeTest
 
-./mvnw clean test -P Regression
+./mvnw clean test -P regression
 ./gradlew clean regressionTest
 ```
 
 > Each profile activates the matching `<groups>` filter in the Surefire configuration or Gradle `useJUnit` category filter
 > using the fully-qualified category class name (`SmokeTests` / `RegressionTests`), and automatically excludes
 > `*Suite.java` / `*Suite.class` classes, which have no `@Category` annotation and would otherwise interfere with
-> filtered runs. Profile IDs match the master-branch convention — `Smoke` and `Regression`.
+> filtered runs. Profile IDs match the master-branch convention — `smoke` and `regression`.
 
 ### 12. Test Suite (`@BeforeSuite` / `@AfterSuite` emulation)
 
@@ -702,15 +702,15 @@ test started, finished, failed, assumed, ignored.
 ```
 
 > ⚠️ In JUnit 4, `-Dgroups` and `-DincludeCategories` require the **fully-qualified class name** of the category interface,
-> unlike JUnit 5+ where short tag strings are used (e.g. `-Dgroups=Smoke`).
+> unlike JUnit 5+ where short tag strings are used (e.g. `-Dgroups=smoke`).
 
 ### Run tests via Maven profile or dedicated Gradle task
 
 ```bash
-./mvnw clean test -P Smoke
+./mvnw clean test -P smoke
 ./gradlew clean smokeTest
 
-./mvnw clean test -P Regression
+./mvnw clean test -P regression
 ./gradlew clean regressionTest
 ```
 

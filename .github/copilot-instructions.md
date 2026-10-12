@@ -119,7 +119,7 @@ JUnit 4 has **no native `@BeforeSuite` / `@AfterSuite`** annotations. Three appr
 mvn clean test                          # run all tests
 mvn clean test -Dtest=AssertTest        # run one class
 mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests  # run by category
-mvn clean test -P Smoke                 # run via Maven profile (Smoke or Regression)
+mvn clean test -P smoke                 # run via Maven profile (smoke or regression)
 mvn clean surefire-report:report        # generate HTML report
 mvn clean site                          # full Maven site
 ```

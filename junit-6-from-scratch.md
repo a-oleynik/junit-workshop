@@ -144,7 +144,7 @@ For the workshop's grouping approach across multiple tests, see
 [CategoriesTest](src/test/java/com/oleynik/qa/workshop/junit/topics/grouping/CategoriesTest.java):
 it uses `@Category` with the `SmokeTests` and `RegressionTests` marker interfaces, including
 combining multiple categories on a single test method. You can also run categories
-via Maven profiles (`-P Smoke` / `-P Regression`) or dedicated Gradle tasks
+via Maven profiles (`-P smoke` / `-P regression`) or dedicated Gradle tasks
 (`smokeTest` / `regressionTest`).
 
 <a id="calculator-walkthrough"></a>
