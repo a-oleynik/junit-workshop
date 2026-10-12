@@ -23,7 +23,7 @@ or the optional assertion libraries in [Advanced Topics](README.md#-advanced-top
 | 5. Reporting                            | [Reporting commands](#reporting) / [README report commands](README.md#generate-the-full-maven-site-or-standard-gradle-test-report)                                                                                      | Inspect results beyond console output, including HTML reports.                                                                                                                                    |
 | 6. We have just invented xUnit          | Revisit [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) and the report from chapter 5                                                                            | Connect discovery, execution, assertions, fixtures, and reporting before moving to parameterized tests.                                                                                           |
 | 7. Parameterized tests                  | [CalculatorParameterizedTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java)                                                                                        | Run five input rows with `@RunWith(Parameterized.class)`, `@Parameterized.Parameters`, and constructor injection.                                                                                 |
-| 8.1. Tags → categories                  | [CategoriesTest](src/test/java/com/oleynik/qa/workshop/junit/topics/grouping/CategoriesTest.java) / [category commands](README.md#run-tests-by-category)                                                                | Use `@Category` with the `SmokeTests` and `RegressionTests` marker interfaces; filter by fully qualified class name.                                                                              |
+| 8.1. Tags → categories                  | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [article category commands](#categories)                                                                       | Select tests with `@Category(SmokeTests.class)` and `@Category(RegressionTests.class)`, adapting the article's tags.                                                                              |
 | 8.2. Disabled tests → ignored tests     | [IgnoringTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/IgnoringTest.java)                                                                                                                            | Temporarily skip a test with `@Ignore`.                                                                                                                                                           |
 | 8.3. Assumptions                        | [AssumeTest](src/test/java/com/oleynik/qa/workshop/junit/topics/conditional/AssumeTest.java)                                                                                                                            | Use `org.junit.Assume` to run tests only when their preconditions hold.                                                                                                                           |
 | 9.1. Exceptions                         | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [ExceptionTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/ExceptionTest.java)                 | Use `org.junit.Assert.assertThrows` (JUnit 4.13+), starting with division by zero; compare with `@Test(expected = ...)`.                                                                          |
@@ -91,6 +91,61 @@ parameterized tests.
 To generate a report for the full workshop instead of only `CalculatorTest`,
 run `./mvnw clean site` or `./gradlew clean test`.
 See the [README report commands and output paths](README.md#generate-the-full-maven-site-or-standard-gradle-test-report).
+
+## Categories
+
+Chapter 8.1 uses tags in JUnit 6. JUnit 4 adapts tags using `@Category` with marker
+interfaces. In
+[CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java),
+`should_add_two_positive_numbers` matches the article's example:
+
+```java
+@Test
+@Category(SmokeTests.class)
+public void should_add_two_positive_numbers() {
+    assertEquals(5, calculator.add(2, 3));
+}
+```
+
+`should_add_zero` uses `@Category(RegressionTests.class)`. Categories label tests for
+filtering; they do not disable them when running without a category filter.
+
+Run the article's smoke example from the repository root with your chosen build tool:
+
+**Maven**
+
+```bash
+# Linux / macOS
+./mvnw test -Dtest=CalculatorTest -Dgroups=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests
+```
+
+```powershell
+# Windows PowerShell
+.\mvnw.cmd test "-Dtest=CalculatorTest" "-Dgroups=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests"
+```
+
+**Gradle**
+
+```bash
+# Linux / macOS
+./gradlew test --tests "*CalculatorTest" -DincludeCategories=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests
+```
+
+```powershell
+# Windows PowerShell
+.\gradlew.bat test --tests "*CalculatorTest" "-DincludeCategories=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests"
+```
+
+Expect one test: `should_add_two_positive_numbers`. Replace `SmokeTests` with `RegressionTests`
+to run only `should_add_zero`. The class filter keeps these commands focused on the
+article example.
+
+For the workshop's grouping approach across multiple tests, see
+[CategoriesTest](src/test/java/com/oleynik/qa/workshop/junit/topics/grouping/CategoriesTest.java):
+it uses `@Category` with the `SmokeTests` and `RegressionTests` marker interfaces, including
+combining multiple categories on a single test method. You can also run categories
+via Maven profiles (`-P Smoke` / `-P Regression`) or dedicated Gradle tasks
+(`smokeTest` / `regressionTest`).
 
 <a id="calculator-walkthrough"></a>
 

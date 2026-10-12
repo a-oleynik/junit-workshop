@@ -1,7 +1,10 @@
 package com.oleynik.qa.workshop.junit.scenarios.calculator;
 
+import com.oleynik.qa.workshop.junit.topics.grouping.categories.RegressionTests;
+import com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
@@ -16,11 +19,13 @@ public class CalculatorTest {
     }
 
     @Test
+    @Category(SmokeTests.class)
     public void should_add_two_positive_numbers() {
         assertEquals(5, calculator.add(2, 3));
     }
 
     @Test
+    @Category(RegressionTests.class)
     public void should_add_zero() {
         assertEquals(5, calculator.add(0, 5));
     }
