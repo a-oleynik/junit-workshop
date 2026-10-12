@@ -27,12 +27,12 @@ mvn clean test -Dtest=<ClassName>
 mvn clean test -Dtest=<ClassName>#<methodName>
 
 # Run by tag
-mvn clean test -Dgroups=Smoke
-mvn clean test -Dgroups=Regression
+mvn clean test -Dgroups=smoke
+mvn clean test -Dgroups=regression
 
 # Run via Maven profile
-mvn clean test -P Smoke
-mvn clean test -P Regression
+mvn clean test -P smoke
+mvn clean test -P regression
 
 # Generate Surefire HTML report
 mvn clean surefire-report:report
@@ -53,8 +53,8 @@ gradle clean test --tests "*<ClassName>"
 gradle clean test --tests "*<ClassName>.<methodName>"
 
 # Run by tag
-gradle clean test -DincludeTags=Smoke
-gradle clean test -DincludeTags=Regression
+gradle clean test -DincludeTags=smoke
+gradle clean test -DincludeTags=regression
 
 # Run via dedicated Gradle task
 gradle clean smokeTest

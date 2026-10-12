@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 public class AssertAllTest {
 
     @Test
-    @Tag("Regression")
+    @Tag("regression")
     void assert_all_test() {
         System.out.println("Assert All in JUnit5 test");
         boolean variable = true;
