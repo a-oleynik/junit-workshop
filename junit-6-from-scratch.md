@@ -22,7 +22,7 @@ handling together.
 | 5. Reporting                            | [Reporting commands](#reporting) / [README report commands](README.md#generate-the-full-maven-site-or-standard-gradle-test-report)                                                                                                    | Inspect results beyond console output, including HTML reports.                                                                |
 | 6. We have just invented xUnit          | Revisit [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) and the report from chapter 5                                                                                          | Connect discovery, execution, assertions, fixtures, and reporting before moving to parameterized tests.                       |
 | 7. Parameterized tests                  | [CalculatorParameterizedTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java)                                                                                                      | Run one addition scenario with the five `@CsvSource` rows.                                                                    |
-| 8.1. Tags                               | [TagsTest](src/test/java/com/oleynik/qa/workshop/junit/topics/grouping/TagsTest.java) / [tag commands](README.md#run-tests-by-tag)                                                                                                    | Select groups such as `Smoke` and `Regression`.                                                                               |
+| 8.1. Tags                               | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [article tag commands](#tags)                                                                                                | Select tests with plain lowercase `@Tag("smoke")` and `@Tag("regression")`, as in the article.                                |
 | 8.2. Disabled tests                     | [DisabledTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/DisabledTest.java)                                                                                                                                          | Temporarily disable a test with `@Disabled`.                                                                                  |
 | 8.3. Assumptions                        | [AssumptionsTest](src/test/java/com/oleynik/qa/workshop/junit/topics/conditional/AssumptionsTest.java)                                                                                                                                | Execute a test only when its preconditions hold.                                                                              |
 | 9.1. Exceptions                         | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [ExceptionTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/ExceptionTest.java)                               | Use `assertThrows`, starting with division by zero.                                                                           |
@@ -86,6 +86,60 @@ parameterized tests.
 To generate a report for the full workshop instead of only `CalculatorTest`,
 run `./mvnw clean site` or `./gradlew clean test`.
 See the [README report commands and output paths](README.md#generate-the-full-maven-site-or-standard-gradle-test-report).
+
+## Tags
+
+Chapter 8.1 uses plain lowercase tags. In
+[CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java),
+`shouldAddTwoPositiveNumbers` matches the article's example:
+
+```java
+@Test
+@Tag("smoke")
+void shouldAddTwoPositiveNumbers() {
+    assertEquals(5, calculator.add(2, 3));
+}
+```
+
+`shouldAddZero` uses `@Tag("regression")`. Tags label tests for filtering; they do
+not disable them when running without a tag filter.
+
+Run the article's smoke example from the repository root with your chosen build tool:
+
+**Maven**
+
+```bash
+# Linux / macOS
+./mvnw test -Dtest=CalculatorTest -Dgroups=smoke
+```
+
+```powershell
+# Windows PowerShell
+.\mvnw.cmd test "-Dtest=CalculatorTest" "-Dgroups=smoke"
+```
+
+**Gradle**
+
+```bash
+# Linux / macOS
+./gradlew test --tests "*CalculatorTest" -DincludeTags=smoke
+```
+
+```powershell
+# Windows PowerShell
+.\gradlew.bat test --tests "*CalculatorTest" "-DincludeTags=smoke"
+```
+
+Expect one test: `shouldAddTwoPositiveNumbers`. Replace `smoke` with `regression`
+to run only `shouldAddZero`. The class filter keeps these commands focused on the
+article example.
+
+For the workshop's advanced approach, see
+[TagsTest](src/test/java/com/oleynik/qa/workshop/junit/topics/grouping/TagsTest.java):
+it uses constants and custom meta-annotations `@Smoke` / `@Regression` with the
+existing `Smoke` / `Regression` values. Tag values are case-sensitive, so the
+article's `smoke` and the workshop's `Smoke` are separate tags. Existing workshop
+profiles and tasks continue to use their original values.
 
 <a id="calculator-walkthrough"></a>
 

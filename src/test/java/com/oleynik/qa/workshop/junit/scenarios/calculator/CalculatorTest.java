@@ -1,6 +1,7 @@
 package com.oleynik.qa.workshop.junit.scenarios.calculator;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,11 +17,13 @@ class CalculatorTest {
     }
 
     @Test
+    @Tag("smoke")
     void shouldAddTwoPositiveNumbers() {
         assertEquals(5, calculator.add(2, 3));
     }
 
     @Test
+    @Tag("regression")
     void shouldAddZero() {
         assertEquals(5, calculator.add(0, 5));
     }
