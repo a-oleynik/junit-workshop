@@ -1,8 +1,9 @@
 # JUnit 6 from Scratch — Article Learning Path
 
 Companion learning path for **JUnit 6 с нуля: что делает тестовый фреймворк**
-(`JUnit_6_in_one_evening`). Follow the article's chapter order on the JUnit 6
-`master` branch, starting with manual checks and the problem of test discovery.
+(`JUnit_6_in_one_evening`). The article describes JUnit 6; the examples in this
+branch run on **JUnit 5.14.4**. Follow the same chapter order, starting with manual
+checks and the problem of test discovery.
 
 The article uses Calculator as its running example. The mapping below connects
 each chapter to the corresponding workshop files. Revisit `CalculatorTest` as you
