@@ -283,6 +283,19 @@ Mark tests as `Smoke` or `Regression` and run subsets from the command line.
 ./gradlew clean test
 ```
 
+### 10. HTML Report Generation
+
+```bash
+# Maven
+./mvnw clean site
+
+# Gradle
+./gradlew clean test
+```
+
+Maven writes the report to `target/site/surefire-report.html`; Gradle writes it to
+`build/reports/tests/test/index.html` automatically as part of the standard `test` task.
+
 [⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
@@ -517,19 +530,6 @@ public class SuiteExtensionFirstTest {
 
 > **⚠️ Note on `getOrComputeIfAbsent`:** the 3-argument overload used here is deprecated in JUnit 6
 > but is the standard API in JUnit 5. This example targets the JUnit 5 branch.
-
-### 13. HTML Report Generation
-
-```bash
-# Maven
-./mvnw clean site
-
-# Gradle
-./gradlew clean test
-```
-
-Maven writes the report to `target/site/surefire-report.html`; Gradle writes it to
-`build/reports/tests/test/index.html` automatically as part of the standard `test` task.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
