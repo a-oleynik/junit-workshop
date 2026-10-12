@@ -233,7 +233,7 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 Work through these topics in order; each builds on the previous one.
 
 1. **Basic assertions** → `AssertTest`  
-   Learn `assertEquals`, `assertThat`, `assertNull`, and `fail`.
+   Learn `assertEquals`, `assertTrue`, `assertNull`, and `fail`.
 
 2. **Test lifecycle** → `FixturesTest`  
    Understand `@Before`, `@After`, `@BeforeClass`, `@AfterClass`.
@@ -257,7 +257,7 @@ Work through these topics in order; each builds on the previous one.
    Organise related scenarios using inner context classes with `HierarchicalContextRunner`.
 
 9. **Categories** → `CategoriesTest`  
-    Mark tests as `SmokeTests` or `RegressionTests` and run subsets from the command line.
+   Mark tests as `SmokeTests` or `RegressionTests` and run subsets from the command line.
 
 **Run the whole beginner suite:**
 
@@ -301,32 +301,45 @@ tests that keep parameters close to the test method.
 Use `@RunWith(Theories.class)` with `@DataPoints` and `@FromDataPoints` to generate all combinations
 of parameter sets automatically — the JUnit 4 native approach to Cartesian-style parameterization.
 
-### 5. Soft Assertions (AssertJ)
+### 5. AssertJ fluent and soft assertions
 
-`SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`  
-Collect all assertion failures before reporting — no early bail-out.
+[`SoftAssertionsAssertJTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertionsAssertJTest.java), [`SoftAssertionsAssertJBDDTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertionsAssertJBDDTest.java)
 
-### 6. Rules: `ExternalResource` & `TestWatcher`
+Use fluent assertions and collect multiple assertion failures with soft assertions.
+These JUnit 4 examples register `JUnitSoftAssertions` and `JUnitBDDSoftAssertions`
+as public `@Rule` fields; the rules report collected failures automatically after
+each test. The BDD variant uses `then(...)`.
+For explicit collection with `SoftAssertions.assertAll()`, see
+[`SoftAssertTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertTest.java).
+
+### 6. Hamcrest matchers
+
+[`HamcrestTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/HamcrestTest.java)
+
+Write expressive assertions with `org.hamcrest.MatcherAssert.assertThat` and
+matchers in ordinary `org.junit.Test` methods.
+
+### 7. Rules: `ExternalResource` & `TestWatcher`
 
 `ExternalResourceRuleTest` → `@Rule ExternalResource` (`DBResourceRule`)  
 `TestWatcherRuleTest` → `@Rule TestWatcher` (`MonitorRule`)  
 JUnit 4 `@Rule` and `@ClassRule` are the equivalent of JUnit 5+ `@ExtendWith`.
 `ExternalResource` manages external resources (databases, servers); `TestWatcher` observes test outcomes.
 
-### 7. Test Execution Order
+### 8. Test Execution Order
 
 `FixMethodOrderTest` — `@FixMethodOrder(MethodSorters.NAME_ASCENDING)`  
 `ExecutionOrderWithTest` — `@OrderWith(Alphanumeric.class)` (JUnit 4.13+)  
 Two ways to control method execution order in JUnit 4.
 
-### 8. Retry Strategies
+### 9. Retry Strategies
 
 `RetryRunnerTest` — `@RunWith(RetryRunner.class)` + `@RetryConfiguration(maxTries=…)` (custom runner)  
 `RetriedTestRuleTest` — `RetryTestRule` via `@Rule` (test-level retry)  
 `RetriedMethodRuleTest` — `RetryMethodRule` via `@Rule` (method-level rule applied per method)  
 Three progressively more granular approaches to retrying flaky tests.
 
-### 9. Parallel Test Execution
+### 10. Parallel Test Execution
 
 Surefire can run tests in parallel without any additional dependencies.
 `pom.xml` already contains the parallel config — just uncomment it:
@@ -371,7 +384,7 @@ public class MyParallelTest { ... }
 
 Runs methods within a single class concurrently, independent of Surefire config.
 
-### 10. Maven Profiles & Gradle Tasks (Category-based filtering)
+### 11. Maven Profiles & Gradle Tasks (Category-based filtering)
 
 Categories used in this project: `SmokeTests` and `RegressionTests` (marker interfaces in `topics/grouping/categories/`).
 
@@ -402,7 +415,7 @@ Categories used in this project: `SmokeTests` and `RegressionTests` (marker inte
 > `*Suite.java` / `*Suite.class` classes, which have no `@Category` annotation and would otherwise interfere with
 > filtered runs. Profile IDs match the master-branch convention — `Smoke` and `Regression`.
 
-### 11. Test Suite (`@BeforeSuite` / `@AfterSuite` emulation)
+### 12. Test Suite (`@BeforeSuite` / `@AfterSuite` emulation)
 
 JUnit 4 has **no native `@BeforeSuite` / `@AfterSuite`**.  
 Two approaches work correctly — both are demonstrated in this project.
@@ -577,13 +590,13 @@ public class SuiteRunListener extends RunListener {
 | Requires suite class    | A & B: ✅ required / C: ❌ not needed | ✅ `@SelectClasses` required        |
 | Tests run independently | ❌ Only via suite entry point         | ❌ Only via suite entry class       |
 
-### 12. Custom RunListener
+### 13. Custom RunListener
 
 `ExecutionListenerRunnerTest`  
 Attach a custom `RunListener` (via `ExecutionListenerRunner`) to observe test lifecycle events:
 test started, finished, failed, assumed, ignored.
 
-### 13. HTML Report Generation
+### 14. HTML Report Generation
 
 ```bash
 # Maven
