@@ -40,7 +40,7 @@ For Appendix A, use [Quick Start](README.md#-quick-start), [pom.xml](pom.xml), a
 in those build files and the [parallel execution notes](README.md#8-parallel-execution).
 
 This route follows the article. The broader [Learning Path — Beginners](README.md#-learning-path--beginners)
-remains available for the workshop, including Hamcrest and `@Nested` as additional topics.
+remains available for the workshop, including `@Nested`. Explore Hamcrest and AssertJ separately in [Advanced Topics — Path for Senior Engineers](#-advanced-topics--path-for-senior-engineers).
 
 ## Reporting
 
