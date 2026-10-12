@@ -434,7 +434,7 @@ public class BeforeAfterSuite {
 > 2. `**/*Suite.java` added to Surefire `<includes>` so `BeforeAfterSuite` is automatically discovered by
 >    `./mvnw clean test`; the equivalent Gradle include is `**/*Suite.class`.
 
-### 11. Suite-like Lifecycle via Extension (`BeforeAllCallback` + Root Store)
+### 12. Suite-like Lifecycle via Extension (`BeforeAllCallback` + Root Store)
 
 `SuiteLikeLifecycleExtension` → `topics/extensions/` package (main); tests → `topics/suites/extension/`<br>
 An **alternative to `@Suite`** that provides global setup/teardown without grouping tests under a suite class.
@@ -491,7 +491,7 @@ public class SuiteExtensionFirstTest {
 > `computeIfAbsent(K, Function, Class<V>)`.
 > On the JUnit 5 branch, use `getOrComputeIfAbsent(K, Function, Class<V>)` instead (same signature, different name).
 
-### 12. HTML Report Generation
+### 13. HTML Report Generation
 
 ```bash
 # Maven
