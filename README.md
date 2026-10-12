@@ -240,23 +240,20 @@ Work through these topics in order; each builds on the previous one.
    Skip tests cleanly and make reports human-readable.  
    `DisplayNameGenerationTest` demonstrates class-level name generators with `@DisplayNameGeneration`.
 
-5. **Hamcrest matchers** → `HamcrestTest`  
-   Write expressive assertions with `assertThat`.
-
-6. **Grouped assertions** → `AssertAllTest`  
+5. **Grouped assertions** → `AssertAllTest`  
    Use `assertAll` so multiple failures are reported together.
 
-7. **Assumptions** → `AssumptionsTest`  
+6. **Assumptions** → `AssumptionsTest`  
    Skip tests dynamically when preconditions aren't met.
 
-8. **Parameterized tests** → `ValueSourceTest`, `ParameterizationTest`  
+7. **Parameterized tests** → `ValueSourceTest`, `ParameterizationTest`  
    Drive one test method with many data rows.
 
-9. **Nested tests** → `NestedTest`  
+8. **Nested tests** → `NestedTest`  
    Organise related scenarios using inner `@Nested` classes.
 
-10. **Tagging** → `TagsTest`  
-    Mark tests as `Smoke` or `Regression` and run subsets from the command line.
+9. **Tagging** → `TagsTest`  
+   Mark tests as `Smoke` or `Regression` and run subsets from the command line.
 
 **Run the whole beginner suite:**
 
@@ -291,29 +288,33 @@ Load test data from CSV files and external `ArgumentsProvider` / `@MethodSource`
 `PioneerCartesianProductTest`  
 Generate all combinations of parameter sets automatically.
 
-### 4. Soft Assertions (AssertJ)
+### 4. AssertJ fluent and soft assertions
 
-`SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`  
-Collect all assertion failures before reporting — no early bail-out.
+['SoftAssertionsAssertJTest'](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertionsAssertJTest.java), ['SoftAssertionsAssertJBDDTest'](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertionsAssertJBDDTest.java)  
+Use fluent assertions and collect multiple assertion failures with soft assertions.
 
-### 5. Custom JUnit 5+ Extensions
+### 5. Hamcrest matchers 
+['HamcrestTest'](src/test/java/com/oleynik/qa/workshop/junit/topics/general/HamcrestTest.java)
+Write expressive assertions with `assertThat` and matchers.
+
+### 6. Custom JUnit 5+ Extensions
 
 `DBResourceExtensionTest`, `TestWatcherExtensionTest`  
 Implement `BeforeAllCallback`, `AfterAllCallback`, and `TestWatcher` to manage external resources and observe test
 outcomes.
 
-### 6. Test Execution Order
+### 7. Test Execution Order
 
 `ExecutionOrderWithTest`  
 Control method execution order with `@TestMethodOrder` and `@Order`.
 
-### 7. Retry Strategies
+### 8. Retry Strategies 
 
 `RetryPioneerTest` — `@RetryingTest(maxAttempts, minSuccess)` via JUnit Pioneer  
 `RetryRerunnerTest` — Rerunner Jupiter integration  
 `RetryRepeatedTest` — JUnit 5+ native `@RepeatedTest`
 
-### 8. Parallel Execution
+### 9. Parallel Execution
 
 Configured globally in both `pom.xml` (Surefire) and `build.gradle`:
 
@@ -339,7 +340,7 @@ void test_that_uses_shared_resource() { ... }
 
 > 💡 See `ExecutionOrderWithTest` in the `topics/order/` package for ordering examples used alongside parallel execution.
 
-### 9. Tag-based filtering
+### 10. Tag-based filtering
 
 Tags used in this project are `Smoke` and `Regression` (defined in `Tags.java`; also available as meta-annotations `@Smoke` and `@Regression`).
 
@@ -374,7 +375,7 @@ Gradle also supports `-DexcludeTags=TagName`; both properties may be supplied to
 > Each Maven profile or Gradle task activates the matching tag filter and automatically
 > excludes `@Suite` classes, which have no tagged members and would otherwise fail with `NoTestsDiscoveredException`.
 
-### 10. Suite Lifecycle (`@BeforeSuite` / `@AfterSuite`)
+### 11. Suite Lifecycle (`@BeforeSuite` / `@AfterSuite`)
 
 `BeforeAfterSuite` → `topics/suites/` package<br>
 Group multiple test classes under a single `@Suite` class.  
