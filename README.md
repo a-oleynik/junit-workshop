@@ -290,12 +290,23 @@ Generate all combinations of parameter sets automatically.
 
 ### 4. AssertJ fluent and soft assertions
 
-['SoftAssertionsAssertJTest'](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertionsAssertJTest.java), ['SoftAssertionsAssertJBDDTest'](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertionsAssertJBDDTest.java)  
-Use fluent assertions and collect multiple assertion failures with soft assertions.
+[`SoftAssertionsAssertJTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertionsAssertJTest.java), [`SoftAssertionsAssertJBDDTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertionsAssertJBDDTest.java)
 
-### 5. Hamcrest matchers 
-['HamcrestTest'](src/test/java/com/oleynik/qa/workshop/junit/topics/general/HamcrestTest.java)
-Write expressive assertions with `assertThat` and matchers.
+Use fluent assertions and collect multiple assertion failures with soft assertions.
+These JUnit Jupiter examples register `SoftAssertionsExtension` with
+`@ExtendWith(SoftAssertionsExtension.class)`; the extension reports collected
+failures automatically after each test. `SoftAssertionsAssertJTest` receives
+`SoftAssertions` as a test method parameter. The BDD example injects a
+`BDDSoftAssertions` field with `@InjectSoftAssertions` and uses `then(...)`.
+For explicit collection with `SoftAssertions.assertAll()`, see
+[`SoftAssertTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertTest.java).
+
+### 5. Hamcrest matchers
+
+[`HamcrestTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/HamcrestTest.java)
+
+Write expressive assertions with `org.hamcrest.MatcherAssert.assertThat` and
+matchers in ordinary `org.junit.jupiter.api.Test` methods.
 
 ### 6. Custom JUnit 5+ Extensions
 
