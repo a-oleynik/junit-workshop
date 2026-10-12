@@ -51,8 +51,11 @@ remains available for the workshop, including nested contexts through
 
 ## Reporting
 
-The Calculator walkthrough below uses Maven consistently. Run commands from the
-repository root. At chapter 5, generate the full Maven site for `CalculatorTest`:
+Run commands from the repository root. Choose Maven or Gradle and follow that
+build tool's commands throughout the walkthrough; each pair below is an alternative.
+At chapter 5, run `CalculatorTest` and inspect its report.
+
+**Maven — HTML test report**
 
 ```bash
 # Linux / macOS
@@ -64,10 +67,26 @@ repository root. At chapter 5, generate the full Maven site for `CalculatorTest`
 .\mvnw.cmd clean site "-Dtest=CalculatorTest"
 ```
 
-Open `target/site/surefire-report.html` after a successful build. Read the test
-names, counts, and outcomes, then continue to the xUnit recap and parameterized tests.
-If you chose Gradle, use the [Gradle report command and output path](README.md#generate-the-full-maven-site-or-standard-gradle-test-report)
-throughout your build workflow.
+Open `target/site/surefire-report.html` after a successful build.
+
+**Gradle — test report**
+
+```bash
+# Linux / macOS
+./gradlew clean test --tests "*CalculatorTest"
+```
+
+```powershell
+# Windows PowerShell
+.\gradlew.bat clean test --tests "*CalculatorTest"
+```
+
+Open `build/reports/tests/test/index.html` after a successful build. Gradle's `test`
+task generates the HTML report automatically. The XML results are in
+`build/test-results/test/`.
+
+Read the test names, counts, and outcomes, then continue to the xUnit recap and
+parameterized tests. See also the [README report commands and output paths](README.md#generate-the-full-maven-site-or-standard-gradle-test-report).
 
 <a id="calculator-walkthrough"></a>
 
@@ -88,6 +107,8 @@ package; the manual entry point uses its `beforejunit` subpackage and the same C
 
 Run the manual example from the repository root:
 
+**Maven**
+
 ```bash
 # Linux / macOS
 ./mvnw compile
@@ -100,7 +121,21 @@ java -cp target/classes com.oleynik.qa.workshop.junit.scenarios.calculator.befor
 java -cp target/classes com.oleynik.qa.workshop.junit.scenarios.calculator.beforejunit.Main
 ```
 
-Expected output:
+**Gradle**
+
+```bash
+# Linux / macOS
+./gradlew classes
+java -cp build/classes/java/main com.oleynik.qa.workshop.junit.scenarios.calculator.beforejunit.Main
+```
+
+```powershell
+# Windows PowerShell
+.\gradlew.bat classes
+java -cp build/classes/java/main com.oleynik.qa.workshop.junit.scenarios.calculator.beforejunit.Main
+```
+
+Expected output (either build tool):
 
 ```text
 Expected: 5
@@ -113,7 +148,9 @@ the `@Test` methods automatically, and `@Before` creates a fresh Calculator for
 each test. `assertThrows` verifies division by zero. The parameterized test then runs
 the addition check with five input rows.
 
-Run these two test classes from the repository root with Maven:
+Run these two test classes from the repository root:
+
+**Maven**
 
 ```bash
 # Linux / macOS
@@ -124,6 +161,21 @@ Run these two test classes from the repository root with Maven:
 # Windows PowerShell
 .\mvnw.cmd test "-Dtest=CalculatorTest,CalculatorParameterizedTest"
 ```
+
+**Gradle**
+
+```bash
+# Linux / macOS
+./gradlew test --tests "*CalculatorTest" --tests "*CalculatorParameterizedTest"
+```
+
+```powershell
+# Windows PowerShell
+.\gradlew.bat test --tests "*CalculatorTest" --tests "*CalculatorParameterizedTest"
+```
+
+The Gradle HTML report at `build/reports/tests/test/index.html` now covers both
+selected classes.
 
 Expect eight successful test invocations: three regular tests and five parameterized
 invocations. For individual JUnit features, continue with the [Feature Map](README.md#-feature-map)
