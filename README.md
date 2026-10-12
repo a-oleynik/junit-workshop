@@ -233,38 +233,47 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 Work through these topics in order; each builds on the previous one.
 
 ### 1. Basic assertions
+
 `AssertTest`  
 Learn `assertEquals`, `assertTrue`, `assertNull`, and `fail`.
 
 ### 2. Test lifecycle
+
 `FixturesTest`  
 Understand `@Before`, `@After`, `@BeforeClass`, `@AfterClass`.
 
 ### 3. Exception testing
+
 `ExceptionTest`  
 Use `@Test(expected=…)` and the modern `assertThrows` (available since JUnit 4.13).
 
 ### 4. Ignoring tests
+
 `IgnoringTest`  
 Skip tests cleanly with `@Ignore` and understand the difference from failing tests.
 
 ### 5. Soft assertions
+
 `SoftAssertErrorCollectorTest`  
 Use `ErrorCollector` rule so multiple failures are collected before reporting.
 
 ### 6. Assumptions
+
 `AssumeTest`
 Skip tests dynamically when preconditions are not met.
 
 ### 7. Parameterized tests
+
 `ParameterizationTest`  
 Drive one test method with many data rows using `@RunWith(Parameterized.class)`.
 
 ### 8. Nested tests
+
 `NestedTest`  
 Organise related scenarios using inner context classes with `HierarchicalContextRunner`.
 
 ### 9. Categories
+
 `CategoriesTest`  
 Mark tests as `SmokeTests` or `RegressionTests` and run subsets from the command line.
 
@@ -277,6 +286,19 @@ Mark tests as `SmokeTests` or `RegressionTests` and run subsets from the command
 # Gradle
 ./gradlew clean test
 ```
+
+### 10. HTML Report Generation
+
+```bash
+# Maven
+./mvnw clean site
+
+# Gradle
+./gradlew clean test
+```
+
+Maven writes the report to `target/site/surefire-report.html`; Gradle writes it to
+`build/reports/tests/test/index.html` automatically as part of the standard `test` task.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -604,19 +626,6 @@ public class SuiteRunListener extends RunListener {
 `ExecutionListenerRunnerTest`  
 Attach a custom `RunListener` (via `ExecutionListenerRunner`) to observe test lifecycle events:
 test started, finished, failed, assumed, ignored.
-
-### 14. HTML Report Generation
-
-```bash
-# Maven
-./mvnw clean site
-
-# Gradle
-./gradlew clean test
-```
-
-Maven writes the report to `target/site/surefire-report.html`; Gradle writes it to
-`build/reports/tests/test/index.html` automatically as part of the standard `test` task.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
