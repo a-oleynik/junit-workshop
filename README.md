@@ -766,8 +766,8 @@ This project uses **GitHub Actions** with a manually triggered workflow.
 
 Triggered manually from **Actions → Run workflow** on GitHub.
 
-| Input    | Required | Description                                                                                                                                                              |
-|----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Input    | Required | Description                                                                                                                                                                     |
+|----------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `groups` | No       | Category filter for the by-category job (fully-qualified class name, e.g. `com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests`). Leave empty to skip that job. |
 
 ### Jobs
