@@ -33,8 +33,8 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 - [Prerequisites](#-prerequisites)
 - [Supported Versions](#-supported-versions)
 - [Feature Map](#-feature-map)
-- [Learning Path — Beginners](#-learning-path--beginners)
-- [Advanced Topics — Path for Senior Engineers](#-advanced-topics--path-for-senior-engineers)
+- [Beginner Learning Path](#-beginner-learning-path)
+- [Advanced Learning Path](#-advanced-learning-path)
 - [Command Examples](#-command-examples)
 - [CI / CD](#-ci--cd)
 - [AI Assistant Support](#-ai-assistant-support)
@@ -228,36 +228,45 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 
 ---
 
-## 🌱 Learning Path — Beginners
+## 🌱 Beginner Learning Path
 
 Work through these topics in order; each builds on the previous one.
 
-1. **Basic assertions** → `AssertTest`  
-   Learn `assertEquals`, `assertTrue`, `assertNull`, and `fail`.
+### 1. Basic assertions
+`AssertTest`  
+Learn `assertEquals`, `assertTrue`, `assertNull`, and `fail`.
 
-2. **Test lifecycle** → `FixturesTest`  
-   Understand `@Before`, `@After`, `@BeforeClass`, `@AfterClass`.
+### 2. Test lifecycle
+`FixturesTest`  
+Understand `@Before`, `@After`, `@BeforeClass`, `@AfterClass`.
 
-3. **Exception testing** → `ExceptionTest`  
-   Use `@Test(expected=…)` and the modern `assertThrows` (available since JUnit 4.13).
+### 3. Exception testing
+`ExceptionTest`  
+Use `@Test(expected=…)` and the modern `assertThrows` (available since JUnit 4.13).
 
-4. **Ignoring tests** → `IgnoringTest`  
-   Skip tests cleanly with `@Ignore` and understand the difference from failing tests.
+### 4. Ignoring tests
+`IgnoringTest`  
+Skip tests cleanly with `@Ignore` and understand the difference from failing tests.
 
-5. **Soft assertions** → `SoftAssertErrorCollectorTest`  
-   Use `ErrorCollector` rule so multiple failures are collected before reporting.
+### 5. Soft assertions
+`SoftAssertErrorCollectorTest`  
+Use `ErrorCollector` rule so multiple failures are collected before reporting.
 
-6. **Assumptions** → `AssumeTest`  
-   Skip tests dynamically when preconditions are not met.
+### 6. Assumptions
+`AssumeTest`
+Skip tests dynamically when preconditions are not met.
 
-7. **Parameterized tests** → `ParameterizationTest`  
-   Drive one test method with many data rows using `@RunWith(Parameterized.class)`.
+### 7. Parameterized tests
+`ParameterizationTest`  
+Drive one test method with many data rows using `@RunWith(Parameterized.class)`.
 
-8. **Nested tests** → `NestedTest`  
-   Organise related scenarios using inner context classes with `HierarchicalContextRunner`.
+### 8. Nested tests
+`NestedTest`  
+Organise related scenarios using inner context classes with `HierarchicalContextRunner`.
 
-9. **Categories** → `CategoriesTest`  
-   Mark tests as `SmokeTests` or `RegressionTests` and run subsets from the command line.
+### 9. Categories
+`CategoriesTest`  
+Mark tests as `SmokeTests` or `RegressionTests` and run subsets from the command line.
 
 **Run the whole beginner suite:**
 
@@ -273,7 +282,7 @@ Work through these topics in order; each builds on the previous one.
 
 ---
 
-## 🎯 Advanced Topics — Path for Senior Engineers
+## 🎯 Advanced Learning Path
 
 These topics assume familiarity with JUnit 4 basics.
 
