@@ -40,8 +40,8 @@ For Appendix A, use [Quick Start](README.md#-quick-start), [pom.xml](pom.xml), a
 [build.gradle](build.gradle). For Appendix B, return to the parallel configuration
 in those build files and the [parallel execution notes](README.md#9-parallel-execution).
 
-This route follows the article. The broader [Learning Path — Beginners](README.md#-learning-path--beginners)
-remains available for the workshop, including `@Nested`. Explore Hamcrest and AssertJ separately in [Advanced Topics — Path for Senior Engineers](README.md#-advanced-topics--path-for-senior-engineers).
+This route follows the article. The broader [Beginner Learning Path](README.md#-beginner-learning-path)
+remains available for the workshop, including `@Nested`. Explore Hamcrest and AssertJ separately in [Advanced Learning Path](README.md#-advanced-learning-path).
 
 ## Reporting
 
@@ -173,7 +173,7 @@ selected classes.
 
 Expect eight successful test invocations: three regular tests and five parameterized
 invocations. For individual JUnit features, continue with the [Feature Map](README.md#-feature-map)
-and the [beginner learning path](README.md#-learning-path--beginners).
+and the [beginner learning path](README.md#-beginner-learning-path).
 
 [⬆ Back to Table of Contents](README.md#-table-of-contents)
 
