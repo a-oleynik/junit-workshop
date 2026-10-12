@@ -26,7 +26,7 @@ handling together.
 | 9.1. Exceptions                         | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [ExceptionTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/ExceptionTest.java)                               | Use `assertThrows`, starting with division by zero.                                                                           |
 | 9.2. Timeouts                           | [TimeoutTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/TimeoutTest.java)                                                                                                                                            | Explore `assertTimeout` and `@Timeout`.                                                                                       |
 | 10. Execution order                     | [ExecutionOrderWithTest](src/test/java/com/oleynik/qa/workshop/junit/topics/order/ExecutionOrderWithTest.java)                                                                                                                        | Inspect `@TestMethodOrder` and `@Order`; keep independent tests as the default design.                                        |
-| 11. Parallel execution                  | [pom.xml](pom.xml) / [build.gradle](build.gradle) / [parallel execution notes](README.md#8-parallel-execution)                                                                                                                        | Find `junit.jupiter.execution.parallel.*`; this workshop already enables concurrent execution.                                |
+| 11. Parallel execution                  | [pom.xml](pom.xml) / [build.gradle](build.gradle) / [parallel execution notes](README.md#9-parallel-execution)                                                                                                                        | Find `junit.jupiter.execution.parallel.*`; this workshop already enables concurrent execution.                                |
 | 12. Running JUnit with build tools      | [Quick Start](README.md#-quick-start) / [Command Examples](README.md#-command-examples)                                                                                                                                               | Run classes, methods, or tags with your chosen build tool; inspect how the build discovers tests.                             |
 | 13. Extensions                          | [DBResourceExtensionTest](src/test/java/com/oleynik/qa/workshop/junit/topics/extensions/DBResourceExtensionTest.java) / [DBResourceExtension](src/main/java/com/oleynik/qa/workshop/junit/topics/extensions/DBResourceExtension.java) | Explore reusable callbacks through the workshop's resource example registered with `@RegisterExtension`.                      |
 | 14. Recap: JUnit and xUnit              | Revisit the Calculator walkthrough below and the mapping above                                                                                                                                                                        | Explain which responsibilities belong to your test code and which belong to the framework.                                    |
@@ -37,10 +37,10 @@ callbacks and `@RegisterExtension`; it is a related example, not a copy of that 
 
 For Appendix A, use [Quick Start](README.md#-quick-start), [pom.xml](pom.xml), and
 [build.gradle](build.gradle). For Appendix B, return to the parallel configuration
-in those build files and the [parallel execution notes](README.md#8-parallel-execution).
+in those build files and the [parallel execution notes](README.md#9-parallel-execution).
 
 This route follows the article. The broader [Learning Path — Beginners](README.md#-learning-path--beginners)
-remains available for the workshop, including `@Nested`. Explore Hamcrest and AssertJ separately in [Advanced Topics — Path for Senior Engineers](#-advanced-topics--path-for-senior-engineers).
+remains available for the workshop, including `@Nested`. Explore Hamcrest and AssertJ separately in [Advanced Topics — Path for Senior Engineers](README.md#-advanced-topics--path-for-senior-engineers).
 
 ## Reporting
 
