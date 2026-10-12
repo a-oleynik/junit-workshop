@@ -34,8 +34,8 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 - [Prerequisites](#-prerequisites)
 - [Supported Versions](#-supported-versions)
 - [Feature Map](#-feature-map)
-- [Learning Path — Beginners](#-learning-path--beginners)
-- [Advanced Topics — Path for Senior Engineers](#-advanced-topics--path-for-senior-engineers)
+- [Beginner Learning Path](#-beginner-learning-path)
+- [Advanced Learning Path](#-advanced-learning-path)
 - [Command Examples](#-command-examples)
 - [CI / CD](#-ci--cd)
 - [AI Assistant Support](#-ai-assistant-support)
@@ -223,37 +223,55 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 
 ---
 
-## 🌱 Learning Path — Beginners
+## 🌱 Beginner Learning Path
 
 Work through these topics in order; each builds on the previous one.
 
-1. **Basic assertions** → `AssertTest`  
-   Learn `assertEquals`, `assertTrue`, `assertNull`, `assertAll`, and `fail`.
+### 1. Basic assertions
 
-2. **Test lifecycle** → `FixturesTest`  
-   Understand `@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`.
+`AssertTest`  
+Learn `assertEquals`, `assertTrue`, `assertNull`, `assertAll`, and `fail`.
 
-3. **Exception testing** → `ExceptionTest`  
-   Use `assertThrows` to assert that code throws the right exception.
+### 2. Test lifecycle
 
-4. **Disabling & display names** → `DisabledTest`, `DisplayNameTest`, `DisplayNameGenerationTest`  
-   Skip tests cleanly and make reports human-readable.  
-   `DisplayNameGenerationTest` demonstrates class-level name generators with `@DisplayNameGeneration`.
+`FixturesTest`  
+Understand `@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`.
 
-5. **Grouped assertions** → `AssertAllTest`  
-   Use `assertAll` so multiple failures are reported together.
+### 3. Exception testing
 
-6. **Assumptions** → `AssumptionsTest`  
-   Skip tests dynamically when preconditions aren't met.
+`ExceptionTest`  
+Use `assertThrows` to assert that code throws the right exception.
 
-7. **Parameterized tests** → `ValueSourceTest`, `ParameterizationTest`  
-   Drive one test method with many data rows.
+### 4. Disabling & display names
 
-8. **Nested tests** → `NestedTest`  
-   Organise related scenarios using inner `@Nested` classes.
+`DisabledTest`, `DisplayNameTest`, `DisplayNameGenerationTest`  
+Skip tests cleanly and make reports human-readable.  
+`DisplayNameGenerationTest` demonstrates class-level name generators with `@DisplayNameGeneration`.
 
-9. **Tagging** → `TagsTest`  
-   Mark tests as `Smoke` or `Regression` and run subsets from the command line.
+### 5. Grouped assertions
+
+`AssertAllTest`  
+Use `assertAll` so multiple failures are reported together.
+
+### 6. Assumptions
+
+`AssumptionsTest`  
+Skip tests dynamically when preconditions aren't met.
+
+### 7. Parameterized tests
+
+`ValueSourceTest`, `ParameterizationTest`  
+Drive one test method with many data rows.
+
+### 8. Nested tests
+
+`NestedTest`  
+Organise related scenarios using inner `@Nested` classes.
+
+### 9. Tagging
+
+`TagsTest`  
+Mark tests as `Smoke` or `Regression` and run subsets from the command line.
 
 **Run the whole beginner suite:**
 
@@ -269,7 +287,7 @@ Work through these topics in order; each builds on the previous one.
 
 ---
 
-## 🎯 Advanced Topics — Path for Senior Engineers
+## 🎯 Advanced Learning Path
 
 These topics assume familiarity with JUnit 5+ basics.
 
