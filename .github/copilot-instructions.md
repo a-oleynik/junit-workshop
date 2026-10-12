@@ -90,7 +90,7 @@ src/
 ## CI / CD
 - Workflow file: `.github/workflows/maven.yml`
 - Triggered **manually only** via `workflow_dispatch` (Actions → Run workflow on GitHub)
-- Input: `groups` (optional) — tag filter for the by-tag job (e.g. `Smoke`, `Regression`)
+- Input: `groups` (optional) — tag filter for the by-tag job (e.g. `smoke`, `regression`)
 - Two jobs:
   - `regression` — always runs all tests: `./mvnw -B clean site`
   - `by-tag` — runs only when `groups` is provided: `./mvnw -B clean site -Dgroups={groups}`
@@ -101,8 +101,8 @@ src/
 ```bash
 mvn clean test                          # run all tests
 mvn clean test -Dtest=AssertTest        # run one class
-mvn clean test -Dgroups=Smoke           # run by tag
-mvn clean test -P Smoke                 # run via Maven profile (Smoke or Regression)
+mvn clean test -Dgroups=smoke           # run by tag
+mvn clean test -P smoke                 # run via Maven profile (smoke or regression)
 mvn clean surefire-report:report        # generate HTML report
 mvn clean site                          # full Maven site
 ```

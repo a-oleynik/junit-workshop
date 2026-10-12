@@ -108,8 +108,8 @@ Parallel execution is enabled globally in `pom.xml` and `build.gradle`. For test
 ```bash
 mvn clean test                          # all tests
 mvn clean test -Dtest=ClassName         # single class
-mvn clean test -Dgroups=Smoke           # by tag
-mvn clean test -P Smoke                 # by Maven profile (Smoke or Regression)
+mvn clean test -Dgroups=smoke           # by tag
+mvn clean test -P smoke                 # by Maven profile (smoke or regression)
 mvn clean surefire-report:report        # HTML report (target/reports/surefire.html)
 mvn clean site                          # full Maven site
 ```
@@ -118,7 +118,7 @@ mvn clean site                          # full Maven site
 ```bash
 gradle clean test                       # all tests (generates HTML report in build/reports/tests/test/index.html)
 gradle clean test --tests "*ClassName"  # single class
-gradle clean test -DincludeTags=Smoke   # by tag
+gradle clean test -DincludeTags=smoke   # by tag
 gradle clean smokeTest                  # dedicated Gradle task (smokeTest / regressionTest)
 ```
 

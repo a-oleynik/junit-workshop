@@ -271,7 +271,7 @@ Organise related scenarios using inner `@Nested` classes.
 ### 9. Tagging
 
 `TagsTest`  
-Mark tests as `Smoke` or `Regression` and run subsets from the command line.
+Mark tests as `smoke` or `regression` and run subsets from the command line.
 
 **Run the whole beginner suite:**
 
@@ -384,22 +384,22 @@ void test_that_uses_shared_resource() { ... }
 
 ### 10. Tag-based filtering
 
-Tags used in this project are `Smoke` and `Regression` (defined in `Tags.java`; also available as meta-annotations `@Smoke` and `@Regression`).
+Tags used in this project are `smoke` and `regression` (defined in `Tags.java`; also available as meta-annotations `@Smoke` and `@Regression`).
 
 **Direct tag filtering (works out of the box):**
 
 ```bash
-# Run only Smoke tests
-./mvnw clean test -Dgroups=Smoke
-./gradlew clean test -DincludeTags=Smoke
+# Run only smoke tests
+./mvnw clean test -Dgroups=smoke
+./gradlew clean test -DincludeTags=smoke
 
-# Run only Regression tests
-./mvnw clean test -Dgroups=Regression
-./gradlew clean test -DincludeTags=Regression
+# Run only regression tests
+./mvnw clean test -Dgroups=regression
+./gradlew clean test -DincludeTags=regression
 
 # Run both tags
-./mvnw clean test -Dgroups=Smoke,Regression
-./gradlew clean test -DincludeTags=Smoke,Regression
+./mvnw clean test -Dgroups=smoke,regression
+./gradlew clean test -DincludeTags=smoke,regression
 ```
 
 Gradle also supports `-DexcludeTags=TagName`; both properties may be supplied together.
@@ -407,15 +407,17 @@ Gradle also supports `-DexcludeTags=TagName`; both properties may be supplied to
 **Via Maven profiles or dedicated Gradle tasks:**
 
 ```bash
-./mvnw clean test -P Smoke
+./mvnw clean test -P smoke
 ./gradlew clean smokeTest
 
-./mvnw clean test -P Regression
+./mvnw clean test -P regression
 ./gradlew clean regressionTest
 ```
 
 > Each Maven profile or Gradle task activates the matching tag filter and automatically
 > excludes `@Suite` classes, which have no tagged members and would otherwise fail with `NoTestsDiscoveredException`.
+> Profile IDs intentionally match the `@Tag` values — `smoke` and `regression` — so the naming is consistent
+> throughout the project.
 
 ### 11. Suite Lifecycle (`@BeforeSuite` / `@AfterSuite`)
 
@@ -591,17 +593,17 @@ public class SuiteExtensionFirstTest {
 ### Run tests by tag
 
 ```bash
-./mvnw clean test -Dgroups=Regression,Smoke
-./gradlew clean test -DincludeTags=Regression,Smoke
+./mvnw clean test -Dgroups=regression,smoke
+./gradlew clean test -DincludeTags=regression,smoke
 ```
 
 ### Run tests via Maven profile or dedicated Gradle task
 
 ```bash
-./mvnw clean test -P Smoke
+./mvnw clean test -P smoke
 ./gradlew clean smokeTest
 
-./mvnw clean test -P Regression
+./mvnw clean test -P regression
 ./gradlew clean regressionTest
 ```
 
@@ -671,7 +673,7 @@ Triggered manually from **Actions → Run workflow** on GitHub.
 
 | Input    | Required | Description                                                                               |
 |----------|----------|-------------------------------------------------------------------------------------------|
-| `groups` | No       | Tag filter for the by-tag job (e.g. `Smoke`, `Regression`). Leave empty to skip that job. |
+| `groups` | No       | Tag filter for the by-tag job (e.g. `smoke`, `regression`). Leave empty to skip that job. |
 
 ### Jobs
 
@@ -695,7 +697,7 @@ Each job uploads two artifacts after completion — including on failure (`if: a
 1. Go to the **Actions** tab on GitHub
 2. Select **Java CI with Maven** in the left panel
 3. Click **Run workflow**
-4. Optionally fill in the **`groups`** field (e.g. `Smoke`) to also run the by-tag job
+4. Optionally fill in the **`groups`** field (e.g. `smoke`) to also run the by-tag job
 5. Click **Run workflow**
 
 ### Downloading the reports
@@ -712,11 +714,11 @@ Each job uploads two artifacts after completion — including on failure (`if: a
 ./gradlew clean test
 
 # By tag
-./mvnw clean site -Dgroups=Smoke
-./gradlew clean test -DincludeTags=Smoke
+./mvnw clean site -Dgroups=smoke
+./gradlew clean test -DincludeTags=smoke
 
-./mvnw clean site -Dgroups=Regression
-./gradlew clean test -DincludeTags=Regression
+./mvnw clean site -Dgroups=regression
+./gradlew clean test -DincludeTags=regression
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)

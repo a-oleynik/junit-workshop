@@ -136,10 +136,10 @@ article example.
 
 For the workshop's advanced approach, see
 [TagsTest](src/test/java/com/oleynik/qa/workshop/junit/topics/grouping/TagsTest.java):
-it uses constants and custom meta-annotations `@Smoke` / `@Regression` with the
-existing `Smoke` / `Regression` values. Tag values are case-sensitive, so the
-article's `smoke` and the workshop's `Smoke` are separate tags. Existing workshop
-profiles and tasks continue to use their original values.
+it uses constants and custom meta-annotations `@Smoke` / `@Regression` for the
+same lowercase `smoke` / `regression` tags. Maven profiles `smoke` / `regression`
+and Gradle tasks `smokeTest` / `regressionTest` select these tags across the
+workshop, including the Calculator example.
 
 <a id="calculator-walkthrough"></a>
 

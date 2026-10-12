@@ -193,14 +193,14 @@
     </build>
     <profiles>
         <profile>
-            <id>Smoke</id>
+            <id>smoke</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <groups>Smoke</groups>
+                            <groups>smoke</groups>
                             <excludes>
                                 <exclude>**/*Suite.java</exclude>
                             </excludes>
@@ -210,14 +210,14 @@
             </build>
         </profile>
         <profile>
-            <id>Regression</id>
+            <id>regression</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
                         <configuration>
-                            <groups>Regression</groups>
+                            <groups>regression</groups>
                             <excludes>
                                 <exclude>**/*Suite.java</exclude>
                             </excludes>

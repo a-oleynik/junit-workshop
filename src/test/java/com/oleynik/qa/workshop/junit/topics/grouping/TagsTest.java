@@ -25,8 +25,8 @@ public class TagsTest {
         Assertions.assertEquals(2.0, 10 / 5.0, 0);
     }
 
-    @Tag("Smoke")
-    @Tag("Regression")
+    @Tag("smoke")
+    @Tag("regression")
     @Test
     void tags_boolean_test() {
         boolean variable = true;

@@ -123,5 +123,5 @@ def registerTaggedTest = { String taskName, String tag ->
     }
 }
 
-registerTaggedTest('smokeTest', 'Smoke')
-registerTaggedTest('regressionTest', 'Regression')
+registerTaggedTest('smokeTest', 'smoke')
+registerTaggedTest('regressionTest', 'regression')
