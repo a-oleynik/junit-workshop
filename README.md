@@ -372,17 +372,16 @@ or Gradle:
 junit.jupiter.execution.parallel.enabled=true
 junit.jupiter.execution.parallel.mode.default=concurrent
 junit.jupiter.execution.parallel.config.strategy=dynamic
-junit.jupiter.execution.parallel.config.executor-service=worker_thread_pool
 ```
 
-The same four settings are also provided as commented alternatives in
+The same three settings are also provided as commented alternatives in
 [`pom.xml`](pom.xml) (Surefire's `configurationParameters`) and
 [`build.gradle`](build.gradle) (`testTask.systemProperty` calls).
 To configure parallel execution through your build tool, uncomment its example
 block. Those values override matching settings in `junit-platform.properties`
 for that build tool's runs; direct IDE runs continue to use the properties file
 unless the IDE supplies its own overrides. Keep the build-tool examples commented
-when using the shared defaults. See [JUnit configuration precedence](https://docs.junit.org/6.1.3/running-tests/configuration-parameters.html).
+when using the shared defaults. See [JUnit configuration precedence](https://docs.junit.org/5.14.4/running-tests/configuration-parameters.html).
 
 Tests run concurrently by default. Use `@ResourceLock` or `@Execution(SAME_THREAD)` to serialise where needed.
 
