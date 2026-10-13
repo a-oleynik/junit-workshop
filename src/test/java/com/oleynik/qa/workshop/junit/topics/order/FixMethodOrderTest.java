@@ -7,6 +7,12 @@ import org.junit.runners.MethodSorters;
 
 import static java.lang.String.format;
 
+/**
+ * Demonstration only.
+ *
+ * <p>Do not use ordering to create dependencies between otherwise independent tests.
+ * Each test should prepare its own fixture and pass when run on its own.
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FixMethodOrderTest {
     @Test

@@ -400,6 +400,10 @@ Both tests should pass.
 `ExecutionOrderWithTest` — `@OrderWith(Alphanumeric.class)` (JUnit 4.13+)  
 Two ways to control method execution order in JUnit 4.
 
+This is a demonstration of the ordering API. Keep tests independent: do not use
+ordering to make one test depend on state or results produced by another.
+Each test should prepare its own fixture and pass when run on its own.
+
 ### 9. Retry Strategies
 
 `RetryRunnerTest` — `@RunWith(RetryRunner.class)` + `@RetryConfiguration(maxTries=…)` (custom runner)  
