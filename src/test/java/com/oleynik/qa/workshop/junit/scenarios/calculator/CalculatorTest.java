@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 class CalculatorTest {
 
@@ -26,6 +27,13 @@ class CalculatorTest {
     @Tag("regression")
     void shouldAddZero() {
         assertEquals(5, calculator.add(0, 5));
+    }
+
+    @Test
+    void shouldAddWhenExternalServiceIsConfigured() {
+        assumeTrue(System.getenv("EXTERNAL_SERVICE_URL") != null);
+
+        assertEquals(5, calculator.add(2, 3));
     }
 
     @Test

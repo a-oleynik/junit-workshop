@@ -6,8 +6,8 @@ Companion learning path for **JUnit 6 с нуля: что делает тест�
 
 The article uses Calculator as its running example. The mapping below connects
 each chapter to the corresponding workshop files. Revisit `CalculatorTest` as you
-read: it contains the completed example with assertions, lifecycle, and exception
-handling together.
+read: it contains the completed example with assertions, lifecycle, tags,
+assumptions, and exception handling together.
 
 ## Article-to-code mapping
 
@@ -23,7 +23,7 @@ handling together.
 | 7. Parameterized tests                  | [CalculatorParameterizedTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java)                                                                                                      | Run one addition scenario with the five `@CsvSource` rows.                                                                    |
 | 8.1. Tags                               | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [article tag commands](#tags)                                                                                                | Select tests with plain lowercase `@Tag("smoke")` and `@Tag("regression")`, as in the article.                                |
 | 8.2. Disabled tests                     | [DisabledTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/DisabledTest.java)                                                                                                                                          | Temporarily disable a test with `@Disabled`.                                                                                  |
-| 8.3. Assumptions                        | [AssumptionsTest](src/test/java/com/oleynik/qa/workshop/junit/topics/conditional/AssumptionsTest.java)                                                                                                                                | Execute a test only when its preconditions hold.                                                                              |
+| 8.3. Assumptions                        | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [assumptions example](#assumptions)                                                                                          | Check a runtime precondition with `assumeTrue()` before an assertion.                                                         |
 | 9.1. Exceptions                         | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [ExceptionTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/ExceptionTest.java)                               | Use `assertThrows`, starting with division by zero.                                                                           |
 | 9.2. Timeouts                           | [TimeoutTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/TimeoutTest.java)                                                                                                                                            | Explore `assertTimeout` and `@Timeout`.                                                                                       |
 | 10. Execution order                     | [ExecutionOrderWithTest](src/test/java/com/oleynik/qa/workshop/junit/topics/order/ExecutionOrderWithTest.java)                                                                                                                        | Inspect `@TestMethodOrder` and `@Order`; keep independent tests as the default design.                                        |
@@ -140,6 +140,36 @@ same lowercase `smoke` / `regression` tags. Maven profiles `smoke` / `regression
 and Gradle tasks `smokeTest` / `regressionTest` select these tags across the
 workshop, including the Calculator example.
 
+## Assumptions
+
+Chapter 8.3 starts with one runtime precondition. In
+[CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java):
+
+```java
+@Test
+void shouldAddWhenExternalServiceIsConfigured() {
+    assumeTrue(System.getenv("EXTERNAL_SERVICE_URL") != null);
+
+    assertEquals(5, calculator.add(2, 3));
+}
+```
+
+`assumeTrue` is imported from `org.junit.jupiter.api.Assumptions`. The environment
+check matches the article; the local Calculator assertion makes the example
+runnable without contacting an external service.
+
+When `EXTERNAL_SERVICE_URL` is absent, JUnit aborts this test before the assertion;
+build reports show it as skipped, not failed. When the variable is set, execution
+continues to the assertion. To try both outcomes, run `CalculatorTest` with the
+variable unset, then set it to an example value such as `https://example.invalid`
+and rerun. With Gradle, add `--rerun-tasks` after changing the environment so the
+test executes again even if its compiled sources are unchanged.
+
+Additional workshop examples:
+
+- [AssumptionsTest](src/test/java/com/oleynik/qa/workshop/junit/topics/conditional/AssumptionsTest.java) — assumptions in `@BeforeEach` and test methods, plus `assumingThat()`.
+- [AssumptionsBeforeAllTest](src/test/java/com/oleynik/qa/workshop/junit/topics/conditional/AssumptionsBeforeAllTest.java) — a more advanced example with an assumption in `@BeforeAll`.
+
 <a id="calculator-walkthrough"></a>
 
 ## Calculator walkthrough
@@ -229,8 +259,9 @@ Run these two test classes from the repository root:
 The Gradle HTML report at `build/reports/tests/test/index.html` now covers both
 selected classes.
 
-Expect eight successful test invocations: three regular tests and five parameterized
-invocations. For individual JUnit features, continue with the [Feature Map](README.md#-feature-map)
+Expect nine test invocations: four regular tests and five parameterized invocations.
+With `EXTERNAL_SERVICE_URL` unset, eight pass and the assumptions example is skipped.
+With it set, all nine pass. For individual JUnit features, continue with the [Feature Map](README.md#-feature-map)
 and the [beginner learning path](README.md#-beginner-learning-path).
 
 [⬆ Back to Table of Contents](README.md#-table-of-contents)
