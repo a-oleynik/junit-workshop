@@ -190,34 +190,35 @@ Gradle. Do not link both models at the same time: select one build system for th
 
 The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit/Main.java`; it uses the shared `Calculator` and leads into `CalculatorTest`.
 
-| Package / folder          | Feature demonstrated                                                                | Test class(es)                                                            |
-|---------------------------|-------------------------------------------------------------------------------------|---------------------------------------------------------------------------|
-| `topics/general`          | Basic assertions (`assertEquals`, `assertTrue`, `assertNull`, …)                    | `AssertTest`                                                              |
-| `topics/general`          | Exception testing (`assertThrows`)                                                  | `ExceptionTest`                                                           |
-| `topics/general`          | Test lifecycle (`@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`)             | `FixturesTest`                                                            |
-| `topics/general`          | Hamcrest matchers                                                                   | `HamcrestTest`                                                            |
-| `topics/general`          | Timeouts (`assertTimeout()`, `@Timeout`)                                            | `TimeoutTest`                                                             |
-| `topics/general`          | Disabling tests (`@Disabled`)                                                       | `DisabledTest`                                                            |
-| `topics/general`          | Display names & name generators                                                     | `DisplayNameTest`, `DisplayNameGenerationTest`                            |
-| `topics/asserts`          | Grouped / soft assertions (`assertAll`)                                             | `AssertAllTest`                                                           |
-| `topics/asserts`          | AssertJ soft assertions                                                             | `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`               |
-| `topics/asserts`          | JUnit 5+ soft assert pattern                                                        | `SoftAssertTest`                                                          |
-| `topics/conditional`      | Assumptions (`assumeTrue`, `assumeThat`)                                            | `AssumptionsTest`, `AssumptionsBeforeAllTest`                             |
-| `topics/ddt`              | Parameterized tests — `@MethodSource`                                               | `ParameterizationTest`                                                    |
-| `topics/ddt`              | Parameterized tests — `@ValueSource` / `@CsvSource`                                 | `ValueSourceTest`                                                         |
-| `topics/ddt`              | CSV file data source (`src/test/resources/numbers.csv`)                             | `CSVParameterizationTest`                                                 |
-| `topics/ddt`              | TNG DataProvider integration                                                        | `DataProviderTest`                                                        |
-| `topics/ddt`              | JUnit Pioneer Cartesian product                                                     | `PioneerCartesianProductTest`                                             |
-| `topics/nested`           | `@Nested` test classes                                                              | `NestedTest`                                                              |
-| `topics/grouping`         | Tagging with `@Tag` and custom tag annotations                                      | `TagsTest`                                                                |
-| `topics/order`            | Test execution ordering (`@TestMethodOrder`)                                        | `ExecutionOrderWithTest`                                                  |
-| `topics/extensions`       | Custom `Extension` (`@RegisterExtension`)                                           | `DBResourceExtensionTest`                                                 |
-| `topics/extensions`       | `TestWatcher` extension                                                             | `TestWatcherExtensionTest`                                                |
-| `topics/retry`            | Retry with JUnit Pioneer (`@RetryingTest`)                                          | `RetryPioneerTest`                                                        |
-| `topics/retry`            | Retry with Rerunner Jupiter                                                         | `RetryRerunnerTest`                                                       |
-| `topics/repeat`           | `@RepeatedTest`                                                                     | `RetryRepeatedTest`                                                       |
-| `topics/suites`           | Suite lifecycle (`@Suite`, `@BeforeSuite`, `@AfterSuite`, `@SelectClasses`)         | `BeforeAfterSuite`, `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase` |
-| `topics/suites/extension` | Suite-like global lifecycle via `BeforeAllCallback` + root `ExtensionContext` store | `SuiteExtensionFirstTest`, `SuiteExtensionSecondTest`                     |
+| Package / folder          | Feature demonstrated                                                                | Test class(es)                                                                                                   |
+|---------------------------|-------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
+| `topics/general`          | Basic assertions (`assertEquals`, `assertTrue`, `assertNull`, …)                    | `AssertTest`                                                                                                     |
+| `topics/general`          | Exception testing (`assertThrows`)                                                  | `ExceptionTest`                                                                                                  |
+| `topics/general`          | Test lifecycle (`@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`)             | `FixturesTest`                                                                                                   |
+| `topics/general`          | Hamcrest matchers                                                                   | `HamcrestTest`                                                                                                   |
+| `topics/general`          | Timeouts (`assertTimeout()`, `@Timeout`)                                            | `TimeoutTest`                                                                                                    |
+| `topics/general`          | Timeout thread modes and `ThreadLocal` context                                      | [`TimeoutThreadModeTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/TimeoutThreadModeTest.java) |
+| `topics/general`          | Disabling tests (`@Disabled`)                                                       | `DisabledTest`                                                                                                   |
+| `topics/general`          | Display names & name generators                                                     | `DisplayNameTest`, `DisplayNameGenerationTest`                                                                   |
+| `topics/asserts`          | Grouped / soft assertions (`assertAll`)                                             | `AssertAllTest`                                                                                                  |
+| `topics/asserts`          | AssertJ soft assertions                                                             | `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`                                                      |
+| `topics/asserts`          | JUnit 5+ soft assert pattern                                                        | `SoftAssertTest`                                                                                                 |
+| `topics/conditional`      | Assumptions (`assumeTrue`, `assumeThat`)                                            | `AssumptionsTest`, `AssumptionsBeforeAllTest`                                                                    |
+| `topics/ddt`              | Parameterized tests — `@MethodSource`                                               | `ParameterizationTest`                                                                                           |
+| `topics/ddt`              | Parameterized tests — `@ValueSource` / `@CsvSource`                                 | `ValueSourceTest`                                                                                                |
+| `topics/ddt`              | CSV file data source (`src/test/resources/numbers.csv`)                             | `CSVParameterizationTest`                                                                                        |
+| `topics/ddt`              | TNG DataProvider integration                                                        | `DataProviderTest`                                                                                               |
+| `topics/ddt`              | JUnit Pioneer Cartesian product                                                     | `PioneerCartesianProductTest`                                                                                    |
+| `topics/nested`           | `@Nested` test classes                                                              | `NestedTest`                                                                                                     |
+| `topics/grouping`         | Tagging with `@Tag` and custom tag annotations                                      | `TagsTest`                                                                                                       |
+| `topics/order`            | Test execution ordering (`@TestMethodOrder`)                                        | `ExecutionOrderWithTest`                                                                                         |
+| `topics/extensions`       | Custom `Extension` (`@RegisterExtension`)                                           | `DBResourceExtensionTest`                                                                                        |
+| `topics/extensions`       | `TestWatcher` extension                                                             | `TestWatcherExtensionTest`                                                                                       |
+| `topics/retry`            | Retry with JUnit Pioneer (`@RetryingTest`)                                          | `RetryPioneerTest`                                                                                               |
+| `topics/retry`            | Retry with Rerunner Jupiter                                                         | `RetryRerunnerTest`                                                                                              |
+| `topics/repeat`           | `@RepeatedTest`                                                                     | `RetryRepeatedTest`                                                                                              |
+| `topics/suites`           | Suite lifecycle (`@Suite`, `@BeforeSuite`, `@AfterSuite`, `@SelectClasses`)         | `BeforeAfterSuite`, `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase`                                        |
+| `topics/suites/extension` | Suite-like global lifecycle via `BeforeAllCallback` + root `ExtensionContext` store | `SuiteExtensionFirstTest`, `SuiteExtensionSecondTest`                                                            |
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -532,6 +533,57 @@ public class SuiteExtensionFirstTest {
 > are deprecated and replaced by identically-signatured `computeIfAbsent` methods — this example uses
 > `computeIfAbsent(K, Function, Class<V>)`.
 > On the JUnit 5 branch, use `getOrComputeIfAbsent(K, Function, Class<V>)` instead (same signature, different name).
+
+### 13. Timeout Thread Modes
+
+[`TimeoutThreadModeTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/TimeoutThreadModeTest.java)
+compares the two explicit thread modes of Jupiter's `@Timeout`:
+
+```java
+@Timeout(value = 2, threadMode = SAME_THREAD)
+// or
+@Timeout(value = 2, threadMode = SEPARATE_THREAD)
+```
+
+The example imports both constants from `org.junit.jupiter.api.Timeout.ThreadMode`.
+Each test method has its own two-second limit. Its `@BeforeEach` and `@AfterEach`
+methods are outside that limit; they can be given their own `@Timeout` annotations.
+A class-level `@Timeout` likewise applies to each test method, not automatically
+to lifecycle methods. This differs from the JUnit 4 `Timeout` rule example,
+where the limit includes setup and cleanup.
+
+`@BeforeEach` records its thread and sets an ordinary `ThreadLocal` value.
+The tests assert the following behavior:
+
+| Mode              | Test thread                       | Value prepared in `@BeforeEach` |
+|-------------------|-----------------------------------|---------------------------------|
+| `SAME_THREAD`     | Same as the fixture thread        | Available                       |
+| `SEPARATE_THREAD` | Different from the fixture thread | Absent                          |
+
+`@AfterEach` verifies that it runs on the original fixture thread with the original
+value, then removes that value in a `finally` block. The separate-thread test
+also removes its own thread-local entry. Each test has its own instance and
+context, so these examples work with the workshop's parallel execution enabled.
+
+Compare with [`TimeoutTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/TimeoutTest.java):
+`assertTimeout()` runs its block on the calling thread and checks elapsed time
+after completion. `@Timeout` with `SAME_THREAD` interrupts the executing thread
+if its limit is exceeded. `SEPARATE_THREAD` demonstrates the context boundary
+that also matters with `assertTimeoutPreemptively()`, for example when transaction
+state is stored in a `ThreadLocal`. The tests verify the difference without
+intentionally timing out. See the [JUnit timeout documentation](https://docs.junit.org/6.1.3/writing-tests/timeouts.html).
+
+Run this example with your chosen build tool:
+
+```bash
+# Maven
+./mvnw test -Dtest=TimeoutThreadModeTest
+
+# Gradle
+./gradlew test --tests "*TimeoutThreadModeTest"
+```
+
+Both tests should pass.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
