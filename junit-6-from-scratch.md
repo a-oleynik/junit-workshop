@@ -39,7 +39,7 @@ callbacks and `@RegisterExtension`; it is a related example, not a copy of that 
 
 For Appendix A, use [Quick Start](README.md#-quick-start), [pom.xml](pom.xml), and
 [build.gradle](build.gradle). For Appendix B, return to [junit-platform.properties](src/test/resources/junit-platform.properties),
-the parallel configuration in those build files, and the [parallel execution notes](README.md#9-parallel-execution).
+the commented alternative configuration in those build files, and the [parallel execution notes](README.md#9-parallel-execution).
 
 This route follows the article. The broader [Beginner Learning Path](README.md#-beginner-learning-path)
 remains available for the workshop, including `@Nested`. Explore Hamcrest and AssertJ separately in [Advanced Learning Path](README.md#-advanced-learning-path).

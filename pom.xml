@@ -173,10 +173,15 @@
                     </includes>
                     <!--<groups>${testcase.groups}</groups>-->
                     <properties>
+                        <!-- Parallel execution defaults are in src/test/resources/junit-platform.properties.
+                             Uncomment this alternative to override them for Maven runs.
                         <configurationParameters>
                             junit.jupiter.execution.parallel.enabled=true
                             junit.jupiter.execution.parallel.mode.default=concurrent
+                            junit.jupiter.execution.parallel.config.strategy=dynamic
+                            junit.jupiter.execution.parallel.config.executor-service=worker_thread_pool
                         </configurationParameters>
+                        -->
                         <!--                        <property>
                                                     <name>listener</name>
                                                     <value>ExampleListener</value>

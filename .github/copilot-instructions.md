@@ -79,7 +79,7 @@ src/
 - Use **Hamcrest** (`assertThat` + matchers) only in `HamcrestTest` or where matcher-based style is explicitly being demonstrated.
 - Use `assertThrows` (JUnit Jupiter) for exception testing — never `@Test(expected = ...)` (that is JUnit 4 style).
 - Use `@Timeout` annotation for time-bound tests — not `assertTimeout` lambda style, unless demonstrating that specific API.
-- Parallel execution is enabled globally via `src/test/resources/junit-platform.properties` and build configuration. Mark tests that must not run concurrently with `@Execution(ExecutionMode.SAME_THREAD)` or `@ResourceLock`.
+- Parallel execution is enabled globally via `src/test/resources/junit-platform.properties`; build files contain commented alternatives. Mark tests that must not run concurrently with `@Execution(ExecutionMode.SAME_THREAD)` or `@ResourceLock`.
 - Keep test method names in `snake_case` (e.g. `assert_equals_multiplication_test`) — this is the established style throughout the project.
 - Do **not** use JUnit 4 annotations (`@org.junit.Test`, `@RunWith`, `@Rule`) in JUnit 5/6 test classes.
 

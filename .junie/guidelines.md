@@ -81,7 +81,7 @@ src/
 - Do **not** use JUnit 4 annotations (`@org.junit.Test`, `@RunWith`, `@Rule`) in JUnit 5/6 classes
 
 ## Parallel execution
-Parallel execution is enabled globally in `src/test/resources/junit-platform.properties`, `pom.xml`, and `build.gradle`. For tests that must not run concurrently, annotate with:
+Parallel execution is enabled globally in `src/test/resources/junit-platform.properties`; `pom.xml` and `build.gradle` contain commented alternatives. For tests that must not run concurrently, annotate with:
 ```java
 @Execution(ExecutionMode.SAME_THREAD)   // serialize the whole class
 @ResourceLock("resource-name")          // mutual exclusion on a named resource
