@@ -212,6 +212,7 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 | `topics/nested`           | `@Nested` test classes                                                              | `NestedTest`                                                                                                     |
 | `topics/grouping`         | Tagging with `@Tag` and custom tag annotations                                      | `TagsTest`                                                                                                       |
 | `topics/order`            | Test execution ordering (`@TestMethodOrder`)                                        | `ExecutionOrderWithTest`                                                                                         |
+| `topics/extensions/basic` | First extension (`BeforeEachCallback`, `@ExtendWith`)                               | `LoggingExtensionTest`                                                                                           |
 | `topics/extensions`       | Custom `Extension` (`@RegisterExtension`)                                           | `DBResourceExtensionTest`                                                                                        |
 | `topics/extensions`       | `TestWatcher` extension                                                             | `TestWatcherExtensionTest`                                                                                       |
 | `topics/retry`            | Retry with JUnit Pioneer (`@RetryingTest`)                                          | `RetryPioneerTest`                                                                                               |
@@ -342,9 +343,18 @@ matchers in ordinary `org.junit.jupiter.api.Test` methods.
 
 ### 6. Custom JUnit 5+ Extensions
 
-`DBResourceExtensionTest`, `TestWatcherExtensionTest`  
-Implement `BeforeAllCallback`, `AfterAllCallback`, and `TestWatcher` to manage external resources and observe test
-outcomes.
+**First extension:** [`LoggingExtensionTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/extensions/basic/LoggingExtensionTest.java)
+registers [`LoggingExtension`](src/main/java/com/oleynik/qa/workshop/junit/topics/extensions/basic/LoggingExtension.java)
+with `@ExtendWith`. Its `BeforeEachCallback` prints the test's display name before
+the test body. Run the example and observe `Starting test: adds_two_numbers()`
+followed by `Running the test body`.
+
+**Advanced extensions:**
+[`DBResourceExtensionTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/extensions/DBResourceExtensionTest.java)
+uses `@RegisterExtension` with `BeforeTestExecutionCallback` and
+`AfterTestExecutionCallback` to connect and disconnect a resource around the test method.
+[`TestWatcherExtensionTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/extensions/TestWatcherExtensionTest.java)
+uses `TestWatcher` to observe outcomes and `AfterAllCallback` to print a summary.
 
 ### 7. Test Execution Order
 
@@ -840,6 +850,7 @@ src/
 │       ├── annotations/         # Custom annotation types and helpers
 │       ├── dataproviders/       # ArgumentsProvider / DataProvider implementations
 │       ├── extensions/          # DBResourceExtension, TestWatcherExtension, SuiteLikeLifecycleExtension
+│       │   └── basic/           # LoggingExtension: first BeforeEachCallback example
 │       ├── model/               # Shared domain model (User, MyDoubleWrapper, MyServer)
 │       ├── Factorial.java       # Example production class for parameterized tests
 │       ├── PrimeNumber.java
@@ -860,6 +871,7 @@ src/
     │       │   └── tags/        # Tags constants, @Smoke and @Regression
     │       ├── order/           # @TestMethodOrder and @Order
     │       ├── extensions/      # Tests exercising custom extensions
+    │       │   └── basic/       # LoggingExtensionTest: registration with @ExtendWith
     │       ├── retry/           # @RetryingTest (Pioneer), @RepeatedIfExceptionsTest (Rerunner)
     │       ├── repeat/          # @RepeatedTest
     │       └── suites/          # @Suite, @BeforeSuite, @AfterSuite

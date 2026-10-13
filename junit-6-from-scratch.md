@@ -30,12 +30,13 @@ assumptions, and exception handling together.
 | 10. Execution order                     | [ExecutionOrderWithTest](src/test/java/com/oleynik/qa/workshop/junit/topics/order/ExecutionOrderWithTest.java)                                                                                                                        | Inspect `@TestMethodOrder` and `@Order`; keep independent tests as the default design.                                        |
 | 11. Parallel execution                  | [junit-platform.properties](src/test/resources/junit-platform.properties) / [pom.xml](pom.xml) / [build.gradle](build.gradle) / [parallel execution notes](README.md#9-parallel-execution)                                            | Find `junit.jupiter.execution.parallel.*` in `junit-platform.properties`; this workshop enables concurrent execution.         |
 | 12. Running JUnit with build tools      | [Quick Start](README.md#-quick-start) / [Command Examples](README.md#-command-examples)                                                                                                                                               | Run classes, methods, or tags with your chosen build tool; inspect how the build discovers tests.                             |
-| 13. Extensions                          | [DBResourceExtensionTest](src/test/java/com/oleynik/qa/workshop/junit/topics/extensions/DBResourceExtensionTest.java) / [DBResourceExtension](src/main/java/com/oleynik/qa/workshop/junit/topics/extensions/DBResourceExtension.java) | Explore reusable callbacks through the workshop's resource example registered with `@RegisterExtension`.                      |
+| 13. Extensions                          | [LoggingExtensionTest](src/test/java/com/oleynik/qa/workshop/junit/topics/extensions/basic/LoggingExtensionTest.java) / [LoggingExtension](src/main/java/com/oleynik/qa/workshop/junit/topics/extensions/basic/LoggingExtension.java) | Register a simple `BeforeEachCallback` with `@ExtendWith` and observe the log message before the test body.                   |
 | 14. Recap: JUnit and xUnit              | Revisit the Calculator walkthrough below and the mapping above                                                                                                                                                                        | Explain which responsibilities belong to your test code and which belong to the framework.                                    |
 
-Chapter 13 introduces `LoggingExtension` with `@ExtendWith` in the article.
-The linked workshop example demonstrates the same extension model using resource
-callbacks and `@RegisterExtension`; it is a related example, not a copy of that snippet.
+Chapter 13 starts with `LoggingExtension`: a `BeforeEachCallback` registered via
+`@ExtendWith`, matching the article's introductory example. For additional resource
+management and outcome observation examples, continue with
+[advanced extensions](README.md#6-custom-junit-5-extensions).
 
 For Appendix A, use [Quick Start](README.md#-quick-start), [pom.xml](pom.xml), and
 [build.gradle](build.gradle). For Appendix B, return to [junit-platform.properties](src/test/resources/junit-platform.properties),
