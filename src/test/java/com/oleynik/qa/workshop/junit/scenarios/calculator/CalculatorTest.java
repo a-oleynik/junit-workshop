@@ -8,6 +8,7 @@ import org.junit.experimental.categories.Category;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assume.assumeTrue;
 
 public class CalculatorTest {
 
@@ -28,6 +29,13 @@ public class CalculatorTest {
     @Category(RegressionTests.class)
     public void should_add_zero() {
         assertEquals(5, calculator.add(0, 5));
+    }
+
+    @Test
+    public void should_add_when_external_service_is_configured() {
+        assumeTrue(System.getenv("EXTERNAL_SERVICE_URL") != null);
+
+        assertEquals(5, calculator.add(2, 3));
     }
 
     @Test

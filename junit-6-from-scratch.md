@@ -25,7 +25,7 @@ or the optional assertion libraries in [Advanced Topics](README.md#-advanced-top
 | 7. Parameterized tests                  | [CalculatorParameterizedTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java)                                                                                        | Run five input rows with `@RunWith(Parameterized.class)`, `@Parameterized.Parameters`, and constructor injection.                                                                                 |
 | 8.1. Tags → categories                  | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [article category commands](#categories)                                                                       | Select tests with `@Category(SmokeTests.class)` and `@Category(RegressionTests.class)`, adapting the article's tags.                                                                              |
 | 8.2. Disabled tests → ignored tests     | [IgnoringTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/IgnoringTest.java)                                                                                                                            | Temporarily skip a test with `@Ignore`.                                                                                                                                                           |
-| 8.3. Assumptions                        | [AssumeTest](src/test/java/com/oleynik/qa/workshop/junit/topics/conditional/AssumeTest.java)                                                                                                                            | Use `org.junit.Assume` to run tests only when their preconditions hold.                                                                                                                           |
+| 8.3. Assumptions                        | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [assumptions example](#assumptions)                                                                            | Use `org.junit.Assume` to run tests only when their preconditions hold.                                                                                                                           |
 | 9.1. Exceptions                         | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [ExceptionTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/ExceptionTest.java)                 | Use `org.junit.Assert.assertThrows` (JUnit 4.13+), starting with division by zero; compare with `@Test(expected = ...)`.                                                                          |
 | 9.2. Timeouts                           | [TimeoutTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/TimeoutTest.java)                                                                                                                              | Set a time limit in milliseconds with `@Test(timeout = ...)`.                                                                                                                                     |
 | 10. Execution order                     | [FixMethodOrderTest](src/test/java/com/oleynik/qa/workshop/junit/topics/order/FixMethodOrderTest.java) / [ExecutionOrderWithTest](src/test/java/com/oleynik/qa/workshop/junit/topics/order/ExecutionOrderWithTest.java) | Inspect `@FixMethodOrder` and JUnit 4.13's `@OrderWith`; keep independent tests as the default design.                                                                                            |
@@ -147,6 +147,35 @@ combining multiple categories on a single test method. You can also run categori
 via Maven profiles (`-P smoke` / `-P regression`) or dedicated Gradle tasks
 (`smokeTest` / `regressionTest`).
 
+## Assumptions
+
+Chapter 8.3 starts with one runtime precondition. In
+[CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java):
+
+```java
+@Test
+public void should_add_when_external_service_is_configured() {
+    assumeTrue(System.getenv("EXTERNAL_SERVICE_URL") != null);
+
+    assertEquals(5, calculator.add(2, 3));
+}
+```
+
+`assumeTrue` is imported from `org.junit.Assume`. The environment
+check matches the article; the local Calculator assertion makes the example
+runnable without contacting an external service.
+
+When `EXTERNAL_SERVICE_URL` is absent, JUnit aborts this test before the assertion;
+build reports show it as skipped, not failed. When the variable is set, execution
+continues to the assertion. To try both outcomes, run `CalculatorTest` with the
+variable unset, then set it to an example value such as `https://example.invalid`
+and rerun. With Gradle, add `--rerun-tasks` after changing the environment so the
+test executes again even if its compiled sources are unchanged.
+
+Additional workshop example:
+
+- [AssumeTest](src/test/java/com/oleynik/qa/workshop/junit/topics/conditional/AssumeTest.java) — JUnit 4 assumptions in `@Before` and test methods, using `Assume.assumeTrue()` and `Assume.assumeThat()`.
+
 <a id="calculator-walkthrough"></a>
 
 ## Calculator walkthrough
@@ -236,8 +265,9 @@ Run these two test classes from the repository root:
 The Gradle HTML report at `build/reports/tests/test/index.html` now covers both
 selected classes.
 
-Expect eight successful test invocations: three regular tests and five parameterized
-invocations. For individual JUnit features, continue with the [Feature Map](README.md#-feature-map)
+Expect nine test invocations: four regular tests and five parameterized invocations.
+With `EXTERNAL_SERVICE_URL` unset, eight pass and the assumptions example is skipped.
+With it set, all nine pass. For individual JUnit features, continue with the [Feature Map](README.md#-feature-map)
 and the [beginner learning path](README.md#-beginner-learning-path).
 
 [⬆ Back to Table of Contents](README.md#-table-of-contents)
