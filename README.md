@@ -351,6 +351,10 @@ outcomes.
 `ExecutionOrderWithTest`  
 Control method execution order with `@TestMethodOrder` and `@Order`.
 
+This is a demonstration of the ordering API. Keep tests independent: do not use
+ordering to make one test depend on state or results produced by another.
+Each test should prepare its own fixture and pass when run on its own.
+
 ### 8. Retry Strategies 
 
 `RetryPioneerTest` — `@RetryingTest(maxAttempts, minSuccess)` via JUnit Pioneer  
