@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.*;
 
-//@Disabled("Disabled until @XXX333 is fixed")
+// @Disabled("BUG-124: shared test fixture initialization fails")
 public class DisabledTest {
 
-    @Disabled
+    @Disabled("BUG-123: integer overflow is not handled yet")
     @Test
     void disabled_multiplication_test() {
         System.out.println("Multiplication test");
