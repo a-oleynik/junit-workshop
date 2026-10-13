@@ -1,7 +1,7 @@
 # JUnit 6 from Scratch — Article Learning Path
 
-Companion learning path for **JUnit 6 с нуля: что делает тестовый фреймворк**
-(`JUnit_6_in_one_evening`). Follow the article's chapter order on the JUnit 6
+Companion learning path for **JUnit 6 from Scratch: What a Test Framework Actually Does**
+(`JUnit_6_from_scratch`). Follow the article's chapter order on the JUnit 6
 `master` branch, starting with manual checks and the problem of test discovery.
 
 The article uses Calculator as its running example. The mapping below connects
