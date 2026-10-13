@@ -4,10 +4,10 @@ import org.junit.*;
 
 import static java.lang.String.format;
 
-/*@Ignore("Ignoring these tests.")*/
+// @Ignore("BUG-124: shared test fixture initialization fails")
 public class IgnoringTest {
 
-    @Ignore
+    @Ignore("BUG-123: integer overflow is not handled yet")
     @Test
     public void ignoring_multiplication_test() {
         System.out.println("Multiplication test.");
