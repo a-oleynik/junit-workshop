@@ -196,7 +196,7 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 | `topics/general`          | Exception testing (`assertThrows`)                                                  | `ExceptionTest`                                                           |
 | `topics/general`          | Test lifecycle (`@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`)             | `FixturesTest`                                                            |
 | `topics/general`          | Hamcrest matchers                                                                   | `HamcrestTest`                                                            |
-| `topics/general`          | Timeouts (`@Timeout`)                                                               | `TimeoutTest`                                                             |
+| `topics/general`          | Timeouts (`assertTimeout()`, `@Timeout`)                                            | `TimeoutTest`                                                             |
 | `topics/general`          | Disabling tests (`@Disabled`)                                                       | `DisabledTest`                                                            |
 | `topics/general`          | Display names & name generators                                                     | `DisplayNameTest`, `DisplayNameGenerationTest`                            |
 | `topics/asserts`          | Grouped / soft assertions (`assertAll`)                                             | `AssertAllTest`                                                           |
