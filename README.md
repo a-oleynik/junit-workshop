@@ -214,6 +214,7 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 | `topics/grouping`           | `@Category` with custom marker interfaces                                                    | `CategoriesTest`                                                                                   |
 | `topics/grouping`           | Tagging via `@Category` annotations                                                          | `TagsTest`                                                                                         |
 | `topics/order`              | Test execution ordering (`@FixMethodOrder`, `@OrderWith`)                                    | `FixMethodOrderTest`, `ExecutionOrderWithTest`                                                     |
+| `topics/rules/basic`        | First rule (`TestWatcher.starting`, `@Rule`)                                                 | `LoggingRuleTest`                                                                                  |
 | `topics/rules`              | External resource rule (`@Rule ExternalResource`)                                            | `ExternalResourceRuleTest`                                                                         |
 | `topics/rules`              | `TestWatcher` rule (`MonitorRule`)                                                           | `TestWatcherRuleTest`                                                                              |
 | `topics/rules`              | Per-test timeout rule, lifecycle scope, and `ThreadLocal` context                            | [`TimeoutRuleTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/rules/TimeoutRuleTest.java) |
@@ -353,10 +354,19 @@ matchers in ordinary `org.junit.Test` methods.
 
 ### 7. Rules: `ExternalResource` & `TestWatcher`
 
-`ExternalResourceRuleTest` → `@Rule ExternalResource` (`DBResourceRule`)  
-`TestWatcherRuleTest` → `@Rule TestWatcher` (`MonitorRule`)  
-JUnit 4 `@Rule` and `@ClassRule` are the equivalent of JUnit 5+ `@ExtendWith`.
-`ExternalResource` manages external resources (databases, servers); `TestWatcher` observes test outcomes.
+**First rule:** [`LoggingRuleTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/rules/basic/LoggingRuleTest.java)
+registers [`LoggingRule`](src/main/java/com/oleynik/qa/workshop/junit/topics/rules/basic/LoggingRule.java)
+as a public, non-static `@Rule` field. The rule extends JUnit 4's `TestWatcher`
+and overrides only `starting(Description)` to print the test name before execution.
+Run it and observe `Starting test: adds_two_numbers` followed by `Running the test body`.
+This is the JUnit 4 counterpart of the article's introductory `LoggingExtension`;
+JUnit 4 uses rules here instead of Jupiter's `BeforeEachCallback` and `@ExtendWith`.
+
+**Advanced rules:**
+[`ExternalResourceRuleTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/rules/ExternalResourceRuleTest.java)
+uses `DBResourceRule` (`ExternalResource`) to manage resource setup and cleanup.
+[`TestWatcherRuleTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/rules/TestWatcherRuleTest.java)
+uses `MonitorRule` (`TestWatcher`) to observe test outcomes.
 
 #### Timeout rule
 
@@ -1015,6 +1025,7 @@ src/
 │       ├── listeners/           # ExecutionListener (RunListener)
 │       ├── model/               # User, MyDoubleWrapper, MyServer
 │       ├── rules/               # DBResourceRule, MonitorRule, retry rules, AssertAll
+│       │   └── basic/           # LoggingRule: log the test name before execution
 │       ├── runners/             # RetryRunner, ExecutionListenerRunner
 │       ├── Factorial.java       # Production code for parameterized tests
 │       └── Utils.java           # Helper used by timeout examples
@@ -1034,6 +1045,7 @@ src/
     │       │   └── categories/  # SmokeTests, RegressionTests marker interfaces
     │       ├── order/           # @FixMethodOrder, @OrderWith
     │       ├── rules/           # ExternalResource and TestWatcher examples
+    │       │   └── basic/       # LoggingRuleTest: registration with @Rule
     │       ├── repeat/          # Retry runners, retry rules and repeat demos
     │       └── suites/
     │           ├── lifecycle/   # @ClassRule + ExternalResource
