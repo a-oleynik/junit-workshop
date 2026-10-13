@@ -20,6 +20,9 @@
         <hamcrest.version>3.0</hamcrest.version>
         <lombok.version>1.18.48</lombok.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Defaults can be overridden with -Dparallel and -DthreadCount. -->
+        <parallel>methods</parallel>
+        <threadCount>3</threadCount>
     </properties>
 
     <dependencies>
@@ -138,10 +141,21 @@
                         <include>**/*TestCase.java</include>
                         <include>**/*Suite.java</include>
                     </includes>
-<!--                    <parallel>methods</parallel>-->
-<!--                    <threadCount>3</threadCount>-->
+                    <!-- Surefire maps these options to Vintage parameters for JUnit 4. -->
+                    <parallel>${parallel}</parallel>
+                    <threadCount>${threadCount}</threadCount>
                     <!--<groups>${testcase.groups}</groups>-->
                     <properties>
+                        <!-- Alternative: configure Vintage directly instead of the options above.
+                             Comment out the parallel/threadCount elements above before enabling this block.
+                             Then edit these values directly; -Dparallel/-DthreadCount no longer control them.
+                        <configurationParameters>
+                            junit.vintage.execution.parallel.enabled=true
+                            junit.vintage.execution.parallel.classes=false
+                            junit.vintage.execution.parallel.methods=true
+                            junit.vintage.execution.parallel.pool-size=3
+                        </configurationParameters>
+                        -->
                         <!--                        <property>
                                                     <name>listener</name>
                                                     <value>ExampleListener</value>

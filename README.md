@@ -413,39 +413,77 @@ Three progressively more granular approaches to retrying flaky tests.
 
 ### 10. Parallel Test Execution
 
-Surefire can run tests in parallel without any additional dependencies.
-`pom.xml` already contains the parallel config — just uncomment it:
+Parallel execution is enabled by default in both build tools, using different mechanisms.
+
+**Maven — parallel methods through JUnit Vintage**
+
+[Surefire 3.6.0](https://maven.apache.org/surefire/maven-surefire-plugin/whats-new-3-6-0.html)
+automatically runs JUnit 4 tests through the Vintage engine on the JUnit Platform.
+The active configuration in [`pom.xml`](pom.xml) runs methods within each class
+concurrently, with a pool size of three; test classes run sequentially:
 
 ```xml
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
     <artifactId>maven-surefire-plugin</artifactId>
-    <version>3.5.5</version>
+    <version>3.6.0</version>
     <configuration>
-        <parallel>methods</parallel>
-        <threadCount>3</threadCount>
+        <properties>
+            <configurationParameters>
+                junit.vintage.execution.parallel.enabled=true
+                junit.vintage.execution.parallel.classes=false
+                junit.vintage.execution.parallel.methods=true
+                junit.vintage.execution.parallel.pool-size=3
+            </configurationParameters>
+        </properties>
     </configuration>
 </plugin>
 ```
 
-**Available `parallel` modes:**
+These are `junit.vintage.*` settings for JUnit 4 tests, not `junit.jupiter.*` settings.
+With `enabled=true`, choose which tests may run concurrently:
 
-| Mode      | What runs in parallel                                  |
-|-----------|--------------------------------------------------------|
-| `methods` | Test methods within each class (safest starting point) |
-| `classes` | Whole test classes                                     |
-| `both`    | Classes and methods simultaneously                     |
-| `suites`  | Test suites                                            |
-| `all`     | Suites, classes, and methods — maximum parallelism     |
+| `classes` | `methods` | What runs concurrently                                        |
+|-----------|-----------|---------------------------------------------------------------|
+| `false`   | `true`    | Methods within each class (the Maven default in this project) |
+| `true`    | `false`   | Classes; methods within each class remain sequential          |
+| `true`    | `true`    | Both classes and methods                                      |
+| `false`   | `false`   | Neither; execution is sequential                              |
 
-**Enable from the command line without editing `pom.xml`:**
+Set `junit.vintage.execution.parallel.enabled=false` in this block to disable
+Vintage parallel execution. See [Vintage parallel execution](https://docs.junit.org/5.14.4/migrating-from-junit4.html#parallel-execution).
 
-```bash
-mvn clean test -Dparallel=methods -DthreadCount=3
+**Gradle — parallel classes in separate JVMs**
+
+[`build.gradle`](build.gradle) uses the native JUnit 4 runner (`useJUnit`).
+Its shared `configureWorkshopTest` configuration enables parallel forks for
+`test`, `smokeTest`, and `regressionTest`:
+
+```groovy
+testTask.maxParallelForks = 3
 ```
 
-> ⚠️ **Thread safety:** tests running in parallel must not share mutable static state.
-> Using `@FixMethodOrder` together with parallel methods can produce unpredictable results.
+Gradle runs test classes in up to three separate JVM processes, subject to its
+worker limit. This setting does not parallelize methods within a class.
+Set it to `1` to return to a single test process.
+See [Gradle test execution](https://docs.gradle.org/current/userguide/java_testing.html#sec:test_execution).
+
+Run the usual test command for your chosen build tool; no extra parallel flag is needed:
+
+```bash
+./mvnw clean test
+./gradlew clean test
+```
+
+These defaults belong to the build tools. Direct IDE test runs do not automatically
+inherit them; IDE runs delegated to Maven or Gradle use that build's configuration.
+There is no shared `junit-platform.properties` in this branch: Gradle's native
+`useJUnit` runner does not consume Vintage configuration parameters.
+
+> **Independent tests:** parallel tests must not rely on execution order or share
+> mutable state without coordination. Separate JVMs still share external resources
+> such as files and databases. Keep ordering demonstrations sequential when observing
+> `@FixMethodOrder` or `@OrderWith`.
 
 **Alternative — `ConcurrentTestRunner`** (`junit-runners` is already in `pom.xml`):
 
@@ -720,8 +758,13 @@ test started, finished, failed, assumed, ignored.
 
 ### Run tests in parallel
 
+Parallel execution is already enabled: Maven runs methods concurrently through
+Vintage; Gradle runs classes in separate JVMs. See [Parallel Test Execution](#10-parallel-test-execution)
+for configuration and how to disable it.
+
 ```bash
-./mvnw clean test -Dparallel=methods -DthreadCount=3
+./mvnw clean test
+./gradlew clean test
 ```
 
 ### Rerun failing tests automatically (e.g. flaky tests)
