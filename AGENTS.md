@@ -107,13 +107,13 @@ Place new feature examples under `src/test/java/…/topics/`; place complete art
 3. Apply `@Tag(Tags.YOUR_TAG)` or the meta-annotation directly to test methods or classes.
 
 ## Key constraints the agent must respect
-| Rule                                                           | Why                                                                                                  |
-|----------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
-| Suite members named `*Case`, never `*Test`                     | Surefire and Gradle discover `*Test` independently → double execution                                |
-| Extensions in `src/main/…/topics/extensions/`                  | Keeps extension code reusable and out of test classpath only                                         |
-| Use `getOrComputeIfAbsent` in the `ExtensionContext` store     | Reuses a stored resource or creates it on first access                                               |
-| No explicit versions on JUnit artifacts covered by `junit-bom` | BOM in `<dependencyManagement>` (Maven) / `platform()` (Gradle) manages them                         |
-| No JUnit Vintage engine                                        | Only add it on the dedicated `junit-4.*` branch                                                      |
-| No JUnit 4 annotations in JUnit 5/6 classes                    | `@org.junit.Test`, `@RunWith`, `@Rule` are JUnit 4 only                                              |
-| Parallel execution is on by default                            | Configured in `pom.xml` & `build.gradle`; annotate with `@Execution(SAME_THREAD)` or `@ResourceLock` |
-| Choose either Maven or Gradle consistently                     | Avoids mixed tool execution, duplicate build outputs, and conflicting project setups                 |
+| Rule                                                           | Why                                                                                                                               |
+|----------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| Suite members named `*Case`, never `*Test`                     | Surefire and Gradle discover `*Test` independently → double execution                                                             |
+| Extensions in `src/main/…/topics/extensions/`                  | Keeps extension code reusable and out of test classpath only                                                                      |
+| Use `getOrComputeIfAbsent` in the `ExtensionContext` store     | Reuses a stored resource or creates it on first access                                                                            |
+| No explicit versions on JUnit artifacts covered by `junit-bom` | BOM in `<dependencyManagement>` (Maven) / `platform()` (Gradle) manages them                                                      |
+| No JUnit Vintage engine                                        | Only add it on the dedicated `junit-4.*` branch                                                                                   |
+| No JUnit 4 annotations in JUnit 5/6 classes                    | `@org.junit.Test`, `@RunWith`, `@Rule` are JUnit 4 only                                                                           |
+| Parallel execution is on by default                            | Configured in `junit-platform.properties`, `pom.xml` & `build.gradle`; annotate with `@Execution(SAME_THREAD)` or `@ResourceLock` |
+| Choose either Maven or Gradle consistently                     | Avoids mixed tool execution, duplicate build outputs, and conflicting project setups                                              |

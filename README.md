@@ -363,7 +363,7 @@ Each test should prepare its own fixture and pass when run on its own.
 
 ### 9. Parallel Execution
 
-Configured globally in both `pom.xml` (Surefire) and `build.gradle`:
+Configured in [`src/test/resources/junit-platform.properties`](src/test/resources/junit-platform.properties) as well as globally in `pom.xml` (Surefire) and `build.gradle`:
 
 ```properties
 junit.jupiter.execution.parallel.enabled=true
