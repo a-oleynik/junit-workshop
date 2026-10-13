@@ -1,7 +1,7 @@
 # JUnit 6 from Scratch — Article Learning Path
 
-Companion learning path for **JUnit 6 с нуля: что делает тестовый фреймворк**
-(`JUnit_6_in_one_evening`). The article describes JUnit 6; the examples in this
+Companion learning path for **JUnit 6 from Scratch: What a Test Framework Actually Does**
+(`JUnit_6_from_scratch`). The article describes JUnit 6; the examples in this
 branch run on **JUnit 5.14.4**. Follow the same chapter order, starting with manual
 checks and the problem of test discovery.
 
