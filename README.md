@@ -571,7 +571,7 @@ after completion. `@Timeout` with `SAME_THREAD` interrupts the executing thread
 if its limit is exceeded. `SEPARATE_THREAD` demonstrates the context boundary
 that also matters with `assertTimeoutPreemptively()`, for example when transaction
 state is stored in a `ThreadLocal`. The tests verify the difference without
-intentionally timing out. See the [JUnit timeout documentation](https://docs.junit.org/6.1.3/writing-tests/timeouts.html).
+intentionally timing out. See the [JUnit timeout documentation](https://docs.junit.org/5.14.4/writing-tests/timeouts.html).
 
 Run this example with your chosen build tool:
 
