@@ -415,43 +415,71 @@ Three progressively more granular approaches to retrying flaky tests.
 
 Parallel execution is enabled by default in both build tools, using different mechanisms.
 
-**Maven — parallel methods through JUnit Vintage**
+**Maven — two ways to configure JUnit Vintage**
 
 [Surefire 3.6.0](https://maven.apache.org/surefire/maven-surefire-plugin/whats-new-3-6-0.html)
 automatically runs JUnit 4 tests through the Vintage engine on the JUnit Platform.
-The active configuration in [`pom.xml`](pom.xml) runs methods within each class
-concurrently, with a pool size of three; test classes run sequentially:
+Both configuration styles below work; use one at a time.
+
+**1. Surefire options — active by default**
+
+[`pom.xml`](pom.xml) defines the project properties `parallel=methods` and
+`threadCount=3` and references them in the Surefire configuration:
 
 ```xml
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-surefire-plugin</artifactId>
-    <version>3.6.0</version>
-    <configuration>
-        <properties>
-            <configurationParameters>
-                junit.vintage.execution.parallel.enabled=true
-                junit.vintage.execution.parallel.classes=false
-                junit.vintage.execution.parallel.methods=true
-                junit.vintage.execution.parallel.pool-size=3
-            </configurationParameters>
-        </properties>
-    </configuration>
-</plugin>
+<configuration>
+    <parallel>${parallel}</parallel>
+    <threadCount>${threadCount}</threadCount>
+</configuration>
 ```
 
-These are `junit.vintage.*` settings for JUnit 4 tests, not `junit.jupiter.*` settings.
-With `enabled=true`, choose which tests may run concurrently:
+Methods within each class run concurrently, with a pool size of three; test
+classes run sequentially. The property references let `-Dparallel` and
+`-DthreadCount` override these defaults from the command line.
 
-| `classes` | `methods` | What runs concurrently                                        |
-|-----------|-----------|---------------------------------------------------------------|
-| `false`   | `true`    | Methods within each class (the Maven default in this project) |
-| `true`    | `false`   | Classes; methods within each class remain sequential          |
-| `true`    | `true`    | Both classes and methods                                      |
-| `false`   | `false`   | Neither; execution is sequential                              |
+| `parallel` value    | What runs concurrently with Surefire 3.6.0 / Vintage                                                                 |
+|---------------------|----------------------------------------------------------------------------------------------------------------------|
+| `methods`           | Methods within each class (the project default)                                                                      |
+| `classes`           | Top-level classes, including separately discovered suite classes; methods within an ordinary class remain sequential |
+| `classesAndMethods` | Classes and methods                                                                                                  |
+| `both`              | Legacy alias for `classesAndMethods`                                                                                 |
+| `none`              | Sequential execution                                                                                                 |
 
-Set `junit.vintage.execution.parallel.enabled=false` in this block to disable
-Vintage parallel execution. See [Vintage parallel execution](https://docs.junit.org/5.14.4/migrating-from-junit4.html#parallel-execution).
+**Version-specific limitation:** with Surefire 3.6.0's Vintage provider, the old
+`suites` and `all` values do not enable class or method parallelism. A check using
+two JUnit 4 suites with two methods each ran all four methods sequentially for
+both values, despite a successful build. The same suites overlapped with `classes`.
+For this version, use `classes` for separately discovered suites, or
+`classesAndMethods` for class and method parallelism; do not assume that the old
+suite-specific scheduling modes carry over unchanged.
+See [Surefire's conversion to Vintage parameters](https://github.com/apache/maven-surefire/blob/surefire-3.6.0/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/AbstractSurefireMojo.java#L1511-L1537).
+
+**2. Vintage parameters — commented alternative in POM**
+
+To configure the engine directly, comment out the two Surefire option elements
+above and uncomment the `configurationParameters` block inside Surefire's
+`properties` element:
+
+```xml
+<properties>
+    <configurationParameters>
+        junit.vintage.execution.parallel.enabled=true
+        junit.vintage.execution.parallel.classes=false
+        junit.vintage.execution.parallel.methods=true
+        junit.vintage.execution.parallel.pool-size=3
+    </configurationParameters>
+</properties>
+```
+
+This produces the same method-level parallelism. These are `junit.vintage.*`
+settings for JUnit 4 tests, not `junit.jupiter.*` settings. With `enabled=true`,
+set `classes=true` to parallelize classes, `methods=true` to parallelize methods,
+or both to parallelize both levels. If both are false, execution is sequential.
+
+When using this alternative, edit the parameters in that block directly;
+`-Dparallel` and `-DthreadCount` do not override its explicit values. Set
+`junit.vintage.execution.parallel.enabled=false` in the block to disable it.
+See [Vintage parallel execution](https://docs.junit.org/5.14.4/migrating-from-junit4.html#parallel-execution).
 
 **Gradle — parallel classes in separate JVMs**
 
@@ -466,6 +494,13 @@ testTask.maxParallelForks = 3
 Gradle runs test classes in up to three separate JVM processes, subject to its
 worker limit. This setting does not parallelize methods within a class.
 Set it to `1` to return to a single test process.
+
+Gradle has no Surefire-style `parallel=suites` or `parallel=all` setting.
+Separately discovered `@RunWith(Suite.class)` classes can run in different forks;
+our two-suite check confirmed this. A single suite is submitted as one class to
+one fork: `maxParallelForks` does not split its members or methods across JVMs.
+A custom runner can introduce its own concurrency. Keep suite members named
+`*Case` so they are not also discovered and run independently.
 See [Gradle test execution](https://docs.gradle.org/current/userguide/java_testing.html#sec:test_execution).
 
 Run the usual test command for your chosen build tool; no extra parallel flag is needed:
@@ -758,14 +793,22 @@ test started, finished, failed, assumed, ignored.
 
 ### Run tests in parallel
 
-Parallel execution is already enabled: Maven runs methods concurrently through
-Vintage; Gradle runs classes in separate JVMs. See [Parallel Test Execution](#10-parallel-test-execution)
-for configuration and how to disable it.
+Parallel execution is already enabled. With the default Surefire configuration,
+you can explicitly select or override its mode and pool size:
 
 ```bash
-./mvnw clean test
+./mvnw clean test -Dparallel=methods -DthreadCount=3
+./mvnw clean test -Dparallel=classes -DthreadCount=3
+# Disable Surefire-managed parallel execution for this run
+./mvnw clean test -Dparallel=none
+
+# Gradle uses maxParallelForks from build.gradle
 ./gradlew clean test
 ```
+
+These Maven overrides apply to the active Surefire options, not the commented
+Vintage alternative. See [Parallel Test Execution](#10-parallel-test-execution)
+for both approaches and the different Gradle behavior.
 
 ### Rerun failing tests automatically (e.g. flaky tests)
 
