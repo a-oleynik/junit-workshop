@@ -1,7 +1,7 @@
 # JUnit 6 from Scratch — Article Learning Path (JUnit 4 adaptation)
 
-Companion learning path for **JUnit 6 с нуля: что делает тестовый фреймворк**
-(`JUnit_6_in_one_evening`). The article uses JUnit 6 on the `master` branch.
+Companion learning path for **JUnit 6 from Scratch: What a Test Framework Actually Does**
+(`JUnit_6_from_scratch`). The article uses JUnit 6 on the `master` branch.
 This branch adapts its examples to **JUnit 4.13.2**, keeping the article's chapter
 order from manual checks and test discovery onward. The mapping identifies the
 JUnit 4 APIs to use at each step.
