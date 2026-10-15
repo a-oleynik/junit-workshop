@@ -271,6 +271,27 @@ Skip tests dynamically when preconditions are not met.
 `ParameterizationTest`  
 Drive one test method with many data rows using `@RunWith(Parameterized.class)`.
 
+Readable invocation names show the inputs and expected result in IDE results and
+reports. JUnit 4 and the additional libraries in this branch use different annotations:
+
+| Runner / library         | Where to configure the name            | Example                                            |
+|--------------------------|----------------------------------------|----------------------------------------------------|
+| JUnit 4 `Parameterized`  | `@Parameters` on the data method       | `@Parameters(name = "{index}: {0}! = {1}")`        |
+| JUnitParams              | `@TestCaseName` on the test method     | `@TestCaseName("{index}: {0} * {1} = {2}")`        |
+| TNG `DataProviderRunner` | `@DataProvider` on the provider method | `@DataProvider(format = "%m[%i: %p[0]! = %p[1]]")` |
+
+`{0}`, `{1}`, etc. select arguments by position; TNG uses `%p[0]`, `%p[1]`, etc.
+`{index}` and `%i` number data rows starting at **0** in these libraries.
+TNG's `%m` adds the test method name. Retaining the index distinguishes repeated
+rows, such as the three identical multiplication cases in `JUnitParamsTest`.
+The expected value is supplied by the data source: a display name does not compute
+or assert the result.
+
+[`CalculatorParameterizedTest`](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java)
+already uses `@Parameterized.Parameters(name = "{index}: {0} + {1} = {2}")`,
+producing names such as `should_add_numbers[0: 2 + 3 = 5]`.
+See [JUnit 4 parameterized test names](https://junit.org/junit4/javadoc/4.13.2/org/junit/runners/Parameterized.html).
+
 ### 8. Nested tests
 
 `NestedTest`  

@@ -24,6 +24,7 @@ public class CalculatorParameterizedTest {
         this.expected = expected;
     }
 
+    // {0}, {1}, {2} are the two inputs and expected sum; JUnit 4 indexes rows from 0.
     @Parameterized.Parameters(name = "{index}: {0} + {1} = {2}")
     public static Collection<Object[]> addition_examples() {
         return Arrays.asList(new Object[][]{

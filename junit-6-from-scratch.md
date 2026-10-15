@@ -234,7 +234,10 @@ true
 Continue with `CalculatorTest`: `assertEquals` checks the expected result, JUnit runs
 the `@Test` methods automatically, and `@Before` creates a fresh Calculator for
 each test. `assertThrows` verifies division by zero. The parameterized test then runs
-the addition check with five input rows.
+the addition check with five input rows. `@Parameterized.Parameters(name = "{index}: {0} + {1} = {2}")`
+labels each row with its inputs and expected sum, for example
+`should_add_numbers[0: 2 + 3 = 5]`. In JUnit 4, `{index}` starts at 0;
+`{0}`, `{1}`, and `{2}` refer to the arguments supplied by the data method.
 
 Run these two test classes from the repository root:
 

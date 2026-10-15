@@ -22,7 +22,7 @@ import static com.oleynik.qa.workshop.junit.topics.dataproviders.JUnitDataProvid
 
 @RunWith(DataProviderRunner.class)
 public class DataProviderTest {
-    @DataProvider
+    @DataProvider(format = "%m[%i: %p[0]! = %p[1]]")
     public static Object[][] read_numbers(FrameworkMethod frameworkMethod) {
         try {
             String dataSource = getDataSourcePathFromTestInfo(frameworkMethod);

@@ -18,7 +18,7 @@ public class Parameterization2Test {
     @Parameter(value = 1)
     public long expected;
 
-    @Parameters
+    @Parameters(name = "{index}: {0}! = {1}")
     public static Collection<Object[]> data() {
         return Arrays.asList(new Object[][]{{1, 1}, {2, 2}, {3, 6}, {4, 24}, {5, 120}});
     }
