@@ -267,6 +267,20 @@ Skip tests dynamically when preconditions aren't met.
 `ValueSourceTest`, `ParameterizationTest`  
 Drive one test method with many data rows.
 
+Use `@ParameterizedTest(name = "...")` to give each invocation a readable name in
+IDE results and test reports. `{0}`, `{1}`, and `{2}` refer to source arguments by
+zero-based position; `{index}` is the invocation number, starting at 1.
+For example, [`CalculatorParameterizedTest`](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java)
+uses `name = "{0} + {1} = {2}"` to show `2 + 3 = 5`. Factorial examples use
+`{0}! = {1}` with a source label. The expected value comes from the data source;
+formatting a name does not calculate or assert the result. `ValueSourceTest`
+keeps JUnit's default names: the argument values already identify each case.
+
+JUnit 6 quotes text arguments before converting them to parameter types. Numeric
+CSV examples set `quoteTextArguments = false` to display numbers without quotes.
+The string example keeps the default quoting so `null` and `""` remain distinguishable.
+See [parameterized display names](https://docs.junit.org/6.1.3/writing-tests/parameterized-classes-and-tests.html#customizing-display-names).
+
 ### 8. Nested tests
 
 `NestedTest`  
