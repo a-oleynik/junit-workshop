@@ -42,7 +42,7 @@ public class ParameterizationTest {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
     }
 
-    @ParameterizedTest(name = "CSV via method source: {0}! = {1}", quoteTextArguments = false)
+    @ParameterizedTest(name = "CSV via method source: {0}! = {1}")
     @MethodSource("com.oleynik.qa.workshop.junit.topics.dataproviders.FactorialDataProvider#factorialsFromFile")
     void csv_from_outer_method_source_factorial_test(int number, int expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
@@ -64,7 +64,7 @@ public class ParameterizationTest {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
     }
 
-    @ParameterizedTest(name = "Custom CSV source: {0}! = {1}", quoteTextArguments = false)
+    @ParameterizedTest(name = "Custom CSV source: {0}! = {1}")
     @ParameterizedDataSource(path = "src/test/resources/numbers.csv")
     void parameterized_arguments_source_factorial_test(int number, int expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");

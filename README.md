@@ -276,10 +276,10 @@ uses `name = "{0} + {1} = {2}"` to show `2 + 3 = 5`. Factorial examples use
 formatting a name does not calculate or assert the result. `ValueSourceTest`
 keeps JUnit's default names: the argument values already identify each case.
 
-JUnit 6 quotes text arguments before converting them to parameter types. Numeric
-CSV examples set `quoteTextArguments = false` to display numbers without quotes.
-The string example keeps the default quoting so `null` and `""` remain distinguishable.
-See [parameterized display names](https://docs.junit.org/6.1.3/writing-tests/parameterized-classes-and-tests.html#customizing-display-names).
+JUnit 5.14.4 displays these numeric CSV arguments without adding quotes, so the
+`name` pattern is sufficient. The `quoteTextArguments` option belongs to JUnit 6
+and is not available in this branch.
+See [parameterized display names](https://docs.junit.org/5.14.4/writing-tests/parameterized-classes-and-tests.html#customizing-display-names).
 
 ### 8. Nested tests
 
