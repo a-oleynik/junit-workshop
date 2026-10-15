@@ -230,7 +230,9 @@ true
 Continue with `CalculatorTest`: `assertEquals` checks the expected result, JUnit runs
 the `@Test` methods automatically, and `@BeforeEach` creates a fresh Calculator for
 each test. `assertThrows` verifies division by zero. The parameterized test then runs
-the addition check with five input rows.
+the addition check with five input rows. Its `name = "{0} + {1} = {2}"` pattern
+shows each pair of inputs and the expected sum, for example `2 + 3 = 5`.
+`quoteTextArguments = false` keeps these numeric CSV values unquoted in JUnit 6.
 
 Run these two test classes from the repository root:
 
