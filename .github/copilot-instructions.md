@@ -37,7 +37,7 @@ src/
 │       ├── annotations/         # DataSource, Retry, RetryConfiguration
 │       ├── dataproviders/       # JUnitDataProvider
 │       ├── listeners/           # ExecutionListener (RunListener)
-│       ├── model/               # User, MyDoubleWrapper, MyServer
+│       ├── model/               # User, MyDoubleWrapper, MyServer, ShoppingCart
 │       ├── rules/               # DBResourceRule, MonitorRule, retry rules, AssertAll
 │       ├── runners/             # RetryRunner, ExecutionListenerRunner
 │       ├── Factorial.java       # Production code for parameterized tests
@@ -49,7 +49,8 @@ src/
     │   │       ├── CalculatorTest.java
     │   │       └── CalculatorParameterizedTest.java
     │   └── topics/
-    │       ├── general/         # Assertions, fixtures, exceptions, timeouts, @Ignore
+    │       ├── general/         # Basic assertions, lifecycle, exceptions, timeouts, @Ignore
+    │       ├── fixtures/        # InlineFixtureTest and ImplicitFixtureTest: fresh cart per test
     │       ├── asserts/         # ErrorCollector, AssertAll, AssertJ soft assertions
     │       ├── conditional/     # Assumptions via Assume
     │       ├── ddt/             # Parameterized, JUnitParams, DataProvider, Theories
@@ -68,7 +69,7 @@ src/
 ```
 
 ## Naming conventions
-- **Test classes** end with `Test` (e.g. `AssertTest`, `FixturesTest`).
+- **Test classes** end with `Test` (e.g. `AssertTest`, `LifecycleTest`).
 - **Suite-member classes** end with `Case` or `Scenario` — **never** `Test` or `Tests`. This prevents Maven Surefire and Gradle from discovering them independently and running them twice.
   - ✅ `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase`
   - ❌ `SuiteLifecycleFirstTest`

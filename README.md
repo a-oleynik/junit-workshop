@@ -197,7 +197,8 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 |-----------------------------|----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
 | `topics/general`            | Basic assertions (`assertEquals`, `assertThat`, `assertNull`, …)                             | `AssertTest`                                                                                       |
 | `topics/general`            | Exception testing (`@Test(expected=…)`, `assertThrows`)                                      | `ExceptionTest`                                                                                    |
-| `topics/general`            | Test lifecycle (`@Before`, `@After`, `@BeforeClass`, `@AfterClass`)                          | `FixturesTest`                                                                                     |
+| `topics/general`            | Test lifecycle (`@Before`, `@After`, `@BeforeClass`, `@AfterClass`)                          | `LifecycleTest`                                                                                    |
+| `topics/fixtures`           | Fixture setup — in-line vs. implicit lifecycle setup                                         | `InlineFixtureTest`, `ImplicitFixtureTest`                                                         |
 | `topics/general`            | Hamcrest matchers                                                                            | `HamcrestTest`                                                                                     |
 | `topics/general`            | Timeouts (`@Test(timeout=…)`)                                                                | `TimeoutTest`                                                                                      |
 | `topics/general`            | Ignoring / disabling tests (`@Ignore`)                                                       | `IgnoringTest`, `DisabledTest`                                                                     |
@@ -243,20 +244,28 @@ Learn `assertEquals`, `assertTrue`, `assertNull`, and `fail`.
 
 ### 2. Test lifecycle
 
-`FixturesTest`  
+`LifecycleTest`  
 Understand `@Before`, `@After`, `@BeforeClass`, `@AfterClass`.
 
-### 3. Exception testing
+### 3. Fixtures (in-line vs. implicit setup)
+
+[`InlineFixtureTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/fixtures/InlineFixtureTest.java),
+[`ImplicitFixtureTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/fixtures/ImplicitFixtureTest.java)  
+Learn the difference between **fixture** (the test state/data) and **lifecycle methods**
+(the setup mechanism). Compare creating an empty `ShoppingCart` directly in each test
+versus using `@Before`.
+
+### 4. Exception testing
 
 `ExceptionTest`  
 Use `@Test(expected=…)` and the modern `assertThrows` (available since JUnit 4.13).
 
-### 4. Ignoring tests
+### 5. Ignoring tests
 
 `IgnoringTest`  
 Skip tests cleanly with `@Ignore` and understand the difference from failing tests.
 
-### 5. Grouped assertions
+### 6. Grouped assertions
 
 [`SoftAssertErrorCollector2Test`](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertErrorCollector2Test.java)
 uses standard JUnit 4 `assertEquals`, `assertTrue`, and `assertFalse` with a custom
@@ -265,12 +274,12 @@ JUnit 4 has no built-in Jupiter `assertAll()`.
 For `ErrorCollector.checkThat()` with Hamcrest matchers, see
 [`SoftAssertErrorCollectorTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertErrorCollectorTest.java).
 
-### 6. Assumptions
+### 7. Assumptions
 
 `AssumeTest`
 Skip tests dynamically when preconditions are not met.
 
-### 7. Parameterized tests
+### 8. Parameterized tests
 
 `ParameterizationTest`  
 Drive one test method with many data rows using `@RunWith(Parameterized.class)`.
@@ -296,12 +305,12 @@ already uses `@Parameterized.Parameters(name = "{index}: {0} + {1} = {2}")`,
 producing names such as `should_add_numbers[0: 2 + 3 = 5]`.
 See [JUnit 4 parameterized test names](https://junit.org/junit4/javadoc/4.13.2/org/junit/runners/Parameterized.html).
 
-### 8. Nested tests
+### 9. Nested tests
 
 `NestedTest`  
 Organise related scenarios using inner context classes with `HierarchicalContextRunner`.
 
-### 9. Categories
+### 10. Categories
 
 `CategoriesTest`  
 Mark tests as `SmokeTests` or `RegressionTests` and run subsets from the command line.
@@ -316,7 +325,7 @@ Mark tests as `SmokeTests` or `RegressionTests` and run subsets from the command
 ./gradlew clean test
 ```
 
-### 10. HTML Report Generation
+### 11. HTML Report Generation
 
 ```bash
 # Maven
@@ -1050,7 +1059,7 @@ src/
 │       ├── annotations/         # DataSource, Retry, RetryConfiguration
 │       ├── dataproviders/       # JUnitDataProvider
 │       ├── listeners/           # ExecutionListener (RunListener)
-│       ├── model/               # User, MyDoubleWrapper, MyServer
+│       ├── model/               # User, MyDoubleWrapper, MyServer, ShoppingCart
 │       ├── rules/               # DBResourceRule, MonitorRule, retry rules, AssertAll
 │       │   └── basic/           # LoggingRule: log the test name before execution
 │       ├── runners/             # RetryRunner, ExecutionListenerRunner
@@ -1063,7 +1072,8 @@ src/
     │   │       ├── CalculatorTest.java
     │   │       └── CalculatorParameterizedTest.java
     │   └── topics/
-    │       ├── general/         # Assertions, fixtures, exceptions, timeouts, @Ignore
+    │       ├── general/         # Basic assertions, lifecycle, exceptions, timeouts, @Ignore
+    │       ├── fixtures/        # InlineFixtureTest and ImplicitFixtureTest: fresh cart per test
     │       ├── asserts/         # ErrorCollector, AssertAll, AssertJ soft assertions
     │       ├── conditional/     # Assumptions via Assume
     │       ├── ddt/             # Parameterized, JUnitParams, DataProvider, Theories
