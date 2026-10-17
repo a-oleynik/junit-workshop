@@ -198,7 +198,7 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 | `topics/general`            | Basic assertions (`assertEquals`, `assertThat`, `assertNull`, …)                             | `AssertTest`                                                                                       |
 | `topics/general`            | Exception testing (`@Test(expected=…)`, `assertThrows`)                                      | `ExceptionTest`                                                                                    |
 | `topics/general`            | Test lifecycle (`@Before`, `@After`, `@BeforeClass`, `@AfterClass`)                          | `LifecycleTest`                                                                                    |
-| `topics/fixtures`           | Fixture setup — in-line vs. implicit lifecycle setup                                         | `InlineFixtureTest`, `ImplicitFixtureTest`                                                         |
+| `topics/fixtures`           | Fresh fixtures with In-line Setup and Implicit Setup                                         | `InlineFixtureTest`, `ImplicitFixtureTest`                                                         |
 | `topics/general`            | Hamcrest matchers                                                                            | `HamcrestTest`                                                                                     |
 | `topics/general`            | Timeouts (`@Test(timeout=…)`)                                                                | `TimeoutTest`                                                                                      |
 | `topics/general`            | Ignoring / disabling tests (`@Ignore`)                                                       | `IgnoringTest`, `DisabledTest`                                                                     |
@@ -254,6 +254,13 @@ Understand `@Before`, `@After`, `@BeforeClass`, `@AfterClass`.
 Learn the difference between **fixture** (the test state/data) and **lifecycle methods**
 (the setup mechanism). Compare creating an empty `ShoppingCart` directly in each test
 versus using `@Before`.
+
+The empty cart and its state form the fixture; creating it is fixture setup.
+Both examples use a **Fresh Fixture**: each test gets a new cart.
+In-line/Implicit Setup describes where preparation happens; Fresh/Shared Fixture
+describes whether fixture state is recreated or reused between tests.
+Prices and quantities stay in each test so its expected total is easy to understand.
+These in-memory objects need no explicit teardown; external resources may need cleanup.
 
 ### 4. Exception testing
 
