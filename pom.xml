@@ -20,8 +20,9 @@
         <hamcrest.version>3.0</hamcrest.version>
         <lombok.version>1.18.48</lombok.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <!-- Defaults can be overridden with -Dparallel and -DthreadCount. -->
-        <parallel>methods</parallel>
+        <!-- Run classes concurrently and their methods sequentially, as in the article.
+             Override with -Dparallel and -DthreadCount for advanced configurations. -->
+        <parallel>classes</parallel>
         <threadCount>3</threadCount>
     </properties>
 
@@ -151,8 +152,8 @@
                              Then edit these values directly; -Dparallel/-DthreadCount no longer control them.
                         <configurationParameters>
                             junit.vintage.execution.parallel.enabled=true
-                            junit.vintage.execution.parallel.classes=false
-                            junit.vintage.execution.parallel.methods=true
+                            junit.vintage.execution.parallel.classes=true
+                            junit.vintage.execution.parallel.methods=false
                             junit.vintage.execution.parallel.pool-size=3
                         </configurationParameters>
                         -->
