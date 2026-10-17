@@ -59,17 +59,18 @@ Your support helps the project reach more Java and QA engineers.
 
 ## 🤔 Why this repository?
 
-Most JUnit 4 tutorials stop at `@Test` and `@Before`.  
-This project goes further — it covers the **full JUnit 4 feature set** with real, runnable code you can clone, execute, and adapt immediately.
+JUnit 4 is more than `@Test`, assertions, and lifecycle annotations.
+
+This branch covers fundamental and advanced JUnit 4 features with practical, runnable Java examples you can clone, execute, and adapt to your own projects.
 
 Use this repository if you want to:
 
-- **learn JUnit from scratch** with a structured, step-by-step learning path
-- **understand the differences between JUnit 4, JUnit 5, and JUnit 6** — what changed and why
-- **see real runnable examples** instead of reading documentation only
-- **explore advanced features** — rules (`@Rule`, `@ClassRule`), custom runners (`@RunWith`), retry strategies, parallel execution, categories, and parameterized tests
+- **learn JUnit 4 from scratch** with a structured, step-by-step learning path
+- **understand the differences between JUnit 4, JUnit 5, and JUnit 6** — compare the examples across the corresponding branches to see what changed and why
+- **explore runnable examples** that demonstrate JUnit 4 features in practice
+- **master advanced features** — rules (`ExternalResource`, `TestWatcher`), custom runners, retry strategies, parallel execution, categories, and parameterized tests
 - **study automated testing patterns in Java** — soft assertions, data-driven tests, conditional execution, and more
-- **understand suite orchestration** — three approaches to `@BeforeSuite` / `@AfterSuite` emulation: `@ClassRule ExternalResource`, `@BeforeClass`/`@AfterClass`, and `JUnitCore` + `RunListener`
+- **understand suite orchestration** — `@RunWith(Suite.class)`, `@Suite.SuiteClasses`, suite setup and cleanup with `@BeforeClass` / `@AfterClass` or `@ClassRule`, and programmatic execution with `JUnitCore` and `RunListener`
 - **compare JUnit and TestNG** patterns and idioms side-by-side with the companion [TestNG Workshop](https://github.com/a-oleynik/testng-workshop)
 - **use it as material** for workshops, tech talks, onboarding sessions, and self-study
 
@@ -267,7 +268,7 @@ Learn `assertEquals`, `assertTrue`, `assertNull`, and `fail`.
 
 ### 2. Test lifecycle
 
-`LifecycleTest`  
+[`LifecycleTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/LifecycleTest.java)
 Understand `@Before`, `@After`, `@BeforeClass`, `@AfterClass`.
 
 ### 3. Fixtures (in-line vs. implicit setup)
