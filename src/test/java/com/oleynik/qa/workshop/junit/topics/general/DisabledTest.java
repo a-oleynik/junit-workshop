@@ -1,19 +1,22 @@
 package com.oleynik.qa.workshop.junit.topics.general;
 
+import com.oleynik.qa.workshop.junit.scenarios.calculator.Calculator;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.*;
 
-//@Disabled("Disabled until @XXX333 is fixed")
+// @Disabled("BUG-124: shared test fixture initialization fails")
 public class DisabledTest {
 
-    @Disabled
+    @Disabled("BUG-123: integer overflow is not handled yet")
     @Test
-    void disabled_multiplication_test() {
-        System.out.println("Multiplication test");
-        assertEquals(10, 2 * 5, "Multiplication result is wrong");
+    void should_detect_integer_overflow() {
+        Calculator calculator = new Calculator();
+
+        // Intended behavior: reject overflow instead of silently wrapping to Integer.MIN_VALUE.
+        assertThrows(ArithmeticException.class, () -> calculator.add(Integer.MAX_VALUE, 1));
     }
 
     @Test

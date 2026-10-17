@@ -8,6 +8,12 @@ import org.junit.jupiter.api.TestMethodOrder;
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Demonstration only.
+ *
+ * <p>Do not use ordering to create dependencies between otherwise independent tests.
+ * Each test should prepare its own fixture and pass when run on its own.
+ */
 @TestMethodOrder(OrderAnnotation.class)
 public class ExecutionOrderWithTest {
     @Test

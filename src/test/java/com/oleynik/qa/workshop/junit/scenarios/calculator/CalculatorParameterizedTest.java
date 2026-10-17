@@ -15,13 +15,17 @@ class CalculatorParameterizedTest {
         calculator = new Calculator();
     }
 
-    @ParameterizedTest
+    // {0}, {1}, {2} are the two inputs and expected sum from each CSV row.
+    // Keep numeric CSV values unquoted in the invocation name (JUnit 6).
+    @ParameterizedTest(name = "{0} + {1} = {2}", quoteTextArguments = false)
     @CsvSource({
             "2, 3, 5",
             "3, -2, 1",
             "-2, -3, -5",
             "5, 0, 5",
-            "0, 0, 0"
+            "0, 0, 0",
+            "2147483647, 0, 2147483647",
+            "-2147483648, 0, -2147483648"
     })
     void shouldAddNumbers(int firstNumber, int secondNumber, int expected) {
         assertEquals(expected, calculator.add(firstNumber, secondNumber));

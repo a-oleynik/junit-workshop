@@ -45,7 +45,7 @@ public class DataProviderTest {
     }
 
     //@TestTemplate
-    @ParameterizedTest
+    @ParameterizedTest(name = "Local data provider: {0}! = {1}")
     @UseDataProvider("read_numbers")
     @DataSource(path = "src/test/resources/numbers.csv")
     void junit5_with_data_provider_test(long number, long expected) {
@@ -53,7 +53,7 @@ public class DataProviderTest {
     }
 
     //@TestTemplate
-    @ParameterizedTest
+    @ParameterizedTest(name = "External data provider: {0}! = {1}")
     @UseDataProvider(value = "read_numbers", location = JUnitDataProvider.class)
     @DataSource(path = "src/test/resources/numbers.csv")
     void junit5_with_external_data_provider_test(long number, long expected) {

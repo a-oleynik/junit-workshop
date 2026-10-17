@@ -34,7 +34,7 @@ src/
 │       ├── annotations/         # Custom annotation types and helpers
 │       ├── dataproviders/       # ArgumentsProvider / DataProvider implementations
 │       ├── extensions/          # DBResourceExtension, TestWatcherExtension, SuiteLikeLifecycleExtension
-│       ├── model/               # Shared domain model (User, MyDoubleWrapper, MyServer)
+│       ├── model/               # Shared domain model (User, MyDoubleWrapper, MyServer, ShoppingCart)
 │       ├── Factorial.java       # Example production class for parameterized tests
 │       ├── PrimeNumber.java
 │       └── Utils.java           # Helper used by timeout examples
@@ -45,7 +45,8 @@ src/
     │   │       ├── CalculatorTest.java
     │   │       └── CalculatorParameterizedTest.java
     │   └── topics/
-    │       ├── general/         # Basic assertions, fixtures, exceptions, display names, timeouts
+    │       ├── general/         # Basic assertions, lifecycle, exceptions, display names, timeouts
+    │       ├── fixtures/        # InlineFixtureTest and ImplicitFixtureTest: fresh cart per test
     │       ├── asserts/         # assertAll and AssertJ soft assertions
     │       ├── conditional/     # Assumptions (assumeTrue, assumingThat)
     │       ├── ddt/             # Parameterized and data-driven tests
@@ -65,7 +66,7 @@ src/
 ## Naming rules — follow exactly
 | Type                | Suffix               | Example                      |
 |---------------------|----------------------|------------------------------|
-| Regular test class  | `Test`               | `AssertTest`, `FixturesTest` |
+| Regular test class  | `Test`               | `AssertTest`, `LifecycleTest` |
 | Suite member class  | `Case` or `Scenario` | `SuiteLifecycleFirstCase`    |
 | Tag meta-annotation | none (short noun)    | `@Smoke`, `@Regression`      |
 
@@ -81,7 +82,7 @@ src/
 - Do **not** use JUnit 4 annotations (`@org.junit.Test`, `@RunWith`, `@Rule`) in JUnit 5/6 classes
 
 ## Parallel execution
-Parallel execution is enabled globally in `pom.xml` and `build.gradle`. For tests that must not run concurrently, annotate with:
+Parallel execution is enabled globally in `src/test/resources/junit-platform.properties`; `pom.xml` and `build.gradle` contain commented alternatives. For tests that must not run concurrently, annotate with:
 ```java
 @Execution(ExecutionMode.SAME_THREAD)   // serialize the whole class
 @ResourceLock("resource-name")          // mutual exclusion on a named resource
@@ -108,8 +109,8 @@ Parallel execution is enabled globally in `pom.xml` and `build.gradle`. For test
 ```bash
 mvn clean test                          # all tests
 mvn clean test -Dtest=ClassName         # single class
-mvn clean test -Dgroups=Smoke           # by tag
-mvn clean test -P Smoke                 # by Maven profile (Smoke or Regression)
+mvn clean test -Dgroups=smoke           # by tag
+mvn clean test -P smoke                 # by Maven profile (smoke or regression)
 mvn clean surefire-report:report        # HTML report (target/reports/surefire.html)
 mvn clean site                          # full Maven site
 ```
@@ -118,7 +119,7 @@ mvn clean site                          # full Maven site
 ```bash
 gradle clean test                       # all tests (generates HTML report in build/reports/tests/test/index.html)
 gradle clean test --tests "*ClassName"  # single class
-gradle clean test -DincludeTags=Smoke   # by tag
+gradle clean test -DincludeTags=smoke   # by tag
 gradle clean smokeTest                  # dedicated Gradle task (smokeTest / regressionTest)
 ```
 

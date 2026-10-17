@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class CSVParameterizationTest {
-    @ParameterizedTest
+    @ParameterizedTest(name = "CSV: {0}! = {1}", quoteTextArguments = false)
     @CsvSource({
             "1, 1",
             "2, 2",
@@ -19,7 +19,7 @@ public class CSVParameterizationTest {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "CSV file: {0}! = {1}", quoteTextArguments = false)
     @CsvFileSource(resources = "/numbers.csv")
     void csv_file_source_factorial_test(int number, int expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");

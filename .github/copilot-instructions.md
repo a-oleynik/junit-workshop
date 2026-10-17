@@ -35,7 +35,7 @@ src/
 │       ├── annotations/         # Custom annotation types and helpers
 │       ├── dataproviders/       # ArgumentsProvider / DataProvider implementations
 │       ├── extensions/          # DBResourceExtension, TestWatcherExtension, SuiteLikeLifecycleExtension
-│       ├── model/               # Shared domain model (User, MyDoubleWrapper, MyServer)
+│       ├── model/               # Shared domain model (User, MyDoubleWrapper, MyServer, ShoppingCart)
 │       ├── Factorial.java       # Example production class for parameterized tests
 │       ├── PrimeNumber.java
 │       └── Utils.java           # Helper used by timeout examples
@@ -46,7 +46,8 @@ src/
     │   │       ├── CalculatorTest.java
     │   │       └── CalculatorParameterizedTest.java
     │   └── topics/
-    │       ├── general/         # Basic assertions, fixtures, exceptions, display names, timeouts
+    │       ├── general/         # Basic assertions, lifecycle, exceptions, display names, timeouts
+    │       ├── fixtures/        # InlineFixtureTest and ImplicitFixtureTest: fresh cart per test
     │       ├── asserts/         # assertAll and AssertJ soft assertions
     │       ├── conditional/     # Assumptions (assumeTrue, assumingThat)
     │       ├── ddt/             # Parameterized and data-driven tests
@@ -64,7 +65,7 @@ src/
 ```
 
 ## Naming conventions
-- **Test classes** end with `Test` (e.g. `AssertTest`, `FixturesTest`).
+- **Test classes** end with `Test` (e.g. `AssertTest`, `LifecycleTest`).
 - **Suite-member classes** end with `Case` or `Scenario` — **never** `Test` or `Tests`. This prevents Maven Surefire from discovering them independently and running them twice (once standalone, once via the suite).
   - ✅ `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase`
   - ❌ `SuiteLifecycleFirstTest`
@@ -79,7 +80,7 @@ src/
 - Use **Hamcrest** (`assertThat` + matchers) only in `HamcrestTest` or where matcher-based style is explicitly being demonstrated.
 - Use `assertThrows` (JUnit Jupiter) for exception testing — never `@Test(expected = ...)` (that is JUnit 4 style).
 - Use `@Timeout` annotation for time-bound tests — not `assertTimeout` lambda style, unless demonstrating that specific API.
-- Parallel execution is enabled globally via Surefire config in `pom.xml`. Mark tests that must not run concurrently with `@Execution(ExecutionMode.SAME_THREAD)` or `@ResourceLock`.
+- Parallel execution is enabled globally via `src/test/resources/junit-platform.properties`; build files contain commented alternatives. Mark tests that must not run concurrently with `@Execution(ExecutionMode.SAME_THREAD)` or `@ResourceLock`.
 - Keep test method names in `snake_case` (e.g. `assert_equals_multiplication_test`) — this is the established style throughout the project.
 - Do **not** use JUnit 4 annotations (`@org.junit.Test`, `@RunWith`, `@Rule`) in JUnit 5/6 test classes.
 
@@ -90,7 +91,7 @@ src/
 ## CI / CD
 - Workflow file: `.github/workflows/maven.yml`
 - Triggered **manually only** via `workflow_dispatch` (Actions → Run workflow on GitHub)
-- Input: `groups` (optional) — tag filter for the by-tag job (e.g. `Smoke`, `Regression`)
+- Input: `groups` (optional) — tag filter for the by-tag job (e.g. `smoke`, `regression`)
 - Two jobs:
   - `regression` — always runs all tests: `./mvnw -B clean site`
   - `by-tag` — runs only when `groups` is provided: `./mvnw -B clean site -Dgroups={groups}`
@@ -101,8 +102,8 @@ src/
 ```bash
 mvn clean test                          # run all tests
 mvn clean test -Dtest=AssertTest        # run one class
-mvn clean test -Dgroups=Smoke           # run by tag
-mvn clean test -P Smoke                 # run via Maven profile (Smoke or Regression)
+mvn clean test -Dgroups=smoke           # run by tag
+mvn clean test -P smoke                 # run via Maven profile (smoke or regression)
 mvn clean surefire-report:report        # generate HTML report
 mvn clean site                          # full Maven site
 ```
