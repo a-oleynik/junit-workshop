@@ -19,9 +19,9 @@ assumptions, and exception handling together.
 | 3. Assertions                           | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [AssertTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/AssertTest.java)                                     | Turn an expected result into an assertion that can fail the test.                                                             |
 | 3. Grouped assertions                   | [AssertAllTest](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/AssertAllTest.java)                                                                                                                                        | Use JUnit `assertAll()` to execute a group of related assertions and report their collected failures together.                |
 | 4. Lifecycle and fixtures               | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [FixturesTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/FixturesTest.java)                                 | Create a fresh Calculator in `@BeforeEach`; explore setup and cleanup around tests and classes.                               |
-| 5. Reporting                            | [Reporting commands](#reporting) / [README report commands](README.md#generate-the-full-maven-site-or-standard-gradle-test-report)                                                                                                    | Inspect results beyond console output, including HTML reports.                                                                |
+| 5. Reporting                            | [Reporting commands](#reporting) / [README report commands](README.md#generate-an-html-test-report)                                                                                                                                   | Inspect results beyond console output, including HTML reports.                                                                |
 | 6. We have just invented xUnit          | Revisit [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) and the report from chapter 5                                                                                          | Connect discovery, execution, assertions, fixtures, and reporting before moving to parameterized tests.                       |
-| 7. Parameterized tests                  | [CalculatorParameterizedTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java)                                                                                                      | Run one addition scenario with the five `@CsvSource` rows.                                                                    |
+| 7. Parameterized tests                  | [CalculatorParameterizedTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java)                                                                                                      | Run one addition scenario with the seven `@CsvSource` rows.                                                                   |
 | 8.1. Tags                               | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [article tag commands](#tags)                                                                                                | Select tests with plain lowercase `@Tag("smoke")` and `@Tag("regression")`, as in the article.                                |
 | 8.2. Disabled tests                     | [DisabledTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/DisabledTest.java)                                                                                                                                          | Temporarily disable a test with `@Disabled`.                                                                                  |
 | 8.3. Assumptions                        | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [assumptions example](#assumptions)                                                                                          | Check a runtime precondition with `assumeTrue()` before an assertion.                                                         |
@@ -38,8 +38,8 @@ Chapter 13 starts with `LoggingExtension`: a `BeforeEachCallback` registered via
 management and outcome observation examples, continue with
 [advanced extensions](README.md#6-custom-junit-5-extensions).
 
-For Appendix A, use [Quick Start](README.md#-quick-start), [pom.xml](pom.xml), and
-[build.gradle](build.gradle). For Appendix B, return to [junit-platform.properties](src/test/resources/junit-platform.properties),
+For the appendix on a minimal JUnit 6 project, use [Quick Start](README.md#-quick-start), [pom.xml](pom.xml), and
+[build.gradle](build.gradle). For chapter 11 on parallel execution, return to [junit-platform.properties](src/test/resources/junit-platform.properties),
 the commented alternative configuration in those build files, and the [parallel execution notes](README.md#9-parallel-execution).
 
 This route follows the article. The broader [Beginner Learning Path](README.md#-beginner-learning-path)
@@ -55,15 +55,15 @@ At chapter 5, run `CalculatorTest` and inspect its report.
 
 ```bash
 # Linux / macOS
-./mvnw clean site -Dtest=CalculatorTest
+./mvnw clean surefire-report:report -Dtest=CalculatorTest
 ```
 
 ```powershell
 # Windows PowerShell
-.\mvnw.cmd clean site "-Dtest=CalculatorTest"
+.\mvnw.cmd clean surefire-report:report "-Dtest=CalculatorTest"
 ```
 
-Open `target/site/surefire-report.html` after a successful build.
+Open `target/reports/surefire.html` after a successful build.
 
 **Gradle — test report**
 
@@ -85,8 +85,8 @@ Read the test names, counts, and outcomes, then continue to the xUnit recap and
 parameterized tests.
 
 To generate a report for the full workshop instead of only `CalculatorTest`,
-run `./mvnw clean site` or `./gradlew clean test`.
-See the [README report commands and output paths](README.md#generate-the-full-maven-site-or-standard-gradle-test-report).
+run `./mvnw clean surefire-report:report` or `./gradlew clean test`.
+See the [README report commands and output paths](README.md#generate-an-html-test-report).
 
 ## Tags
 
@@ -187,7 +187,7 @@ package; the manual entry point uses its `beforejunit` subpackage and the same C
 | 1. The code under test             | [Calculator.java](src/main/java/com/oleynik/qa/workshop/junit/scenarios/calculator/Calculator.java)                                   | `add()` and integer `divide()`                                                 |
 | 2. Start with a manual check       | [beforejunit/Main.java](src/main/java/com/oleynik/qa/workshop/junit/scenarios/calculator/beforejunit/Main.java)                       | Expected and actual values, then `expected == actual`                          |
 | 3. Tests, assertions and lifecycle | [CalculatorTest.java](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java)                           | `@Test`, `assertEquals`, `@BeforeEach` and `assertThrows` for division by zero |
-| 4. One scenario, multiple inputs   | [CalculatorParameterizedTest.java](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java) | `@ParameterizedTest` and the five `@CsvSource` rows from the article           |
+| 4. One scenario, multiple inputs   | [CalculatorParameterizedTest.java](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java) | `@ParameterizedTest` and the seven `@CsvSource` rows from the article          |
 
 Run the manual example from the repository root:
 
@@ -230,7 +230,7 @@ true
 Continue with `CalculatorTest`: `assertEquals` checks the expected result, JUnit runs
 the `@Test` methods automatically, and `@BeforeEach` creates a fresh Calculator for
 each test. `assertThrows` verifies division by zero. The parameterized test then runs
-the addition check with five input rows. Its `name = "{0} + {1} = {2}"` pattern
+the addition check with seven input rows. Its `name = "{0} + {1} = {2}"` pattern
 shows each pair of inputs and the expected sum, for example `2 + 3 = 5`.
 In this JUnit 5 branch, the `name` pattern alone displays the numeric CSV values without quotes.
 
@@ -263,9 +263,9 @@ Run these two test classes from the repository root:
 The Gradle HTML report at `build/reports/tests/test/index.html` now covers both
 selected classes.
 
-Expect nine test invocations: four regular tests and five parameterized invocations.
-With `EXTERNAL_SERVICE_URL` unset, eight pass and the assumptions example is skipped.
-With it set, all nine pass. For individual JUnit features, continue with the [Feature Map](README.md#-feature-map)
+Expect eleven test invocations: four regular tests and seven parameterized invocations.
+With `EXTERNAL_SERVICE_URL` unset, ten pass and the assumptions example is skipped.
+With it set, all eleven pass. For individual JUnit features, continue with the [Feature Map](README.md#-feature-map)
 and the [beginner learning path](README.md#-beginner-learning-path).
 
 [⬆ Back to Table of Contents](README.md#-table-of-contents)

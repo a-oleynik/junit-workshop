@@ -23,7 +23,9 @@ class CalculatorParameterizedTest {
             "3, -2, 1",
             "-2, -3, -5",
             "5, 0, 5",
-            "0, 0, 0"
+            "0, 0, 0",
+            "2147483647, 0, 2147483647",
+            "-2147483648, 0, -2147483648"
     })
     void shouldAddNumbers(int firstNumber, int secondNumber, int expected) {
         assertEquals(expected, calculator.add(firstNumber, secondNumber));
