@@ -35,7 +35,7 @@ src/
 │       ├── annotations/         # Custom annotation types and helpers
 │       ├── dataproviders/       # ArgumentsProvider / DataProvider implementations
 │       ├── extensions/          # DBResourceExtension, TestWatcherExtension, SuiteLikeLifecycleExtension
-│       ├── model/               # Shared domain model (User, MyDoubleWrapper, MyServer)
+│       ├── model/               # Shared domain model (User, MyDoubleWrapper, MyServer, ShoppingCart)
 │       ├── Factorial.java       # Example production class for parameterized tests
 │       ├── PrimeNumber.java
 │       └── Utils.java           # Helper used by timeout examples
@@ -46,7 +46,8 @@ src/
     │   │       ├── CalculatorTest.java
     │   │       └── CalculatorParameterizedTest.java
     │   └── topics/
-    │       ├── general/         # Basic assertions, fixtures, exceptions, display names, timeouts
+    │       ├── general/         # Basic assertions, lifecycle, exceptions, display names, timeouts
+    │       ├── fixtures/        # InlineFixtureTest and ImplicitFixtureTest: fresh cart per test
     │       ├── asserts/         # assertAll and AssertJ soft assertions
     │       ├── conditional/     # Assumptions (assumeTrue, assumingThat)
     │       ├── ddt/             # Parameterized and data-driven tests
@@ -64,7 +65,7 @@ src/
 ```
 
 ## Naming conventions
-- **Test classes** end with `Test` (e.g. `AssertTest`, `FixturesTest`).
+- **Test classes** end with `Test` (e.g. `AssertTest`, `LifecycleTest`).
 - **Suite-member classes** end with `Case` or `Scenario` — **never** `Test` or `Tests`. This prevents Maven Surefire from discovering them independently and running them twice (once standalone, once via the suite).
   - ✅ `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase`
   - ❌ `SuiteLifecycleFirstTest`
