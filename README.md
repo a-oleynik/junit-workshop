@@ -202,7 +202,7 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 | `topics/general`          | Timeout thread modes and `ThreadLocal` context                                      | [`TimeoutThreadModeTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/TimeoutThreadModeTest.java) |
 | `topics/general`          | Disabling tests (`@Disabled`)                                                       | `DisabledTest`                                                                                                   |
 | `topics/general`          | Display names & name generators                                                     | `DisplayNameTest`, `DisplayNameGenerationTest`                                                                   |
-| `topics/asserts`          | Grouped / soft assertions (`assertAll`)                                             | `AssertAllTest`                                                                                                  |
+| `topics/asserts`          | JUnit grouped assertions (`assertAll`)                                              | `AssertAllTest`                                                                                                  |
 | `topics/asserts`          | AssertJ soft assertions                                                             | `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`                                                      |
 | `topics/asserts`          | JUnit 5+ soft assert pattern                                                        | `SoftAssertTest`                                                                                                 |
 | `topics/conditional`      | Assumptions (`assumeTrue`, `assumeThat`)                                            | `AssumptionsTest`, `AssumptionsBeforeAllTest`                                                                    |
@@ -234,7 +234,7 @@ Work through these topics in order; each builds on the previous one.
 ### 1. Basic assertions
 
 `AssertTest`  
-Learn `assertEquals`, `assertTrue`, `assertNull`, `assertAll`, and `fail`.
+Learn `assertEquals`, `assertTrue`, `assertNull`, and `fail`.
 
 ### 2. Test lifecycle
 
