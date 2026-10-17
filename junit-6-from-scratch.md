@@ -20,9 +20,9 @@ or the optional assertion libraries in [Advanced Topics](README.md#-advanced-top
 | 2. Test discovery and the first `@Test` | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java)                                                                                                                  | Start with `should_add_two_positive_numbers`; JUnit discovers public methods annotated with `org.junit.Test`.                                                                                                                                                   |
 | 3. Assertions                           | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [AssertTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/AssertTest.java)                       | Use `org.junit.Assert` assertions to turn an expected result into a test outcome.                                                                                                                                                                               |
 | 4. Lifecycle and fixtures               | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [FixturesTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/FixturesTest.java)                   | Create a fresh Calculator in `@Before`; explore `@After`, `@BeforeClass`, and `@AfterClass`.                                                                                                                                                                    |
-| 5. Reporting                            | [Reporting commands](#reporting) / [README report commands](README.md#generate-the-full-maven-site-or-standard-gradle-test-report)                                                                                      | Inspect results beyond console output, including HTML reports.                                                                                                                                                                                                  |
+| 5. Reporting                            | [Reporting commands](#reporting) / [README report commands](README.md#generate-an-html-test-report)                                                                                                                     | Inspect results beyond console output, including HTML reports.                                                                                                                                                                                                  |
 | 6. We have just invented xUnit          | Revisit [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) and the report from chapter 5                                                                            | Connect discovery, execution, assertions, fixtures, and reporting before moving to parameterized tests.                                                                                                                                                         |
-| 7. Parameterized tests                  | [CalculatorParameterizedTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java)                                                                                        | Run five input rows with `@RunWith(Parameterized.class)`, `@Parameterized.Parameters`, and constructor injection.                                                                                                                                               |
+| 7. Parameterized tests                  | [CalculatorParameterizedTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java)                                                                                        | Run seven input rows with `@RunWith(Parameterized.class)`, `@Parameterized.Parameters`, and constructor injection.                                                                                                                                              |
 | 8.1. Tags → categories                  | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [article category commands](#categories)                                                                       | Select tests with `@Category(SmokeTests.class)` and `@Category(RegressionTests.class)`, adapting the article's tags.                                                                                                                                            |
 | 8.2. Disabled tests → ignored tests     | [IgnoringTest](src/test/java/com/oleynik/qa/workshop/junit/topics/general/IgnoringTest.java)                                                                                                                            | Temporarily skip a test with `@Ignore`.                                                                                                                                                                                                                         |
 | 8.3. Assumptions                        | [CalculatorTest](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java) / [assumptions example](#assumptions)                                                                            | Use `org.junit.Assume` to run tests only when their preconditions hold.                                                                                                                                                                                         |
@@ -40,8 +40,8 @@ logs the test name in `starting(Description)`, registered as a public `@Rule`
 field. For additional resource management and outcome observation examples,
 continue with [advanced rules](README.md#7-rules-externalresource--testwatcher).
 
-For Appendix A, use this branch's [Quick Start](README.md#-quick-start),
-[pom.xml](pom.xml), and [build.gradle](build.gradle). For Appendix B, follow the
+For the appendix on a minimal project, use this branch's [Quick Start](README.md#-quick-start),
+[pom.xml](pom.xml), and [build.gradle](build.gradle). For chapter 11 on parallel execution, follow the
 JUnit 4 [parallel execution notes](README.md#10-parallel-test-execution).
 
 The broader [Beginner Learning Path](README.md#-beginner-learning-path)
@@ -59,15 +59,15 @@ At chapter 5, run `CalculatorTest` and inspect its report.
 
 ```bash
 # Linux / macOS
-./mvnw clean site -Dtest=CalculatorTest
+./mvnw clean surefire-report:report -Dtest=CalculatorTest
 ```
 
 ```powershell
 # Windows PowerShell
-.\mvnw.cmd clean site "-Dtest=CalculatorTest"
+.\mvnw.cmd clean surefire-report:report "-Dtest=CalculatorTest"
 ```
 
-Open `target/site/surefire-report.html` after a successful build.
+Open `target/reports/surefire.html` after a successful build.
 
 **Gradle — test report**
 
@@ -89,8 +89,8 @@ Read the test names, counts, and outcomes, then continue to the xUnit recap and
 parameterized tests.
 
 To generate a report for the full workshop instead of only `CalculatorTest`,
-run `./mvnw clean site` or `./gradlew clean test`.
-See the [README report commands and output paths](README.md#generate-the-full-maven-site-or-standard-gradle-test-report).
+run `./mvnw clean surefire-report:report` or `./gradlew clean test`.
+See the [README report commands and output paths](README.md#generate-an-html-test-report).
 
 ## Categories
 
@@ -191,7 +191,7 @@ package; the manual entry point uses its `beforejunit` subpackage and the same C
 | 1. The code under test             | [Calculator.java](src/main/java/com/oleynik/qa/workshop/junit/scenarios/calculator/Calculator.java)                                   | `add()` and integer `divide()`                                                                             |
 | 2. Start with a manual check       | [beforejunit/Main.java](src/main/java/com/oleynik/qa/workshop/junit/scenarios/calculator/beforejunit/Main.java)                       | Expected and actual values, then `expected == actual`                                                      |
 | 3. Tests, assertions and lifecycle | [CalculatorTest.java](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java)                           | `org.junit.Test`, `@Before`, `assertEquals` and `assertThrows` for division by zero                        |
-| 4. One scenario, multiple inputs   | [CalculatorParameterizedTest.java](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java) | `@RunWith(Parameterized.class)`, `@Parameterized.Parameters` and constructor injection for five input rows |
+| 4. One scenario, multiple inputs   | [CalculatorParameterizedTest.java](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java) | `@RunWith(Parameterized.class)`, `@Parameterized.Parameters` and constructor injection for seven input rows |
 
 Run the manual example from the repository root:
 
@@ -234,7 +234,7 @@ true
 Continue with `CalculatorTest`: `assertEquals` checks the expected result, JUnit runs
 the `@Test` methods automatically, and `@Before` creates a fresh Calculator for
 each test. `assertThrows` verifies division by zero. The parameterized test then runs
-the addition check with five input rows. `@Parameterized.Parameters(name = "{index}: {0} + {1} = {2}")`
+the addition check with seven input rows. `@Parameterized.Parameters(name = "{index}: {0} + {1} = {2}")`
 labels each row with its inputs and expected sum, for example
 `should_add_numbers[0: 2 + 3 = 5]`. In JUnit 4, `{index}` starts at 0;
 `{0}`, `{1}`, and `{2}` refer to the arguments supplied by the data method.
@@ -268,9 +268,9 @@ Run these two test classes from the repository root:
 The Gradle HTML report at `build/reports/tests/test/index.html` now covers both
 selected classes.
 
-Expect nine test invocations: four regular tests and five parameterized invocations.
-With `EXTERNAL_SERVICE_URL` unset, eight pass and the assumptions example is skipped.
-With it set, all nine pass. For individual JUnit features, continue with the [Feature Map](README.md#-feature-map)
+Expect eleven test invocations: four regular tests and seven parameterized invocations.
+With `EXTERNAL_SERVICE_URL` unset, ten pass and the assumptions example is skipped.
+With it set, all eleven pass. For individual JUnit features, continue with the [Feature Map](README.md#-feature-map)
 and the [beginner learning path](README.md#-beginner-learning-path).
 
 [⬆ Back to Table of Contents](README.md#-table-of-contents)
