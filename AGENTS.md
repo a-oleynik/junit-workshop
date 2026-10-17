@@ -76,7 +76,7 @@ Place new feature examples under `src/test/java/…/topics/`; place complete art
 
 ### Add a new test class
 1. Decide which feature to demonstrate and pick the correct package under `src/test/…`.
-2. Name the class `<Feature>Test` (e.g. `TimeoutTest`, `NestedTest`).
+2. Name the class `<Feature>Test` (e.g. `TimeoutTest`, `LifecycleTest`).
 3. Use `@Test` from `org.junit.jupiter.api` — never `org.junit.Test`.
 4. Name test methods in `snake_case`.
 5. Use **AssertJ** for assertions unless the class is specifically demonstrating Hamcrest.
