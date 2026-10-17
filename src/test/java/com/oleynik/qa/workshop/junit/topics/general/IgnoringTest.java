@@ -1,17 +1,20 @@
 package com.oleynik.qa.workshop.junit.topics.general;
 
+import com.oleynik.qa.workshop.junit.scenarios.calculator.Calculator;
 import org.junit.*;
 
 import static java.lang.String.format;
 
-/*@Ignore("Ignoring these tests.")*/
+// @Ignore("BUG-124: shared test fixture initialization fails")
 public class IgnoringTest {
 
-    @Ignore
+    @Ignore("BUG-123: integer overflow is not handled yet")
     @Test
-    public void ignoring_multiplication_test() {
-        System.out.println("Multiplication test.");
-        Assert.assertEquals("Multiplication result is wrong", 10, 2 * 5);
+    public void should_detect_integer_overflow() {
+        Calculator calculator = new Calculator();
+
+        // Intended behavior: reject overflow instead of silently wrapping to Integer.MIN_VALUE.
+        Assert.assertThrows(ArithmeticException.class, () -> calculator.add(Integer.MAX_VALUE, 1));
     }
 
     @Test

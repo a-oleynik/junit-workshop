@@ -20,6 +20,10 @@ public class TimeoutTest {
         System.out.println("Tear down thread id " + Thread.currentThread().getId());
     }
 
+    // JUnit 4 expresses @Test timeout values in milliseconds.
+    // The test method runs on a different thread from @Before and @After.
+    // ThreadLocal context set up in @Before (for example, a transaction)
+    // is not automatically available in the test method.
     @Test(timeout = 6000)
     public void timeout_test() {
         System.out.println("Timeout test");
@@ -34,6 +38,7 @@ public class TimeoutTest {
         Utils.waitFor(1);//4
     }
 
+    // The six-second limit applies to this test method, not setUp() or tearDown().
     @Test(timeout = 6000)
     public void timeout_test3() {
         System.out.println("Timeout test");

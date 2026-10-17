@@ -7,6 +7,12 @@ import org.junit.runner.manipulation.Alphanumeric;
 
 import static java.lang.String.format;
 
+/**
+ * Demonstration only.
+ *
+ * <p>Do not use ordering to create dependencies between otherwise independent tests.
+ * Each test should prepare its own fixture and pass when run on its own.
+ */
 @OrderWith(Alphanumeric.class)
 public class ExecutionOrderWithTest {
     @Test

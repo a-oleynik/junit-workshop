@@ -40,7 +40,7 @@ src/
 │       ├── annotations/         # DataSource, Retry, RetryConfiguration
 │       ├── dataproviders/       # JUnitDataProvider
 │       ├── listeners/           # ExecutionListener (RunListener)
-│       ├── model/               # User, MyDoubleWrapper, MyServer
+│       ├── model/               # User, MyDoubleWrapper, MyServer, ShoppingCart
 │       ├── rules/               # DBResourceRule, MonitorRule, retry rules, AssertAll
 │       ├── runners/             # RetryRunner, ExecutionListenerRunner
 │       ├── Factorial.java       # Production code for parameterized tests
@@ -52,7 +52,8 @@ src/
     │   │       ├── CalculatorTest.java
     │   │       └── CalculatorParameterizedTest.java
     │   └── topics/
-    │       ├── general/         # Assertions, fixtures, exceptions, timeouts, @Ignore
+    │       ├── general/         # Basic assertions, lifecycle, exceptions, timeouts, @Ignore
+    │       ├── fixtures/        # InlineFixtureTest and ImplicitFixtureTest: fresh cart per test
     │       ├── asserts/         # ErrorCollector, AssertAll, AssertJ soft assertions
     │       ├── conditional/     # Assumptions via Assume
     │       ├── ddt/             # Parameterized, JUnitParams, DataProvider, Theories
@@ -73,7 +74,7 @@ src/
 ## Naming rules — follow exactly
 | Type               | Suffix                  | Example                         |
 |--------------------|-------------------------|---------------------------------|
-| Regular test class | `Test`                  | `AssertTest`, `FixturesTest`    |
+| Regular test class | `Test`                  | `AssertTest`, `LifecycleTest`   |
 | Suite member class | `Case` or `Scenario`    | `SuiteLifecycleFirstCase`       |
 | Category marker    | interface name (plural) | `SmokeTests`, `RegressionTests` |
 
@@ -127,7 +128,7 @@ JUnit 4 has no native `@BeforeSuite` / `@AfterSuite`. Three approaches are demon
 mvn clean test                          # all tests
 mvn clean test -Dtest=ClassName         # single class
 mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests  # by category
-mvn clean test -P Smoke                 # by Maven profile (Smoke or Regression)
+mvn clean test -P smoke                 # by Maven profile (smoke or regression)
 mvn clean surefire-report:report        # HTML report
 mvn clean site                          # full Maven site
 ```

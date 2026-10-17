@@ -2,7 +2,8 @@ package com.oleynik.qa.workshop.junit.topics.general;
 
 import org.junit.*;
 
-public class FixturesTest {
+/** Demonstrates lifecycle method calls. */
+public class LifecycleTest {
     private static final String ACTUAL = "Actual string";
     private static final String EXPECTED = "Actual string";// "Expected string"
 
@@ -23,17 +24,17 @@ public class FixturesTest {
 
     @After
     public void tearDown() {
-        System.out.println("Test down method");
+        System.out.println("Tear down method");
     }
 
     @Test
-    public void fixtures_the_first_test() {
+    public void lifecycle_the_first_test() {
         System.out.println("The first test");
         Assert.assertEquals("Wrong string found", EXPECTED, ACTUAL);
     }
 
     @Test
-    public void fixtures_the_second_test() {
+    public void lifecycle_the_second_test() {
         System.out.println("The second test");
         Assert.assertEquals("Wrong string found", EXPECTED, ACTUAL);
     }

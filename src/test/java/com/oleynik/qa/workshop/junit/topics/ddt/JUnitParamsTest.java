@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import junitparams.Parameters;
+import junitparams.naming.TestCaseName;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,12 +21,15 @@ public class JUnitParamsTest {
     }
 
     @Test
+    @TestCaseName("{index}: {0}! = {1}")
     @Parameters(method = "numbers")
     public void test_factorial_with_junit_params(long number, long expected) {
         Assert.assertEquals("Factorial function is wrong.", expected, Factorial.factorial(number));
     }
 
     @Test
+    // Keep the index: identical input rows must still have distinct invocation names.
+    @TestCaseName("{index}: {0} * {1} = {2}")
     @Parameters({
             "2,2,4",//3
             "2,2,4",

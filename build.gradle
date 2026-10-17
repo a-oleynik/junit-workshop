@@ -63,6 +63,8 @@ def configureWorkshopTest = { Test testTask ->
             '**/*Suite.class'
     testTask.systemProperties System.getProperties()
     testTask.systemProperty 'file.encoding', 'UTF-8'
+    // Native JUnit 4: run test classes in up to three separate JVMs.
+    testTask.maxParallelForks = 3
     testTask.testLogging {
         exceptionFormat = 'full'
         showStandardStreams = true

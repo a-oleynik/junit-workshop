@@ -20,7 +20,7 @@ public class TestWatcherRuleTest {
     }
 
     @Test
-    @Ignore
+    @Ignore("BUG-42: boolean conversion returns true for a false input")
     public void test_watcher_boolean_test(){
         boolean variable = true;
         Assert.assertTrue("variable is not true", variable);

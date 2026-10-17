@@ -30,9 +30,9 @@ mvn clean test -Dtest=<ClassName>#<methodName>
 mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests
 mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.topics.grouping.categories.RegressionTests
 
-# Run via Maven profile (Smoke or Regression — resolves to the fully-qualified category class internally)
-mvn clean test -P Smoke
-mvn clean test -P Regression
+# Run via Maven profile (smoke or regression — resolves to the fully-qualified category class internally)
+mvn clean test -P smoke
+mvn clean test -P regression
 
 # Generate Surefire HTML report
 mvn clean surefire-report:report
@@ -76,7 +76,7 @@ Place feature examples under `src/test/java/…/topics/` and shared helpers unde
 
 ### Add a new test class
 1. Decide which feature to demonstrate and pick the correct package under `src/test/…`.
-2. Name the class `<Feature>Test` (e.g. `TimeoutTest`, `FixturesTest`).
+2. Name the class `<Feature>Test` (e.g. `TimeoutTest`, `LifecycleTest`).
 3. Use `@org.junit.Test` — never `@org.junit.jupiter.api.Test`.
 4. Use `@Before` / `@After` / `@BeforeClass` / `@AfterClass` for lifecycle methods.
 5. Name test methods in `snake_case`.

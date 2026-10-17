@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class JUnitDataProvider {
-    @DataProvider
+    @DataProvider(format = "%m[%i: %p[0]! = %p[1]]")
     public static Object[][] read_numbers(FrameworkMethod frameworkMethod) {
         try {
             String dataSource = getDataSourcePathFromTestInfo(frameworkMethod);

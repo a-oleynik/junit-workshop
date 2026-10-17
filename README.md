@@ -10,8 +10,10 @@
 [![Lombok](https://img.shields.io/badge/Lombok-1.18.48-red.svg)](https://projectlombok.org/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
-> Companion code for the IT Talk **"JUnit 4 vs TestNG 6"**.
-> 
+**Runnable JUnit 4 examples for articles, workshops, talks, and self-study.**
+
+> Originally created as companion code for the IT Talk **"JUnit 4 vs TestNG 6"**.
+>
 > Previous edition: [TestNG vs. JUnit 4 slides](https://www.slideshare.net/oleynikandrey/it-talk-testng-6-vs-junit-4/) · [TestNG vs. JUnit 4 webinar](https://youtu.be/3C-Nu5mkyOQ?t=3207)
 >
 > **Related projects:**
@@ -33,8 +35,8 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 - [Prerequisites](#-prerequisites)
 - [Supported Versions](#-supported-versions)
 - [Feature Map](#-feature-map)
-- [Learning Path — Beginners](#-learning-path--beginners)
-- [Advanced Topics — Path for Senior Engineers](#-advanced-topics--path-for-senior-engineers)
+- [Beginner Learning Path](#-beginner-learning-path)
+- [Advanced Learning Path](#-advanced-learning-path)
 - [Command Examples](#-command-examples)
 - [CI / CD](#-ci--cd)
 - [AI Assistant Support](#-ai-assistant-support)
@@ -191,88 +193,163 @@ Gradle. Do not link both models at the same time: select one build system for th
 
 The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit/Main.java`; it uses the shared `Calculator` and leads into `CalculatorTest`.
 
-| Package / folder            | Feature demonstrated                                                                         | Test class(es)                                                                       |
-|-----------------------------|----------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
-| `topics/general`            | Basic assertions (`assertEquals`, `assertThat`, `assertNull`, …)                             | `AssertTest`                                                                         |
-| `topics/general`            | Exception testing (`@Test(expected=…)`, `assertThrows`)                                      | `ExceptionTest`                                                                      |
-| `topics/general`            | Test lifecycle (`@Before`, `@After`, `@BeforeClass`, `@AfterClass`)                          | `FixturesTest`                                                                       |
-| `topics/general`            | Hamcrest matchers                                                                            | `HamcrestTest`                                                                       |
-| `topics/general`            | Timeouts (`@Test(timeout=…)`, `Timeout` rule)                                                | `TimeoutTest`                                                                        |
-| `topics/general`            | Ignoring / disabling tests (`@Ignore`)                                                       | `IgnoringTest`, `DisabledTest`                                                       |
-| `topics/general`            | Custom `RunListener` + `ExecutionListenerRunner`                                             | `ExecutionListenerRunnerTest`                                                        |
-| `topics/asserts`            | Soft assertions via `ErrorCollector` rule                                                    | `SoftAssertErrorCollectorTest`, `SoftAssertErrorCollector2Test`                      |
-| `topics/asserts`            | AssertJ soft assertions                                                                      | `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`                          |
-| `topics/asserts`            | JUnit 4 soft assert pattern (`AssertAll` rule)                                               | `SoftAssertTest`                                                                     |
-| `topics/conditional`        | Assumptions (`Assume.assumeTrue`, `Assume.assumeThat`)                                       | `AssumeTest`, `AssumptionsTest`                                                      |
-| `topics/conditional`        | Assumptions in `@BeforeClass`                                                                | `AssumeBeforeClassTest`, `AssumptionsBeforeAllTest`                                  |
-| `topics/ddt`                | Parameterized tests — `@RunWith(Parameterized.class)`                                        | `ParameterizationTest`, `Parameterization2Test`                                      |
-| `topics/ddt`                | Lifecycle in parameterized tests (`@Before` / `@After`)                                      | `BeforeAfterParameterizationTest`                                                    |
-| `topics/ddt`                | JUnitParams (`@JUnitParamsRunner`, `@Parameters`)                                            | `JUnitParamsTest`                                                                    |
-| `topics/ddt`                | TNG DataProvider integration (`src/test/resources/numbers.csv`)                              | `DataProviderTest`, `DataProvider2Test`                                              |
-| `topics/ddt`                | Theories — `@Theory` + `@DataPoints` (Cartesian-style)                                       | `TheoryTest`                                                                         |
-| `topics/nested`             | Nested test classes (`HierarchicalContextRunner`)                                            | `NestedTest`                                                                         |
-| `topics/grouping`           | `@Category` with custom marker interfaces                                                    | `CategoriesTest`                                                                     |
-| `topics/grouping`           | Tagging via `@Category` annotations                                                          | `TagsTest`                                                                           |
-| `topics/order`              | Test execution ordering (`@FixMethodOrder`, `@OrderWith`)                                    | `FixMethodOrderTest`, `ExecutionOrderWithTest`                                       |
-| `topics/rules`              | External resource rule (`@Rule ExternalResource`)                                            | `ExternalResourceRuleTest`                                                           |
-| `topics/rules`              | `TestWatcher` rule (`MonitorRule`)                                                           | `TestWatcherRuleTest`                                                                |
-| `topics/repeat`             | Retry via custom runner (`@RunWith(RetryRunner.class)`)                                      | `RetryRunnerTest`                                                                    |
-| `topics/repeat`             | Retry via test-level rule (`RetryTestRule`)                                                  | `RetriedTestRuleTest`                                                                |
-| `topics/repeat`             | Retry via method-level rule (`RetryMethodRule`)                                              | `RetriedMethodRuleTest`                                                              |
-| `topics/repeat`             | Repeat demos                                                                                 | `RetryRepeatedTest`                                                                  |
-| `topics/suites/lifecycle`   | Suite lifecycle via `@ClassRule ExternalResource` — `@BeforeSuite` / `@AfterSuite` emulation | `BeforeAfterSuite`, `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase`            |
-| `topics/suites/beforeclass` | Suite lifecycle via `@BeforeClass` / `@AfterClass` directly on the suite class               | `BeforeClassSuite`, `BeforeClassFirstCase`, `BeforeClassSecondCase`                  |
-| `topics/suites/listener`    | Suite lifecycle via `JUnitCore` + `RunListener` (`testRunStarted` / `testRunFinished`)       | `JUnitCoreRunnerTest`, `SuiteRunListener`, `ListenerFirstCase`, `ListenerSecondCase` |
+| Package / folder            | Feature demonstrated                                                                         | Test class(es)                                                                                     |
+|-----------------------------|----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------|
+| `topics/general`            | Basic assertions (`assertEquals`, `assertThat`, `assertNull`, …)                             | `AssertTest`                                                                                       |
+| `topics/general`            | Exception testing (`@Test(expected=…)`, `assertThrows`)                                      | `ExceptionTest`                                                                                    |
+| `topics/general`            | Test lifecycle (`@Before`, `@After`, `@BeforeClass`, `@AfterClass`)                          | `LifecycleTest`                                                                                    |
+| `topics/fixtures`           | Fresh fixtures with In-line Setup and Implicit Setup                                         | `InlineFixtureTest`, `ImplicitFixtureTest`                                                         |
+| `topics/general`            | Hamcrest matchers                                                                            | `HamcrestTest`                                                                                     |
+| `topics/general`            | Timeouts (`@Test(timeout=…)`)                                                                | `TimeoutTest`                                                                                      |
+| `topics/general`            | Ignoring / disabling tests (`@Ignore`)                                                       | `IgnoringTest`, `DisabledTest`                                                                     |
+| `topics/general`            | Custom `RunListener` + `ExecutionListenerRunner`                                             | `ExecutionListenerRunnerTest`                                                                      |
+| `topics/asserts`            | Grouped assertions via `ErrorCollector.checkThat()` and Hamcrest matchers                    | `SoftAssertErrorCollectorTest`                                                                     |
+| `topics/asserts`            | AssertJ soft assertions                                                                      | `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`, `SoftAssertTest`                      |
+| `topics/asserts`            | Grouped JUnit assertions via a custom `AssertAll` helper and `ErrorCollector` rule           | `SoftAssertErrorCollector2Test`                                                                    |
+| `topics/conditional`        | Assumptions (`Assume.assumeTrue`, `Assume.assumeThat`)                                       | `AssumeTest`, `AssumptionsTest`                                                                    |
+| `topics/conditional`        | Assumptions in `@BeforeClass`                                                                | `AssumeBeforeClassTest`, `AssumptionsBeforeAllTest`                                                |
+| `topics/ddt`                | Parameterized tests — `@RunWith(Parameterized.class)`                                        | `ParameterizationTest`, `Parameterization2Test`                                                    |
+| `topics/ddt`                | Lifecycle in parameterized tests (`@Before` / `@After`)                                      | `BeforeAfterParameterizationTest`                                                                  |
+| `topics/ddt`                | JUnitParams (`@JUnitParamsRunner`, `@Parameters`)                                            | `JUnitParamsTest`                                                                                  |
+| `topics/ddt`                | TNG DataProvider integration (`src/test/resources/numbers.csv`)                              | `DataProviderTest`, `DataProvider2Test`                                                            |
+| `topics/ddt`                | Theories — `@Theory` + `@DataPoints` (Cartesian-style)                                       | `TheoryTest`                                                                                       |
+| `topics/nested`             | Nested test classes (`HierarchicalContextRunner`)                                            | `NestedTest`                                                                                       |
+| `topics/grouping`           | `@Category` with custom marker interfaces                                                    | `CategoriesTest`                                                                                   |
+| `topics/grouping`           | Tagging via `@Category` annotations                                                          | `TagsTest`                                                                                         |
+| `topics/order`              | Test execution ordering (`@FixMethodOrder`, `@OrderWith`)                                    | `FixMethodOrderTest`, `ExecutionOrderWithTest`                                                     |
+| `topics/rules/basic`        | First rule (`TestWatcher.starting`, `@Rule`)                                                 | `LoggingRuleTest`                                                                                  |
+| `topics/rules`              | External resource rule (`@Rule ExternalResource`)                                            | `ExternalResourceRuleTest`                                                                         |
+| `topics/rules`              | `TestWatcher` rule (`MonitorRule`)                                                           | `TestWatcherRuleTest`                                                                              |
+| `topics/rules`              | Per-test timeout rule, lifecycle scope, and `ThreadLocal` context                            | [`TimeoutRuleTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/rules/TimeoutRuleTest.java) |
+| `topics/repeat`             | Retry via custom runner (`@RunWith(RetryRunner.class)`)                                      | `RetryRunnerTest`                                                                                  |
+| `topics/repeat`             | Retry via test-level rule (`RetryTestRule`)                                                  | `RetriedTestRuleTest`                                                                              |
+| `topics/repeat`             | Retry via method-level rule (`RetryMethodRule`)                                              | `RetriedMethodRuleTest`                                                                            |
+| `topics/repeat`             | Repeat demos                                                                                 | `RetryRepeatedTest`                                                                                |
+| `topics/suites/lifecycle`   | Suite lifecycle via `@ClassRule ExternalResource` — `@BeforeSuite` / `@AfterSuite` emulation | `BeforeAfterSuite`, `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase`                          |
+| `topics/suites/beforeclass` | Suite lifecycle via `@BeforeClass` / `@AfterClass` directly on the suite class               | `BeforeClassSuite`, `BeforeClassFirstCase`, `BeforeClassSecondCase`                                |
+| `topics/suites/listener`    | Suite lifecycle via `JUnitCore` + `RunListener` (`testRunStarted` / `testRunFinished`)       | `JUnitCoreRunnerTest`, `SuiteRunListener`, `ListenerFirstCase`, `ListenerSecondCase`               |
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
-## 🌱 Learning Path — Beginners
+## 🌱 Beginner Learning Path
 
 Work through these topics in order; each builds on the previous one.
 
-1. **Basic assertions** → `AssertTest`  
-   Learn `assertEquals`, `assertThat`, `assertNull`, and `fail`.
+### 1. Basic assertions
 
-2. **Test lifecycle** → `FixturesTest`  
-   Understand `@Before`, `@After`, `@BeforeClass`, `@AfterClass`.
+`AssertTest`  
+Learn `assertEquals`, `assertTrue`, `assertNull`, and `fail`.
 
-3. **Exception testing** → `ExceptionTest`  
-   Use `@Test(expected=…)` and the modern `assertThrows` (available since JUnit 4.13).
+### 2. Test lifecycle
 
-4. **Ignoring tests** → `IgnoringTest`  
-   Skip tests cleanly with `@Ignore` and understand the difference from failing tests.
+`LifecycleTest`  
+Understand `@Before`, `@After`, `@BeforeClass`, `@AfterClass`.
 
-5. **Hamcrest matchers** → `HamcrestTest`  
-   Write expressive assertions with `assertThat`.
+### 3. Fixtures (in-line vs. implicit setup)
 
-6. **Soft assertions** → `SoftAssertErrorCollectorTest`  
-   Use `ErrorCollector` rule so multiple failures are collected before reporting.
+[`InlineFixtureTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/fixtures/InlineFixtureTest.java),
+[`ImplicitFixtureTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/fixtures/ImplicitFixtureTest.java)  
+Learn the difference between **fixture** (the test state/data) and **lifecycle methods**
+(the setup mechanism). Compare creating an empty `ShoppingCart` directly in each test
+versus using `@Before`.
 
-7. **Assumptions** → `AssumeTest`  
-   Skip tests dynamically when preconditions are not met.
+The empty cart and its state form the fixture; creating it is fixture setup.
+Both examples use a **Fresh Fixture**: each test gets a new cart.
+In-line/Implicit Setup describes where preparation happens; Fresh/Shared Fixture
+describes whether fixture state is recreated or reused between tests.
+Prices and quantities stay in each test so its expected total is easy to understand.
+These in-memory objects need no explicit teardown; external resources may need cleanup.
 
-8. **Parameterized tests** → `ParameterizationTest`  
-   Drive one test method with many data rows using `@RunWith(Parameterized.class)`.
+### 4. Exception testing
 
-9. **Nested tests** → `NestedTest`  
-   Organise related scenarios using inner context classes with `HierarchicalContextRunner`.
+`ExceptionTest`  
+Use `@Test(expected=…)` and the modern `assertThrows` (available since JUnit 4.13).
 
-10. **Categories** → `CategoriesTest`  
-    Mark tests as `SmokeTests` or `RegressionTests` and run subsets from the command line.
+### 5. Ignoring tests
+
+`IgnoringTest`  
+Skip tests cleanly with `@Ignore` and understand the difference from failing tests.
+
+### 6. Grouped assertions
+
+[`SoftAssertErrorCollector2Test`](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertErrorCollector2Test.java)
+uses standard JUnit 4 `assertEquals`, `assertTrue`, and `assertFalse` with a custom
+`AssertAll` helper and an `ErrorCollector` rule to report collected failures together.
+JUnit 4 has no built-in Jupiter `assertAll()`.
+For `ErrorCollector.checkThat()` with Hamcrest matchers, see
+[`SoftAssertErrorCollectorTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertErrorCollectorTest.java).
+
+### 7. Assumptions
+
+`AssumeTest`
+Skip tests dynamically when preconditions are not met.
+
+### 8. Parameterized tests
+
+`ParameterizationTest`  
+Drive one test method with many data rows using `@RunWith(Parameterized.class)`.
+
+Readable invocation names show the inputs and expected result in IDE results and
+reports. JUnit 4 and the additional libraries in this branch use different annotations:
+
+| Runner / library         | Where to configure the name            | Example                                            |
+|--------------------------|----------------------------------------|----------------------------------------------------|
+| JUnit 4 `Parameterized`  | `@Parameters` on the data method       | `@Parameters(name = "{index}: {0}! = {1}")`        |
+| JUnitParams              | `@TestCaseName` on the test method     | `@TestCaseName("{index}: {0} * {1} = {2}")`        |
+| TNG `DataProviderRunner` | `@DataProvider` on the provider method | `@DataProvider(format = "%m[%i: %p[0]! = %p[1]]")` |
+
+`{0}`, `{1}`, etc. select arguments by position; TNG uses `%p[0]`, `%p[1]`, etc.
+`{index}` and `%i` number data rows starting at **0** in these libraries.
+TNG's `%m` adds the test method name. Retaining the index distinguishes repeated
+rows, such as the three identical multiplication cases in `JUnitParamsTest`.
+The expected value is supplied by the data source: a display name does not compute
+or assert the result.
+
+[`CalculatorParameterizedTest`](src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java)
+already uses `@Parameterized.Parameters(name = "{index}: {0} + {1} = {2}")`,
+producing names such as `should_add_numbers[0: 2 + 3 = 5]`.
+See [JUnit 4 parameterized test names](https://junit.org/junit4/javadoc/4.13.2/org/junit/runners/Parameterized.html).
+
+### 9. Nested tests
+
+`NestedTest`  
+Organise related scenarios using inner context classes with `HierarchicalContextRunner`.
+
+### 10. Categories
+
+`CategoriesTest`  
+Mark tests as `SmokeTests` or `RegressionTests` and run subsets from the command line.
 
 **Run the whole beginner suite:**
 
 ```bash
-mvn clean test
+# Maven
+./mvnw clean test
+
+# Gradle
+./gradlew clean test
 ```
+
+### 11. HTML Report Generation
+
+```bash
+# Maven
+./mvnw clean site
+
+# Gradle
+./gradlew clean test
+```
+
+Maven writes the report to `target/site/surefire-report.html`; Gradle writes it to
+`build/reports/tests/test/index.html` automatically as part of the standard `test` task.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
 ---
 
-## 🎯 Advanced Topics — Path for Senior Engineers
+## 🎯 Advanced Learning Path
 
 These topics assume familiarity with JUnit 4 basics.
 
@@ -300,66 +377,201 @@ tests that keep parameters close to the test method.
 Use `@RunWith(Theories.class)` with `@DataPoints` and `@FromDataPoints` to generate all combinations
 of parameter sets automatically — the JUnit 4 native approach to Cartesian-style parameterization.
 
-### 5. Soft Assertions (AssertJ)
+### 5. AssertJ fluent and soft assertions
 
-`SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`  
-Collect all assertion failures before reporting — no early bail-out.
+[`SoftAssertionsAssertJTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertionsAssertJTest.java), [`SoftAssertionsAssertJBDDTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertionsAssertJBDDTest.java)
 
-### 6. Rules: `ExternalResource` & `TestWatcher`
+Use fluent assertions and collect multiple assertion failures with soft assertions.
+These JUnit 4 examples register `JUnitSoftAssertions` and `JUnitBDDSoftAssertions`
+as public `@Rule` fields; the rules report collected failures automatically after
+each test. The BDD variant uses `then(...)`.
+For explicit collection with `SoftAssertions.assertAll()`, see
+[`SoftAssertTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertTest.java).
 
-`ExternalResourceRuleTest` → `@Rule ExternalResource` (`DBResourceRule`)  
-`TestWatcherRuleTest` → `@Rule TestWatcher` (`MonitorRule`)  
-JUnit 4 `@Rule` and `@ClassRule` are the equivalent of JUnit 5+ `@ExtendWith`.
-`ExternalResource` manages external resources (databases, servers); `TestWatcher` observes test outcomes.
+### 6. Hamcrest matchers
 
-### 7. Test Execution Order
+[`HamcrestTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/HamcrestTest.java)
+
+Write expressive assertions with `org.hamcrest.MatcherAssert.assertThat` and
+matchers in ordinary `org.junit.Test` methods.
+
+### 7. Rules: `ExternalResource` & `TestWatcher`
+
+**First rule:** [`LoggingRuleTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/rules/basic/LoggingRuleTest.java)
+registers [`LoggingRule`](src/main/java/com/oleynik/qa/workshop/junit/topics/rules/basic/LoggingRule.java)
+as a public, non-static `@Rule` field. The rule extends JUnit 4's `TestWatcher`
+and overrides only `starting(Description)` to print the test name before execution.
+Run it and observe `Starting test: adds_two_numbers` followed by `Running the test body`.
+This is the JUnit 4 counterpart of the article's introductory `LoggingExtension`;
+JUnit 4 uses rules here instead of Jupiter's `BeforeEachCallback` and `@ExtendWith`.
+
+**Advanced rules:**
+[`ExternalResourceRuleTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/rules/ExternalResourceRuleTest.java)
+uses `DBResourceRule` (`ExternalResource`) to manage resource setup and cleanup.
+[`TestWatcherRuleTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/rules/TestWatcherRuleTest.java)
+uses `MonitorRule` (`TestWatcher`) to observe test outcomes.
+
+#### Timeout rule
+
+[`TimeoutRuleTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/rules/TimeoutRuleTest.java)
+uses JUnit 4's built-in `org.junit.rules.Timeout`:
+
+```java
+@Rule
+public Timeout timeout = Timeout.seconds(2);
+```
+
+The same limit applies to each test separately, including its `@Before` and
+`@After` methods; it is not a shared time budget for the whole class.
+The rule runs this lifecycle in a worker thread. Both tests verify that the
+`ThreadLocal` value prepared in `@Before` is available during the test, and
+`@After` checks the context and thread before removing the value in a `finally` block.
+One test also simulates a short operation with `Thread.sleep(100)`.
+
+Compare with [`TimeoutTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/TimeoutTest.java):
+`@Test(timeout = ...)` limits only the test method and runs it on a different
+thread from `@Before` and `@After`. An ordinary `ThreadLocal` initialized during
+setup is therefore not automatically available in that test method.
+Use either mechanism on its own in these examples so the threading behavior
+remains clear. See the [JUnit 4 timeout documentation](https://junit.org/junit4/javadoc/4.13.2/org/junit/Test.html).
+
+Run this example with your chosen build tool:
+
+```bash
+# Maven
+./mvnw test -Dtest=TimeoutRuleTest
+
+# Gradle
+./gradlew test --tests "*TimeoutRuleTest"
+```
+
+Both tests should pass.
+
+### 8. Test Execution Order
 
 `FixMethodOrderTest` — `@FixMethodOrder(MethodSorters.NAME_ASCENDING)`  
 `ExecutionOrderWithTest` — `@OrderWith(Alphanumeric.class)` (JUnit 4.13+)  
 Two ways to control method execution order in JUnit 4.
 
-### 8. Retry Strategies
+This is a demonstration of the ordering API. Keep tests independent: do not use
+ordering to make one test depend on state or results produced by another.
+Each test should prepare its own fixture and pass when run on its own.
+
+### 9. Retry Strategies
 
 `RetryRunnerTest` — `@RunWith(RetryRunner.class)` + `@RetryConfiguration(maxTries=…)` (custom runner)  
 `RetriedTestRuleTest` — `RetryTestRule` via `@Rule` (test-level retry)  
 `RetriedMethodRuleTest` — `RetryMethodRule` via `@Rule` (method-level rule applied per method)  
 Three progressively more granular approaches to retrying flaky tests.
 
-### 9. Parallel Test Execution
+### 10. Parallel Test Execution
 
-Surefire can run tests in parallel without any additional dependencies.
-`pom.xml` already contains the parallel config — just uncomment it:
+Parallel execution is enabled by default in both build tools, using different mechanisms.
+
+**Maven — two ways to configure JUnit Vintage**
+
+[Surefire 3.6.0](https://maven.apache.org/surefire/maven-surefire-plugin/whats-new-3-6-0.html)
+automatically runs JUnit 4 tests through the Vintage engine on the JUnit Platform.
+Both configuration styles below work; use one at a time.
+
+**1. Surefire options — active by default**
+
+[`pom.xml`](pom.xml) defines the project properties `parallel=methods` and
+`threadCount=3` and references them in the Surefire configuration:
 
 ```xml
-<plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-surefire-plugin</artifactId>
-    <version>3.5.5</version>
-    <configuration>
-        <parallel>methods</parallel>
-        <threadCount>3</threadCount>
-    </configuration>
-</plugin>
+<configuration>
+    <parallel>${parallel}</parallel>
+    <threadCount>${threadCount}</threadCount>
+</configuration>
 ```
 
-**Available `parallel` modes:**
+Methods within each class run concurrently, with a pool size of three; test
+classes run sequentially. The property references let `-Dparallel` and
+`-DthreadCount` override these defaults from the command line.
 
-| Mode      | What runs in parallel                                  |
-|-----------|--------------------------------------------------------|
-| `methods` | Test methods within each class (safest starting point) |
-| `classes` | Whole test classes                                     |
-| `both`    | Classes and methods simultaneously                     |
-| `suites`  | Test suites                                            |
-| `all`     | Suites, classes, and methods — maximum parallelism     |
+| `parallel` value    | What runs concurrently with Surefire 3.6.0 / Vintage                                                                 |
+|---------------------|----------------------------------------------------------------------------------------------------------------------|
+| `methods`           | Methods within each class (the project default)                                                                      |
+| `classes`           | Top-level classes, including separately discovered suite classes; methods within an ordinary class remain sequential |
+| `classesAndMethods` | Classes and methods                                                                                                  |
+| `both`              | Legacy alias for `classesAndMethods`                                                                                 |
+| `none`              | Sequential execution                                                                                                 |
 
-**Enable from the command line without editing `pom.xml`:**
+**Version-specific limitation:** with Surefire 3.6.0's Vintage provider, the old
+`suites` and `all` values do not enable class or method parallelism. A check using
+two JUnit 4 suites with two methods each ran all four methods sequentially for
+both values, despite a successful build. The same suites overlapped with `classes`.
+For this version, use `classes` for separately discovered suites, or
+`classesAndMethods` for class and method parallelism; do not assume that the old
+suite-specific scheduling modes carry over unchanged.
+See [Surefire's conversion to Vintage parameters](https://github.com/apache/maven-surefire/blob/surefire-3.6.0/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/AbstractSurefireMojo.java#L1511-L1537).
+
+**2. Vintage parameters — commented alternative in POM**
+
+To configure the engine directly, comment out the two Surefire option elements
+above and uncomment the `configurationParameters` block inside Surefire's
+`properties` element:
+
+```xml
+<properties>
+    <configurationParameters>
+        junit.vintage.execution.parallel.enabled=true
+        junit.vintage.execution.parallel.classes=false
+        junit.vintage.execution.parallel.methods=true
+        junit.vintage.execution.parallel.pool-size=3
+    </configurationParameters>
+</properties>
+```
+
+This produces the same method-level parallelism. These are `junit.vintage.*`
+settings for JUnit 4 tests, not `junit.jupiter.*` settings. With `enabled=true`,
+set `classes=true` to parallelize classes, `methods=true` to parallelize methods,
+or both to parallelize both levels. If both are false, execution is sequential.
+
+When using this alternative, edit the parameters in that block directly;
+`-Dparallel` and `-DthreadCount` do not override its explicit values. Set
+`junit.vintage.execution.parallel.enabled=false` in the block to disable it.
+See [Vintage parallel execution](https://docs.junit.org/5.14.4/migrating-from-junit4.html#parallel-execution).
+
+**Gradle — parallel classes in separate JVMs**
+
+[`build.gradle`](build.gradle) uses the native JUnit 4 runner (`useJUnit`).
+Its shared `configureWorkshopTest` configuration enables parallel forks for
+`test`, `smokeTest`, and `regressionTest`:
+
+```groovy
+testTask.maxParallelForks = 3
+```
+
+Gradle runs test classes in up to three separate JVM processes, subject to its
+worker limit. This setting does not parallelize methods within a class.
+Set it to `1` to return to a single test process.
+
+Gradle has no Surefire-style `parallel=suites` or `parallel=all` setting.
+Separately discovered `@RunWith(Suite.class)` classes can run in different forks;
+our two-suite check confirmed this. A single suite is submitted as one class to
+one fork: `maxParallelForks` does not split its members or methods across JVMs.
+A custom runner can introduce its own concurrency. Keep suite members named
+`*Case` so they are not also discovered and run independently.
+See [Gradle test execution](https://docs.gradle.org/current/userguide/java_testing.html#sec:test_execution).
+
+Run the usual test command for your chosen build tool; no extra parallel flag is needed:
 
 ```bash
-mvn clean test -Dparallel=methods -DthreadCount=3
+./mvnw clean test
+./gradlew clean test
 ```
 
-> ⚠️ **Thread safety:** tests running in parallel must not share mutable static state.
-> Using `@FixMethodOrder` together with parallel methods can produce unpredictable results.
+These defaults belong to the build tools. Direct IDE test runs do not automatically
+inherit them; IDE runs delegated to Maven or Gradle use that build's configuration.
+There is no shared `junit-platform.properties` in this branch: Gradle's native
+`useJUnit` runner does not consume Vintage configuration parameters.
+
+> **Independent tests:** parallel tests must not rely on execution order or share
+> mutable state without coordination. Separate JVMs still share external resources
+> such as files and databases. Keep ordering demonstrations sequential when observing
+> `@FixMethodOrder` or `@OrderWith`.
 
 **Alternative — `ConcurrentTestRunner`** (`junit-runners` is already in `pom.xml`):
 
@@ -370,7 +582,7 @@ public class MyParallelTest { ... }
 
 Runs methods within a single class concurrently, independent of Surefire config.
 
-### 10. Maven Profiles & Gradle Tasks (Category-based filtering)
+### 11. Maven Profiles & Gradle Tasks (Category-based filtering)
 
 Categories used in this project: `SmokeTests` and `RegressionTests` (marker interfaces in `topics/grouping/categories/`).
 
@@ -389,19 +601,19 @@ Categories used in this project: `SmokeTests` and `RegressionTests` (marker inte
 **Via Maven profiles or dedicated Gradle tasks:**
 
 ```bash
-./mvnw clean test -P Smoke
+./mvnw clean test -P smoke
 ./gradlew clean smokeTest
 
-./mvnw clean test -P Regression
+./mvnw clean test -P regression
 ./gradlew clean regressionTest
 ```
 
 > Each profile activates the matching `<groups>` filter in the Surefire configuration or Gradle `useJUnit` category filter
 > using the fully-qualified category class name (`SmokeTests` / `RegressionTests`), and automatically excludes
 > `*Suite.java` / `*Suite.class` classes, which have no `@Category` annotation and would otherwise interfere with
-> filtered runs. Profile IDs match the master-branch convention — `Smoke` and `Regression`.
+> filtered runs. Profile IDs match the master-branch convention — `smoke` and `regression`.
 
-### 11. Test Suite (`@BeforeSuite` / `@AfterSuite` emulation)
+### 12. Test Suite (`@BeforeSuite` / `@AfterSuite` emulation)
 
 JUnit 4 has **no native `@BeforeSuite` / `@AfterSuite`**.  
 Two approaches work correctly — both are demonstrated in this project.
@@ -576,24 +788,11 @@ public class SuiteRunListener extends RunListener {
 | Requires suite class    | A & B: ✅ required / C: ❌ not needed | ✅ `@SelectClasses` required        |
 | Tests run independently | ❌ Only via suite entry point         | ❌ Only via suite entry class       |
 
-### 12. Custom RunListener
+### 13. Custom RunListener
 
 `ExecutionListenerRunnerTest`  
 Attach a custom `RunListener` (via `ExecutionListenerRunner`) to observe test lifecycle events:
 test started, finished, failed, assumed, ignored.
-
-### 13. HTML Report Generation
-
-```bash
-# Maven
-./mvnw clean site
-
-# Gradle
-./gradlew clean test
-```
-
-Maven writes the report to `target/site/surefire-report.html`; Gradle writes it to
-`build/reports/tests/test/index.html` automatically as part of the standard `test` task.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -647,9 +846,22 @@ Maven writes the report to `target/site/surefire-report.html`; Gradle writes it 
 
 ### Run tests in parallel
 
+Parallel execution is already enabled. With the default Surefire configuration,
+you can explicitly select or override its mode and pool size:
+
 ```bash
 ./mvnw clean test -Dparallel=methods -DthreadCount=3
+./mvnw clean test -Dparallel=classes -DthreadCount=3
+# Disable Surefire-managed parallel execution for this run
+./mvnw clean test -Dparallel=none
+
+# Gradle uses maxParallelForks from build.gradle
+./gradlew clean test
 ```
+
+These Maven overrides apply to the active Surefire options, not the commented
+Vintage alternative. See [Parallel Test Execution](#10-parallel-test-execution)
+for both approaches and the different Gradle behavior.
 
 ### Rerun failing tests automatically (e.g. flaky tests)
 
@@ -670,15 +882,15 @@ Maven writes the report to `target/site/surefire-report.html`; Gradle writes it 
 ```
 
 > ⚠️ In JUnit 4, `-Dgroups` and `-DincludeCategories` require the **fully-qualified class name** of the category interface,
-> unlike JUnit 5+ where short tag strings are used (e.g. `-Dgroups=Smoke`).
+> unlike JUnit 5+ where short tag strings are used (e.g. `-Dgroups=smoke`).
 
 ### Run tests via Maven profile or dedicated Gradle task
 
 ```bash
-./mvnw clean test -P Smoke
+./mvnw clean test -P smoke
 ./gradlew clean smokeTest
 
-./mvnw clean test -P Regression
+./mvnw clean test -P regression
 ./gradlew clean regressionTest
 ```
 
@@ -752,8 +964,8 @@ This project uses **GitHub Actions** with a manually triggered workflow.
 
 Triggered manually from **Actions → Run workflow** on GitHub.
 
-| Input    | Required | Description                                                                                                                                                              |
-|----------|----------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Input    | Required | Description                                                                                                                                                                     |
+|----------|----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `groups` | No       | Category filter for the by-category job (fully-qualified class name, e.g. `com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests`). Leave empty to skip that job. |
 
 ### Jobs
@@ -854,8 +1066,9 @@ src/
 │       ├── annotations/         # DataSource, Retry, RetryConfiguration
 │       ├── dataproviders/       # JUnitDataProvider
 │       ├── listeners/           # ExecutionListener (RunListener)
-│       ├── model/               # User, MyDoubleWrapper, MyServer
+│       ├── model/               # User, MyDoubleWrapper, MyServer, ShoppingCart
 │       ├── rules/               # DBResourceRule, MonitorRule, retry rules, AssertAll
+│       │   └── basic/           # LoggingRule: log the test name before execution
 │       ├── runners/             # RetryRunner, ExecutionListenerRunner
 │       ├── Factorial.java       # Production code for parameterized tests
 │       └── Utils.java           # Helper used by timeout examples
@@ -866,7 +1079,8 @@ src/
     │   │       ├── CalculatorTest.java
     │   │       └── CalculatorParameterizedTest.java
     │   └── topics/
-    │       ├── general/         # Assertions, fixtures, exceptions, timeouts, @Ignore
+    │       ├── general/         # Basic assertions, lifecycle, exceptions, timeouts, @Ignore
+    │       ├── fixtures/        # InlineFixtureTest and ImplicitFixtureTest: fresh cart per test
     │       ├── asserts/         # ErrorCollector, AssertAll, AssertJ soft assertions
     │       ├── conditional/     # Assumptions via Assume
     │       ├── ddt/             # Parameterized, JUnitParams, DataProvider, Theories
@@ -875,6 +1089,7 @@ src/
     │       │   └── categories/  # SmokeTests, RegressionTests marker interfaces
     │       ├── order/           # @FixMethodOrder, @OrderWith
     │       ├── rules/           # ExternalResource and TestWatcher examples
+    │       │   └── basic/       # LoggingRuleTest: registration with @Rule
     │       ├── repeat/          # Retry runners, retry rules and repeat demos
     │       └── suites/
     │           ├── lifecycle/   # @ClassRule + ExternalResource
@@ -942,3 +1157,5 @@ build/                       # Generated by Gradle — not committed to git
 This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
 
 [⬆ Back to Table of Contents](#-table-of-contents)
+
+---
