@@ -1,4 +1,4 @@
-# JUnit 6 Workshop Examples
+# JUnit 6, JUnit 5 & JUnit 4 — Java Tutorials, Examples & Workshops
 
 [![Java CI with Maven](https://github.com/a-oleynik/junit-workshop/actions/workflows/maven.yml/badge.svg)](https://github.com/a-oleynik/junit-workshop/actions/workflows/maven.yml)
 [![Java](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
@@ -11,7 +11,9 @@
 [![Lombok](https://img.shields.io/badge/Lombok-1.18.48-red.svg)](https://projectlombok.org/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
-**Runnable JUnit 6 examples for articles, workshops, talks, and self-study.**
+A hands-on Java testing workshop with runnable examples for **JUnit 6, JUnit 5, and JUnit 4.**
+
+Learn JUnit from scratch, explore advanced features, and compare JUnit with TestNG. Includes Maven and Gradle projects, step-by-step learning paths, and practical examples for articles, workshops, tech talks, and self-study.
 
 > Originally created as companion code for the IT Talk **"JUnit 6 vs TestNG 7"**.
 >
