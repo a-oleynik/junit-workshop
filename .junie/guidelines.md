@@ -34,7 +34,7 @@ src/
 │       ├── annotations/         # Custom annotation types and helpers
 │       ├── dataproviders/       # ArgumentsProvider / DataProvider implementations
 │       ├── extensions/          # DBResourceExtension, TestWatcherExtension, SuiteLikeLifecycleExtension
-│       ├── model/               # Shared domain model (User, MyDoubleWrapper, MyServer)
+│       ├── model/               # Shared domain model (User, MyDoubleWrapper, MyServer, ShoppingCart)
 │       ├── Factorial.java       # Example production class for parameterized tests
 │       ├── PrimeNumber.java
 │       └── Utils.java           # Helper used by timeout examples
@@ -45,7 +45,8 @@ src/
     │   │       ├── CalculatorTest.java
     │   │       └── CalculatorParameterizedTest.java
     │   └── topics/
-    │       ├── general/         # Basic assertions, fixtures, exceptions, display names, timeouts
+    │       ├── general/         # Basic assertions, lifecycle, exceptions, display names, timeouts
+    │       ├── fixtures/        # InlineFixtureTest and ImplicitFixtureTest: fresh cart per test
     │       ├── asserts/         # assertAll and AssertJ soft assertions
     │       ├── conditional/     # Assumptions (assumeTrue, assumingThat)
     │       ├── ddt/             # Parameterized and data-driven tests
@@ -65,7 +66,7 @@ src/
 ## Naming rules — follow exactly
 | Type                | Suffix               | Example                      |
 |---------------------|----------------------|------------------------------|
-| Regular test class  | `Test`               | `AssertTest`, `FixturesTest` |
+| Regular test class  | `Test`               | `AssertTest`, `LifecycleTest` |
 | Suite member class  | `Case` or `Scenario` | `SuiteLifecycleFirstCase`    |
 | Tag meta-annotation | none (short noun)    | `@Smoke`, `@Regression`      |
 

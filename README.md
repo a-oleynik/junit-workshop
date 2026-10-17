@@ -196,7 +196,8 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 |---------------------------|-------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
 | `topics/general`          | Basic assertions (`assertEquals`, `assertTrue`, `assertNull`, …)                    | `AssertTest`                                                                                                     |
 | `topics/general`          | Exception testing (`assertThrows`)                                                  | `ExceptionTest`                                                                                                  |
-| `topics/general`          | Test lifecycle (`@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`)             | `FixturesTest`                                                                                                   |
+| `topics/general`          | Test lifecycle (`@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`)             | `LifecycleTest`                                                                                                  |
+| `topics/fixtures`         | Fresh fixtures with In-line Setup and Implicit Setup                                | `InlineFixtureTest`, `ImplicitFixtureTest`                                                                       |
 | `topics/general`          | Hamcrest matchers                                                                   | `HamcrestTest`                                                                                                   |
 | `topics/general`          | Timeouts (`assertTimeout()`, `@Timeout`)                                            | `TimeoutTest`                                                                                                    |
 | `topics/general`          | Timeout thread modes and `ThreadLocal` context                                      | [`TimeoutThreadModeTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/TimeoutThreadModeTest.java) |
@@ -236,10 +237,27 @@ Work through these topics in order; each builds on the previous one.
 `AssertTest`  
 Learn `assertEquals`, `assertTrue`, `assertNull`, and `fail`.
 
-### 2. Test lifecycle
+### 2. Test lifecycle and fixtures
 
-`FixturesTest`  
-Understand `@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`.
+[`LifecycleTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/LifecycleTest.java)
+shows when JUnit calls `@BeforeEach`, `@AfterEach`, `@BeforeAll`, and `@AfterAll`.
+It runs its methods sequentially so the lifecycle messages are easy to follow.
+
+Compare [`InlineFixtureTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/fixtures/InlineFixtureTest.java)
+and [`ImplicitFixtureTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/fixtures/ImplicitFixtureTest.java).
+Both use the same [`ShoppingCart`](src/main/java/com/oleynik/qa/workshop/junit/topics/model/ShoppingCart.java)
+and test scenarios. In-line Setup creates the cart inside each test;
+Implicit Setup creates it in a `@BeforeEach` method.
+
+The empty cart and its state form the fixture; creating it is fixture setup.
+Both examples use a **Fresh Fixture**: each test gets a new cart.
+In-line/Implicit Setup describes where preparation happens; Fresh/Shared Fixture
+describes whether fixture state is recreated or reused between tests.
+Prices and quantities stay in each test so its expected total is easy to understand.
+These in-memory objects need no explicit teardown; external resources may need cleanup.
+
+See [What Is a Test Fixture in JUnit, and Why Is @BeforeEach Not a Fixture?](https://medium.com/@andrei.oleynik/what-is-a-test-fixture-in-junit-and-why-is-beforeeach-not-the-fixture-53f5c750270e)
+for the terminology and further examples.
 
 ### 3. Exception testing
 
@@ -867,7 +885,7 @@ src/
 │       ├── dataproviders/       # ArgumentsProvider / DataProvider implementations
 │       ├── extensions/          # DBResourceExtension, TestWatcherExtension, SuiteLikeLifecycleExtension
 │       │   └── basic/           # LoggingExtension: first BeforeEachCallback example
-│       ├── model/               # Shared domain model (User, MyDoubleWrapper, MyServer)
+│       ├── model/               # Shared domain model (User, MyDoubleWrapper, MyServer, ShoppingCart)
 │       ├── Factorial.java       # Example production class for parameterized tests
 │       ├── PrimeNumber.java
 │       └── Utils.java           # Helper used by timeout examples
@@ -878,7 +896,8 @@ src/
     │   │       ├── CalculatorTest.java
     │   │       └── CalculatorParameterizedTest.java
     │   └── topics/
-    │       ├── general/         # Basic assertions, fixtures, exceptions, display names, timeouts
+    │       ├── general/         # Basic assertions, lifecycle, exceptions, display names, timeouts
+    │       ├── fixtures/        # InlineFixtureTest and ImplicitFixtureTest: fresh cart per test
     │       ├── asserts/         # assertAll and AssertJ soft assertions
     │       ├── conditional/     # Assumptions (assumeTrue, assumingThat)
     │       ├── ddt/             # Parameterized and data-driven tests
