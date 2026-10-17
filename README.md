@@ -237,17 +237,18 @@ Work through these topics in order; each builds on the previous one.
 `AssertTest`  
 Learn `assertEquals`, `assertTrue`, `assertNull`, and `fail`.
 
-### 2. Test lifecycle and fixtures
+### 2. Test lifecycle
 
 [`LifecycleTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/LifecycleTest.java)
-shows when JUnit calls `@BeforeEach`, `@AfterEach`, `@BeforeAll`, and `@AfterAll`.
-It runs its methods sequentially so the lifecycle messages are easy to follow.
+Understand `@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`.
 
-Compare [`InlineFixtureTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/fixtures/InlineFixtureTest.java)
-and [`ImplicitFixtureTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/fixtures/ImplicitFixtureTest.java).
-Both use the same [`ShoppingCart`](src/main/java/com/oleynik/qa/workshop/junit/topics/model/ShoppingCart.java)
-and test scenarios. In-line Setup creates the cart inside each test;
-Implicit Setup creates it in a `@BeforeEach` method.
+### 3. Fixtures (in-line vs. implicit setup)
+
+[`InlineFixtureTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/fixtures/InlineFixtureTest.java),
+[`ImplicitFixtureTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/fixtures/ImplicitFixtureTest.java)  
+Learn the difference between **fixture** (the test state/data) and **lifecycle methods**
+(the setup mechanism). Compare creating an empty `ShoppingCart` directly in each test
+versus using `@BeforeEach`.
 
 The empty cart and its state form the fixture; creating it is fixture setup.
 Both examples use a **Fresh Fixture**: each test gets a new cart.
@@ -256,31 +257,28 @@ describes whether fixture state is recreated or reused between tests.
 Prices and quantities stay in each test so its expected total is easy to understand.
 These in-memory objects need no explicit teardown; external resources may need cleanup.
 
-See [What Is a Test Fixture in JUnit, and Why Is @BeforeEach Not a Fixture?](https://medium.com/@andrei.oleynik/what-is-a-test-fixture-in-junit-and-why-is-beforeeach-not-the-fixture-53f5c750270e)
-for the terminology and further examples.
-
-### 3. Exception testing
+### 4. Exception testing
 
 `ExceptionTest`  
 Use `assertThrows` to assert that code throws the right exception.
 
-### 4. Disabling & display names
+### 5. Disabling & display names
 
 `DisabledTest`, `DisplayNameTest`, `DisplayNameGenerationTest`  
 Skip tests cleanly and make reports human-readable.  
 `DisplayNameGenerationTest` demonstrates class-level name generators with `@DisplayNameGeneration`.
 
-### 5. Grouped assertions
+### 6. Grouped assertions
 
 `AssertAllTest`  
 Use `assertAll` so multiple failures are reported together.
 
-### 6. Assumptions
+### 7. Assumptions
 
 `AssumptionsTest`  
 Skip tests dynamically when preconditions aren't met.
 
-### 7. Parameterized tests
+### 8. Parameterized tests
 
 `ValueSourceTest`, `ParameterizationTest`  
 Drive one test method with many data rows.
@@ -299,12 +297,12 @@ JUnit 5.14.4 displays these numeric CSV arguments without adding quotes, so the
 and is not available in this branch.
 See [parameterized display names](https://docs.junit.org/5.14.4/writing-tests/parameterized-classes-and-tests.html#customizing-display-names).
 
-### 8. Nested tests
+### 9. Nested tests
 
 `NestedTest`  
 Organise related scenarios using inner `@Nested` classes.
 
-### 9. Tagging
+### 10. Tagging
 
 `TagsTest`  
 Mark tests as `smoke` or `regression` and run subsets from the command line.
@@ -319,7 +317,7 @@ Mark tests as `smoke` or `regression` and run subsets from the command line.
 ./gradlew clean test
 ```
 
-### 10. HTML Report Generation
+### 11. HTML Report Generation
 
 ```bash
 # Maven
