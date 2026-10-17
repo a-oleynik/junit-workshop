@@ -24,6 +24,10 @@ public class TimeoutTest {
         System.out.println("Tear down thread id " + Thread.currentThread().threadId());
     }
 
+    // assertTimeout runs the block on the calling thread and checks elapsed time
+    // after it finishes. It does not interrupt the block or stop a hung operation.
+    // assertTimeoutPreemptively runs the block on another thread: ThreadLocal
+    // context (for example, a transaction) may not be available there.
     @Test
     void timeout_test() {
         System.out.println("Timeout test");
@@ -42,6 +46,7 @@ public class TimeoutTest {
         );
     }
 
+    // The two-second limit applies to this test method, not setUp() or tearDown().
     @Timeout(2)
     @Test
     public void timeout_test3() {

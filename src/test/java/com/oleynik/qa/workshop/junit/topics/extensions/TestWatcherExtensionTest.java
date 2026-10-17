@@ -23,7 +23,7 @@ public class TestWatcherExtensionTest {
     }
 
     @Test
-    @Disabled("XXX-111")
+    @Disabled("BUG-42: boolean conversion returns true for a false input")
     void test_watcher_boolean_test(){
         System.out.println("Boolean test");
         boolean variable = true;

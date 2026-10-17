@@ -61,10 +61,11 @@ def configureWorkshopTest = { Test testTask ->
             '**/*Suite.class'
     testTask.systemProperties System.getProperties()
     testTask.systemProperty 'file.encoding', 'UTF-8'
-    testTask.systemProperty 'junit.jupiter.execution.parallel.enabled', 'true'
-    testTask.systemProperty 'junit.jupiter.execution.parallel.mode.default', 'concurrent'
-    testTask.systemProperty 'junit.jupiter.execution.parallel.config.strategy', 'dynamic'
-    testTask.systemProperty 'junit.jupiter.execution.parallel.config.executor-service', 'worker_thread_pool'
+    // Parallel execution defaults are in src/test/resources/junit-platform.properties.
+    // Uncomment these alternatives to override them for Gradle runs.
+    // testTask.systemProperty 'junit.jupiter.execution.parallel.enabled', 'true'
+    // testTask.systemProperty 'junit.jupiter.execution.parallel.mode.default', 'concurrent'
+    // testTask.systemProperty 'junit.jupiter.execution.parallel.config.strategy', 'dynamic'
     testTask.testLogging {
         exceptionFormat = 'full'
         showStandardStreams = true
@@ -123,5 +124,5 @@ def registerTaggedTest = { String taskName, String tag ->
     }
 }
 
-registerTaggedTest('smokeTest', 'Smoke')
-registerTaggedTest('regressionTest', 'Regression')
+registerTaggedTest('smokeTest', 'smoke')
+registerTaggedTest('regressionTest', 'regression')

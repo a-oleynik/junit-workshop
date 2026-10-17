@@ -3,25 +3,23 @@ package com.oleynik.qa.workshop.junit.topics.asserts;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.closeTo;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AssertAllTest {
 
     @Test
-    @Tag("Regression")
+    @Tag("regression")
     void assert_all_test() {
-        System.out.println("Assert All in JUnit5 test");
+        System.out.println("Grouped assertions with JUnit assertAll()");
         boolean variable = true;
         assertAll(
-                () -> assertThat("Multiplication result is wrong", 2 * 5,
-                        equalTo(10)),
-                () -> assertThat(10 / 5.0, closeTo(1.9, 0.2)),
-                () -> assertThat(variable, is(true)),
-                () -> assertThat(!variable, is(false))
+                () -> assertEquals(10, 2 * 5, "Multiplication result is wrong"),
+                () -> assertEquals(1.9, 10 / 5.0, 0.2),
+                () -> assertTrue(variable),
+                () -> assertFalse(!variable)
         );
     }
 }

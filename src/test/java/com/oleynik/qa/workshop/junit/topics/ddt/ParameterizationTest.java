@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class ParameterizationTest {
-    @ParameterizedTest
+    @ParameterizedTest(name = "Local method source: {0}! = {1}")
     @MethodSource("factorials")
     public void inner_method_source_factorial_test(int number, int expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
@@ -30,19 +30,19 @@ public class ParameterizationTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "External method source: {0}! = {1}")
     @MethodSource("com.oleynik.qa.workshop.junit.topics.dataproviders.FactorialDataProvider#factorials")
     void outer_method_source_factorial_test(int number, int expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Arguments provider: {0}! = {1}")
     @ArgumentsSource(AnotherFactorialDataProvider.class)
     void arguments_source_factorial_test(int number, int expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "CSV via method source: {0}! = {1}")
     @MethodSource("com.oleynik.qa.workshop.junit.topics.dataproviders.FactorialDataProvider#factorialsFromFile")
     void csv_from_outer_method_source_factorial_test(int number, int expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
@@ -58,13 +58,13 @@ public class ParameterizationTest {
         };
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Array method source: {0}! = {1}")
     @MethodSource("anotherFactorials")
     void another_inner_method_source_factorial_test(int number, int expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Custom CSV source: {0}! = {1}")
     @ParameterizedDataSource(path = "src/test/resources/numbers.csv")
     void parameterized_arguments_source_factorial_test(int number, int expected) {
         Assertions.assertEquals(expected, Factorial.factorial(number), "factorial function works wrong");

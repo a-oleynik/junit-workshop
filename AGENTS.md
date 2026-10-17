@@ -27,12 +27,12 @@ mvn clean test -Dtest=<ClassName>
 mvn clean test -Dtest=<ClassName>#<methodName>
 
 # Run by tag
-mvn clean test -Dgroups=Smoke
-mvn clean test -Dgroups=Regression
+mvn clean test -Dgroups=smoke
+mvn clean test -Dgroups=regression
 
 # Run via Maven profile
-mvn clean test -P Smoke
-mvn clean test -P Regression
+mvn clean test -P smoke
+mvn clean test -P regression
 
 # Generate Surefire HTML report
 mvn clean surefire-report:report
@@ -53,8 +53,8 @@ gradle clean test --tests "*<ClassName>"
 gradle clean test --tests "*<ClassName>.<methodName>"
 
 # Run by tag
-gradle clean test -DincludeTags=Smoke
-gradle clean test -DincludeTags=Regression
+gradle clean test -DincludeTags=smoke
+gradle clean test -DincludeTags=regression
 
 # Run via dedicated Gradle task
 gradle clean smokeTest
@@ -76,7 +76,7 @@ Place new feature examples under `src/test/java/…/topics/`; place complete art
 
 ### Add a new test class
 1. Decide which feature to demonstrate and pick the correct package under `src/test/…`.
-2. Name the class `<Feature>Test` (e.g. `TimeoutTest`, `NestedTest`).
+2. Name the class `<Feature>Test` (e.g. `TimeoutTest`, `LifecycleTest`).
 3. Use `@Test` from `org.junit.jupiter.api` — never `org.junit.Test`.
 4. Name test methods in `snake_case`.
 5. Use **AssertJ** for assertions unless the class is specifically demonstrating Hamcrest.
@@ -107,13 +107,13 @@ Place new feature examples under `src/test/java/…/topics/`; place complete art
 3. Apply `@Tag(Tags.YOUR_TAG)` or the meta-annotation directly to test methods or classes.
 
 ## Key constraints the agent must respect
-| Rule                                                           | Why                                                                                                  |
-|----------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
-| Suite members named `*Case`, never `*Test`                     | Surefire and Gradle discover `*Test` independently → double execution                                |
-| Extensions in `src/main/…/topics/extensions/`                  | Keeps extension code reusable and out of test classpath only                                         |
-| Use `getOrComputeIfAbsent` in the `ExtensionContext` store     | Reuses a stored resource or creates it on first access                                               |
-| No explicit versions on JUnit artifacts covered by `junit-bom` | BOM in `<dependencyManagement>` (Maven) / `platform()` (Gradle) manages them                         |
-| No JUnit Vintage engine                                        | Only add it on the dedicated `junit-4.*` branch                                                      |
-| No JUnit 4 annotations in JUnit 5/6 classes                    | `@org.junit.Test`, `@RunWith`, `@Rule` are JUnit 4 only                                              |
-| Parallel execution is on by default                            | Configured in `pom.xml` & `build.gradle`; annotate with `@Execution(SAME_THREAD)` or `@ResourceLock` |
-| Choose either Maven or Gradle consistently                     | Avoids mixed tool execution, duplicate build outputs, and conflicting project setups                 |
+| Rule                                                           | Why                                                                                                                                               |
+|----------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
+| Suite members named `*Case`, never `*Test`                     | Surefire and Gradle discover `*Test` independently → double execution                                                                             |
+| Extensions in `src/main/…/topics/extensions/`                  | Keeps extension code reusable and out of test classpath only                                                                                      |
+| Use `getOrComputeIfAbsent` in the `ExtensionContext` store     | Reuses a stored resource or creates it on first access                                                                                            |
+| No explicit versions on JUnit artifacts covered by `junit-bom` | BOM in `<dependencyManagement>` (Maven) / `platform()` (Gradle) manages them                                                                      |
+| No JUnit Vintage engine                                        | Only add it on the dedicated `junit-4.*` branch                                                                                                   |
+| No JUnit 4 annotations in JUnit 5/6 classes                    | `@org.junit.Test`, `@RunWith`, `@Rule` are JUnit 4 only                                                                                           |
+| Parallel execution is on by default                            | Configured in `junit-platform.properties`; build files contain commented alternatives; annotate with `@Execution(SAME_THREAD)` or `@ResourceLock` |
+| Choose either Maven or Gradle consistently                     | Avoids mixed tool execution, duplicate build outputs, and conflicting project setups                                                              |
