@@ -60,17 +60,18 @@ Your support helps the project reach more Java and QA engineers.
 
 ## 🤔 Why this repository?
 
-Most JUnit tutorials stop at `@Test` and `@BeforeEach`.  
-This project goes further — it covers the **full JUnit 5 / JUnit 6 feature set** with real, runnable code you can clone, execute, and adapt immediately.
+JUnit is more than `@Test`, assertions, and lifecycle annotations.
+
+This project covers fundamental and advanced JUnit features with practical, runnable Java examples you can clone, execute, and adapt to your own projects.
 
 Use this repository if you want to:
 
 - **learn JUnit from scratch** with a structured, step-by-step learning path
 - **understand the differences between JUnit 4, JUnit 5, and JUnit 6** — what changed and why
-- **see real runnable examples** instead of reading documentation only
-- **explore advanced features** — extensions (`BeforeAllCallback`, `AfterAllCallback`, `TestWatcher`), retry strategies, parallel execution, tagging, and parameterized tests
+- **explore runnable examples** that demonstrate JUnit features in practice
+- **master advanced features** — extensions (`BeforeAllCallback`, `AfterAllCallback`, `TestWatcher`), retry strategies, parallel execution, tagging, and parameterized tests
 - **study automated testing patterns in Java** — soft assertions, data-driven tests, conditional execution, and more
-- **understand suite orchestration** — `@BeforeSuite`, `@AfterSuite`, `@Suite`, and suite-like lifecycle via custom extensions
+- **understand suite orchestration** — JUnit Platform's `@Suite`, `@BeforeSuite`, `@AfterSuite`, and suite-like lifecycle management via custom extensions
 - **compare JUnit and TestNG** patterns and idioms side-by-side with the companion [TestNG Workshop](https://github.com/a-oleynik/testng-workshop)
 - **use it as material** for workshops, tech talks, onboarding sessions, and self-study
 
