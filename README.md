@@ -38,6 +38,7 @@ Use it as a practical reference, a workshop starter kit, or a side-by-side compa
 - [Prerequisites](#-prerequisites)
 - [Supported Versions](#-supported-versions)
 - [Feature Map](#-feature-map)
+- [Article Companions](#-article-companions)
 - [Beginner Learning Path](#-beginner-learning-path)
 - [Advanced Learning Path](#-advanced-learning-path)
 - [Command Examples](#-command-examples)
@@ -230,6 +231,26 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 
 ---
 
+## 📖 Article Companions
+
+This repository is also used as companion code for articles and tutorials.
+
+### JUnit 6 from Scratch: What a Test Framework Actually Does
+
+A beginner-friendly introduction that starts with manual checks in `main()` and
+gradually introduces test discovery, assertions, lifecycle, fixtures,
+parameterized tests, tags, assumptions, exceptions, parallel execution,
+build tools, and extensions.
+
+The article describes JUnit 6; this branch provides the corresponding examples
+adapted for **JUnit 5.14.4**.
+
+➡️ [Follow the article learning path](docs/junit-6-from-scratch.md)
+
+[⬆ Back to Table of Contents](#-table-of-contents)
+
+---
+
 ## 🌱 Beginner Learning Path
 
 Work through these topics in order; each builds on the previous one.
@@ -414,11 +435,19 @@ or Gradle:
 
 ```properties
 junit.jupiter.execution.parallel.enabled=true
-junit.jupiter.execution.parallel.mode.default=concurrent
+junit.jupiter.execution.parallel.mode.default=same_thread
+junit.jupiter.execution.parallel.mode.classes.default=concurrent
 junit.jupiter.execution.parallel.config.strategy=dynamic
 ```
 
-The same three settings are also provided as commented alternatives in
+As in the [article learning path](docs/junit-6-from-scratch.md#parallel-execution),
+top-level test classes may run in parallel, while methods within each class run
+sequentially by default. The first three settings select that execution model.
+The fourth setting, `dynamic`, derives parallelism from the available processors.
+JUnit 5 uses a `ForkJoinPool`; the JUnit 6 `executor-service=worker_thread_pool`
+option is not supported in this branch.
+
+The same four settings are also provided as commented alternatives in
 [`pom.xml`](pom.xml) (Surefire's `configurationParameters`) and
 [`build.gradle`](build.gradle) (`testTask.systemProperty` calls).
 To configure parallel execution through your build tool, uncomment its example
@@ -427,14 +456,32 @@ for that build tool's runs; direct IDE runs continue to use the properties file
 unless the IDE supplies its own overrides. Keep the build-tool examples commented
 when using the shared defaults. See [JUnit configuration precedence](https://docs.junit.org/5.14.4/running-tests/configuration-parameters.html).
 
-Tests run concurrently by default. Use `@ResourceLock` or `@Execution(SAME_THREAD)` to serialise where needed.
+#### Advanced: parallel classes and methods
+
+To allow methods within a class to run concurrently as well, replace the execution
+mode settings in the properties file (or in your build-tool override) with:
+
+```properties
+junit.jupiter.execution.parallel.enabled=true
+junit.jupiter.execution.parallel.mode.default=concurrent
+junit.jupiter.execution.parallel.mode.classes.default=concurrent
+```
+
+This is an optional workshop configuration beyond the article's defaults.
+Methods in classes using `@TestInstance(PER_CLASS)` or a `MethodOrderer` still
+require an explicit `@Execution(CONCURRENT)` to run concurrently.
+See [JUnit parallel execution](https://docs.junit.org/5.14.4/writing-tests/parallel-execution.html).
+
+Classes running in parallel can still share mutable resources. Use the same
+`@ResourceLock` name on tests accessing a shared resource; `@Execution(SAME_THREAD)`
+keeps a class's methods sequential but does not isolate it from other classes.
 
 ```java
-// Serialise a single test class back to the main thread:
+// Keep this class's methods sequential, even with the advanced defaults:
 @Execution(ExecutionMode.SAME_THREAD)
 class MyOrderSensitiveTest { ... }
 
-// Declare a shared resource lock (prevents concurrent access):
+// Coordinate tests that declare the same shared resource:
 @ResourceLock("shared-db-connection")
 @Test
 void test_that_uses_shared_resource() { ... }
@@ -859,33 +906,34 @@ All files encode the same critical conventions:
 
 ## 📁 Project Structure
 
-```
-AGENTS.md                    # AI Agent task recipes and conventions
-README.md                    # This file
-LICENSE
-pom.xml                      # Maven build — dependencies, Surefire config, profiles
-mvnw / mvnw.cmd              # Maven Wrapper scripts (no local Maven installation required)
-build.gradle                 # Gradle build — equivalent dependencies and test configuration
-settings.gradle              # Gradle project name
-gradlew / gradlew.bat        # Gradle Wrapper scripts (no local Gradle installation required)
-gradle/wrapper/              # Pinned Gradle distribution and wrapper bootstrap JAR
+```text
 .github/
 └── copilot-instructions.md  # GitHub Copilot workspace instructions (always-on)
 .junie/
 └── guidelines.md            # JetBrains Junie project guidelines
+.mvn/
+└── wrapper/
+    └── maven-wrapper.properties
+build/                       # Generated by Gradle — not committed to git
+├── reports/tests/test/
+│   └── index.html           # Gradle HTML test report
+└── test-results/test/       # Raw JUnit XML results
+docs/
+└── junit-6-from-scratch.md   # Article learning path and chapter-to-code mapping
+gradle/wrapper/              # Pinned Gradle distribution and wrapper bootstrap JAR
 src/
 ├── main/java/com/oleynik/qa/workshop/junit/
 │   ├── scenarios/
 │   │   └── calculator/
-│   │       ├── Calculator.java  # Article example: addition and integer division
-│   │       └── beforejunit/
-│   │           └── Main.java    # Manual comparison before introducing JUnit
+│   │       ├── beforejunit/
+│   │       │   └── Main.java    # Manual comparison before introducing JUnit
+│   │       └── Calculator.java  # Article example: addition and integer division
 │   └── topics/
 │       ├── annotations/         # Custom annotation types and helpers
 │       ├── dataproviders/       # ArgumentsProvider / DataProvider implementations
 │       ├── extensions/          # DBResourceExtension, TestWatcherExtension, SuiteLikeLifecycleExtension
 │       │   └── basic/           # LoggingExtension: first BeforeEachCallback example
-│       ├── model/               # Shared domain model (User, MyDoubleWrapper, MyServer, ShoppingCart)
+│       ├── model/               # Shared domain model (MyDoubleWrapper, MyServer, ShoppingCart, User)
 │       ├── Factorial.java       # Example production class for parameterized tests
 │       ├── PrimeNumber.java
 │       └── Utils.java           # Helper used by timeout examples
@@ -893,35 +941,42 @@ src/
     ├── java/com/oleynik/qa/workshop/junit/
     │   ├── scenarios/
     │   │   └── calculator/
-    │   │       ├── CalculatorTest.java
-    │   │       └── CalculatorParameterizedTest.java
+    │   │       ├── CalculatorParameterizedTest.java
+    │   │       └── CalculatorTest.java
     │   └── topics/
-    │       ├── general/         # Basic assertions, lifecycle, exceptions, display names, timeouts
-    │       ├── fixtures/        # InlineFixtureTest and ImplicitFixtureTest: fresh cart per test
     │       ├── asserts/         # assertAll and AssertJ soft assertions
     │       ├── conditional/     # Assumptions (assumeTrue, assumingThat)
     │       ├── ddt/             # Parameterized and data-driven tests
-    │       ├── nested/          # @Nested test classes
-    │       ├── grouping/        # @Tag usage and custom tag annotations
-    │       │   └── tags/        # Tags constants, @Smoke and @Regression
-    │       ├── order/           # @TestMethodOrder and @Order
     │       ├── extensions/      # Tests exercising custom extensions
     │       │   └── basic/       # LoggingExtensionTest: registration with @ExtendWith
-    │       ├── retry/           # @RetryingTest (Pioneer), @RepeatedIfExceptionsTest (Rerunner)
+    │       ├── fixtures/        # ImplicitFixtureTest and InlineFixtureTest: fresh cart per test
+    │       ├── general/         # Basic assertions, lifecycle, exceptions, display names, timeouts
+    │       ├── grouping/        # @Tag usage and custom tag annotations
+    │       │   └── tags/        # Tags constants, @Smoke and @Regression
+    │       ├── nested/          # @Nested test classes
+    │       ├── order/           # @TestMethodOrder and @Order
     │       ├── repeat/          # @RepeatedTest
+    │       ├── retry/           # @RetryingTest (Pioneer), @RepeatedIfExceptionsTest (Rerunner)
     │       └── suites/          # @Suite, @BeforeSuite, @AfterSuite
     │           └── extension/  # Suite-like lifecycle via BeforeAllCallback and root store
     └── resources/
         ├── junit-platform.properties # Shared JUnit configuration, including parallel execution
-        └── numbers.csv      # Input data for CSVParameterizationTest (number → expected factorial)
+        └── numbers.csv         # CSVParameterizationTest input (number → expected factorial)
 target/                      # Generated by Maven — not committed to git
-├── surefire-reports/        # Raw JUnit XML results (TEST-*.xml) + console output (*.txt)
-└── site/
-    └── surefire-report.html # HTML test report — open in a browser after `mvn site`
-build/                       # Generated by Gradle — not committed to git
-├── test-results/test/       # Raw JUnit XML results
-└── reports/tests/test/
-    └── index.html           # Gradle HTML test report
+├── site/
+│   └── surefire-report.html # HTML test report — open in a browser after `mvn site`
+└── surefire-reports/        # Raw JUnit XML results (TEST-*.xml) + console output (*.txt)
+.gitignore
+AGENTS.md                    # AI Agent task recipes and conventions
+build.gradle                 # Gradle build — equivalent dependencies and test configuration
+gradlew                      # Gradle Wrapper for Unix
+gradlew.bat                  # Gradle Wrapper for Windows
+LICENSE
+mvnw                         # Maven Wrapper for Unix
+mvnw.cmd                     # Maven Wrapper for Windows
+pom.xml                      # Maven build — dependencies, Surefire config, profiles
+README.md                    # This file
+settings.gradle              # Gradle project name
 ```
 
 [⬆ Back to Table of Contents](#-table-of-contents)

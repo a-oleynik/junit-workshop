@@ -64,7 +64,8 @@ def configureWorkshopTest = { Test testTask ->
     // Parallel execution defaults are in src/test/resources/junit-platform.properties.
     // Uncomment these alternatives to override them for Gradle runs.
     // testTask.systemProperty 'junit.jupiter.execution.parallel.enabled', 'true'
-    // testTask.systemProperty 'junit.jupiter.execution.parallel.mode.default', 'concurrent'
+    // testTask.systemProperty 'junit.jupiter.execution.parallel.mode.default', 'same_thread'
+    // testTask.systemProperty 'junit.jupiter.execution.parallel.mode.classes.default', 'concurrent'
     // testTask.systemProperty 'junit.jupiter.execution.parallel.config.strategy', 'dynamic'
     testTask.testLogging {
         exceptionFormat = 'full'
