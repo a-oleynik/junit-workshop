@@ -10,6 +10,8 @@
 [![Lombok](https://img.shields.io/badge/Lombok-1.18.48-red.svg)](https://projectlombok.org/)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](LICENSE)
 
+> **Current branch: JUnit 4.13.2 (`junit-4.13.2`)**. For other versions, see [Branches](#-branches).
+
 A hands-on Java testing workshop with runnable examples for **JUnit 6, JUnit 5, and JUnit 4.**
 
 Learn JUnit from scratch, explore advanced features, and compare JUnit with TestNG. Includes Maven and Gradle projects, step-by-step learning paths, and practical examples for articles, workshops, tech talks, and self-study.
