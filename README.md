@@ -115,7 +115,7 @@ This repository contains examples for multiple JUnit versions, each on its own b
 > - **Gradle:** use `./gradlew` (Linux/macOS) or `gradlew.bat` (Windows)
 
 ```bash
-git clone https://github.com/a-oleynik/junit-workshop.git
+git clone --branch junit-4.13.2 https://github.com/a-oleynik/junit-workshop.git
 cd junit-workshop
 
 # Maven
