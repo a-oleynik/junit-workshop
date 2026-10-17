@@ -25,9 +25,6 @@ Learn JUnit from scratch, explore advanced features, and compare JUnit with Test
 > - 🧪 [TestNG Workshop](https://github.com/a-oleynik/testng-workshop) — companion TestNG examples to compare side-by-side with this repo
 > - 🌐 [Selenium Example (JUnit 6 branch)](https://github.com/a-oleynik/selenium-example/tree/junit6) — real-world Selenium WebDriver framework built on top of JUnit 6
 
-Hands-on examples for **JUnit 6**, **JUnit 5**, and **JUnit 4** in Java — covering every major feature from basic assertions to advanced extensions, parameterized tests, retry strategies, parallel execution, and suite orchestration.  
-Use it as a practical reference, a workshop starter kit, or a side-by-side comparison with the companion [TestNG Workshop](https://github.com/a-oleynik/testng-workshop).
-
 ---
 
 ## 📋 Table of Contents
