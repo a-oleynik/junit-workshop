@@ -202,9 +202,9 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 | `topics/general`            | Timeouts (`@Test(timeout=…)`)                                                                | `TimeoutTest`                                                                                      |
 | `topics/general`            | Ignoring / disabling tests (`@Ignore`)                                                       | `IgnoringTest`, `DisabledTest`                                                                     |
 | `topics/general`            | Custom `RunListener` + `ExecutionListenerRunner`                                             | `ExecutionListenerRunnerTest`                                                                      |
-| `topics/asserts`            | Soft assertions via `ErrorCollector` rule                                                    | `SoftAssertErrorCollectorTest`, `SoftAssertErrorCollector2Test`                                    |
-| `topics/asserts`            | AssertJ soft assertions                                                                      | `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`                                        |
-| `topics/asserts`            | JUnit 4 soft assert pattern (`AssertAll` rule)                                               | `SoftAssertTest`                                                                                   |
+| `topics/asserts`            | Grouped assertions via `ErrorCollector.checkThat()` and Hamcrest matchers                    | `SoftAssertErrorCollectorTest`                                                                     |
+| `topics/asserts`            | AssertJ soft assertions                                                                      | `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`, `SoftAssertTest`                      |
+| `topics/asserts`            | Grouped JUnit assertions via a custom `AssertAll` helper and `ErrorCollector` rule           | `SoftAssertErrorCollector2Test`                                                                    |
 | `topics/conditional`        | Assumptions (`Assume.assumeTrue`, `Assume.assumeThat`)                                       | `AssumeTest`, `AssumptionsTest`                                                                    |
 | `topics/conditional`        | Assumptions in `@BeforeClass`                                                                | `AssumeBeforeClassTest`, `AssumptionsBeforeAllTest`                                                |
 | `topics/ddt`                | Parameterized tests — `@RunWith(Parameterized.class)`                                        | `ParameterizationTest`, `Parameterization2Test`                                                    |
@@ -256,10 +256,14 @@ Use `@Test(expected=…)` and the modern `assertThrows` (available since JUnit 4
 `IgnoringTest`  
 Skip tests cleanly with `@Ignore` and understand the difference from failing tests.
 
-### 5. Soft assertions
+### 5. Grouped assertions
 
-`SoftAssertErrorCollectorTest`  
-Use `ErrorCollector` rule so multiple failures are collected before reporting.
+[`SoftAssertErrorCollector2Test`](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertErrorCollector2Test.java)
+uses standard JUnit 4 `assertEquals`, `assertTrue`, and `assertFalse` with a custom
+`AssertAll` helper and an `ErrorCollector` rule to report collected failures together.
+JUnit 4 has no built-in Jupiter `assertAll()`.
+For `ErrorCollector.checkThat()` with Hamcrest matchers, see
+[`SoftAssertErrorCollectorTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/asserts/SoftAssertErrorCollectorTest.java).
 
 ### 6. Assumptions
 

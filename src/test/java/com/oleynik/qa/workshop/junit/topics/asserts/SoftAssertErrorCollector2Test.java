@@ -5,10 +5,9 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ErrorCollector;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.closeTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class SoftAssertErrorCollector2Test {
     public final AssertAll assertAll = new AssertAll();
@@ -18,14 +17,13 @@ public class SoftAssertErrorCollector2Test {
 
     @Test
     public void assert_all_test() {
-        System.out.println("Assert All in JUnit5 test");
+        System.out.println("Grouped assertions with a custom AssertAll helper and JUnit 4 ErrorCollector");
         boolean variable = true;
         assertAll.assertAll(
-                () -> assertThat("Multiplication result is wrong", 2 * 5,
-                        equalTo(10)),
-                () -> assertThat(10 / 5.0, closeTo(1.9, 0.2)),
-                () -> assertThat(variable, is(true)),
-                () -> assertThat(!variable, is(false))
+                () -> assertEquals("Multiplication result is wrong", 10, 2 * 5),
+                () -> assertEquals(1.9, 10 / 5.0, 0.2),
+                () -> assertTrue(variable),
+                () -> assertFalse(!variable)
         );
     }
 }
