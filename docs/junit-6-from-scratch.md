@@ -1,4 +1,8 @@
+<a id="top"></a>
+
 # JUnit 6 from Scratch — Article Learning Path (JUnit 4 adaptation)
+
+[⬅ Back to README](../README.md)
 
 Companion learning path for **[JUnit 6 from Scratch: What a Test Framework Actually Does](https://medium.com/@andrei.oleynik/junit-6-from-scratch-6d4be3f04974)**
 (`JUnit_6_from_scratch`). The article uses JUnit 6 on the `master` branch.
@@ -207,11 +211,11 @@ This branch adapts the Calculator example from the article to JUnit 4.13.2. Foll
 The Calculator and test classes use the `com.oleynik.qa.workshop.junit.scenarios.calculator`
 package; the manual entry point uses its `beforejunit` subpackage and the same Calculator.
 
-| Step                               | Code                                                                                                                                  | What to look for                                                                                           |
-|------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------|
-| 1. The code under test             | [Calculator.java](../src/main/java/com/oleynik/qa/workshop/junit/scenarios/calculator/Calculator.java)                                   | `add()` and integer `divide()`                                                                             |
-| 2. Start with a manual check       | [beforejunit/Main.java](../src/main/java/com/oleynik/qa/workshop/junit/scenarios/calculator/beforejunit/Main.java)                       | Expected and actual values, then `expected == actual`                                                      |
-| 3. Tests, assertions and lifecycle | [CalculatorTest.java](../src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java)                           | `org.junit.Test`, `@Before`, `assertEquals` and `assertThrows` for division by zero                        |
+| Step                               | Code                                                                                                                                     | What to look for                                                                                            |
+|------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| 1. The code under test             | [Calculator.java](../src/main/java/com/oleynik/qa/workshop/junit/scenarios/calculator/Calculator.java)                                   | `add()` and integer `divide()`                                                                              |
+| 2. Start with a manual check       | [beforejunit/Main.java](../src/main/java/com/oleynik/qa/workshop/junit/scenarios/calculator/beforejunit/Main.java)                       | Expected and actual values, then `expected == actual`                                                       |
+| 3. Tests, assertions and lifecycle | [CalculatorTest.java](../src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorTest.java)                           | `org.junit.Test`, `@Before`, `assertEquals` and `assertThrows` for division by zero                         |
 | 4. One scenario, multiple inputs   | [CalculatorParameterizedTest.java](../src/test/java/com/oleynik/qa/workshop/junit/scenarios/calculator/CalculatorParameterizedTest.java) | `@RunWith(Parameterized.class)`, `@Parameterized.Parameters` and constructor injection for seven input rows |
 
 Run the manual example from the repository root:
@@ -294,6 +298,6 @@ With `EXTERNAL_SERVICE_URL` unset, ten pass and the assumptions example is skipp
 With it set, all eleven pass. For individual JUnit features, continue with the [Feature Map](../README.md#-feature-map)
 and the [beginner learning path](../README.md#-beginner-learning-path).
 
-[⬆ Back to Table of Contents](../README.md#-table-of-contents)
+[⬆ Back to top](#top) · [⬅ Back to README](../README.md)
 
 ---
