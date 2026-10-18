@@ -1,6 +1,6 @@
 # JUnit 6 from Scratch — Article Learning Path
 
-Companion learning path for **JUnit 6 from Scratch: What a Test Framework Actually Does**
+Companion learning path for **[JUnit 6 from Scratch: What a Test Framework Actually Does](https://medium.com/@andrei.oleynik/junit-6-from-scratch-6d4be3f04974)**
 (`JUnit_6_from_scratch`). Follow the article's chapter order on the JUnit 6
 `master` branch, starting with manual checks and the problem of test discovery.
 
