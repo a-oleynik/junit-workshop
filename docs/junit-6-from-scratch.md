@@ -1,4 +1,8 @@
+<a id="top"></a>
+
 # JUnit 6 from Scratch — Article Learning Path
+
+[⬅ Back to README](../README.md)
 
 Companion learning path for **JUnit 6 from Scratch: What a Test Framework Actually Does**
 (`JUnit_6_from_scratch`). The article describes JUnit 6; the examples in this
@@ -289,6 +293,6 @@ With `EXTERNAL_SERVICE_URL` unset, ten pass and the assumptions example is skipp
 With it set, all eleven pass. For individual JUnit features, continue with the [Feature Map](../README.md#-feature-map)
 and the [beginner learning path](../README.md#-beginner-learning-path).
 
-[⬆ Back to Table of Contents](../README.md#-table-of-contents)
+[⬆ Back to top](#top) · [⬅ Back to README](../README.md)
 
 ---
