@@ -286,7 +286,7 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 
 This repository is also used as companion code for articles and tutorials.
 
-### JUnit 6 from Scratch: What a Test Framework Actually Does
+### [JUnit 6 from Scratch: What a Test Framework Actually Does](https://medium.com/@andrei.oleynik/junit-6-from-scratch-6d4be3f04974)
 
 A beginner-friendly introduction that starts with manual checks in `main()` and
 gradually introduces test discovery, assertions, lifecycle, fixtures,
@@ -1005,6 +1005,7 @@ All files encode the same critical conventions:
 - [**JUnit 4 Releases**](https://github.com/junit-team/junit4/releases)
 - [**How to Install and Set Up Java on Windows, macOS, and Ubuntu (JDK, Maven, Gradle)**](https://medium.com/@andrei.oleynik/how-to-install-and-set-up-java-on-windows-macos-and-ubuntu-jdk-maven-and-gradle-728a732dd123)
 - [**JUnit 6 Released — Clean-Up, Modernization & Minimal Disruption**](https://medium.com/@andrei.oleynik/junit-6-released-clean-up-modernization-minimal-disruption-d3ecf11b64ad)
+- [JUnit 6 from Scratch: What a Test Framework Actually Does](https://medium.com/@andrei.oleynik/junit-6-from-scratch-6d4be3f04974)
 - [**What Is a Test Fixture in JUnit, and Why Is @BeforeEach Not a Fixture?**](https://medium.com/@andrei.oleynik/what-is-a-test-fixture-in-junit-and-why-is-beforeeach-not-the-fixture-53f5c750270e)
 - [**Maven Wrapper: Why You Need It and How to Use It**](https://medium.com/@andrei.oleynik/maven-wrapper-why-you-need-it-and-how-to-use-it-bfa7619078b6)
 - [**JUnit Pioneer Releases**](https://github.com/junit-pioneer/junit-pioneer/releases)
