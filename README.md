@@ -617,6 +617,13 @@ public class BeforeAfterSuite {
 > If they matched Surefire’s or Gradle’s default discovery patterns they would execute **twice** —  
 > once directly by Surefire / Gradle and once again through the suite.
 
+> **⚠️ The `@BeforeSuite` / `@AfterSuite` lifecycle only runs when the `@Suite` entry class itself is executed.**
+> `SuiteLifecycleFirstCase` and `SuiteLifecycleSecondCase` are plain Jupiter test classes — nothing stops you from
+> running one of them directly (e.g. `./mvnw test -Dtest=SuiteLifecycleFirstCase`). In that case JUnit never sees
+> `BeforeAfterSuite`, so `@BeforeSuite` / `@AfterSuite` **do not execute at all**. This lifecycle is a property of the
+> suite class being launched, not of the member test classes — always run `BeforeAfterSuite` (or filter to
+> `**/*Suite.class`) when you need the wrapping setup/teardown.
+
 > **⚙️ Build config:** `pom.xml` and `build.gradle` both declare the JUnit Platform Suite dependency and include
 > `*Suite` classes in test discovery. In Maven that is expressed through Surefire `<includes>`; in Gradle it is
 > configured on every `Test` task.
@@ -677,12 +684,25 @@ public class SuiteExtensionFirstTest {
 
 **Comparing the two suite-lifecycle approaches:**
 
-|                         | `@Suite` + `@BeforeSuite`           | Extension approach                    |
-|-------------------------|-------------------------------------|---------------------------------------|
-| Test class naming       | `*Case` / `*Scenario` (not `*Test`) | `*Test` — normal, runs independently  |
-| Requires suite class    | ✅ `@SelectClasses` required        | ❌ No suite class needed              |
-| Tests run independently | ❌ Only via suite entry class       | ✅ Normal Surefire / Gradle discovery |
-| Opt-in mechanism        | Declared in `@SelectClasses`        | `@ExtendWith` per class               |
+These are two **distinct mechanisms**, not interchangeable implementations of the same thing — pick based on
+whether you actually need a `@Suite` entry class.
+
+|                         | `@Suite` + `@BeforeSuite`           | Extension approach                                                                                                                                                |
+|-------------------------|-------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Test class naming       | `*Case` / `*Scenario` (not `*Test`) | `*Test` — normal, runs independently                                                                                                                              |
+| Requires suite class    | ✅ `@SelectClasses` required        | ❌ No suite class needed                                                                                                                                          |
+| Tests run independently | ❌ Only via suite entry class       | ✅ Normal Surefire / Gradle discovery                                                                                                                             |
+| Opt-in mechanism        | Declared in `@SelectClasses`        | `@ExtendWith` per class                                                                                                                                           |
+| Scope of "once" setup   | Once per `@Suite` class launched    | Once per **root** `ExtensionContext`<br>— i.e. once per JVM test run, shared by<br>every extended class, regardless of how<br>many suites or classes are selected |
+
+> **⚠️ Root `ExtensionContext` ≠ a suite, and neither is a launcher session.** The root `ExtensionContext` used by
+> `computeIfAbsent` here is a Jupiter-engine concept: it is shared by all Jupiter tests discovered **within a single
+> `TestEngine` execution**, whatever triggered it — a `@Suite`, a single `*Test` class, or a full build run. It does
+> **not** span multiple engines or multiple separate launcher invocations. A `LauncherSessionListener` (not used in
+> this project) is a different, platform-level hook that wraps one `Launcher` session — i.e. one invocation of the
+> whole JUnit Platform — and can observe engines beyond Jupiter. Don't treat `@Suite`, the root `ExtensionContext`
+> store, and a launcher session as three equivalent ways to say "runs once for everything"; each has its own,
+> narrower scope.
 
 > **ℹ️ `computeIfAbsent` vs `getOrComputeIfAbsent`:** In JUnit 6, all `getOrComputeIfAbsent` overloads
 > are deprecated and replaced by identically-signatured `computeIfAbsent` methods — this example uses
