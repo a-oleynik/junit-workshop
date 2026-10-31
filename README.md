@@ -789,6 +789,14 @@ public class BeforeClassSuite {
 > If they matched Surefire’s or Gradle’s default discovery patterns they would execute **twice** —  
 > once directly by Surefire / Gradle and once again through the suite.
 
+> **⚠️ Approaches A and B only run their suite-wrapping setup/teardown when the `@RunWith(Suite.class)` entry class
+> itself is executed.** `SuiteLifecycleFirstCase` / `SuiteLifecycleSecondCase` and `BeforeClassFirstCase` /
+> `BeforeClassSecondCase` are plain `*Case` classes — nothing stops Surefire, Gradle, or an IDE from running one of
+> them directly. In that case `BeforeAfterSuite` / `BeforeClassSuite` are never loaded, so the `@ClassRule` /
+> `@BeforeClass` / `@AfterClass` on the suite class **do not execute at all**. This is a property of the suite class
+> being launched, not of its member classes — always run `BeforeAfterSuite` or `BeforeClassSuite` (or filter to
+> `**/*Suite.class`) when the wrapping setup/teardown is required.
+
 > **⚙️ Build config:** `pom.xml` and `build.gradle` both include `*Suite` classes in test discovery.
 > In Maven that is expressed through Surefire `<includes>`:
 
@@ -874,6 +882,15 @@ public class SuiteRunListener extends RunListener {
 > Maven test run (all test classes in the project), not just a specific group.  
 > Use this when you need a global hook for the whole build — e.g., starting a Docker container
 > before any test in the project runs.
+
+> **⚠️ Scope of `SuiteRunListener` in `JUnitCoreRunnerTest` vs the Surefire `<listener>` property.** Inside
+> `JUnitCoreRunnerTest`, `core.addListener(new SuiteRunListener())` attaches the listener **only to that specific
+> `JUnitCore` instance and only to the `core.run(...)` call in that test method** — it does not observe any other
+> test class in the project, and it is not a JVM-wide or project-wide hook. The Surefire `<listener>` property above
+> is the project-wide alternative: it registers the listener for every test Surefire runs **through that build
+> execution**. It is **not** equivalent to a JVM-wide guarantee either — it only applies when tests are run via that
+> Surefire execution (e.g. `./mvnw test`); running a test class directly from an IDE run configuration bypasses
+> Surefire entirely and the listener is never attached in that case.
 
 **JUnit 4 vs JUnit 6 suite lifecycle:**
 
