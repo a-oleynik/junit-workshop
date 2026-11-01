@@ -246,37 +246,38 @@ settings.gradle              # Gradle project name
 
 The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit/Main.java`; it uses the shared `Calculator` and leads into `CalculatorTest`.
 
-| Package / folder          | Feature demonstrated                                                                | Test class(es)                                                                                                   |
-|---------------------------|-------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
-| `topics/general`          | Basic assertions (`assertEquals`, `assertTrue`, `assertNull`, …)                    | `AssertTest`                                                                                                     |
-| `topics/general`          | Exception testing (`assertThrows`)                                                  | `ExceptionTest`                                                                                                  |
-| `topics/general`          | Test lifecycle (`@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`)             | `LifecycleTest`                                                                                                  |
-| `topics/fixtures`         | Fresh fixtures with In-line Setup and Implicit Setup                                | `InlineFixtureTest`, `ImplicitFixtureTest`                                                                       |
-| `topics/general`          | Hamcrest matchers                                                                   | `HamcrestTest`                                                                                                   |
-| `topics/general`          | Timeouts (`assertTimeout()`, `@Timeout`)                                            | `TimeoutTest`                                                                                                    |
-| `topics/general`          | Timeout thread modes and `ThreadLocal` context                                      | [`TimeoutThreadModeTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/TimeoutThreadModeTest.java) |
-| `topics/general`          | Disabling tests (`@Disabled`)                                                       | `DisabledTest`                                                                                                   |
-| `topics/general`          | Display names & name generators                                                     | `DisplayNameTest`, `DisplayNameGenerationTest`                                                                   |
-| `topics/asserts`          | JUnit grouped assertions (`assertAll`)                                              | `AssertAllTest`                                                                                                  |
-| `topics/asserts`          | AssertJ soft assertions                                                             | `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`                                                      |
-| `topics/asserts`          | JUnit 5+ soft assert pattern                                                        | `SoftAssertTest`                                                                                                 |
-| `topics/conditional`      | Assumptions (`assumeTrue`, `assumeThat`)                                            | `AssumptionsTest`, `AssumptionsBeforeAllTest`                                                                    |
-| `topics/ddt`              | Parameterized tests — `@MethodSource`                                               | `ParameterizationTest`                                                                                           |
-| `topics/ddt`              | Parameterized tests — `@ValueSource` / `@CsvSource`                                 | `ValueSourceTest`                                                                                                |
-| `topics/ddt`              | CSV file data source (`src/test/resources/numbers.csv`)                             | `CSVParameterizationTest`                                                                                        |
-| `topics/ddt`              | TNG DataProvider integration                                                        | `DataProviderTest`                                                                                               |
-| `topics/ddt`              | JUnit Pioneer Cartesian product                                                     | `PioneerCartesianProductTest`                                                                                    |
-| `topics/nested`           | `@Nested` test classes                                                              | `NestedTest`                                                                                                     |
-| `topics/grouping`         | Tagging with `@Tag` and custom tag annotations                                      | `TagsTest`                                                                                                       |
-| `topics/order`            | Test execution ordering (`@TestMethodOrder`)                                        | `ExecutionOrderWithTest`                                                                                         |
-| `topics/extensions/basic` | First extension (`BeforeEachCallback`, `@ExtendWith`)                               | `LoggingExtensionTest`                                                                                           |
-| `topics/extensions`       | Custom `Extension` (`@RegisterExtension`)                                           | `DBResourceExtensionTest`                                                                                        |
-| `topics/extensions`       | `TestWatcher` extension                                                             | `TestWatcherExtensionTest`                                                                                       |
-| `topics/retry`            | Retry with JUnit Pioneer (`@RetryingTest`)                                          | `RetryPioneerTest`                                                                                               |
-| `topics/retry`            | Retry with Rerunner Jupiter                                                         | `RetryRerunnerTest`                                                                                              |
-| `topics/repeat`           | `@RepeatedTest`                                                                     | `RetryRepeatedTest`                                                                                              |
-| `topics/suites`           | Suite lifecycle (`@Suite`, `@BeforeSuite`, `@AfterSuite`, `@SelectClasses`)         | `BeforeAfterSuite`, `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase`                                        |
-| `topics/suites/extension` | Suite-like global lifecycle via `BeforeAllCallback` + root `ExtensionContext` store | `SuiteExtensionFirstTest`, `SuiteExtensionSecondTest`                                                            |
+| Package / folder           | Feature demonstrated                                                                | Test class(es)                                                                                                   |
+|----------------------------|-------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|
+| `topics/general`           | Basic assertions (`assertEquals`, `assertTrue`, `assertNull`, …)                    | `AssertTest`                                                                                                     |
+| `topics/general`           | Exception testing (`assertThrows`)                                                  | `ExceptionTest`                                                                                                  |
+| `topics/general`           | Test lifecycle (`@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`)             | `LifecycleTest`                                                                                                  |
+| `topics/fixtures`          | Fresh fixtures with In-line Setup and Implicit Setup                                | `InlineFixtureTest`, `ImplicitFixtureTest`                                                                       |
+| `topics/general`           | Hamcrest matchers                                                                   | `HamcrestTest`                                                                                                   |
+| `topics/general`           | Timeouts (`assertTimeout()`, `@Timeout`)                                            | `TimeoutTest`                                                                                                    |
+| `topics/general`           | Timeout thread modes and `ThreadLocal` context                                      | [`TimeoutThreadModeTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/TimeoutThreadModeTest.java) |
+| `topics/general`           | Disabling tests (`@Disabled`)                                                       | `DisabledTest`                                                                                                   |
+| `topics/general`           | Display names & name generators                                                     | `DisplayNameTest`, `DisplayNameGenerationTest`                                                                   |
+| `topics/asserts`           | JUnit grouped assertions (`assertAll`)                                              | `AssertAllTest`                                                                                                  |
+| `topics/asserts`           | AssertJ soft assertions                                                             | `SoftAssertionsAssertJTest`, `SoftAssertionsAssertJBDDTest`                                                      |
+| `topics/asserts`           | JUnit 5+ soft assert pattern                                                        | `SoftAssertTest`                                                                                                 |
+| `topics/conditional`       | Assumptions (`assumeTrue`, `assumeThat`)                                            | `AssumptionsTest`, `AssumptionsBeforeAllTest`                                                                    |
+| `topics/ddt`               | Parameterized tests — `@MethodSource`                                               | `ParameterizationTest`                                                                                           |
+| `topics/ddt`               | Parameterized tests — `@ValueSource` / `@CsvSource`                                 | `ValueSourceTest`                                                                                                |
+| `topics/ddt`               | CSV file data source (`src/test/resources/numbers.csv`)                             | `CSVParameterizationTest`                                                                                        |
+| `topics/ddt`               | TNG DataProvider integration                                                        | `DataProviderTest`                                                                                               |
+| `topics/ddt`               | JUnit Pioneer Cartesian product                                                     | `PioneerCartesianProductTest`                                                                                    |
+| `topics/nested`            | `@Nested` test classes                                                              | `NestedTest`                                                                                                     |
+| `topics/grouping`          | Tagging with `@Tag` and custom tag annotations                                      | `TagsTest`                                                                                                       |
+| `topics/order`             | Test execution ordering (`@TestMethodOrder`)                                        | `ExecutionOrderWithTest`                                                                                         |
+| `topics/extensions/basic`  | First extension (`BeforeEachCallback`, `@ExtendWith`)                               | `LoggingExtensionTest`                                                                                           |
+| `topics/extensions`        | Custom `Extension` (`@RegisterExtension`)                                           | `DBResourceExtensionTest`                                                                                        |
+| `topics/extensions`        | `TestWatcher` extension                                                             | `TestWatcherExtensionTest`                                                                                       |
+| `topics/retry`             | Retry with JUnit Pioneer (`@RetryingTest`)                                          | `RetryPioneerTest`                                                                                               |
+| `topics/retry`             | Retry with Rerunner Jupiter                                                         | `RetryRerunnerTest`                                                                                              |
+| `topics/repeat`            | `@RepeatedTest`                                                                     | `RetryRepeatedTest`                                                                                              |
+| `topics/suites`            | Suite lifecycle (`@Suite`, `@BeforeSuite`, `@AfterSuite`, `@SelectClasses`)         | `BeforeAfterSuite`, `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase`                                        |
+| `topics/suites/extension`  | Suite-like global lifecycle via `BeforeAllCallback` + root `ExtensionContext` store | `SuiteExtensionFirstTest`, `SuiteExtensionSecondTest`                                                            |
+| `topics/suites/autodetect` | ServiceLoader extension autodetection (no `@ExtendWith`)                            | `AutoDetectedFirstTest`, `AutoDetectedSecondTest`                                                                |
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -711,7 +712,64 @@ whether you actually need a `@Suite` entry class.
 > **⚠️ Note on `getOrComputeIfAbsent`:** the 3-argument overload used here is deprecated in JUnit 6
 > but is the standard API in JUnit 5. This example targets the JUnit 5 branch.
 
-### 13. Timeout Thread Modes
+### 13. ServiceLoader Extension Autodetection
+
+`AutoDetectedRootResourceExtension` → `topics/extensions/` package (main); tests → `topics/suites/autodetect/`<br>
+A third way to get global setup/teardown: register a Jupiter extension so the **platform discovers it itself**,
+without `@ExtendWith` on any test class and without a shared base class.
+
+**How it works:**
+
+1. Declare the extension's fully-qualified class name in
+   `src/test/resources/META-INF/services/org.junit.jupiter.api.extension.Extension` — standard `java.util.ServiceLoader`
+   registration.
+2. The extension class (`AutoDetectedRootResourceExtension`) is a plain `BeforeAllCallback` — identical in shape to
+   `SuiteLikeLifecycleExtension` from section 12, using the same `getOrComputeIfAbsent` root-store pattern.
+3. `AutoDetectedFirstTest` and `AutoDetectedSecondTest` have **no** `@ExtendWith` and **no** common superclass —
+   autodetection attaches the extension to every Jupiter test class in the run.
+
+```java
+public class AutoDetectedRootResourceExtension implements BeforeAllCallback {
+    @Override
+    public void beforeAll(ExtensionContext context) {
+        context.getRoot()
+                .getStore(NAMESPACE)
+                .getOrComputeIfAbsent("autodetected-root-resource", key -> {
+                    System.out.println("Before entire run via autodetected extension");
+                    return new RootResource();
+                }, RootResource.class);
+    }
+}
+```
+
+```java
+// no @ExtendWith, no shared base class
+public class AutoDetectedFirstTest {
+    @Test
+    void first() { ... }
+}
+```
+
+> **⚠️ Autodetection is opt-in and run-wide, not class-wide.** ServiceLoader registration alone (the
+> `META-INF/services` file) does nothing by itself — it only takes effect when the
+> `junit.jupiter.extensions.autodetection.enabled=true` configuration parameter is set. Once it **is** set, the
+> extension attaches to **every** Jupiter test class discovered in that run, not just `AutoDetectedFirstTest` /
+> `AutoDetectedSecondTest`. For that reason this project does **not** enable autodetection in the shared
+> `src/test/resources/junit-platform.properties` — doing so would silently affect every other example in the
+> workshop. Instead, autodetection is enabled only for a dedicated, isolated run:
+>
+> ```bash
+> ./mvnw test -P autodetect-extension-demo
+> ./gradlew autodetectExtensionDemoTest
+> ```
+>
+> The Maven profile restricts Surefire to `AutoDetected*Test` and passes
+> `junit.jupiter.extensions.autodetection.enabled=true` only via that profile's `configurationParameters`; the Gradle
+> task filters to the same classes and sets the system property only on that task. Running `./mvnw clean test` /
+> `./gradlew clean test` normally still executes `AutoDetectedFirstTest` / `AutoDetectedSecondTest` as plain tests —
+> autodetection is off, so the extension is simply not attached and no `RootResource` is created.
+
+### 14. Timeout Thread Modes
 
 [`TimeoutThreadModeTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/TimeoutThreadModeTest.java)
 compares the two explicit thread modes of Jupiter's `@Timeout`:
