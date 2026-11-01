@@ -14,7 +14,7 @@
 
 A hands-on Java testing workshop with runnable examples for **JUnit 6, JUnit 5, and JUnit 4.**
 
-Learn JUnit from scratch, explore advanced features, and compare JUnit with TestNG. Includes Maven and Gradle projects, step-by-step learning paths, and practical examples for articles, workshops, tech talks, and self-study.
+Learn JUnit from scratch, explore advanced features, and compare JUnit with TestNG. Includes Maven and Gradle support, step-by-step learning paths, and practical examples for articles, workshops, tech talks, and self-study.
 
 > Originally created as companion code for the IT Talk **"JUnit 4 vs TestNG 6"**.
 >
