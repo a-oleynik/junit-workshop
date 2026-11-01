@@ -16,8 +16,8 @@ import org.junit.jupiter.api.extension.ExtensionContext;
  * enable autodetection and select only the demo classes. Enabling it for a broader test selection
  * would register this extension for those other Jupiter classes too.
  *
- * @see <a href="https://docs.junit.org/current/extensions/registering-extensions.html#automatic-extension-registration">Automatic extension registration</a>
- * @see <a href="https://docs.junit.org/current/extensions/keeping-state-in-extensions.html">Extension stores and resource cleanup</a>
+ * @see <a href="https://docs.junit.org/5.14.4/extensions/registering-extensions.html#automatic-extension-registration">Automatic extension registration</a>
+ * @see <a href="https://docs.junit.org/5.14.4/extensions/keeping-state-in-extensions.html">Extension stores and resource cleanup</a>
  */
 public class AutoDetectedRootResourceExtension implements BeforeAllCallback {
 

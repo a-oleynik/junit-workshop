@@ -8,7 +8,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
  * Each class triggers {@code beforeAll()}, but the root store creates the resource only once
  * in that Jupiter engine execution. JUnit closes the resource when the root context closes.
  *
- * @see <a href="https://docs.junit.org/current/extensions/keeping-state-in-extensions.html">Extension stores and resource cleanup</a>
+ * @see <a href="https://docs.junit.org/5.14.4/extensions/keeping-state-in-extensions.html">Extension stores and resource cleanup</a>
  */
 public class SuiteLikeLifecycleExtension implements BeforeAllCallback {
 

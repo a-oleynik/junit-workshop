@@ -26,7 +26,7 @@ public class SuiteLikeLifecycleExtension implements BeforeAllCallback {
     public void beforeAll(ExtensionContext context) {
         context.getRoot()
                 .getStore(NAMESPACE)
-                .computeIfAbsent("suite-like-resource", key -> {
+                .getOrComputeIfAbsent("suite-like-resource", key -> {
                     System.out.println("Created shared resource in the Jupiter root context");
                     return new SuiteCleanupResource();
                 }, SuiteCleanupResource.class);
@@ -50,7 +50,7 @@ public class SuiteLikeLifecycleExtension implements BeforeAllCallback {
 3. `getStore(NAMESPACE)` selects this extension's storage area.
    Using the extension class as the namespace keeps its entries separate
    from entries belonging to other extensions.
-4. `computeIfAbsent("suite-like-resource", ...)` looks up the resource by key.
+4. `getOrComputeIfAbsent("suite-like-resource", ...)` looks up the resource by key.
    If it is missing, JUnit invokes the factory and stores its result.
    Later calls return that same object. Concurrent calls for this key also
    create only one resource.
@@ -68,13 +68,13 @@ public class SuiteExtensionFirstTest {
 }
 ```
 
-> **ℹ️ `computeIfAbsent` vs `getOrComputeIfAbsent`:** In JUnit 6, all `getOrComputeIfAbsent` overloads
-> are deprecated and replaced by identically-signatured `computeIfAbsent` methods — this example uses
-> `computeIfAbsent(K, Function, Class<V>)`.
-> On the JUnit 5 branch, use `getOrComputeIfAbsent(K, Function, Class<V>)` instead (same signature, different name).
+> **ℹ️ JUnit 5 API:** This branch uses `getOrComputeIfAbsent(K, Function, Class<V>)`,
+> which is available in JUnit 5.14.4.
+> In JUnit 6, the replacement is `computeIfAbsent(K, Function, Class<V>)`;
+> that method is not available in JUnit 5.
 
-See [keeping state and closing resources in extensions](https://docs.junit.org/current/extensions/keeping-state-in-extensions.html)
-and the [Store API](https://docs.junit.org/current/api/org.junit.jupiter.api/org/junit/jupiter/api/extension/ExtensionContext.Store.html).
+See [keeping state and closing resources in extensions](https://docs.junit.org/5.14.4/extensions/keeping-state-in-extensions.html)
+and the [Store API](https://docs.junit.org/5.14.4/api/org.junit.jupiter.api/org/junit/jupiter/api/extension/ExtensionContext.Store.html).
 
 ## Several executions in one JVM
 
@@ -100,8 +100,8 @@ can involve engines other than Jupiter.
 This workshop does not implement that listener; it is included here to explain
 the difference in scope.
 
-See the [LauncherSession API](https://docs.junit.org/current/api/org.junit.platform.launcher/org/junit/platform/launcher/LauncherSession.html)
-and [LauncherSessionListener API](https://docs.junit.org/current/api/org.junit.platform.launcher/org/junit/platform/launcher/LauncherSessionListener.html).
+See the [LauncherSession API](https://docs.junit.org/5.14.4/api/org.junit.platform.launcher/org/junit/platform/launcher/LauncherSession.html)
+and [LauncherSessionListener API](https://docs.junit.org/5.14.4/api/org.junit.platform.launcher/org/junit/platform/launcher/LauncherSessionListener.html).
 
 ## Registration does not define resource lifetime
 
@@ -117,7 +117,7 @@ In this example, the root store determines when the resource is created and clos
 | `LauncherSessionListener`                     | Opening and closing the launcher session, which can contain several test executions.          |
 | ServiceLoader                                 | Extension discovery and registration; no separate lifecycle for the shared resource.          |
 
-See [automatic extension registration](https://docs.junit.org/current/extensions/registering-extensions.html#automatic-extension-registration).
+See [automatic extension registration](https://docs.junit.org/5.14.4/extensions/registering-extensions.html#automatic-extension-registration).
 For the provider file and activation steps, see the [automatic registration walkthrough](automatic-extension-registration.md).
 Return to the README's [suite lifecycle example](../../README.md#11-suite-lifecycle-beforesuite--aftersuite)
 or [automatic registration demo](../../README.md#13-automatic-extension-registration-serviceloader).

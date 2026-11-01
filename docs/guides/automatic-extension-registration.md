@@ -79,11 +79,11 @@ appear; this extension's resource messages do not.
 ServiceLoader changes how the extension is registered. The resource is managed
 by the same root-store pattern as the explicitly registered extension.
 See [the root-store example and lifecycle boundaries](junit-extension-lifecycle.md)
-for `computeIfAbsent`, automatic cleanup, and the scope of a shared resource.
+for `getOrComputeIfAbsent`, automatic cleanup, and the scope of a shared resource.
 
 ## Documentation
 
-- [JUnit automatic extension registration](https://docs.junit.org/current/extensions/registering-extensions.html#automatic-extension-registration)
+- [JUnit automatic extension registration](https://docs.junit.org/5.14.4/extensions/registering-extensions.html#automatic-extension-registration)
 - [Java ServiceLoader](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ServiceLoader.html)
 
 [Back to the README learning path](../../README.md#13-automatic-extension-registration-serviceloader)
