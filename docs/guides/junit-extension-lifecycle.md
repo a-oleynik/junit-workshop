@@ -9,39 +9,13 @@ Both use the root `ExtensionContext` store to manage that resource.
 
 ## What does "once" mean?
 
-Jupiter is the engine that executes these JUnit tests. Its root `ExtensionContext`
-holds a store that extensions can use to share objects across test classes in
-one engine execution.
-
-For example, when `SuiteExtensionFirstTest` and `SuiteExtensionSecondTest` run
-in the same Jupiter execution:
-
-1. Jupiter calls the extension's `beforeAll()` callback before each class.
-2. The first call to `computeIfAbsent` creates the resource in the root store.
-3. The other class reuses that resource, including when classes run in parallel.
-4. When the root context closes, JUnit calls `close()` on the stored
-   `AutoCloseable` resource.
-
-The callback runs for each class; the store makes resource creation happen once.
-See [keeping state and closing resources](https://docs.junit.org/current/extensions/keeping-state-in-extensions.html)
-and the [Store API](https://docs.junit.org/current/api/org.junit.jupiter.api/org/junit/jupiter/api/extension/ExtensionContext.Store.html).
+Jupiter is the engine that executes these JUnit tests.
+Here, "once" means one shared resource for the participating test classes within
+a single Jupiter engine execution.
+The root `ExtensionContext` marks that boundary; the resource does not belong
+to the whole JVM or Maven build.
 
 ## Implementation walkthrough
-
-**How it works:**
-
-1. Jupiter, the engine that runs these JUnit tests, calls `beforeAll()` before each
-   participating class.
-2. `context.getRoot()` gives access to the context shared by test classes in this
-   Jupiter engine execution. Its **store** holds objects for the extension to reuse.
-3. `getStore(NAMESPACE)` selects this extension's storage area. `computeIfAbsent`
-   creates the resource only if its key is missing. The next class gets the same
-   stored object, even if classes start in parallel.
-4. When the root context closes, JUnit calls `close()` on the stored `AutoCloseable`
-   resource. Test classes do not need to close it themselves.
-
-See [keeping state and closing resources in extensions](https://docs.junit.org/current/extensions/keeping-state-in-extensions.html)
-and the [Store API](https://docs.junit.org/current/api/org.junit.jupiter.api/org/junit/jupiter/api/extension/ExtensionContext.Store.html).
 
 ```java
 public class SuiteLikeLifecycleExtension implements BeforeAllCallback {
@@ -67,6 +41,23 @@ public class SuiteLikeLifecycleExtension implements BeforeAllCallback {
 }
 ```
 
+**How the code works:**
+
+1. Jupiter calls `beforeAll()` before each class that registers this extension.
+   The callback itself is not limited to a single invocation.
+2. `context.getRoot()` selects the context shared by test classes in this
+   Jupiter engine execution, instead of the current class's context.
+3. `getStore(NAMESPACE)` selects this extension's storage area.
+   Using the extension class as the namespace keeps its entries separate
+   from entries belonging to other extensions.
+4. `computeIfAbsent("suite-like-resource", ...)` looks up the resource by key.
+   If it is missing, JUnit invokes the factory and stores its result.
+   Later calls return that same object. Concurrent calls for this key also
+   create only one resource.
+5. The stored `SuiteCleanupResource` implements `AutoCloseable`.
+   JUnit calls its `close()` method when the root context closes,
+   so participating test classes do not need to close it themselves.
+
 Apply `@ExtendWith` to every test class that participates in the shared lifecycle:
 
 ```java
@@ -81,6 +72,9 @@ public class SuiteExtensionFirstTest {
 > are deprecated and replaced by identically-signatured `computeIfAbsent` methods — this example uses
 > `computeIfAbsent(K, Function, Class<V>)`.
 > On the JUnit 5 branch, use `getOrComputeIfAbsent(K, Function, Class<V>)` instead (same signature, different name).
+
+See [keeping state and closing resources in extensions](https://docs.junit.org/current/extensions/keeping-state-in-extensions.html)
+and the [Store API](https://docs.junit.org/current/api/org.junit.jupiter.api/org/junit/jupiter/api/extension/ExtensionContext.Store.html).
 
 ## Several executions in one JVM
 
