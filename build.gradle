@@ -128,3 +128,21 @@ def registerTaggedTest = { String taskName, String tag ->
 
 registerTaggedTest('smokeTest', 'smoke')
 registerTaggedTest('regressionTest', 'regression')
+
+// Runs only the ServiceLoader-autodetection demo, with autodetection enabled just for this task.
+// Autodetection is intentionally NOT enabled in the shared junit-platform.properties because it would apply
+// AutoDetectedRootResourceExtension to every Jupiter test class discovered in the same run.
+tasks.register('autodetectExtensionDemoTest', Test) {
+    group = LifecycleBasePlugin.VERIFICATION_GROUP
+    description = 'Runs the ServiceLoader extension-autodetection demo with autodetection enabled.'
+    testClassesDirs = sourceSets.test.output.classesDirs
+    classpath = sourceSets.test.runtimeClasspath
+    configureWorkshopTest(delegate)
+    filter {
+        includeTestsMatching '*.autodetect.AutoDetected*Test'
+    }
+    exclude '**/*Suite.class'
+    systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
+    useJUnitPlatform()
+    shouldRunAfter tasks.named('test')
+}

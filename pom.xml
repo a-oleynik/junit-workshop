@@ -226,6 +226,28 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <!-- Runs only the ServiceLoader-autodetection demo, with autodetection enabled just for this run.
+                 Autodetection is intentionally NOT enabled in the shared junit-platform.properties because it would
+                 apply AutoDetectedRootResourceExtension to every Jupiter test class discovered in the same run. -->
+            <id>autodetect-extension-demo</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <test>AutoDetected*Test</test>
+                            <properties>
+                                <configurationParameters>
+                                    junit.jupiter.extensions.autodetection.enabled=true
+                                </configurationParameters>
+                            </properties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
     <reporting>
         <plugins>
