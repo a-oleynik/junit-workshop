@@ -7,7 +7,7 @@ This is a **Java test-automation workshop** that demonstrates every major JUnit 
 | Concern               | Library / Tool                                                                    |
 |-----------------------|-----------------------------------------------------------------------------------|
 | Language              | Java 21 (LTS)                                                                     |
-| Build                 | Maven 3.9+ / Gradle 9.6.0+ (Maven and Gradle Wrappers included)                   |
+| Build                 | Maven 3.9.12 / Gradle 9.6.0 (Maven and Gradle Wrappers included)                  |
 | Test framework        | JUnit 5.14.4 (junit-jupiter-engine, junit-jupiter-params, junit-platform-suite)   |
 | Community extensions  | JUnit Pioneer 2.3.0 (`@RetryingTest`, `@CartesianTest`)                           |
 | Data-provider bridge  | junit-jupiter-params-dataprovider 2.12                                            |
@@ -100,17 +100,41 @@ src/
 
 ## Maven commands (quick reference)
 ```bash
-mvn clean test                          # run all tests
-mvn clean test -Dtest=AssertTest        # run one class
-mvn clean test -Dgroups=smoke           # run by tag
-mvn clean test -P smoke                 # run via Maven profile (smoke or regression)
-mvn clean surefire-report:report        # generate HTML report
-mvn clean site                          # full Maven site
+./mvnw clean test                          # run all tests
+./mvnw clean test -Dtest=AssertTest        # run one class
+./mvnw clean test -Dgroups=smoke           # run by tag
+./mvnw clean test -P smoke                 # run via Maven profile (smoke or regression)
+./mvnw clean test -P regression            # run the regression profile
+./mvnw test -P autodetect-extension-demo    # run the automatic extension registration demo
+./mvnw clean surefire-report:report        # generate HTML report
+./mvnw clean site                          # full Maven site
+```
+
+## Gradle commands (quick reference)
+
+```bash
+./gradlew clean test                            # run all tests and generate the Gradle HTML report
+./gradlew test --tests "*AssertTest"             # run one class
+./gradlew test --tests "*AssertTest.<method>"    # replace <method> with an actual test method
+./gradlew clean test -DincludeTags=smoke         # run by tag
+./gradlew clean smokeTest                       # run via dedicated task
+./gradlew clean regressionTest                  # run the regression task
+./gradlew autodetectExtensionDemoTest            # run the automatic extension registration demo
 ```
 
 ## Important constraints
-- When generating commands, test runs, or build actions, consistently follow the user's chosen build tool (Maven or Gradle) rather than mixing both.
+- Validate affected workshop examples with both Maven and Gradle wrappers; follow the validation policy below.
 - Do **not** rename `*Case` classes to `*Test` — it will cause double-execution.
 - Do **not** add `<groupId>org.junit.vintage</groupId>` (JUnit 4 vintage engine) unless specifically creating a JUnit 4 example branch.
 - The `junit-bom` BOM is declared in `<dependencyManagement>` — do not specify explicit versions for JUnit artifacts that are covered by the BOM.
 
+## Validation with Maven and Gradle
+
+- Every workshop example must work with both Maven and Gradle. Keep corresponding commands in README and guides synchronized.
+- Use the pinned wrappers: Maven 3.9.12 and Gradle 9.6.0. On Unix use `./mvnw` and `./gradlew`; on Windows use `mvnw.cmd` and `gradlew.bat`.
+- For Java or test changes, run the affected examples with both wrappers. A successful Maven run alone does not establish Gradle compatibility, or vice versa.
+- For dependency changes or shared build/test configuration changes, run the full test suite with both wrappers.
+- For documentation-only changes, check relative links, heading anchors, and consistency with the actual source/build files. If runnable commands are added or changed, execute the corresponding commands for both build tools.
+- Check actual test counts, callback output, and reports when these are part of the example; build success alone is not sufficient.
+- Report Maven and Gradle validation separately, including commands run, results, and any verification that could not be completed.
+- The current GitHub Actions workflow runs Maven only. It does not replace local Gradle validation.

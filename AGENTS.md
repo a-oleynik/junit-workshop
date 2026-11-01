@@ -1,15 +1,15 @@
 # AI Agent Instructions — JUnit Workshop
 
 ## Agent behaviour
-- Always read `copilot-instructions.md` (same `.github/` folder) for full project conventions before taking any action.
+- Always read `.github/copilot-instructions.md` for full project conventions before taking any action.
 - This is a **workshop / demo project** — every test class exists to *demonstrate* a JUnit feature. When adding new tests, make them educational: prefer clear, minimal, self-contained examples over production-style abstractions.
 - Never silently skip a feature or leave a `TODO` — implement it fully or ask.
-- When executing tasks, running tests, or writing instructions, consistently target the user's chosen build tool (Maven or Gradle) rather than mixing both commands.
+- Validate affected workshop examples with both Maven and Gradle wrappers; follow the validation policy below.
 
 ## Environment
 - **OS:** any (Maven and Gradle Wrappers included — use `./mvnw` / `./gradlew` on Unix, `mvnw.cmd` / `gradlew.bat` on Windows)
 - **Java:** 21 LTS (`JAVA_HOME` must point to JDK 21)
-- **Build:** Maven 3.9+ or Gradle 9.6.0+ (bundled wrappers included)
+- **Build:** Maven 3.9.12 and Gradle 9.6.0 (bundled wrappers included)
 - **IDE:** IntelliJ IDEA with Lombok plugin enabled
 - **CI:** GitHub Actions — `.github/workflows/maven.yml`, triggered manually (`workflow_dispatch`). Two jobs: `regression` (all tests, `./mvnw -B clean site`) and `by-tag` (runs only when `groups` input is provided, `./mvnw -B clean site -Dgroups={groups}`). Both upload `surefire-report` and `junit-xml-results` artifacts. Do **not** change `site` to `test`.
 
@@ -18,50 +18,50 @@
 ### Maven
 ```bash
 # Run all tests
-mvn clean test
+./mvnw clean test
 
 # Run a single test class
-mvn clean test -Dtest=<ClassName>
+./mvnw clean test -Dtest=<ClassName>
 
 # Run a single test method
-mvn clean test -Dtest=<ClassName>#<methodName>
+./mvnw clean test -Dtest=<ClassName>#<methodName>
 
 # Run by tag
-mvn clean test -Dgroups=smoke
-mvn clean test -Dgroups=regression
+./mvnw clean test -Dgroups=smoke
+./mvnw clean test -Dgroups=regression
 
 # Run via Maven profile
-mvn clean test -P smoke
-mvn clean test -P regression
+./mvnw clean test -P smoke
+./mvnw clean test -P regression
 
 # Generate Surefire HTML report
-mvn clean surefire-report:report
+./mvnw clean surefire-report:report
 
 # Full Maven site
-mvn clean site
+./mvnw clean site
 ```
 
 ### Gradle
 ```bash
 # Run all tests
-gradle clean test
+./gradlew clean test
 
 # Run a single test class
-gradle clean test --tests "*<ClassName>"
+./gradlew clean test --tests "*<ClassName>"
 
 # Run a single test method
-gradle clean test --tests "*<ClassName>.<methodName>"
+./gradlew clean test --tests "*<ClassName>.<methodName>"
 
 # Run by tag
-gradle clean test -DincludeTags=smoke
-gradle clean test -DincludeTags=regression
+./gradlew clean test -DincludeTags=smoke
+./gradlew clean test -DincludeTags=regression
 
 # Run via dedicated Gradle task
-gradle clean smokeTest
-gradle clean regressionTest
+./gradlew clean smokeTest
+./gradlew clean regressionTest
 
 # Generate HTML test report (written to build/reports/tests/test/index.html)
-gradle clean test
+./gradlew clean test
 ```
 
 ## Source organization
@@ -80,7 +80,7 @@ Place new feature examples under `src/test/java/…/topics/`; place complete art
 3. Use `@Test` from `org.junit.jupiter.api` — never `org.junit.Test`.
 4. Name test methods in `snake_case`.
 5. Use **AssertJ** for assertions unless the class is specifically demonstrating Hamcrest.
-6. Run `mvn clean test -Dtest=<NewClass>` or `gradle clean test --tests "*<NewClass>"` to verify.
+6. Run `./mvnw clean test -Dtest=<NewClass>` and `./gradlew clean test --tests "*<NewClass>"` to verify both builds.
 
 ### Add a suite-member class
 1. Name it `*Case` or `*Scenario` — **never** `*Test` (Surefire / Gradle would run it twice).
@@ -116,4 +116,15 @@ Place new feature examples under `src/test/java/…/topics/`; place complete art
 | No JUnit Vintage engine                                        | Only add it on the dedicated `junit-4.*` branch                                                                                                   |
 | No JUnit 4 annotations in JUnit 5/6 classes                    | `@org.junit.Test`, `@RunWith`, `@Rule` are JUnit 4 only                                                                                           |
 | Parallel execution is on by default                            | Configured in `junit-platform.properties`; build files contain commented alternatives; annotate with `@Execution(SAME_THREAD)` or `@ResourceLock` |
-| Choose either Maven or Gradle consistently                     | Avoids mixed tool execution, duplicate build outputs, and conflicting project setups                                                              |
+| Validate with both Maven and Gradle                            | Both supported builds must run the affected examples successfully                                                                                 |
+
+## Validation with Maven and Gradle
+
+- Every workshop example must work with both Maven and Gradle. Keep corresponding commands in README and guides synchronized.
+- Use the pinned wrappers: Maven 3.9.12 and Gradle 9.6.0. On Unix use `./mvnw` and `./gradlew`; on Windows use `mvnw.cmd` and `gradlew.bat`.
+- For Java or test changes, run the affected examples with both wrappers. A successful Maven run alone does not establish Gradle compatibility, or vice versa.
+- For dependency changes or shared build/test configuration changes, run the full test suite with both wrappers.
+- For documentation-only changes, check relative links, heading anchors, and consistency with the actual source/build files. If runnable commands are added or changed, execute the corresponding commands for both build tools.
+- Check actual test counts, callback output, and reports when these are part of the example; build success alone is not sufficient.
+- Report Maven and Gradle validation separately, including commands run, results, and any verification that could not be completed.
+- The current GitHub Actions workflow runs Maven only. It does not replace local Gradle validation.
