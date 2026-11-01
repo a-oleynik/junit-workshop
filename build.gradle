@@ -126,3 +126,31 @@ def registerCategoryTest = { String taskName, String categoryClass ->
 
 registerCategoryTest('smokeTest', 'com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests')
 registerCategoryTest('regressionTest', 'com.oleynik.qa.workshop.junit.topics.grouping.categories.RegressionTests')
+
+def registerAutodetectListenerTest = { String taskName, String taskDesc ->
+    tasks.register(taskName, Test) {
+        group = LifecycleBasePlugin.VERIFICATION_GROUP
+        description = taskDesc
+        testClassesDirs = sourceSets.test.output.classesDirs
+        classpath = sourceSets.test.runtimeClasspath
+        configureWorkshopTest(delegate)
+        filter {
+            includeTestsMatching '*.autodetect.AutoDetected*Test'
+        }
+        exclude '**/*Suite.class'
+        beforeSuite { TestDescriptor suite ->
+            if (suite.parent == null) {
+                println "Before entire run via autodetected listener"
+            }
+        }
+        afterSuite { TestDescriptor suite, TestResult result ->
+            if (suite.parent == null) {
+                println "After entire run via autodetected listener"
+            }
+        }
+        shouldRunAfter tasks.named('test')
+    }
+}
+
+registerAutodetectListenerTest('autodetectListenerDemoTest', 'Runs build-tool listener demo tests with listener registration enabled.')
+registerAutodetectListenerTest('autodetectExtensionDemoTest', 'Runs build-tool listener demo tests with listener registration enabled (master branch parity alias).')

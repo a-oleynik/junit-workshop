@@ -209,6 +209,50 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <!-- Run with: ./mvnw clean test -P autodetect-listener-demo
+                 A global RunListener is registered at the build-tool level for all test classes in this execution.
+                 In isolation, only AutoDetected*Test classes are executed. -->
+            <id>autodetect-listener-demo</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <test>AutoDetected*Test</test>
+                            <properties>
+                                <property>
+                                    <name>listener</name>
+                                    <value>com.oleynik.qa.workshop.junit.topics.listeners.AutoDetectedRunListener</value>
+                                </property>
+                            </properties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!-- Alias for parity with master branch command: ./mvnw clean test -P autodetect-extension-demo -->
+            <id>autodetect-extension-demo</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <test>AutoDetected*Test</test>
+                            <properties>
+                                <property>
+                                    <name>listener</name>
+                                    <value>com.oleynik.qa.workshop.junit.topics.listeners.AutoDetectedRunListener</value>
+                                </property>
+                            </properties>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
     <reporting>
         <plugins>

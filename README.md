@@ -187,7 +187,7 @@ src/
 │   └── topics/
 │       ├── annotations/         # DataSource, Retry, RetryConfiguration
 │       ├── dataproviders/       # JUnitDataProvider
-│       ├── listeners/           # ExecutionListener (RunListener)
+│       ├── listeners/           # ExecutionListener, AutoDetectedRunListener (RunListener)
 │       ├── model/               # MyDoubleWrapper, MyServer, ShoppingCart, User
 │       ├── rules/               # DBResourceRule, MonitorRule, retry rules, AssertAll
 │       │   └── basic/           # LoggingRule: log the test name before execution
@@ -214,6 +214,7 @@ src/
     │       ├── rules/           # ExternalResource and TestWatcher examples
     │       │   └── basic/       # LoggingRuleTest: registration with @Rule
     │       └── suites/
+    │           ├── autodetect/  # AutoDetectedFirstTest, AutoDetectedSecondTest
     │           ├── beforeclass/ # @BeforeClass / @AfterClass on the suite
     │           ├── lifecycle/   # @ClassRule + ExternalResource
     │           └── listener/    # JUnitCore + RunListener
@@ -281,6 +282,7 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 | `topics/suites/lifecycle`   | Suite lifecycle via `@ClassRule ExternalResource` — `@BeforeSuite` / `@AfterSuite` emulation | `BeforeAfterSuite`, `SuiteLifecycleFirstCase`, `SuiteLifecycleSecondCase`                          |
 | `topics/suites/beforeclass` | Suite lifecycle via `@BeforeClass` / `@AfterClass` directly on the suite class               | `BeforeClassSuite`, `BeforeClassFirstCase`, `BeforeClassSecondCase`                                |
 | `topics/suites/listener`    | Suite lifecycle via `JUnitCore` + `RunListener` (`testRunStarted` / `testRunFinished`)       | `JUnitCoreRunnerTest`, `SuiteRunListener`, `ListenerFirstCase`, `ListenerSecondCase`               |
+| `topics/suites/autodetect`  | Build-tool global `RunListener` registration (run-wide, opt-in via profile/task)             | `AutoDetectedFirstTest`, `AutoDetectedSecondTest`                                                  |
 
 [⬆ Back to Table of Contents](#-table-of-contents)
 
@@ -812,16 +814,16 @@ public class BeforeClassSuite {
 
 In Gradle, `**/*Suite.class` is included in test discovery and automatically excluded for single-class runs.
 
-**Comparing the three JUnit 4 suite-lifecycle approaches:**
+**Comparing the four JUnit 4 suite-lifecycle approaches:**
 
-|                             | Approach A — `@ClassRule ExternalResource` | Approach B — `@BeforeClass`/`@AfterClass` | Approach C — `JUnitCore` + `RunListener`   |
-|-----------------------------|--------------------------------------------|-------------------------------------------|--------------------------------------------|
-| Requires a suite class      | ✅ `@RunWith(Suite.class)` needed          | ✅ `@RunWith(Suite.class)` needed         | ❌ No suite class needed                   |
-| Member class naming         | `*Case` (not `*Test`)                      | `*Case` (not `*Test`)                     | `*Case` (not `*Test`)                      |
-| Syntax complexity           | Verbose (anonymous class)                  | Simple — same as regular test class       | Moderate — wrapper `*Test` needed          |
-| Teardown guarantee          | ✅ try-finally inside `ExternalResource`   | ⚠️ No guarantee if setup throws           | ⚠️ No guarantee if setup throws            |
-| Reusable across suites      | ✅ Extract rule to a shared field          | ❌ Must duplicate the methods             | ✅ Attach same listener to any `JUnitCore` |
-| Result inspection available | ❌                                         | ❌                                        | ✅ `Result` object in `testRunFinished`    |
+|                             | Approach A — `@ClassRule ExternalResource` | Approach B — `@BeforeClass`/`@AfterClass` | Approach C — `JUnitCore` + `RunListener`   | Approach D — Build-Tool `RunListener`      |
+|-----------------------------|--------------------------------------------|-------------------------------------------|--------------------------------------------|--------------------------------------------|
+| Requires a suite class      | ✅ `@RunWith(Suite.class)` needed          | ✅ `@RunWith(Suite.class)` needed         | ❌ No suite class needed                   | ❌ No suite class needed                   |
+| Member class naming         | `*Case` (not `*Test`)                      | `*Case` (not `*Test`)                     | `*Case` (not `*Test`)                      | `*Test` — normal, runs independently       |
+| Syntax complexity           | Verbose (anonymous class)                  | Simple — same as regular test class       | Moderate — wrapper `*Test` needed          | Simple — standard test classes             |
+| Teardown guarantee          | ✅ try-finally inside `ExternalResource`   | ⚠️ No guarantee if setup throws           | ⚠️ No guarantee if setup throws            | ⚠️ No guarantee if setup throws            |
+| Reusable across suites      | ✅ Extract rule to a shared field          | ❌ Must duplicate the methods             | ✅ Attach same listener to any `JUnitCore` | ✅ Attached to entire build execution run  |
+| Result inspection available | ❌                                         | ❌                                        | ✅ `Result` object in `testRunFinished`    | ✅ `Result` object in `testRunFinished`    |
 
 #### Approach C — `JUnitCore` + `RunListener` (`topics/suites/listener/`)
 
@@ -892,14 +894,75 @@ public class SuiteRunListener extends RunListener {
 > Surefire execution (e.g. `./mvnw test`); running a test class directly from an IDE run configuration bypasses
 > Surefire entirely and the listener is never attached in that case.
 
-**JUnit 4 vs JUnit 6 suite lifecycle:**
+#### Approach D — Build-Tool Global `RunListener` (Maven Surefire & Gradle Options)
 
-|                         | JUnit 4 (all three approaches)        | JUnit 6 (`@Suite` + `@BeforeSuite`) |
-|-------------------------|---------------------------------------|-------------------------------------|
-| Native annotation       | ❌ No `@BeforeSuite` / `@AfterSuite`  | ✅ `@BeforeSuite` / `@AfterSuite`   |
-| Test class naming       | `*Case` / `*Scenario` (not `*Test`)   | `*Case` / `*Scenario` (not `*Test`) |
-| Requires suite class    | A & B: ✅ required / C: ❌ not needed | ✅ `@SelectClasses` required        |
-| Tests run independently | ❌ Only via suite entry point         | ❌ Only via suite entry class       |
+`AutoDetectedRunListener` → `topics/listeners/` package (main); tests → `topics/suites/autodetect/`<br>
+A fourth way to achieve global setup and teardown in JUnit 4 without modifying test classes or wrapping them in a `@Suite`:
+register a `RunListener` at the **build-tool level** (Maven Surefire `<listener>` property or Gradle test lifecycle options).
+
+In JUnit 5 and JUnit 6, this is achieved natively within the test framework using Java’s `java.util.ServiceLoader`
+extension autodetection (`junit.jupiter.extensions.autodetection.enabled=true`). JUnit 4 has no extension API or
+ServiceLoader discovery mechanism, so the equivalent global capability is handled via build-tool configuration.
+
+**How it works:**
+
+1. Implement a custom `RunListener` overriding `testRunStarted` and `testRunFinished`.
+2. `AutoDetectedFirstTest` and `AutoDetectedSecondTest` have **no** `@RunWith`, **no** `@Rule`, and **no** common superclass —
+   the listener is attached externally by the build tool to every test class in the execution.
+3. In Maven, Surefire's `<properties><property><name>listener</name><value>...</value></property></properties>` registers the listener.
+4. In Gradle, the `Test` task's lifecycle options (`beforeSuite` / `afterSuite` on the root descriptor) provide the corresponding run-level hooks.
+
+```java
+public class AutoDetectedRunListener extends RunListener {
+    @Override
+    public void testRunStarted(Description description) {
+        System.out.println("Before entire run via autodetected listener");
+    }
+
+    @Override
+    public void testRunFinished(Result result) {
+        System.out.println("After entire run via autodetected listener");
+    }
+}
+```
+
+```java
+// no @RunWith, no @Rule, no shared base class
+public class AutoDetectedFirstTest {
+    @Test
+    public void first() {
+        System.out.println("autodetect case one");
+    }
+}
+```
+
+> **⚠️ Build-level listener registration is opt-in and run-wide, not class-wide.** Registering a listener at the build
+> tool level applies to **every** test class executed in that build run. For that reason, this project does **not** enable
+> it globally in the default build configuration — doing so would attach the listener to every other example in the workshop.
+> Instead, it is exposed as a dedicated, isolated run:
+>
+> ```bash
+> ./mvnw test -P autodetect-listener-demo
+> ./gradlew autodetectListenerDemoTest
+> ```
+>
+> *(Note: `-P autodetect-extension-demo` and `autodetectExtensionDemoTest` are also provided as aliases matching the master branch command syntax).*
+>
+> The Maven profile restricts Surefire to `AutoDetected*Test` and sets the `listener` property only for that profile.
+> The Gradle task filters to the same classes and configures the listener hooks only on that task.
+> Running `./mvnw clean test` / `./gradlew clean test` normally still executes `AutoDetectedFirstTest` and `AutoDetectedSecondTest`
+> as plain tests without the listener attached.
+
+**JUnit 4 vs JUnit 6 suite & global lifecycle:**
+
+|                          | JUnit 4 (Approaches A & B)            | JUnit 4 (Approach C)                 | JUnit 4 (Approach D)                 | JUnit 6 (`@Suite` + `@BeforeSuite`) | JUnit 6 (ServiceLoader Autodetection) |
+|--------------------------|---------------------------------------|--------------------------------------|--------------------------------------|-------------------------------------|---------------------------------------|
+| Mechanism                | `@RunWith(Suite.class)` + annotations | Programmatic `JUnitCore` runner      | Maven Surefire / Gradle test options | `@Suite` + `@SelectClasses`         | `ServiceLoader` SPI + engine param    |
+| Native annotation        | ❌ No `@BeforeSuite` / `@AfterSuite`  | ❌ No `@BeforeSuite` / `@AfterSuite` | ❌ No `@BeforeSuite` / `@AfterSuite` | ✅ `@BeforeSuite` / `@AfterSuite`   | ❌ None needed (automatic SPI hook)   |
+| Test class naming        | `*Case` / `*Scenario` (not `*Test`)   | `*Case` / `*Scenario` (not `*Test`)  | `*Test` — normal, runs independently | `*Case` / `*Scenario` (not `*Test`) | `*Test` — normal, runs independently  |
+| Requires suite class     | ✅ Required                           | ❌ Not needed                        | ❌ Not needed                        | ✅ `@SelectClasses` required        | ❌ Not needed                         |
+| Tests run independently  | ❌ Only via suite entry point         | ❌ Only via wrapper test             | ✅ Normal build discovery            | ❌ Only via suite entry class       | ✅ Normal build discovery             |
+| Active in direct IDE run | ✅ When running suite class           | ✅ When running wrapper test         | ❌ Bypassed (build-tool only)        | ✅ When running suite class         | ✅ JVM / engine-wide discovery        |
 
 ### 13. Custom RunListener
 
@@ -1023,6 +1086,18 @@ for both approaches and the different Gradle behavior.
 > ⚠️ **Naming convention:** suite-member classes (e.g. `SuiteLifecycleFirstCase`) are named `*Case`, **not** `*Test` or `*Tests`.  
 > This prevents Surefire and Gradle from discovering them as standalone tests and running them **twice** —  
 > once directly by Surefire / Gradle and once again through the suite.
+
+### Run build-tool global listener demo
+
+```bash
+# Maven profile (listener registered via Surefire <properties>)
+./mvnw clean test -P autodetect-listener-demo
+
+# Gradle task (listener hooks registered via Test task options)
+./gradlew clean autodetectListenerDemoTest
+```
+
+> *(Note: `-P autodetect-extension-demo` and `./gradlew clean autodetectExtensionDemoTest` are also supported as aliases for command parity with the master branch).*
 
 ### Compile, test, and package
 
