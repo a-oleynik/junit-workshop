@@ -119,3 +119,12 @@ Place feature examples under `src/test/java/…/topics/` and shared helpers unde
 | Use `@FixMethodOrder` for ordering                                           | No `@TestMethodOrder` in JUnit 4                                                     |
 | No `junit-bom` — all versions explicit in `pom.xml` / `build.gradle`         | BOM-based version management is a JUnit 5/6 pattern                                  |
 | Choose either Maven or Gradle consistently                                   | Avoids mixed tool execution, duplicate build outputs, and conflicting project setups |
+
+## Documentation organization
+
+- Article companions belong in `docs/articles/`; the JUnit 4 adaptation is `docs/articles/junit-6-from-scratch.md`.
+- Detailed explanations of README topics belong in `docs/guides/`.
+- Keep README learning paths focused on the goal, source examples, and commands; link guides for implementation details.
+- In these nested documents, use `../../` for links to README, source files, and build files at repository root.
+- `junit-suite-lifecycle.md` covers suite-scoped resources and explicit JUnitCore runs; `external-listener-registration.md` distinguishes Surefire RunListener events from Gradle TestListener events.
+- Do not describe externally registered listener callbacks as a single resource setup/teardown pair for the entire build or JVM.

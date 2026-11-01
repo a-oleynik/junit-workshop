@@ -114,7 +114,7 @@ src/
 JUnit 4 has no native `@BeforeSuite` / `@AfterSuite`. Three approaches are demonstrated:
 1. **`@ClassRule` + `ExternalResource`** (`BeforeAfterSuite`): static `@ClassRule` field on the suite class; `before()` / `after()` wrap the entire suite.
 2. **`@BeforeClass` / `@AfterClass`** (`BeforeClassSuite`): static methods on the `@RunWith(Suite.class)` class run before/after the whole suite.
-3. **`JUnitCore` + `RunListener`** (`JUnitCoreRunnerTest`): programmatic execution with listener callbacks for global hooks.
+3. **`JUnitCore` + `RunListener`** (`JUnitCoreRunnerTest`): programmatic execution with listener callbacks scoped to the selected `core.run(...)` call.
 
 ## CI / CD
 - Workflow: `.github/workflows/maven.yml` (GitHub Actions), triggered **manually only** (`workflow_dispatch`)
@@ -148,3 +148,12 @@ gradle clean test                       # HTML report (build/reports/tests/test/
 - Do not add a `junit-bom` — all dependency versions are managed explicitly in `pom.xml` and `build.gradle`
 - Do not rename `*Case` suite members to `*Test`
 - Do not use `@RunWith(Suite.class)` member classes named `*Test` — Surefire and Gradle will run them twice
+
+## Documentation organization
+
+- Article companions belong in `docs/articles/`; the JUnit 4 adaptation is `docs/articles/junit-6-from-scratch.md`.
+- Detailed explanations of README topics belong in `docs/guides/`.
+- Keep README learning paths focused on the goal, source examples, and commands; link guides for implementation details.
+- In these nested documents, use `../../` for links to README, source files, and build files at repository root.
+- `junit-suite-lifecycle.md` covers suite-scoped resources and explicit JUnitCore runs; `external-listener-registration.md` distinguishes Surefire RunListener events from Gradle TestListener events.
+- Do not describe externally registered listener callbacks as a single resource setup/teardown pair for the entire build or JVM.

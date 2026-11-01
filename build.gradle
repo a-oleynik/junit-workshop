@@ -138,19 +138,33 @@ def registerAutodetectListenerTest = { String taskName, String taskDesc ->
             includeTestsMatching '*.autodetect.AutoDetected*Test'
         }
         exclude '**/*Suite.class'
-        beforeSuite { TestDescriptor suite ->
-            if (suite.parent == null) {
-                println "Before entire run via autodetected listener"
+        // This is a Gradle listener; it does not register AutoDetectedRunListener.
+        addTestListener(new TestListener() {
+            @Override
+            void beforeSuite(TestDescriptor suite) {
+                if (suite.parent == null) {
+                    println "Gradle TestListener.beforeSuite: " + suite.name
+                }
             }
-        }
-        afterSuite { TestDescriptor suite, TestResult result ->
-            if (suite.parent == null) {
-                println "After entire run via autodetected listener"
+
+            @Override
+            void afterSuite(TestDescriptor suite, TestResult result) {
+                if (suite.parent == null) {
+                    println "Gradle TestListener.afterSuite: tests=" + result.testCount +
+                            ", failures=" + result.failedTestCount +
+                            ", skipped=" + result.skippedTestCount
+                }
             }
-        }
+
+            @Override
+            void beforeTest(TestDescriptor test) {}
+
+            @Override
+            void afterTest(TestDescriptor test, TestResult result) {}
+        })
         shouldRunAfter tasks.named('test')
     }
 }
 
-registerAutodetectListenerTest('autodetectListenerDemoTest', 'Runs build-tool listener demo tests with listener registration enabled.')
-registerAutodetectListenerTest('autodetectExtensionDemoTest', 'Runs build-tool listener demo tests with listener registration enabled (master branch parity alias).')
+registerAutodetectListenerTest('autodetectListenerDemoTest', 'Runs two JUnit 4 tests observed by a Gradle TestListener.')
+registerAutodetectListenerTest('autodetectExtensionDemoTest', 'Runs the Gradle TestListener demo (master branch command alias).')

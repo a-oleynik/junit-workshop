@@ -6,35 +6,16 @@ import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 
 /**
- * Demonstrates the third option for {@code @BeforeSuite} / {@code @AfterSuite} emulation
- * in JUnit 4: attaching a {@link SuiteRunListener} to a {@link JUnitCore} instance and
- * running test classes programmatically.
+ * Demonstrates an explicitly controlled JUnit 4 run with a {@link SuiteRunListener}.
+ * One {@code core.run(...)} call executes the two selected classes and returns a combined {@link Result}.
+ * The assertions below verify all four nested tests passed.
  *
- * <p>How it works:
- * <ol>
- *   <li>A {@code JUnitCore} instance is created.</li>
- *   <li>A {@link SuiteRunListener} is registered — it overrides
- *       {@code testRunStarted} and {@code testRunFinished}.</li>
- *   <li>{@code core.run(Class1, Class2, ...)} launches the classes as a single run:
- *       <ul>
- *         <li>{@code testRunStarted} fires <b>once</b> before any class starts
- *             → equivalent to {@code @BeforeSuite}.</li>
- *         <li>{@code testRunFinished} fires <b>once</b> after all classes finish
- *             → equivalent to {@code @AfterSuite}.</li>
- *       </ul>
- *   </li>
- *   <li>The {@link Result} is asserted to ensure all tests passed.</li>
- * </ol>
+ * <p>This wrapper is named {@code *Test} so build tools discover it. Its member classes are named
+ * {@code *Case} to avoid also matching the workshop's default discovery patterns.
  *
- * <p>This class is named {@code *Test} so Surefire discovers it as a regular test.
- * The member classes ({@link ListenerFirstCase}, {@link ListenerSecondCase}) are named
- * {@code *Case} to prevent Surefire from running them a second time as standalone tests.
- *
- * <p><b>Comparison with Surefire {@code <listener>} property:</b><br>
- * The commented-out {@code <listener>} block in {@code pom.xml} can register a
- * {@code RunListener} for the <em>entire</em> Maven test run (all test classes in the project).
- * That is a global hook, not a suite-scoped one. The {@code JUnitCore} approach here is
- * scoped to exactly the classes you pass to {@code core.run()}.
+ * <p>The listener observes only this {@code JUnitCore} run. A Surefire-configured listener instead
+ * observes events delivered by its provider, which can include several runs per build execution.
+ * Neither example is a JVM-wide resource lifecycle.
  */
 public class JUnitCoreRunnerTest {
 

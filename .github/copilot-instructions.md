@@ -103,7 +103,7 @@ JUnit 4 has **no native `@BeforeSuite` / `@AfterSuite`** annotations. Three appr
 
 1. **`@ClassRule` + `ExternalResource`** (see `BeforeAfterSuite`): apply a static `@ClassRule` of type `ExternalResource` on the suite class — `before()` runs once before the suite, `after()` once after.
 2. **`@BeforeClass` / `@AfterClass` on suite class** (see `BeforeClassSuite`): static methods on the `@RunWith(Suite.class)` class are called before/after the entire suite.
-3. **`JUnitCore` + `RunListener`** (see `JUnitCoreRunnerTest`): programmatic suite execution with a custom `RunListener` for global setup/teardown hooks.
+3. **`JUnitCore` + `RunListener`** (see `JUnitCoreRunnerTest`): programmatic execution with a `RunListener` scoped to the selected `core.run(...)` call.
 
 ## CI / CD
 - Workflow file: `.github/workflows/maven.yml`
@@ -139,3 +139,12 @@ gradle clean test                       # generate HTML report (build/reports/te
 - Do **not** rename `*Case` classes to `*Test` — it will cause double-execution via Surefire and Gradle.
 - Do **not** use JUnit 5/6 annotations (`@ExtendWith`, `@BeforeEach`, `@AfterEach`, `@Disabled`, `@Tag`) — they are not on the classpath in this branch.
 - Dependency versions are declared explicitly in `pom.xml` and `build.gradle` — there is no `junit-bom` in this branch.
+
+## Documentation organization
+
+- Article companions belong in `docs/articles/`; the JUnit 4 adaptation is `docs/articles/junit-6-from-scratch.md`.
+- Detailed explanations of README topics belong in `docs/guides/`.
+- Keep README learning paths focused on the goal, source examples, and commands; link guides for implementation details.
+- In these nested documents, use `../../` for links to README, source files, and build files at repository root.
+- `junit-suite-lifecycle.md` covers suite-scoped resources and explicit JUnitCore runs; `external-listener-registration.md` distinguishes Surefire RunListener events from Gradle TestListener events.
+- Do not describe externally registered listener callbacks as a single resource setup/teardown pair for the entire build or JVM.

@@ -211,7 +211,7 @@
         </profile>
         <profile>
             <!-- Run with: ./mvnw clean test -P autodetect-listener-demo
-                 A global RunListener is registered at the build-tool level for all test classes in this execution.
+                 Registers a JUnit RunListener through Surefire. Callback pairs follow provider runs, not the entire build.
                  In isolation, only AutoDetected*Test classes are executed. -->
             <id>autodetect-listener-demo</id>
             <build>
@@ -233,7 +233,7 @@
             </build>
         </profile>
         <profile>
-            <!-- Alias for parity with master branch command: ./mvnw clean test -P autodetect-extension-demo -->
+            <!-- Command alias only: still a JUnit 4 listener, not a Jupiter extension. ./mvnw clean test -P autodetect-extension-demo -->
             <id>autodetect-extension-demo</id>
             <build>
                 <plugins>

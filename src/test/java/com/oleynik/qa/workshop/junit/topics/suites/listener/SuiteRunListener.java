@@ -5,24 +5,15 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.RunListener;
 
 /**
- * Custom {@link RunListener} used to emulate {@code @BeforeSuite} / {@code @AfterSuite}
- * behaviour in JUnit 4 via a programmatic {@code JUnitCore} launch.
+ * Observes the classes passed to one {@code JUnitCore.run(...)} call in {@link JUnitCoreRunnerTest}.
+ * The start callback precedes those classes and the finish callback receives their combined result.
+ * Running other tests outside that call does not notify this listener.
  *
- * <p>How it works:
- * <ul>
- *   <li>{@link #testRunStarted(Description)} — fires <b>once</b> before the first test class
- *       in the run starts. Equivalent to {@code @BeforeSuite}.</li>
- *   <li>{@link #testRunFinished(Result)} — fires <b>once</b> after the last test class in the
- *       run finishes. Equivalent to {@code @AfterSuite}.</li>
- * </ul>
+ * <p>Registering a listener through Surefire is a separate example: the provider may report
+ * several JUnit runs in one Maven execution. It does not guarantee one setup/teardown pair
+ * for the whole build. Use a suite-scoped {@code ClassRule} when demonstrating a shared resource.
  *
- * <p>This listener is attached to a {@code JUnitCore} instance inside
- * {@link JUnitCoreRunnerTest}, which passes the exact set of test classes it should wrap.
- * No suite class or {@code @ClassRule} is required.
- *
- * <p>Alternative (global scope): the Surefire {@code <listener>} property can register a
- * {@code RunListener} for the <em>entire Maven test run</em> (all test classes in the project),
- * not just a specific group. See the commented-out block in {@code pom.xml}.
+ * @see <a href="https://junit.org/junit4/javadoc/4.13.2/org/junit/runner/JUnitCore.html">JUnitCore</a>
  */
 public class SuiteRunListener extends RunListener {
 

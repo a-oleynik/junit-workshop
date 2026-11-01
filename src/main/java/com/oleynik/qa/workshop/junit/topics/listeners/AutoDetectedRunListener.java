@@ -5,21 +5,30 @@ import org.junit.runner.Result;
 import org.junit.runner.notification.RunListener;
 
 /**
- * Registered automatically at the build-tool level via Maven Surefire {@code <listener>} property
- * and Gradle {@code useJUnit { listeners = [...] }} — no annotations or base classes are required
- * on test classes. This demonstrates the JUnit 4 build-level equivalent of global unannotated lifecycle
- * hooks, isolated within the {@code autodetect-listener-demo} Maven profile and
- * {@code autodetectListenerDemoTest} Gradle task.
+ * Registered by the Surefire listener property in the {@code autodetect-listener-demo} Maven profile.
+ * The demo tests need no listener registration annotations or shared base class.
+ *
+ * <p>Reports JUnit run events delivered by the configured provider. There may be several
+ * start/finish pairs in one Maven execution, especially when tests use separate forks.
+ * These callbacks do not define a single shared-resource lifecycle for the whole build.
+ *
+ * <p>The Gradle demo uses a Gradle {@code TestListener} configured in {@code build.gradle};
+ * it does not register this JUnit {@code RunListener}.
+ *
+ * @see <a href="https://junit.org/junit4/javadoc/4.13.2/org/junit/runner/notification/RunListener.html">JUnit 4 RunListener</a>
  */
 public class AutoDetectedRunListener extends RunListener {
 
     @Override
     public void testRunStarted(Description description) {
-        System.out.println("Before entire run via autodetected listener");
+        // Surefire's JUnit 4 adapter can deliver a run event without a Description.
+        String runName = description == null ? "<no description from provider>" : description.getDisplayName();
+        System.out.println("RunListener.testRunStarted: " + runName);
     }
 
     @Override
     public void testRunFinished(Result result) {
-        System.out.println("After entire run via autodetected listener");
+        System.out.println("RunListener.testRunFinished: tests=" + result.getRunCount()
+                + ", failures=" + result.getFailureCount());
     }
 }
