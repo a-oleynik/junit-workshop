@@ -64,11 +64,11 @@ src/
 ```
 
 ## Naming rules — follow exactly
-| Type                | Suffix               | Example                      |
-|---------------------|----------------------|------------------------------|
+| Type                | Suffix               | Example                       |
+|---------------------|----------------------|-------------------------------|
 | Regular test class  | `Test`               | `AssertTest`, `LifecycleTest` |
-| Suite member class  | `Case` or `Scenario` | `SuiteLifecycleFirstCase`    |
-| Tag meta-annotation | none (short noun)    | `@Smoke`, `@Regression`      |
+| Suite member class  | `Case` or `Scenario` | `SuiteLifecycleFirstCase`     |
+| Tag meta-annotation | none (short noun)    | `@Smoke`, `@Regression`       |
 
 > ⚠️ **Never** name suite member classes with `*Test` or `*Tests`. Maven Surefire and Gradle auto-discover `*Test` classes and would run them twice (standalone + via suite).
 
