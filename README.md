@@ -646,24 +646,37 @@ public class BeforeAfterSuite {
 
 ### 12. Suite-like Lifecycle via Extension (`BeforeAllCallback` + Root Store)
 
-`SuiteLikeLifecycleExtension` → `topics/extensions/` package (main); tests → `topics/suites/extension/`<br>
-An **alternative to `@Suite`** that provides global setup/teardown without grouping tests under a suite class.
+[`SuiteLikeLifecycleExtension`](src/main/java/com/oleynik/qa/workshop/junit/topics/extensions/SuiteLikeLifecycleExtension.java)
+shares one resource between test classes that register it with `@ExtendWith`.
+For example, several classes could use the same test server instead of starting
+a server for every class. This demo only prints messages; it does not start a real server.
 
 **How it works:**
 
-1. Implement `BeforeAllCallback`
-2. Access the **root** `ExtensionContext` — shared across the entire JVM test run
-3. `getOrComputeIfAbsent` ensures the factory runs **only once**, on the first class whose `beforeAll` fires
-4. Return an `AutoCloseable` — JUnit calls `close()` when the root context tears down (end of run = “AfterSuite”)
+1. Jupiter, the engine that runs these JUnit tests, calls `beforeAll()` before each
+   participating class.
+2. `context.getRoot()` gives access to the context shared by test classes in this
+   Jupiter engine execution. Its **store** holds objects for the extension to reuse.
+3. `getStore(NAMESPACE)` selects this extension's storage area. `computeIfAbsent`
+   creates the resource only if its key is missing. The next class gets the same
+   stored object, even if classes start in parallel.
+4. When the root context closes, JUnit calls `close()` on the stored `AutoCloseable`
+   resource. Test classes do not need to close it themselves.
+
+See [keeping state and closing resources in extensions](https://docs.junit.org/current/extensions/keeping-state-in-extensions.html)
+and the [Store API](https://docs.junit.org/current/api/org.junit.jupiter.api/org/junit/jupiter/api/extension/ExtensionContext.Store.html).
 
 ```java
 public class SuiteLikeLifecycleExtension implements BeforeAllCallback {
+    private static final ExtensionContext.Namespace NAMESPACE =
+            ExtensionContext.Namespace.create(SuiteLikeLifecycleExtension.class);
+
     @Override
     public void beforeAll(ExtensionContext context) {
         context.getRoot()
                 .getStore(NAMESPACE)
-                .getOrComputeIfAbsent("suite-like-resource", key -> {
-                    System.out.println("Before entire run"); // runs only once
+                .computeIfAbsent("suite-like-resource", key -> {
+                    System.out.println("Created shared resource in the Jupiter root context");
                     return new SuiteCleanupResource();
                 }, SuiteCleanupResource.class);
     }
@@ -671,7 +684,7 @@ public class SuiteLikeLifecycleExtension implements BeforeAllCallback {
     static class SuiteCleanupResource implements AutoCloseable {
         @Override
         public void close() {
-            System.out.println("After entire run"); // called once at end of all tests
+            System.out.println("Closed shared resource from the Jupiter root context");
         }
     }
 }
@@ -687,87 +700,134 @@ public class SuiteExtensionFirstTest {
 }
 ```
 
-**Comparing the two suite-lifecycle approaches:**
+**Comparing these two workshop examples:**
 
-These are two **distinct mechanisms**, not interchangeable implementations of the same thing — pick based on
-whether you actually need a `@Suite` entry class.
+|                                      | Suite example                                                 | Extension example                                                                                           |
+|--------------------------------------|---------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------|
+| How classes are selected             | A `@Suite` class uses `@SelectClasses`.                       | Test classes register `@ExtendWith` and run through normal test discovery.                                  |
+| Default discovery in this repository | `*Case` / `*Scenario` classes are selected through the suite. | `*Test` classes are discovered directly.                                                                    |
+| Scope of shared setup and cleanup    | Each execution of the suite.                                  | One root `ExtensionContext` in a Jupiter engine execution; separate executions have separate root contexts. |
 
-|                         | `@Suite` + `@BeforeSuite`           | Extension approach                                                                                                                                                |
-|-------------------------|-------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Test class naming       | `*Case` / `*Scenario` (not `*Test`) | `*Test` — normal, runs independently                                                                                                                              |
-| Requires suite class    | ✅ `@SelectClasses` required        | ❌ No suite class needed                                                                                                                                          |
-| Tests run independently | ❌ Only via suite entry class       | ✅ Normal Surefire / Gradle discovery                                                                                                                             |
-| Opt-in mechanism        | Declared in `@SelectClasses`        | `@ExtendWith` per class                                                                                                                                           |
-| Scope of "once" setup   | Once per `@Suite` class launched    | Once per **root** `ExtensionContext`<br>— i.e. once per JVM test run, shared by<br>every extended class, regardless of how<br>many suites or classes are selected |
+The naming above is a workshop convention, not a JUnit restriction. A suite's
+test classes can also be selected directly, but that does not run the suite's
+`@BeforeSuite` / `@AfterSuite` methods.
 
-> **⚠️ Root `ExtensionContext` ≠ a suite, and neither is a launcher session.** The root `ExtensionContext` used by
-> `getOrComputeIfAbsent` here is a Jupiter-engine concept: it is shared by all Jupiter tests discovered **within a single
-> `TestEngine` execution**, whatever triggered it — a `@Suite`, a single `*Test` class, or a full build run. It does
-> **not** span multiple engines or multiple separate launcher invocations. A `LauncherSessionListener` (not used in
-> this project) is a different, platform-level hook that wraps one `Launcher` session — i.e. one invocation of the
-> whole JUnit Platform — and can observe engines beyond Jupiter. Don't treat `@Suite`, the root `ExtensionContext`
-> store, and a launcher session as three equivalent ways to say "runs once for everything"; each has its own,
-> narrower scope.
+**What does "once" mean here?**
+
+If `SuiteExtensionFirstTest` and `SuiteExtensionSecondTest` are selected together
+for one Jupiter engine execution, they share one resource. Run them again and
+JUnit creates a new root context and a new resource.
+
+The boundary is the Jupiter engine execution, not the lifetime of the Java process.
+A tool can execute tests more than once in the same JVM, and separate suites can
+start separate Jupiter executions. Those executions have separate root stores;
+one resource is not automatically shared across all of them.
+
+A **launcher session** belongs to the JUnit Platform, which coordinates test engines.
+An IDE or another tool can open a session, discover tests, execute them, execute
+another selection, and then close the session. One session can therefore cover
+more than one execution. See the
+[LauncherSession API](https://docs.junit.org/current/api/org.junit.platform.launcher/org/junit/platform/launcher/LauncherSession.html).
+
+| Mechanism                                     | What starts and ends together?                                                                                  |
+|-----------------------------------------------|-----------------------------------------------------------------------------------------------------------------|
+| `@BeforeSuite` / `@AfterSuite`                | Setup and teardown around the selected suite's execution; see the suite example in section 11.                  |
+| Resource in the root `ExtensionContext` store | Created when first requested by this extension; closed when that Jupiter root context closes.                   |
+| `LauncherSessionListener`                     | Receives events when the launcher session opens and closes; the session may contain several test executions.    |
+| ServiceLoader                                 | Finds and registers an extension. It does not define when the extension's shared resource is created or closed. |
+
+This project does not implement a `LauncherSessionListener`; it is included here
+to explain the difference in scope. See the
+[LauncherSessionListener API](https://docs.junit.org/current/api/org.junit.platform.launcher/org/junit/platform/launcher/LauncherSessionListener.html).
 
 > **⚠️ Note on `getOrComputeIfAbsent`:** the 3-argument overload used here is deprecated in JUnit 6
 > but is the standard API in JUnit 5. This example targets the JUnit 5 branch.
 
 ### 13. ServiceLoader Extension Autodetection
 
-`AutoDetectedRootResourceExtension` → `topics/extensions/` package (main); tests → `topics/suites/autodetect/`<br>
-A third way to get global setup/teardown: register a Jupiter extension so the **platform discovers it itself**,
-without `@ExtendWith` on any test class and without a shared base class.
+The previous example connects an extension to tests with `@ExtendWith`.
+This example lets Jupiter find the extension automatically, so the test classes
+need neither that annotation nor a shared base class.
+
+**Registration and resource lifetime are two separate parts of this example:**
+
+- **ServiceLoader registration** tells Jupiter which extension to load.
+- **The root store** lets that extension create one resource and reuse it across
+  test classes in the same Jupiter engine execution.
 
 **How it works:**
 
-1. Declare the extension's fully-qualified class name in
-   `src/test/resources/META-INF/services/org.junit.jupiter.api.extension.Extension` — standard `java.util.ServiceLoader`
-   registration.
-2. The extension class (`AutoDetectedRootResourceExtension`) is a plain `BeforeAllCallback` — identical in shape to
-   `SuiteLikeLifecycleExtension` from section 12, using the same `getOrComputeIfAbsent` root-store pattern.
-3. `AutoDetectedFirstTest` and `AutoDetectedSecondTest` have **no** `@ExtendWith` and **no** common superclass —
-   autodetection attaches the extension to every Jupiter test class in the run.
+1. The [service descriptor](src/test/resources/META-INF/services/org.junit.jupiter.api.extension.Extension)
+   is a text file named after the extension interface. It contains the provider's
+   fully qualified class name:
+   ```text
+   com.oleynik.qa.workshop.junit.topics.extensions.AutoDetectedRootResourceExtension
+   ```
+2. The `junit.jupiter.extensions.autodetection.enabled=true` setting tells Jupiter
+   to load extensions listed in these files using Java's ServiceLoader.
+3. [`AutoDetectedRootResourceExtension`](src/main/java/com/oleynik/qa/workshop/junit/topics/extensions/AutoDetectedRootResourceExtension.java)
+   uses `BeforeAllCallback` and the same root-store pattern as section 12.
+   The callback runs before each class; `computeIfAbsent` creates the resource
+   only on the first request in that store.
+4. [`AutoDetectedFirstTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/suites/autodetect/AutoDetectedFirstTest.java)
+   and [`AutoDetectedSecondTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/suites/autodetect/AutoDetectedSecondTest.java)
+   are ordinary Jupiter test classes, with no `@ExtendWith`.
+
+The key part of the extension is:
 
 ```java
-public class AutoDetectedRootResourceExtension implements BeforeAllCallback {
-    @Override
-    public void beforeAll(ExtensionContext context) {
-        context.getRoot()
-                .getStore(NAMESPACE)
-                .getOrComputeIfAbsent("autodetected-root-resource", key -> {
-                    System.out.println("Before entire run via autodetected extension");
-                    return new RootResource();
-                }, RootResource.class);
-    }
+@Override
+public void beforeAll(ExtensionContext context) {
+    context.getRoot()
+            .getStore(NAMESPACE)
+            .computeIfAbsent("autodetected-root-resource", key -> {
+                System.out.println("Created shared resource in the Jupiter root context");
+                return new RootResource();
+            }, RootResource.class);
 }
 ```
 
-```java
-// no @ExtendWith, no shared base class
-public class AutoDetectedFirstTest {
-    @Test
-    void first() { ... }
-}
+`RootResource` implements `AutoCloseable`. When the root context closes, its
+`close()` method prints the cleanup message. As in section 12, this is a small
+lifecycle demonstration; no external server or database is started.
+
+**Run the demo** with your chosen build tool:
+
+```bash
+# Maven
+./mvnw test -P autodetect-extension-demo
+
+# Gradle
+./gradlew autodetectExtensionDemoTest
 ```
 
-> **⚠️ Autodetection is opt-in and run-wide, not class-wide.** ServiceLoader registration alone (the
-> `META-INF/services` file) does nothing by itself — it only takes effect when the
-> `junit.jupiter.extensions.autodetection.enabled=true` configuration parameter is set. Once it **is** set, the
-> extension attaches to **every** Jupiter test class discovered in that run, not just `AutoDetectedFirstTest` /
-> `AutoDetectedSecondTest`. For that reason this project does **not** enable autodetection in the shared
-> `src/test/resources/junit-platform.properties` — doing so would silently affect every other example in the
-> workshop. Instead, autodetection is enabled only for a dedicated, isolated run:
->
-> ```bash
-> ./mvnw test -P autodetect-extension-demo
-> ./gradlew autodetectExtensionDemoTest
-> ```
->
-> The Maven profile restricts Surefire to `AutoDetected*Test` and passes
-> `junit.jupiter.extensions.autodetection.enabled=true` only via that profile's `configurationParameters`; the Gradle
-> task filters to the same classes and sets the system property only on that task. Running `./mvnw clean test` /
-> `./gradlew clean test` normally still executes `AutoDetectedFirstTest` / `AutoDetectedSecondTest` as plain tests —
-> autodetection is off, so the extension is simply not attached and no `RootResource` is created.
+Look for these messages among the build output:
+
+```text
+Created shared resource in the Jupiter root context
+autodetect case one
+autodetect case two
+Closed shared resource from the Jupiter root context
+```
+
+The two test messages may appear in the opposite order because classes can run
+in parallel. For this two-class demo, the resource messages appear once each:
+creation before the tests, cleanup after them. Run the demo again and a new
+resource is created and closed.
+
+**Why a separate profile and task?** Enabling autodetection registers this
+extension for all Jupiter test classes in that execution, not just these two.
+The [Maven profile](pom.xml) and [Gradle task](build.gradle) select only the demo
+classes and enable autodetection for that selection. The shared
+[`junit-platform.properties`](src/test/resources/junit-platform.properties)
+leaves autodetection off.
+
+A normal `./mvnw clean test` or `./gradlew clean test` still runs the two demo
+classes, but only their test messages appear: the extension is not registered,
+so its shared resource is not created.
+
+Read more: [JUnit automatic extension registration](https://docs.junit.org/current/extensions/registering-extensions.html#automatic-extension-registration)
+and [Java ServiceLoader provider files](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ServiceLoader.html).
 
 ### 14. Timeout Thread Modes
 
