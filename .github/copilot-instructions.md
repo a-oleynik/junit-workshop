@@ -47,7 +47,7 @@ src/
     │   │       └── CalculatorParameterizedTest.java
     │   └── topics/
     │       ├── general/         # Basic assertions, lifecycle, exceptions, display names, timeouts
-    │       ├── fixtures/        # InlineFixtureTest and ImplicitFixtureTest: fresh cart per test
+    │       ├── fixtures/        # ImplicitFixtureTest, InlineFixtureTest, SharedFixtureTest: fresh carts and shared catalog
     │       ├── asserts/         # assertAll and AssertJ soft assertions
     │       ├── conditional/     # Assumptions (assumeTrue, assumingThat)
     │       ├── ddt/             # Parameterized and data-driven tests
