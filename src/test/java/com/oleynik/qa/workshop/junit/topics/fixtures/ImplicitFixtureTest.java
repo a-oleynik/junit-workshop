@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Implicit Setup: a lifecycle method prepares a fresh empty cart before each test.
+ * Implicit Setup + Fresh Fixture: a lifecycle method prepares a new empty cart before each test.
  * The cart and its state are the fixture; the lifecycle method is not the fixture.
  */
 public class ImplicitFixtureTest {

@@ -50,7 +50,7 @@ src/
     │   │       └── CalculatorParameterizedTest.java
     │   └── topics/
     │       ├── general/         # Basic assertions, lifecycle, exceptions, timeouts, @Ignore
-    │       ├── fixtures/        # InlineFixtureTest and ImplicitFixtureTest: fresh cart per test
+    │       ├── fixtures/        # ImplicitFixtureTest, InlineFixtureTest, SharedFixtureTest: fresh carts and shared catalog
     │       ├── asserts/         # ErrorCollector, AssertAll, AssertJ soft assertions
     │       ├── conditional/     # Assumptions via Assume
     │       ├── ddt/             # Parameterized, JUnitParams, DataProvider, Theories
