@@ -210,7 +210,7 @@ src/
     │       ├── ddt/             # Parameterized and data-driven tests
     │       ├── extensions/      # Tests exercising custom extensions
     │       │   └── basic/       # LoggingExtensionTest: registration with @ExtendWith
-    │       ├── fixtures/        # ImplicitFixtureTest and InlineFixtureTest: fresh cart per test
+    │       ├── fixtures/        # ImplicitFixtureTest, InlineFixtureTest, SharedFixtureTest: fresh carts and shared catalog
     │       ├── general/         # Basic assertions, lifecycle, exceptions, display names, timeouts
     │       ├── grouping/        # @Tag usage and custom tag annotations
     │       │   └── tags/        # Tags constants, @Smoke and @Regression
@@ -255,7 +255,7 @@ The manual starting point is `src/main/java/…/scenarios/calculator/beforejunit
 | `topics/general`           | Basic assertions (`assertEquals`, `assertTrue`, `assertNull`, …)                    | `AssertTest`                                                                                                     |
 | `topics/general`           | Exception testing (`assertThrows`)                                                  | `ExceptionTest`                                                                                                  |
 | `topics/general`           | Test lifecycle (`@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`)             | `LifecycleTest`                                                                                                  |
-| `topics/fixtures`          | Fresh fixtures with In-line Setup and Implicit Setup                                | `InlineFixtureTest`, `ImplicitFixtureTest`                                                                       |
+| `topics/fixtures`          | Fresh/Shared Fixture and In-line/Implicit Setup                                     | `InlineFixtureTest`, `ImplicitFixtureTest`, `SharedFixtureTest`                                                  |
 | `topics/general`           | Hamcrest matchers                                                                   | `HamcrestTest`                                                                                                   |
 | `topics/general`           | Timeouts (`assertTimeout()`, `@Timeout`)                                            | `TimeoutTest`                                                                                                    |
 | `topics/general`           | Timeout thread modes and `ThreadLocal` context                                      | [`TimeoutThreadModeTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/TimeoutThreadModeTest.java) |
@@ -318,20 +318,30 @@ Learn `assertEquals`, `assertTrue`, `assertNull`, and `fail`.
 [`LifecycleTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/general/LifecycleTest.java)
 Understand `@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`.
 
-### 3. Fixtures (in-line vs. implicit setup)
+<a id="3-fixtures-in-line-vs-implicit-setup"></a>
+
+### 3. Fixtures
 
 [`InlineFixtureTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/fixtures/InlineFixtureTest.java),
-[`ImplicitFixtureTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/fixtures/ImplicitFixtureTest.java)  
-Learn the difference between **fixture** (the test state/data) and **lifecycle methods**
-(the setup mechanism). Compare creating an empty `ShoppingCart` directly in each test
-versus using `@BeforeEach`.
+[`ImplicitFixtureTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/fixtures/ImplicitFixtureTest.java),
+[`SharedFixtureTest`](src/test/java/com/oleynik/qa/workshop/junit/topics/fixtures/SharedFixtureTest.java)
 
-The empty cart and its state form the fixture; creating it is fixture setup.
-Both examples use a **Fresh Fixture**: each test gets a new cart.
-In-line/Implicit Setup describes where preparation happens; Fresh/Shared Fixture
-describes whether fixture state is recreated or reused between tests.
-Prices and quantities stay in each test so its expected total is easy to understand.
-These in-memory objects need no explicit teardown; external resources may need cleanup.
+A **fixture** is the prepared state, data, objects, or resources needed by a test.
+Lifecycle methods such as `@BeforeEach` prepare it; they are not the fixture itself.
+
+| Concept            | What it describes                                                    | Example                                                                                |
+|--------------------|----------------------------------------------------------------------|----------------------------------------------------------------------------------------|
+| **Fresh Fixture**  | State created separately for each test.                              | Each example gives every test a new `ShoppingCart`.                                    |
+| **Shared Fixture** | A fixture, or part of it, reused by several tests.                   | `SharedFixtureTest` creates one immutable price catalog for the class in `@BeforeAll`. |
+| **In-line Setup**  | Preparation written directly inside the test method.                 | `InlineFixtureTest` creates the cart in each test.                                     |
+| **Implicit Setup** | Common preparation performed by a lifecycle method before each test. | `ImplicitFixtureTest` and `SharedFixtureTest` create their carts in `@BeforeEach`.     |
+
+Fresh/Shared Fixture describes reuse; In-line/Implicit Setup describes where preparation happens.
+The first two classes compare the same cart scenarios with different setup locations.
+Their scenario-specific prices and quantities stay visible in each test.
+The shared example combines reusable reference data with a fresh mutable cart,
+so tests do not depend on each other's changes or execution order.
+These in-memory fixtures need no explicit teardown; external resources may need cleanup.
 
 ### 4. Exception testing
 

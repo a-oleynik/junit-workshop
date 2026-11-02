@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * In-line Setup: each test prepares its own fresh fixture inside the test method.
+ * In-line Setup + Fresh Fixture: each test creates its own cart inside the test method.
  * Compare with ImplicitFixtureTest: the scenarios and assertions are the same.
  */
 class InlineFixtureTest {
