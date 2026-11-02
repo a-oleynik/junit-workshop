@@ -1,4 +1,8 @@
+<a id="top"></a>
+
 # External listener registration in JUnit 4
+
+[⬅ Back to README](../../README.md)
 
 Observe test execution without adding registration code to each test class.
 Maven and Gradle use different mechanisms. Neither demo manages a shared fixture.
@@ -47,7 +51,7 @@ two successful tests. Use the Surefire summary or XML/HTML report for build tota
 Several callback pairs can arrive in one Maven execution. A finish callback does
 not necessarily mean all tests in the build have finished. A directly managed
 `JUnitCore` run provides its own combined result, as shown in the
-[suite lifecycle guide](junit-suite-lifecycle.md).
+[suite lifecycle guide](junit-lifecycle.md).
 
 ## Gradle: register a Gradle TestListener
 
@@ -115,7 +119,7 @@ A static flag suppressing repeated setup would not identify the final teardown
 event or share a resource across forked JVMs.
 
 For resource setup and cleanup, start with the
-[suite-scoped ClassRule example](junit-suite-lifecycle.md).
+[suite-scoped ClassRule example](junit-lifecycle.md).
 In Jupiter, ServiceLoader controls extension registration; the root store
 separately controls the shared resource's lifetime.
 JUnit 4 has no Jupiter extension autodetection API.
@@ -128,3 +132,5 @@ JUnit 4 has no Jupiter extension autodetection API.
 - [Gradle 9.6 Test task](https://docs.gradle.org/9.6.0/dsl/org.gradle.api.tasks.testing.Test.html)
 
 [Back to the README listener example](../../README.md#13-external-listener-registration-maven-and-gradle)
+
+[⬆ Back to top](#top) · [⬅ Back to README](../../README.md)

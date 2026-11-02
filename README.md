@@ -178,8 +178,8 @@ docs/
 ├── articles/                # Companion material for specific articles
 │   └── junit-6-from-scratch.md # Article learning path (JUnit 4 adaptation)
 └── guides/                  # Detailed explanations of README topics
-    ├── external-listener-registration.md # Maven and Gradle listeners
-    └── junit-suite-lifecycle.md # Suite resources and JUnitCore
+    ├── extension-and-listener-registration.md # Maven and Gradle listeners
+    └── junit-lifecycle.md # Suite resources and JUnitCore
 gradle/wrapper/              # Pinned Gradle distribution and wrapper bootstrap JAR
 src/
 ├── main/java/com/oleynik/qa/workshop/junit/
@@ -755,7 +755,7 @@ Run an example with your chosen build tool:
 ```
 
 The workshop names suite members `*Case` to avoid duplicate discovery.
-See [the suite lifecycle guide](docs/guides/junit-suite-lifecycle.md)
+See [the suite lifecycle guide](docs/guides/junit-lifecycle.md)
 for all three examples, commands, cleanup behavior, and comparison with Jupiter.
 
 ### 13. External Listener Registration (Maven and Gradle)
@@ -775,7 +775,7 @@ Run the isolated demo with your chosen build tool:
 ./gradlew autodetectListenerDemoTest                    # Gradle
 ```
 
-See [registration steps, observed callbacks, and documentation](docs/guides/external-listener-registration.md).
+See [registration steps, observed callbacks, and documentation](docs/guides/extension-and-listener-registration.md).
 
 ## 💻 Command Examples
 

@@ -1,4 +1,8 @@
+<a id="top"></a>
+
 # JUnit 4 suite lifecycle
+
+[⬅ Back to README](../../README.md)
 
 JUnit 4 has no native `@BeforeSuite` or `@AfterSuite`.
 Use a suite-scoped rule or class lifecycle methods to prepare and clean up resources.
@@ -105,6 +109,8 @@ The programmatic example prints one listener start/finish pair around its four n
 
 JUnit 5/6 can share resources through a Jupiter root-context store.
 JUnit 4's suite rules address a similar setup/cleanup task with different boundaries.
-See [external listener registration](external-listener-registration.md) for build-tool observation.
+See [external listener registration](extension-and-listener-registration.md) for build-tool observation.
 
 [Back to the README suite example](../../README.md#12-test-suite-beforesuite--aftersuite-emulation)
+
+[⬆ Back to top](#top) · [⬅ Back to README](../../README.md)

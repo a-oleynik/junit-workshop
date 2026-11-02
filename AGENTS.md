@@ -126,7 +126,7 @@ Place feature examples under `src/test/java/…/topics/` and shared helpers unde
 - Detailed explanations of README topics belong in `docs/guides/`.
 - Keep README learning paths focused on the goal, source examples, and commands; link guides for implementation details.
 - In these nested documents, use `../../` for links to README, source files, and build files at repository root.
-- `junit-suite-lifecycle.md` covers suite-scoped resources and explicit JUnitCore runs; `external-listener-registration.md` distinguishes Surefire RunListener events from Gradle TestListener events.
+- `junit-lifecycle.md` covers suite-scoped resources and explicit JUnitCore runs; `extension-and-listener-registration.md` distinguishes Surefire RunListener events from Gradle TestListener events.
 - Do not describe externally registered listener callbacks as a single resource setup/teardown pair for the entire build or JVM.
 
 ## Validation with Maven and Gradle
