@@ -1,4 +1,9 @@
+<a id="top"></a>
+
 # JUnit extension lifecycle
+
+[⬅ Back to README](../../README.md)
+
 
 The README introduces two examples that share a resource between test classes:
 [`SuiteLikeLifecycleExtension`](../../src/main/java/com/oleynik/qa/workshop/junit/topics/extensions/SuiteLikeLifecycleExtension.java),
@@ -121,3 +126,5 @@ See [automatic extension registration](https://docs.junit.org/5.14.4/extensions/
 For the provider file and activation steps, see the [automatic registration walkthrough](automatic-extension-registration.md).
 Return to the README's [suite lifecycle example](../../README.md#11-suite-lifecycle-beforesuite--aftersuite)
 or [automatic registration demo](../../README.md#13-automatic-extension-registration-serviceloader).
+
+[⬆ Back to top](#top) · [⬅ Back to README](../../README.md)
