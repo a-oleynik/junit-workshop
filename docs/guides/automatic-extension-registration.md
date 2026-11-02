@@ -1,4 +1,9 @@
+<a id="top"></a>
+
 # Automatic extension registration (ServiceLoader)
+
+[⬅ Back to README](../../README.md)
+
 
 Use automatic registration when an extension should apply to all Jupiter test classes
 in an execution, without adding `@ExtendWith` to every class.
@@ -87,3 +92,5 @@ for `computeIfAbsent`, automatic cleanup, and the scope of a shared resource.
 - [Java ServiceLoader](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/ServiceLoader.html)
 
 [Back to the README learning path](../../README.md#13-automatic-extension-registration-serviceloader)
+
+[⬆ Back to top](#top) · [⬅ Back to README](../../README.md)
