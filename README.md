@@ -557,7 +557,7 @@ using JUnit 4 mechanisms rather than Jupiter configuration properties.
 
 **Maven — two ways to configure JUnit Vintage**
 
-[Surefire 3.6.0](https://maven.apache.org/surefire/maven-surefire-plugin/whats-new-3-6-0.html)
+[Surefire 3.6.0+](https://maven.apache.org/surefire/maven-surefire-plugin/whats-new-3-6-0.html)
 automatically runs JUnit 4 tests through the Vintage engine on the JUnit Platform.
 Both configuration styles below work; use one at a time.
 
@@ -577,7 +577,7 @@ Classes run concurrently, with a pool size of three; methods within each ordinar
 class run sequentially. The property references let `-Dparallel` and
 `-DthreadCount` override these defaults from the command line.
 
-| `parallel` value    | What runs concurrently with Surefire 3.6.0 / Vintage                                                                 |
+| `parallel` value    | What runs concurrently with Surefire 3.6.1 / Vintage                                                                 |
 |---------------------|----------------------------------------------------------------------------------------------------------------------|
 | `methods`           | Methods within each class                                                                      |
 | `classes`           | Top-level classes (the project default), including separately discovered suite classes; methods within an ordinary class remain sequential |
@@ -585,14 +585,12 @@ class run sequentially. The property references let `-Dparallel` and
 | `both`              | Legacy alias for `classesAndMethods`                                                                                 |
 | `none`              | Sequential execution                                                                                                 |
 
-**Version-specific limitation:** with Surefire 3.6.0's Vintage provider, the old
-`suites` and `all` values do not enable class or method parallelism. A check using
-two JUnit 4 suites with two methods each ran all four methods sequentially for
-both values, despite a successful build. The same suites overlapped with `classes`.
-For this version, use `classes` for separately discovered suites, or
-`classesAndMethods` for class and method parallelism; do not assume that the old
-suite-specific scheduling modes carry over unchanged.
-See [Surefire's conversion to Vintage parameters](https://github.com/apache/maven-surefire/blob/surefire-3.6.0/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/AbstractSurefireMojo.java#L1511-L1537).
+**Version-specific limitation:** Surefire 3.6.1 does not map the old `suites`
+and `all` values to Vintage's class or method parallelism flags.
+The `all` demo run warns that no scope is defined and falls back to sequential
+execution despite a successful build. Use `classes` for separately discovered
+suite classes, or `classesAndMethods` for class and method parallelism.
+See [Surefire 3.6.1's conversion to Vintage parameters](https://github.com/apache/maven-surefire/blob/surefire-3.6.1/maven-surefire-common/src/main/java/org/apache/maven/plugin/surefire/AbstractSurefireMojo.java#L1635-L1664).
 
 **2. Vintage parameters — commented alternative in POM**
 

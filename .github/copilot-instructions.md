@@ -7,7 +7,7 @@ This is a **Java test-automation workshop** that demonstrates every major JUnit 
 | Concern               | Library / Tool                                                       |
 |-----------------------|----------------------------------------------------------------------|
 | Language              | Java 17 (LTS)                                                        |
-| Build                 | Maven 3.9+ / Gradle 9.6.0+ (Maven and Gradle Wrappers included)      |
+| Build                 | Maven 3.9.12 / Gradle 9.6.0 (Maven and Gradle Wrappers included)      |
 | Test framework        | JUnit 4.13.2 (`junit:junit`)                                         |
 | Parameterized tests   | JUnitParams 1.1.1 (`@JUnitParamsRunner`)                             |
 | Data-provider bridge  | junit4-dataprovider 2.12 (TNG-style `@DataProvider`)                 |
@@ -117,25 +117,29 @@ JUnit 4 has **no native `@BeforeSuite` / `@AfterSuite`** annotations. Three appr
 
 ## Maven commands (quick reference)
 ```bash
-mvn clean test                          # run all tests
-mvn clean test -Dtest=AssertTest        # run one class
-mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests  # run by category
-mvn clean test -P smoke                 # run via Maven profile (smoke or regression)
-mvn clean surefire-report:report        # generate HTML report
-mvn clean site                          # full Maven site
+./mvnw clean test                          # run all tests
+./mvnw clean test -Dtest=AssertTest        # run one class
+./mvnw clean test -Dgroups=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests  # run by category
+./mvnw clean test -P smoke                 # run via Maven profile (smoke or regression)
+./mvnw clean test -P regression            # run the regression profile
+./mvnw test -P autodetect-listener-demo     # register a JUnit 4 listener through Surefire
+./mvnw clean surefire-report:report        # generate HTML report
+./mvnw clean site                          # full Maven site
 ```
 
 ## Gradle commands (quick reference)
 ```bash
-gradle clean test                       # run all tests
-gradle clean test --tests "*AssertTest" # run one class
-gradle clean test -DincludeCategories=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests # run by category
-gradle clean smokeTest                  # run via dedicated Gradle task
-gradle clean test                       # generate HTML report (build/reports/tests/test/index.html)
+./gradlew clean test                       # run all tests
+./gradlew clean test --tests "*AssertTest" # run one class
+./gradlew clean test -DincludeCategories=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests # run by category
+./gradlew clean smokeTest                  # run via dedicated Gradle task
+./gradlew clean regressionTest             # run the regression task
+./gradlew autodetectListenerDemoTest        # observe execution with a Gradle TestListener
+./gradlew clean test                       # generate HTML report (build/reports/tests/test/index.html)
 ```
 
 ## Important constraints
-- When generating commands, test runs, or build actions, consistently follow the user's chosen build tool (Maven or Gradle) rather than mixing both.
+- Validate affected workshop examples with both Maven and Gradle wrappers; follow the validation policy below.
 - Do **not** rename `*Case` classes to `*Test` — it will cause double-execution via Surefire and Gradle.
 - Do **not** use JUnit 5/6 annotations (`@ExtendWith`, `@BeforeEach`, `@AfterEach`, `@Disabled`, `@Tag`) — they are not on the classpath in this branch.
 - Dependency versions are declared explicitly in `pom.xml` and `build.gradle` — there is no `junit-bom` in this branch.
@@ -148,3 +152,14 @@ gradle clean test                       # generate HTML report (build/reports/te
 - In these nested documents, use `../../` for links to README, source files, and build files at repository root.
 - `junit-suite-lifecycle.md` covers suite-scoped resources and explicit JUnitCore runs; `external-listener-registration.md` distinguishes Surefire RunListener events from Gradle TestListener events.
 - Do not describe externally registered listener callbacks as a single resource setup/teardown pair for the entire build or JVM.
+
+## Validation with Maven and Gradle
+
+- Every workshop example must work with both Maven and Gradle. Keep corresponding commands in README and guides synchronized.
+- Use the pinned wrappers: Maven 3.9.12 and Gradle 9.6.0. On Unix use `./mvnw` and `./gradlew`; on Windows use `mvnw.cmd` and `gradlew.bat`.
+- For Java or test changes, run the affected examples with both wrappers. A successful Maven run alone does not establish Gradle compatibility, or vice versa.
+- For dependency changes or shared build/test configuration changes, run the full test suite with both wrappers.
+- For documentation-only changes, check relative links, heading anchors, and consistency with the actual source/build files. If runnable commands are added or changed, execute the corresponding commands for both build tools.
+- Check actual test counts, callback output, and reports when these are part of the example; build success alone is not sufficient.
+- Report Maven and Gradle validation separately, including commands run, results, and any verification that could not be completed.
+- The current GitHub Actions workflow runs Maven only. It does not replace local Gradle validation.

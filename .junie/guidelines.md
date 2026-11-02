@@ -5,7 +5,7 @@ A hands-on Java workshop demonstrating the full JUnit feature set across JUnit 4
 
 ## Stack
 - **Java 17** — language level, no preview features
-- **Maven 3.9+** and **Gradle 9.6.0+** with bundled wrappers (`mvnw` / `mvnw.cmd`, `gradlew` / `gradlew.bat`)
+- **Maven 3.9.12** and **Gradle 9.6.0** with bundled wrappers (`mvnw` / `mvnw.cmd`, `gradlew` / `gradlew.bat`)
 - **JUnit 4.13.2** — `junit:junit` artifact; all dependency versions are explicit (no BOM)
 - **JUnitParams 1.1.1** — `@JUnitParamsRunner` + `@Parameters` for parameterized tests
 - **junit4-dataprovider 2.12** — TNG-style `@DataProvider` for JUnit 4
@@ -125,25 +125,25 @@ JUnit 4 has no native `@BeforeSuite` / `@AfterSuite`. Three approaches are demon
 
 ## Maven quick reference
 ```bash
-mvn clean test                          # all tests
-mvn clean test -Dtest=ClassName         # single class
-mvn clean test -Dgroups=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests  # by category
-mvn clean test -P smoke                 # by Maven profile (smoke or regression)
-mvn clean surefire-report:report        # HTML report
-mvn clean site                          # full Maven site
+./mvnw clean test                          # all tests
+./mvnw clean test -Dtest=ClassName         # single class
+./mvnw clean test -Dgroups=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests  # by category
+./mvnw clean test -P smoke                 # by Maven profile (smoke or regression)
+./mvnw clean surefire-report:report        # HTML report
+./mvnw clean site                          # full Maven site
 ```
 
 ## Gradle quick reference
 ```bash
-gradle clean test                       # all tests
-gradle clean test --tests "*ClassName"  # single class
-gradle clean test -DincludeCategories=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests # by category
-gradle clean smokeTest                  # by dedicated Gradle task (smokeTest or regressionTest)
-gradle clean test                       # HTML report (build/reports/tests/test/index.html)
+./gradlew clean test                       # all tests
+./gradlew clean test --tests "*ClassName"  # single class
+./gradlew clean test -DincludeCategories=com.oleynik.qa.workshop.junit.topics.grouping.categories.SmokeTests # by category
+./gradlew clean smokeTest                  # by dedicated Gradle task (smokeTest or regressionTest)
+./gradlew clean test                       # HTML report (build/reports/tests/test/index.html)
 ```
 
 ## What NOT to do
-- Do not mix Maven and Gradle commands in a single workflow; consistently follow the selected build tool
+- Do not consider a change validated until the required Maven and Gradle checks have both been completed; report any missing verification
 - Do not use Jupiter annotations (`@BeforeEach`, `@AfterEach`, `@Disabled`, `@Tag`, `@ExtendWith`) — not on the classpath
 - Do not add a `junit-bom` — all dependency versions are managed explicitly in `pom.xml` and `build.gradle`
 - Do not rename `*Case` suite members to `*Test`
@@ -157,3 +157,14 @@ gradle clean test                       # HTML report (build/reports/tests/test/
 - In these nested documents, use `../../` for links to README, source files, and build files at repository root.
 - `junit-suite-lifecycle.md` covers suite-scoped resources and explicit JUnitCore runs; `external-listener-registration.md` distinguishes Surefire RunListener events from Gradle TestListener events.
 - Do not describe externally registered listener callbacks as a single resource setup/teardown pair for the entire build or JVM.
+
+## Validation with Maven and Gradle
+
+- Every workshop example must work with both Maven and Gradle. Keep corresponding commands in README and guides synchronized.
+- Use the pinned wrappers: Maven 3.9.12 and Gradle 9.6.0. On Unix use `./mvnw` and `./gradlew`; on Windows use `mvnw.cmd` and `gradlew.bat`.
+- For Java or test changes, run the affected examples with both wrappers. A successful Maven run alone does not establish Gradle compatibility, or vice versa.
+- For dependency changes or shared build/test configuration changes, run the full test suite with both wrappers.
+- For documentation-only changes, check relative links, heading anchors, and consistency with the actual source/build files. If runnable commands are added or changed, execute the corresponding commands for both build tools.
+- Check actual test counts, callback output, and reports when these are part of the example; build success alone is not sufficient.
+- Report Maven and Gradle validation separately, including commands run, results, and any verification that could not be completed.
+- The current GitHub Actions workflow runs Maven only. It does not replace local Gradle validation.

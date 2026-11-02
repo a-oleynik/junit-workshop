@@ -60,7 +60,7 @@ Chapter 11 runs classes in parallel and methods within each class sequentially.
 This branch uses the same default execution pattern with JUnit 4 mechanisms:
 
 - **Maven:** [pom.xml](../../pom.xml) sets `parallel=classes` and `threadCount=3`.
-  Surefire 3.6.0 maps these options to the Vintage engine. Its commented alternative
+  Surefire 3.6.1 maps these options to the Vintage engine. Its commented alternative
   sets `junit.vintage.execution.parallel.classes=true` and
   `junit.vintage.execution.parallel.methods=false`.
 - **Gradle:** [build.gradle](../../build.gradle) uses `useJUnit` and

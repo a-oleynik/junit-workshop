@@ -20,7 +20,7 @@ extends JUnit 4's `RunListener`. The isolated [Maven profile](../../pom.xml)
 
 The [two demo tests](../../src/test/java/com/oleynik/qa/workshop/junit/topics/suites/autodetect)
 need no `@RunWith`, `@Rule`, or shared base class to register the listener.
-Surefire 3.6.0 runs JUnit 4 tests through its Platform provider and Vintage.
+Surefire 3.6.1 runs JUnit 4 tests through its Platform provider and Vintage.
 
 The listener prints the actual events:
 
@@ -39,7 +39,7 @@ public void testRunFinished(Result result) {
 ```
 
 `Description` and `Result` are supplied by the runner or provider.
-Surefire 3.6.0's adapter can supply a null description; the example prints a
+Surefire 3.6.1's adapter can supply a null description; the example prints a
 placeholder instead of throwing an exception. In the verified demo its `Result`
 objects also reported zero tests, while the Surefire summary correctly reported
 two successful tests. Use the Surefire summary or XML/HTML report for build totals.
@@ -94,14 +94,14 @@ but do not enable either external demo listener.
 
 ## Observed callback counts
 
-Observed on Windows with Surefire 3.6.0, JUnit 4.13.2, Gradle 9.6.0,
+Observed on Windows with Surefire 3.6.1, JUnit 4.13.2, Gradle 9.6.0,
 and JDK 21 compiling for Java 17:
 
 | Execution                                       | Start/finish pairs                           |
 |-------------------------------------------------|----------------------------------------------|
 | Maven demo, default `parallel=classes`          | 3                                            |
-| Maven demo, `parallel=none`                     | 3                                            |
-| Maven demo, `parallel=methods`, `threadCount=3` | 3                                            |
+| Maven demo, `parallel=none`                     | 4                                            |
+| Maven demo, `parallel=methods`, `threadCount=3` | 4                                            |
 | Maven demo, `forkCount=3`, `reuseForks=false`   | 4                                            |
 | Gradle demo, `maxParallelForks=3` or `1`        | 1 root pair; 2 tests in the aggregate result |
 
