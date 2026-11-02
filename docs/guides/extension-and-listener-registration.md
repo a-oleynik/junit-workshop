@@ -83,7 +83,7 @@ appear; this extension's resource messages do not.
 
 ServiceLoader changes how the extension is registered. The resource is managed
 by the same root-store pattern as the explicitly registered extension.
-See [the root-store example and lifecycle boundaries](junit-extension-lifecycle.md)
+See [the root-store example and lifecycle boundaries](junit-lifecycle.md)
 for `computeIfAbsent`, automatic cleanup, and the scope of a shared resource.
 
 ## Documentation

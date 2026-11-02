@@ -123,7 +123,7 @@ In this example, the root store determines when the resource is created and clos
 | ServiceLoader                                 | Extension discovery and registration; no separate lifecycle for the shared resource.          |
 
 See [automatic extension registration](https://docs.junit.org/current/extensions/registering-extensions.html#automatic-extension-registration).
-For the provider file and activation steps, see the [automatic registration walkthrough](automatic-extension-registration.md).
+For the provider file and activation steps, see the [automatic registration walkthrough](extension-and-listener-registration.md).
 Return to the README's [suite lifecycle example](../../README.md#11-suite-lifecycle-beforesuite--aftersuite)
 or [automatic registration demo](../../README.md#13-automatic-extension-registration-serviceloader).
 

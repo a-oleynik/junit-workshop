@@ -179,8 +179,8 @@ docs/
 ├── articles/                # Companion material for specific articles
 │   └── junit-6-from-scratch.md # Article learning path and chapter-to-code mapping
 └── guides/                  # Detailed explanations of README topics
-    ├── automatic-extension-registration.md # ServiceLoader registration walkthrough
-    └── junit-extension-lifecycle.md # Root stores, suites, and launcher sessions
+    ├── extension-and-listener-registration.md # ServiceLoader registration walkthrough
+    └── junit-lifecycle.md # Root stores, suites, and launcher sessions
 gradle/wrapper/              # Pinned Gradle distribution and wrapper bootstrap JAR
 src/
 ├── main/java/com/oleynik/qa/workshop/junit/
@@ -681,7 +681,7 @@ Run the two classes together with your chosen build tool:
 ./gradlew test --tests "*SuiteExtensionFirstTest" --tests "*SuiteExtensionSecondTest"
 ```
 
-See [how the root-store example works and where its lifecycle ends](docs/guides/junit-extension-lifecycle.md).
+See [how the root-store example works and where its lifecycle ends](docs/guides/junit-lifecycle.md).
 
 ### 13. Automatic Extension Registration (ServiceLoader)
 
@@ -700,7 +700,7 @@ Run with your chosen build tool; both commands enable autodetection for the demo
 ./gradlew autodetectExtensionDemoTest    # Gradle
 ```
 
-See [the registration walkthrough, expected output, and documentation links](docs/guides/automatic-extension-registration.md).
+See [the registration walkthrough, expected output, and documentation links](docs/guides/extension-and-listener-registration.md).
 
 ### 14. Timeout Thread Modes
 
